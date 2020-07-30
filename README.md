@@ -4,7 +4,7 @@
 - cd discourse
 - git checkout stable - we should work only on stable version of discourse
 - cd plugins
-- ln -s ../../communitarian .
+- ln -s ../../communitarian . ([wiki](https://en.wikipedia.org/wiki/Symbolic_link), [guide](https://meta.discourse.org/t/beginners-guide-to-creating-discourse-plugins-part-4-git-setup/31272))
 - cd ..
 - install dependencies([guide](https://github.com/discourse/discourse#development))
 - run rails server
