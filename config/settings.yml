@@ -1,0 +1,4 @@
+plugins:
+  communitarian_enabled:
+    default: true
+    client: true
