@@ -14,7 +14,7 @@ RSpec.describe Communitarian::PostDelay, type: :model do
 
       it "creates an error" do
         expect(result.errors).to have_attributes(
-          full_messages: include("You can't post more than once in 5 minutes in this topic")
+          full_messages: include("You can't post more than once in 5 minutes to this dialog")
         )
       end
     end
