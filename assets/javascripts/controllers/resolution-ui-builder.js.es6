@@ -18,12 +18,23 @@ export default Controller.extend({
     return pollOptions.split("\n").filter(notEmpty).length;
   },
 
+  @discourseComputed("pollOutput", "title")
+  previewText(pollOptions, title) {
+    let output = "";
+
+    if (title.length > 0) output += `${title}\n`;
+
+    output += this.pollOutput;
+
+    return output;
+  },
+
   @discourseComputed("pollOptions")
   pollOutput(pollOptions) {
     let pollHeader = "[poll type=regular results=always chartType=bar";
     let output = "";
 
-    pollHeader += ` close=${this._closeDate()}`;
+    pollHeader += ` close=${this._closeDate().toISOString()}`;
     pollHeader += "]";
 
     output += `${pollHeader}\n`;
@@ -90,11 +101,18 @@ export default Controller.extend({
       typingTime: 0,
       firstOpenedTimestamp: new Date(),
       category: window.location.pathname.match(/c\/.*\/(.*)$/)[1],
+      autoCloseReminder: this._autoCloseReminderText(),
+      activePerionNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
     });
   },
 
+  _autoCloseReminderText() {
+    const closeDate = this._closeDate().format("MMM D, ha");
+    return I18n.t("communitarian.resolution.ui_builder.auto_close_reminder", { close_date: closeDate })
+  },
+
   _closeDate() {
-    let closeDate = moment.tz("america_new_york").set({ hours: 17, minutes: 0, seconds: 0, millisecond: 0 });
+    let closeDate = moment.tz("America/New_York").set({ hours: 17, minutes: 0, seconds: 0, millisecond: 0 });
     const currentWeekday = closeDate.weekday();
     const closeWeekDay = 6;
     const isWeekEnd = (weekday) => weekday == 0 || weekday == 6;
@@ -104,7 +122,7 @@ export default Controller.extend({
 
     closeDate.isoWeekday(closeWeekDay);
 
-    return closeDate.toISOString();
+    return closeDate;
   },
 
   _parsedPollOptions(pollOptions) {
