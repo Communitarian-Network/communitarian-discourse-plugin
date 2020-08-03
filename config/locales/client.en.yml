@@ -2,3 +2,6 @@ en:
   js:
     communitarian:
       new_resolution_button: New Resolution
+    resolutions:
+      settings_page: Resolution settings
+      show: Show Settings
