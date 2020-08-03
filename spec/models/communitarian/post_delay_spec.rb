@@ -3,13 +3,11 @@
 require "rails_helper"
 
 RSpec.describe Communitarian::PostDelay, type: :model do
-  let(:manager) { NewPostManager.new(user, args) }
-
   describe ".call" do
     subject(:result) { Communitarian::PostDelay.call(manager) }
 
+    let(:manager) { NewPostManager.new(user, topic_id: 1) }
     let(:user) { mock("user") }
-    let(:args) { { topic_id: 3 } }
 
     context "when user posted recently" do
       before { user.stubs(:posted_recently?).returns(true) }
