@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Communitarian
   refine User do
     def posted_recently?(topic_id)
