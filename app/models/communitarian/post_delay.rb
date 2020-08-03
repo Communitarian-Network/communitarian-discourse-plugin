@@ -7,7 +7,7 @@ module Communitarian
     def self.call(manager)
       if manager.user.posted_recently?(manager.args[:topic_id])
         result = NewPostResult.new(:post, false)
-        result.errors[:base] << "You can't post that often"
+        result.errors[:base] << I18n.t("model.post.delay.error", period: 5.minutes.inspect)
         result
       end
     end
