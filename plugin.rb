@@ -15,6 +15,11 @@ PLUGIN_NAME ||= "communitarian"
 load File.expand_path("lib/communitarian/engine.rb", __dir__)
 
 after_initialize do
+
+  [
+    "../app/models/communitarian/resolution",
+  ].each { |path| require File.expand_path(path, __FILE__) }
+
   Topic.register_custom_field_type("is_resolution", :boolean)
 
   # using Discourse "Topic Created" event to trigger a save.
@@ -23,6 +28,12 @@ after_initialize do
     if opts[:is_resolution] != nil
       topic.custom_fields["is_resolution"] = opts[:is_resolution]
       topic.save_custom_fields(true)
+    end
+  end
+
+  on(:post_created) do |post, _opts|
+    if post.topic.is_resolution
+      Communitarian::Resolution.schedule_jobs(post)
     end
   end
 end
