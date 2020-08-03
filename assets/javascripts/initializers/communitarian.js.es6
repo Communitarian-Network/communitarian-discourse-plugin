@@ -1,7 +1,7 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 
 function initializeCommunitarian(api) {
-  console.log("Communitarian plugin initialized: Hello World!!!")
+  console.log("Communitarian plugin initialized")
 }
 
 export default {
