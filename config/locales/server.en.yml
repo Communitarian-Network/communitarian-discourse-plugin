@@ -2,6 +2,6 @@ en:
   model:
     post:
       delay:
-        error: "You can't post more than once in %{period} in this topic"
+        error: "You can't post more than once in %{period} in this dialog"
   site_settings:
     communitarian_enabled: "Enable communitarian plugin"
