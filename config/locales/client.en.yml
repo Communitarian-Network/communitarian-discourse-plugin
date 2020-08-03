@@ -1,4 +1,16 @@
 en:
   js:
     communitarian:
-      new_resolution_button: New Resolution
+      resolution:
+        new_button: New Resolution
+        ui_builder:
+          form_title: New Resolution
+          create: Create Resolution
+          title:
+            label: Type title, or paste a link here
+          help:
+            options_count: Enter at least 1 option
+          poll_options:
+            label: Enter one poll option per line
+            close_option: Close the poll
+        error_while_creating: "Sorry, there was an error creating the resolution."
