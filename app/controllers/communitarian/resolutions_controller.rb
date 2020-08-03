@@ -9,7 +9,7 @@ module Communitarian
 
       result = manager.perform
       json = serialize_data(result, NewPostResultSerializer, root: false)
-      render json: json, status: result.success? ? 200 : 422
+      render json: json, status: result.success? ? :created : :unprocessable_entity
     end
 
     private

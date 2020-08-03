@@ -14,45 +14,22 @@ export default Controller.extend({
 
   @discourseComputed("pollOptions")
   pollOptionsCount(pollOptions) {
-    if (pollOptions.length === 0) return 0;
-
-    let length = 0;
-
-    pollOptions.split("\n").forEach(option => {
-      if (option.length !== 0) length += 1;
-    });
-
-    return length;
+    const notEmpty = Boolean;
+    return pollOptions.split("\n").filter(notEmpty).length;
   },
 
   @discourseComputed("pollOptions")
   pollOutput(pollOptions) {
     let pollHeader = "[poll type=regular results=always chartType=bar";
     let output = "";
-    let closeDate = moment.tz("america_new_york").set({ hours: 17, minutes: 0, seconds: 0, millisecond: 0 });
-    const currentWeekday = closeDate.weekday();
-    const closeWeekDay = 6;
 
-    // choose next saturday if current work week has been finished
-    if (currentWeekday > 0 && currentWeekday < 6) {
-      closeDate.isoWeekday(closeWeekDay);
-    } else {
-      closeDate.add(1, "week").isoWeekday(closeWeekDay);
-    }
-
-    pollHeader += ` close=${closeDate.toISOString()}`;
-
+    pollHeader += ` close=${this._closeDate()}`;
     pollHeader += "]";
+
     output += `${pollHeader}\n`;
-
-    if (pollOptions.length > 0) {
-      pollOptions.split("\n").forEach(option => {
-        if (option.length !== 0) output += `* ${option}\n`;
-      });
-      output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`
-    }
-
+    output += this._parsedPollOptions(pollOptions);
     output += "[/poll]\n";
+
     return output;
   },
 
@@ -86,11 +63,9 @@ export default Controller.extend({
 
   @discourseComputed("pollOptionsCount", "title", "loading")
   disabledButton(pollOptionsCount, title, loading) {
-    if (loading) {
-      return true;
-    } else {
-      return (pollOptionsCount < 1 || title.length > this.siteSettings.max_topic_title_length);
-    }
+    return loading ||
+           pollOptionsCount < 1 ||
+           title.length > this.siteSettings.max_topic_title_length;
   },
 
   @observes("title", "pollOptions")
@@ -116,6 +91,33 @@ export default Controller.extend({
       firstOpenedTimestamp: new Date(),
       category: window.location.pathname.match(/c\/.*\/(.*)$/)[1],
     });
+  },
+
+  _closeDate() {
+    let closeDate = moment.tz("america_new_york").set({ hours: 17, minutes: 0, seconds: 0, millisecond: 0 });
+    const currentWeekday = closeDate.weekday();
+    const closeWeekDay = 6;
+    const isWeekEnd = (weekday) => weekday == 0 || weekday == 6;
+
+    // choose next saturday if current work week has been finished
+    if (isWeekEnd(currentWeekday)) closeDate.add(1, "week");
+
+    closeDate.isoWeekday(closeWeekDay);
+
+    return closeDate.toISOString();
+  },
+
+  _parsedPollOptions(pollOptions) {
+    let output = "";
+
+    if (pollOptions.length > 0) {
+      pollOptions.split("\n").forEach(option => {
+        if (option.length !== 0) output += `* ${option}\n`;
+      });
+      output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`
+    }
+
+    return output;
   },
 
   actions: {
