@@ -16,3 +16,6 @@ en:
             label: Enter resolution options per line
             close_option: Close the poll
         error_while_creating: Sorry, there was an error creating the resolution.
+      communities_header:
+        title: Active communities
+        subtitle: We are trying to address the issues that people are concerned about right now, and together with the community we are trying to find the answers.

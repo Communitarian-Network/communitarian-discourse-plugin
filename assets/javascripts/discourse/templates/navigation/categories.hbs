@@ -1,0 +1,12 @@
+{{#d-section bodyClass="navigation-categories" class="navigation-container"}}
+  {{communities-header}}
+  {{d-navigation
+    filterType="categories"
+    isCategoriesPage=true
+    showCategoryAdmin=showCategoryAdmin
+    createCategory=(route-action "createCategory")
+    reorderCategories=(route-action "reorderCategories")
+    canCreateTopic=canCreateTopic
+    hasDraft=draft
+    createTopic=(route-action "createTopic")}}
+{{/d-section}}

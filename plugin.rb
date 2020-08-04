@@ -9,6 +9,8 @@
 enabled_site_setting :communitarian_enabled
 
 register_asset "stylesheets/common/resolution-form.scss"
+register_asset "stylesheets/common/communities-header.scss"
+register_asset "stylesheets/common/communities-cards.scss"
 
 PLUGIN_NAME ||= "communitarian"
 

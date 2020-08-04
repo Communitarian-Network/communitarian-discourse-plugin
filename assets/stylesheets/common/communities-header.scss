@@ -1,0 +1,44 @@
+.communities-header {
+  margin-top: 1em;
+
+  .title {
+    font-size: 1.7em;
+    text-transform: capitalize;
+    font-weight: 600;
+    padding-left: 0.8em;
+
+    @media screen and (min-width: 500px) {
+      padding-left: 0.65em;
+      font-size: 2.33em;
+    }
+
+    &:before {
+      content: "";
+      position: absolute;
+      margin-top: 14px;
+      margin-left: -20px;
+      width: 8px;
+      height: 8px;
+      background-color: $tertiary;
+      border-radius: 50%;
+
+      @media screen and (min-width: 500px) {
+        margin-top: 20px;
+        margin-left: -22px;
+        width: 10px;
+        height: 10px;
+      }
+    }
+  }
+
+  .subtitle {
+    font-size: 1em;
+    max-width: 36em;
+    margin-top: 0;
+
+    @media screen and (min-width: 500px) {
+      margin-top: 1em;
+      font-size: 1.2em;
+    }
+  }
+}
