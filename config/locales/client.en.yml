@@ -5,12 +5,14 @@ en:
         new_button: New Resolution
         ui_builder:
           form_title: New Resolution
-          create: Create Resolution
+          create: Create
+          auto_close_reminder: This resolution will be automatically closed at %{close_date} and reopened in 12 hours.
+          active_perion_note: Resolution active during 1 week after reopening.
           title:
-            label: Type title, or paste a link here
+            label: Resolution title
           help:
             options_count: Enter at least 1 option
           poll_options:
-            label: Enter one poll option per line
+            label: Enter resolution options per line
             close_option: Close the poll
-        error_while_creating: "Sorry, there was an error creating the resolution."
+        error_while_creating: Sorry, there was an error creating the resolution.
