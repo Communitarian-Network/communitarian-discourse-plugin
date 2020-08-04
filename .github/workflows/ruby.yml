@@ -6,7 +6,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     services:
-      db:
+      database:
         image: postgres
         ports: ['5432:5432']
         env:
@@ -42,12 +42,12 @@ jobs:
     - name: Cache bundle
       uses: actions/cache@v1
       with:
-        path: vendor/bundle
+        path: .bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
     - name: Install dependencies
-      run: bundle install
+      run: bundle install --path='.bundle'
     - name: Migrate database
       env:
         RAILS_ENV: test
