@@ -1,22 +1,34 @@
 # frozen_string_literal: true
 
 require_relative "../../jobs/regular/reopen_resolution"
+require_relative "../post"
 
 module Communitarian
   class Resolution
-    REOPENED_POLL_POST_ATTRIBUTES = %w[
-      user_id topic_id raw post_type last_editor_id last_version_at user_deleted public_version
-    ]
+    using Communitarian
+
+    def self.reopened_poll_post_attributes
+      %w[user_id topic_id raw post_type last_editor_id last_version_at user_deleted public_version]
+    end
 
     def self.reopen_weekly_resolution!(original_post)
       original_poll = original_post.polls.first
-      return if original_post.user_deleted || !original_post.topic.is_resolution
+      return if original_post.user_deleted || !original_post.resolution?
 
-      post_attributes = original_post.attributes.slice(*REOPENED_POLL_POST_ATTRIBUTES)
+      post_attributes = original_post.attributes.slice(*self.reopened_poll_post_attributes)
       post = Post.create!(post_attributes)
       poll = post.reload.polls.first
       poll.update!(close_at: self.next_close_time, is_weekly: true)
       self.schedule_jobs(post)
+    end
+
+    def self.schedule_jobs(post)
+      ::DiscoursePoll::Poll.schedule_jobs(post)
+      return unless post.resolution?
+
+      job_args = { post_id: post.id }
+      Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
+      Jobs.enqueue_at(self.next_reopen_time(post.polls.first.close_at), :reopen_resolution , job_args)
     end
 
     def self.next_close_time(today = self.current_time)
@@ -26,14 +38,6 @@ module Communitarian
         today.end_of_week
       end
       next_close_day.change(hour: self.close_hour)
-    end
-
-    def self.schedule_jobs(post)
-      ::DiscoursePoll::Poll.schedule_jobs(post)
-
-      job_args = { post_id: post.id }
-      Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
-      Jobs.enqueue_at(self.next_reopen_time(poll.close_at), :reopen_resolution , job_args)
     end
 
     def self.next_reopen_time(today = self.current_time)
