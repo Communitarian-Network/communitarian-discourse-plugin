@@ -35,8 +35,6 @@ after_initialize do
   end
 
   on(:post_created) do |post, _opts|
-    if post.topic.is_resolution
-      Communitarian::Resolution.schedule_jobs(post)
-    end
+    Communitarian::Resolution.schedule_jobs(post)
   end
 end
