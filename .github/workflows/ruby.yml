@@ -50,7 +50,15 @@ jobs:
       run: bundle install --path='.bundle'
     - name: Migrate database
       env:
+        POSTGRES_HOST: localhost
+        POSTGRES_USER: discourse
+        POSTGRES_PASSWORD: discourse
         RAILS_ENV: test
       run: bundle exec rake db:create db:migrate
     - name: Run Communitarian tests
+      env:
+        POSTGRES_HOST: localhost
+        POSTGRES_USER: discourse
+        POSTGRES_PASSWORD: discourse
+        RAILS_ENV: test
       run: bundle exec rails plugin:spec[communitarian]
