@@ -1,12 +1,6 @@
-{{#if canCreateTopic}}
-  {{#if category}}
-    {{d-button
-      class=btnClass
-      id="create-resolution"
-      action="clickNewResolutionButton"
-      icon="plus"
-      disabled=disabled
-      label="communitarian.new_resolution_button"
-    }}
-  {{/if}}
-{{/if}}
+{{new-resolution-button
+  category=category
+  canCreateResolution=canCreateTopic
+  disabled=createTopicButtonDisabled
+  btnClass=createTopicClass
+}}
