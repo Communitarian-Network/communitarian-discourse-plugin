@@ -10,7 +10,7 @@ enabled_site_setting :communitarian_enabled
 
 register_asset "stylesheets/common/resolution-form.scss"
 
-PLUGIN_NAME ||= 'Communitarian'
+PLUGIN_NAME ||= "communitarian"
 
 load File.expand_path("lib/communitarian/engine.rb", __dir__)
 
