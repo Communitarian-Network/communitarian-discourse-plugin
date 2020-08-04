@@ -1,0 +1,53 @@
+name: Quality
+
+on: [push]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    services:
+      db:
+        image: postgres
+        ports: ['5432:5432']
+        env:
+          POSTGRES_HOST: localhost
+          POSTGRES_USER: discourse
+          POSTGRES_PASSWORD: discourse
+          RAILS_ENV: test
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+    - name: Clone Discourse (stable)
+      uses: actions/checkout@v2
+      with:
+        repository: 'discourse/discourse'
+        ref: 'stable'
+    - name: Clone communitarian-discourse-plugin
+      uses: actions/checkout@v2
+      with:
+        path: plugins/communitarian
+    - name: Set up Ruby
+    # To automatically get bug fixes and new Ruby versions for ruby/setup-ruby,
+    # change this to (see https://github.com/ruby/setup-ruby#versioning):
+    # uses: ruby/setup-ruby@v1
+      uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
+      with:
+        ruby-version: 2.6
+    - name: Cache bundle
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
+    - name: Install dependencies
+      run: bundle install
+    - name: Migrate database
+      env:
+        RAILS_ENV: test
+      run: bundle exec rake db:create db:migrate
+    - name: Run Communitarian tests
+      run: bundle exec rails plugin:spec[communitarian]
