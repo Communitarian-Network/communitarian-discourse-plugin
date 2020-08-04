@@ -4,15 +4,16 @@ on: [push]
 
 jobs:
   test:
+    env:
+      POSTGRES_HOST: localhost
+      POSTGRES_USER: discourse
+      POSTGRES_PASSWORD: discourse
+      RAILS_ENV: test
     runs-on: ubuntu-latest
     services:
       database:
         image: postgres
         ports: ['5432:5432']
-        env:
-          POSTGRES_HOST: localhost
-          POSTGRES_USER: discourse
-          POSTGRES_PASSWORD: discourse
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
@@ -42,23 +43,15 @@ jobs:
     - name: Cache bundle
       uses: actions/cache@v1
       with:
-        path: .bundle
+        path: vendor/bundle
         key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
         restore-keys: |
           ${{ runner.os }}-gems-
     - name: Install dependencies
-      run: bundle install --path='.bundle'
+      run: |
+        bundle config path vendor/bundle
+        bundle install
     - name: Migrate database
-      env:
-        POSTGRES_HOST: localhost
-        POSTGRES_USER: discourse
-        POSTGRES_PASSWORD: discourse
-        RAILS_ENV: test
       run: bundle exec rake db:create db:migrate
     - name: Run Communitarian tests
-      env:
-        POSTGRES_HOST: localhost
-        POSTGRES_USER: discourse
-        POSTGRES_PASSWORD: discourse
-        RAILS_ENV: test
       run: bundle exec rails plugin:spec[communitarian]
