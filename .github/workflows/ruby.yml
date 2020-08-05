@@ -5,9 +5,9 @@ on: [push]
 jobs:
   test:
     env:
-      POSTGRES_HOST: localhost
       POSTGRES_USER: discourse
       POSTGRES_PASSWORD: discourse
+      POSTGRES_DB: discourse_test
       RAILS_ENV: test
     runs-on: ubuntu-latest
     services:
@@ -15,10 +15,11 @@ jobs:
         image: postgres
         ports: ['5432:5432']
         env:
-          POSTGRES_HOST: localhost
-          POSTGRES_USER: discourse	
+          POSTGRES_USER: discourse
           POSTGRES_PASSWORD: discourse
+          POSTGRES_DB: discourse_test
         options: >-
+          --mount type=tmpfs,destination=/var/lib/postgresql/data
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
@@ -44,7 +45,7 @@ jobs:
       uses: ruby/setup-ruby@ec106b438a1ff6ff109590de34ddc62c540232e0
       with:
         ruby-version: 2.6
-    - name: Cache bundle
+    - name: Restore bundle from cache
       uses: actions/cache@v1
       with:
         path: vendor/bundle
@@ -55,6 +56,13 @@ jobs:
       run: |
         bundle config path vendor/bundle
         bundle install
+    - name: Cache bundle
+      uses: actions/cache@v1
+      with:
+        path: vendor/bundle
+        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-gems-
     - name: Migrate database
       run: bundle exec rake db:create db:migrate
     - name: Run Communitarian tests
