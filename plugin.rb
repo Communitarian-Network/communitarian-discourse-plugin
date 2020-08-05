@@ -24,7 +24,7 @@ after_initialize do
 
   Topic.register_custom_field_type("is_resolution", :boolean)
 
-  NewPostManager.add_handler(10) { |manager| Communitarian::PostDelay.call(manager) }
+  NewPostManager.add_handler(10) { |manager| Communitarian::PostDelay.new.call(manager) }
 
   # using Discourse "Topic Created" event to trigger a save.
   # `opts[]` is how you pass the data back from the frontend into Rails
