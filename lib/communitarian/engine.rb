@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Communitarian
   class Engine < ::Rails::Engine
     engine_name "Communitarian".freeze
