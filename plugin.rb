@@ -8,8 +8,6 @@
 
 enabled_site_setting :communitarian_enabled
 
-add_admin_route "admin.resolutions.settings_page", "resolutions"
-
 register_asset "stylesheets/common/resolution-form.scss"
 
 PLUGIN_NAME ||= "communitarian"
