@@ -1,7 +1,6 @@
 en:
   js:
     communitarian:
-      new_resolution_button: New Resolution
       resolution:
         new_button: New Resolution
         ui_builder:
