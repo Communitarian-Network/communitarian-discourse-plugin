@@ -16,8 +16,6 @@ jobs:
         ports: ['5432:5432']
         env:
           POSTGRES_HOST: localhost
-          POSTGRES_USER: discourse
-          POSTGRES_PASSWORD: discourse1
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
