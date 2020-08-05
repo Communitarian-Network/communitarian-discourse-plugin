@@ -6,7 +6,10 @@
 # authors: Flatstack
 # url: https://github.com/fs/communitarian-discourse-plugin
 
-enabled_site_setting :communitarian_enabled
+%i[
+  communitarian_enabled
+  post_delay
+].each { |setting| enabled_site_setting setting }
 
 register_asset "stylesheets/common/resolution-form.scss"
 
