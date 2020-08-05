@@ -3,15 +3,7 @@ name: Quality
 on: [push]
 
 jobs:
-  test:
-    env:
-      RAILS_ENV: test
-      PGHOST: localhost
-      PGUSER: discourse
-      PGPASSWORD: discourse
-      DISCOURSE_HOSTNAME: www.example.com
-      RUBY_GLOBAL_METHOD_CACHE_SIZE: 131072
-
+  setup:
     runs-on: ubuntu-latest
     services:
       db:
@@ -31,24 +23,26 @@ jobs:
         image: redis
         ports: ['6379:6379']
         options: --entrypoint redis-server
-
+    env:
+      RAILS_ENV: test
+      PGHOST: localhost
+      PGUSER: discourse
+      PGPASSWORD: discourse
+      RUBY_GLOBAL_METHOD_CACHE_SIZE: 131072
     steps:
     - name: Clone Discourse (stable)
       uses: actions/checkout@v2
       with:
         repository: 'discourse/discourse'
         ref: 'stable'
-
     - name: Clone communitarian-discourse-plugin
       uses: actions/checkout@v2
       with:
         path: plugins/communitarian
-
     - name: Set up Ruby
       uses: ruby/setup-ruby@v1
       with:
         ruby-version: 2.6
-
     - name: Restore bundle from cache
       uses: actions/cache@v1
       with:
@@ -58,15 +52,24 @@ jobs:
     - name: Install dependencies
       run: bundle install --path='./vendor/bundle'
 
-    - name: Cache bundle
-      uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: ${{ runner.os }}-gems-
-
+  test:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    env:
+      RAILS_ENV: test
+      PGHOST: localhost
+      PGUSER: discourse
+      PGPASSWORD: discourse
+      DISCOURSE_HOSTNAME: www.example.com
+    steps:
     - name: Migrate database
       run: bundle exec rake db:create db:migrate
-
     - name: Run Communitarian tests
       run: bundle exec rails plugin:spec[communitarian]
+
+  lint:
+    runs-on: ubuntu-latest
+    needs: [setup]
+    steps:
+    - name: Run rubocop
+      run: bundle exec rubocop plugins/communitarian
