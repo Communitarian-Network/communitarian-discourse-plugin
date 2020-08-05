@@ -58,13 +58,6 @@ jobs:
     - name: Install dependencies
       run: bundle install --path='./vendor/bundle'
 
-    - name: Cache bundle
-      uses: actions/cache@v1
-      with:
-        path: vendor/bundle
-        key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-        restore-keys: ${{ runner.os }}-gems-
-
     - name: Migrate database
       run: bundle exec rake db:create db:migrate
 
