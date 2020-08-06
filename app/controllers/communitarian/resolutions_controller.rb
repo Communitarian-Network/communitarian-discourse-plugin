@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Communitarian
   class ResolutionsController < ::ApplicationController
     requires_plugin Communitarian
