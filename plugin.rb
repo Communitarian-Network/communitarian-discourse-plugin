@@ -15,10 +15,9 @@ PLUGIN_NAME ||= "communitarian"
 load File.expand_path("lib/communitarian/engine.rb", __dir__)
 
 after_initialize do
-
   [
     "../app/models/communitarian/post_delay",
-    "../app/models/communitarian/resolution",
+    "../app/models/communitarian/resolution"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Topic.register_custom_field_type("is_resolution", :boolean)
