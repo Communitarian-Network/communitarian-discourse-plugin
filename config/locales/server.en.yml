@@ -6,6 +6,6 @@ en:
   site_settings:
     communitarian_enabled: Enable communitarian plugin
     communitarian_resolutions_close:  Enable resolutions close
-    communitarian_resolutions_close_week_day: Week day(1-7) for closing resolutions
-    communitarian_resolutions_close_hour: Hour for closing resolutions(1-24)
+    communitarian_resolutions_close_week_day: Day of the week for closing resolutions
+    communitarian_resolutions_close_hour: Hour(0-23) for closing resolutions
     communitarian_resolutions_reopen_delay: Delay(in hours) between closing and reopening resolutions

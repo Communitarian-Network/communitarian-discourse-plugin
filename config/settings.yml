@@ -6,7 +6,7 @@ plugins:
     default: true
     client: true
   communitarian_resolutions_close_week_day:
-    default: 6
+    default: "Sunday"
     client: true
   communitarian_resolutions_close_hour:
     default: 12
