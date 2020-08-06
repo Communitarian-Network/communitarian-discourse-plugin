@@ -6,13 +6,26 @@ plugins:
     default: true
     client: true
   communitarian_resolutions_close_week_day:
-    default: "Sunday"
+    default: Sunday
     client: true
+    type: enum
+    choices:
+      - Sunday
+      - Monday
+      - Tuesday
+      - Wednesday
+      - Thursday
+      - Friday
+      - Saturday
   communitarian_resolutions_close_hour:
     default: 12
     client: true
+    min: 0
+    max: 23
   communitarian_resolutions_reopen_delay:
     default: 1
+    client: true
+    min: 1
   post_delay:
     default: 300
     client: true

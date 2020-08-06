@@ -20,7 +20,7 @@ module Communitarian
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
       poll = post.reload.polls.first
-      poll.update!(close_at: resolution_schedule.next_close_time)
+      poll.update!(close_at: resolution_schedule.next_close_time(poll.close_at))
       self.schedule_jobs(post)
     end
 
@@ -28,9 +28,12 @@ module Communitarian
       return unless resolution?(post)
 
       ::DiscoursePoll::Poll.schedule_jobs(post)
+
+      poll = post.reload.polls.first
       job_args = { post_id: post.id }
+
       Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
-      Jobs.enqueue_at(resolution_schedule.next_reopen_time, :reopen_resolution, job_args)
+      Jobs.enqueue_at(resolution_schedule.reopen_delay.since(poll.close_at), :reopen_resolution, job_args)
     end
 
     private

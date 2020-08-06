@@ -2,6 +2,7 @@
 
 module Communitarian
   class ResolutionSchedule
+    TIME_ZONE = "America/New_York"
     WEEKDAYS = Date::DAYS_INTO_WEEK.keys.freeze
 
     attr_reader :close_hour, :reopen_delay
@@ -14,13 +15,13 @@ module Communitarian
       @reopen_delay = reopen_delay
     end
 
-    def next_close_time(today = self.class.current_time)
-      next_close_day = today.next_occurring(self.close_weekday)
+    def next_close_time(close_time = self.class.current_time)
+      next_close_day = close_time.in_time_zone(TIME_ZONE).next_occurring(self.close_weekday)
       next_close_day.change(hour: self.close_hour)
     end
 
-    def next_reopen_time(today = self.class.current_time)
-      self.next_close_time(today) + self.reopen_delay
+    def next_reopen_time(close_time = self.class.current_time)
+      self.next_close_time(close_time) + self.reopen_delay
     end
 
     def close_weekday
@@ -28,7 +29,7 @@ module Communitarian
     end
 
     def self.current_time
-      ActiveSupport::TimeZone["America/New_York"].now
+      Time.current.in_time_zone(TIME_ZONE)
     end
 
     def self.close_weekday
