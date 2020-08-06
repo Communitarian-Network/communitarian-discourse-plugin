@@ -45,7 +45,7 @@ module Communitarian
     end
 
     def self.current_time
-      ActiveSupport::TimeZone["America/New_York"].current
+      ActiveSupport::TimeZone["America/New_York"].now
     end
 
     def self.close_week_day
