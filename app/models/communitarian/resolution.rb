@@ -1,12 +1,9 @@
 # frozen_string_literal: true
 
 require_relative "../../jobs/regular/reopen_resolution"
-require_relative "../post"
 
 module Communitarian
   class Resolution
-    using Communitarian
-
     REOPENED_RESOLUTION_ATTRIBUTES = %w[
       user_id topic_id raw post_type last_editor_id last_version_at user_deleted public_version
     ].freeze
@@ -18,7 +15,7 @@ module Communitarian
     end
 
     def reopen_weekly_resolution!(original_post)
-      return if original_post.user_deleted || !original_post.resolution?
+      return if original_post.user_deleted || !resolution?(original_post)
 
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
@@ -28,12 +25,18 @@ module Communitarian
     end
 
     def schedule_jobs(post)
-      return unless post.resolution?
+      return unless resolution?(post)
 
       ::DiscoursePoll::Poll.schedule_jobs(post)
       job_args = { post_id: post.id }
       Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
       Jobs.enqueue_at(resolution_schedule.next_reopen_time, :reopen_resolution, job_args)
+    end
+
+    private
+
+    def resolution?(post)
+      post.topic.custom_fields["is_resolution"]
     end
   end
 end
