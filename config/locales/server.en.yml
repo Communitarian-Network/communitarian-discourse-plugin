@@ -5,3 +5,4 @@ en:
         error: "You can't post more than once in %{period} to this dialog"
   site_settings:
     communitarian_enabled: "Enable communitarian plugin"
+    post_delay: "Minimal time in seconds before user can publish again to a dialog"
