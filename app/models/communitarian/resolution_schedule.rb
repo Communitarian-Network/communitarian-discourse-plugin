@@ -37,7 +37,7 @@ module Communitarian
     end
 
     def self.close_hour
-      SiteSetting.communitarian_resolutions_close_hour % 24
+      SiteSetting.communitarian_resolutions_close_hour.to_i % 24
     end
 
     def self.reopen_delay
