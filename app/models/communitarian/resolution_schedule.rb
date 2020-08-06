@@ -32,18 +32,15 @@ module Communitarian
     end
 
     def self.close_weekday
-      # TODO: replace 0 with reading the setting
-      0
+      Date::DAYS_INTO_WEEK[SiteSetting.communitarian_resolutions_close_week_day.downcase.to_sym] || 0
     end
 
     def self.close_hour
-      # TODO: replace 20 with reading the setting
-      20
+      SiteSetting.communitarian_resolutions_close_hour % 24
     end
 
     def self.reopen_delay
-      # TODO: read this value from the settings
-      12.hours
+      SiteSetting.communitarian_resolutions_reopen_delay.hours
     end
   end
 end
