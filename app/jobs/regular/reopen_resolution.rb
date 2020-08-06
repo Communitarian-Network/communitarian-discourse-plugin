@@ -6,7 +6,8 @@ module Jobs
       raise Discourse::InvalidParameters.new(:post_id) if args[:post_id].blank?
 
       post = Post.find(args[:post_id])
-      Communitarian::Resolution.reopen_weekly_resolution!(post)
+      Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
+        reopen_weekly_resolution!(post)
     end
   end
 end
