@@ -13,4 +13,6 @@ plugins:
     client: true
   communitarian_resolutions_reopen_delay:
     default: 1
+  post_delay:
+    default: 300
     client: true
