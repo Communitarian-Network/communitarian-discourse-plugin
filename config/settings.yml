@@ -2,6 +2,17 @@ plugins:
   communitarian_enabled:
     default: true
     client: true
+  communitarian_resolutions_close:
+    default: true
+    client: true
+  communitarian_resolutions_close_week_day:
+    default: "Sunday"
+    client: true
+  communitarian_resolutions_close_hour:
+    default: 12
+    client: true
+  communitarian_resolutions_reopen_delay:
+    default: 1
   post_delay:
     default: 300
     client: true
