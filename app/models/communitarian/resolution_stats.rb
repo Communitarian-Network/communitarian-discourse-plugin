@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../jobs/regular/reopen_resolution"
-
 module Communitarian
   class ResolutionStats
     attr_reader :poll
