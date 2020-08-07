@@ -49,7 +49,7 @@ module Communitarian
     end
 
     def resolution?(post)
-      post.topic.custom_fields["is_resolution"]
+      post.topic.custom_fields["is_resolution"] && post.polls.exists?
     end
   end
 end
