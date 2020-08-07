@@ -15,7 +15,7 @@ module Communitarian
     end
 
     def reopen_weekly_resolution!(original_post)
-      return if original_post.user_deleted || !resolution?(original_post)
+      return if to_be_closed?(original_post)
 
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
@@ -25,7 +25,7 @@ module Communitarian
     end
 
     def schedule_jobs(post)
-      return unless resolution?(post)
+      return if to_be_closed?(post)
 
       ::DiscoursePoll::Poll.schedule_jobs(post)
 
@@ -37,6 +37,16 @@ module Communitarian
     end
 
     private
+
+    def to_be_closed?(post)
+      post.user_deleted || !resolution?(post) || close_by_vote?(post)
+    end
+
+    def close_by_vote?(post)
+      @resolution_stats ||= Communitarian::ResolutionSchedule.new(post.polls.first)
+
+      @resolution_stats.to_close?
+    end
 
     def resolution?(post)
       post.topic.custom_fields["is_resolution"]
