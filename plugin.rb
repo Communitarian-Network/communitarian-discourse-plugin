@@ -19,7 +19,8 @@ load File.expand_path("lib/communitarian/engine.rb", __dir__)
 
 after_initialize do
   [
-    "../app/models/communitarian/post_delay"
+    "../app/models/communitarian/post_delay",
+    "../app/models/communitarian/resolution"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Topic.register_custom_field_type("is_resolution", :boolean)
@@ -33,5 +34,10 @@ after_initialize do
       topic.custom_fields["is_resolution"] = opts[:is_resolution]
       topic.save_custom_fields(true)
     end
+  end
+
+  on(:post_created) do |post, _opts|
+    Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
+      schedule_jobs(post)
   end
 end

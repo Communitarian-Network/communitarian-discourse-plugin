@@ -6,7 +6,8 @@ en:
         ui_builder:
           form_title: New Resolution
           create: Create
-          auto_close_reminder: This resolution will be automatically closed at %{close_date} and reopened in 12 hours.
+          auto_close_and_reopen_reminder: This resolution will be automatically closed at %{close_date} and reopened immediately.
+          auto_close_and_reopen_with_delay_reminder: This resolution will be automatically closed at %{close_date} and reopened in %{delay} hour(s).
           active_perion_note: Resolution active during 1 week after reopening.
           title:
             label: Resolution title
