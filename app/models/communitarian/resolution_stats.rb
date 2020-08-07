@@ -18,7 +18,9 @@ module Communitarian
 
     def to_close?
       decision = votes.max_by { |_, v| v }
-      decision[1].nonzero? && decision[0] == "Close the poll"
+
+      decision[1].nonzero? &&
+        decision[0] == I18n.t("js.communitarian.resolution.ui_builder.poll_options.close_option")
     end
   end
 end
