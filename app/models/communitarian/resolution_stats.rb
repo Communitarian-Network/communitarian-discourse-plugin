@@ -17,7 +17,8 @@ module Communitarian
     end
 
     def to_close?
-      votes.max_by { |_, v| v }[0] == "Close the poll"
+      decision = votes.max_by { |_, v| v }
+      decision[1].nonzero? && decision[0] == "Close the poll"
     end
   end
 end
