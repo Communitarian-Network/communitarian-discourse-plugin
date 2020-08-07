@@ -39,7 +39,7 @@ module Communitarian
     private
 
     def resolution?(post)
-      post.topic.custom_fields["is_resolution"]
+      post.topic.custom_fields["is_resolution"] && post.polls.size.nonzero?
     end
   end
 end
