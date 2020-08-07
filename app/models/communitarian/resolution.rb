@@ -43,7 +43,7 @@ module Communitarian
     end
 
     def close_by_vote?(post)
-      @resolution_stats ||= Communitarian::ResolutionSchedule.new(post.polls.first)
+      @resolution_stats ||= Communitarian::ResolutionStats.new(post.polls.first)
 
       @resolution_stats.to_close?
     end
