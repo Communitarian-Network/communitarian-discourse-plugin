@@ -7,6 +7,8 @@ import { popupAjaxError } from "discourse/lib/ajax-error";
 import { throttle } from "@ember/runloop";
 
 export default Controller.extend({
+  weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+
   init() {
     this._super(...arguments);
     this._setupPoll();
@@ -102,23 +104,32 @@ export default Controller.extend({
       firstOpenedTimestamp: new Date(),
       category: window.location.pathname.match(/c\/.*\/(.*)$/)[1],
       autoCloseReminder: this._autoCloseReminderText(),
-      activePerionNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
+      activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
     });
   },
 
   _autoCloseReminderText() {
     const closeDate = this._closeDate().format("MMM D, ha");
-    return I18n.t("communitarian.resolution.ui_builder.auto_close_reminder", { close_date: closeDate })
+    const reopenDelay = this.siteSettings.communitarian_resolutions_reopen_delay;
+    if (reopenDelay == 0) {
+      return I18n.t("communitarian.resolution.ui_builder.auto_close_and_reopen_reminder", { close_date: closeDate });
+    } else {
+      return I18n.t(
+        "communitarian.resolution.ui_builder.auto_close_and_reopen_with_delay_reminder",
+        { close_date: closeDate, delay: reopenDelay }
+      );
+    }
   },
 
   _closeDate() {
-    let closeDate = moment.tz("America/New_York").set({ hours: 17, minutes: 0, seconds: 0, millisecond: 0 });
-    const currentWeekday = closeDate.weekday();
-    const closeWeekDay = 6;
-    const isWeekEnd = (weekday) => weekday == 0 || weekday == 6;
+    const closeHour = this.siteSettings.communitarian_resolutions_close_hour;
+    const closeWeekDay = this.siteSettings.communitarian_resolutions_close_week_day;
+    const closeDate = moment.tz("America/New_York").set({ hours: closeHour, minutes: 0, seconds: 0, millisecond: 0 });
+    const currentWeekday = this.weekdays[closeDate.weekday()];
+    const closeOnNextWeek = () => this.weekdays.indexOf(currentWeekday) >= this.weekdays.indexOf(closeWeekDay);
 
-    // choose next saturday if current work week has been finished
-    if (isWeekEnd(currentWeekday)) closeDate.add(1, "week");
+    // choose next week if current weekday already passed close weekday
+    if (closeOnNextWeek()) closeDate.add(1, "week");
 
     closeDate.isoWeekday(closeWeekDay);
 
@@ -132,7 +143,9 @@ export default Controller.extend({
       pollOptions.split("\n").forEach(option => {
         if (option.length !== 0) output += `* ${option}\n`;
       });
-      output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`
+      if (this.siteSettings.communitarian_resolutions_close) {
+        output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`
+      }
     }
 
     return output;
