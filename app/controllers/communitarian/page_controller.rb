@@ -5,8 +5,7 @@ module Communitarian
     requires_plugin Communitarian
 
     def index
-      binding.pry
-      render json: { name: "Hello world!" }
+      render json: { title: "Hello world!" }
     end
   end
 end
