@@ -10,15 +10,15 @@ module Communitarian
 
     def votes
       @votes ||= poll.poll_options.map do |option|
-        [option.html, option.poll_votes.size + object.anonymous_votes.to_i]
+        [option.html, option.poll_votes.size + option.anonymous_votes.to_i]
       end.to_h
     end
 
     def to_close?
-      decision = votes.max_by { |_, v| v }
+      decision, votes_count = votes.max_by { |_, v| v }
 
-      decision[1].nonzero? &&
-        decision[0] == I18n.t("js.communitarian.resolution.ui_builder.poll_options.close_option")
+      votes_count > 0 &&
+        decision == I18n.t("js.communitarian.resolution.ui_builder.poll_options.close_option")
     end
   end
 end
