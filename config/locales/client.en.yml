@@ -17,3 +17,6 @@ en:
             label: Enter resolution options per line
             close_option: Close the poll
         error_while_creating: Sorry, there was an error creating the resolution.
+    user:
+      name:
+        instructions: Your full name
