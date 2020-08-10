@@ -1,0 +1,16 @@
+{{#if siteSettings.communitarian_enabled}}
+  <div class="landing-explore__content">
+    <h2 class="landing-explore__title">
+      {{i18n "communitarian.landing.explore.title"}}
+    </h2>
+    <p class="landing-explore__text">
+      {{i18n "communitarian.landing.explore.text"}}
+    </p>
+    {{#link-to "discovery.categories" class="landing-explore__link"}}
+      {{i18n "communitarian.landing.explore.link"}}
+    {{/link-to}}
+  </div>
+  <div class="landing-explore__image-wrapper">
+    <img src={{screenExampleUrl}}  class="landing-explore__image" />
+  </div>
+{{/if}}

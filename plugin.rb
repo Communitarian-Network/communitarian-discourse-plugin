@@ -12,8 +12,7 @@
 ].each { |setting| enabled_site_setting setting }
 
 register_asset "stylesheets/common/resolution-form.scss"
-register_asset "stylesheets/common/communities-header.scss"
-register_asset "stylesheets/common/communities-cards.scss"
+register_asset "stylesheets/common/landing.scss"
 
 PLUGIN_NAME ||= "communitarian"
 

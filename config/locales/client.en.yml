@@ -17,6 +17,11 @@ en:
             label: Enter resolution options per line
             close_option: Close the poll
         error_while_creating: Sorry, there was an error creating the resolution.
-      communities_header:
-        title: Active communities
-        subtitle: We are trying to address the issues that people are concerned about right now, and together with the community we are trying to find the answers.
+      landing:
+        explore:
+          title: The communitarian platform for civil agreement on the most pressing issues
+          text: We believe in presenting your real self, productive conversation, and seeking to find common ground and undoing toxic polarization in our nation.
+          link: Explore Communities
+        communities_header:
+          title: Active communities
+          text: We are trying to address the issues that people are concerned about right now, and together with the community we are trying to find the answers.

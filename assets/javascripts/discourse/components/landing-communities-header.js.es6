@@ -1,5 +1,5 @@
 import Component from "@ember/component";
 
 export default Component.extend({
-  classNames: ["communities-header"],
+  classNames: ["landing-communities-header"],
 });
