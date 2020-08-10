@@ -2,3 +2,6 @@ plugins:
   communitarian_enabled:
     default: true
     client: true
+  landing_categories_length:
+    default: 4
+    client: true

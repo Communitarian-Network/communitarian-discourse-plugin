@@ -1,6 +1,4 @@
-{{#unless isCategoriesPage}}
-  {{bread-crumbs categories=categories category=category noSubcategories=noSubcategories}}
-{{/unless}}
+{{bread-crumbs categories=categories category=category noSubcategories=noSubcategories}}
 
 {{#if showCategoryAdmin}}
   {{categories-admin-dropdown
@@ -11,9 +9,7 @@
   }}
 {{/if}}
 
-{{#unless isCategoriesPage}}
-  {{navigation-bar navItems=navItems filterMode=filterMode category=category}}
-{{/unless}}
+{{navigation-bar navItems=navItems filterMode=filterMode category=category}}
 
 {{#if showCategoryNotifications}}
   {{category-notifications-button
@@ -31,15 +27,13 @@
     createTopicLabel=createTopicLabel)
 }}
 
-{{#unless isCategoriesPage}}
-  {{create-topic-button
-    canCreateTopic=canCreateTopic
-    action=(action "clickCreateTopicButton")
-    disabled=createTopicButtonDisabled
-    label=createTopicLabel
-    btnClass=createTopicClass
-  }}
-{{/unless}}
+{{create-topic-button
+  canCreateTopic=canCreateTopic
+  action=(action "clickCreateTopicButton")
+  disabled=createTopicButtonDisabled
+  label=createTopicLabel
+  btnClass=createTopicClass
+}}
 
 {{#if showCategoryEdit}}
   {{d-button
