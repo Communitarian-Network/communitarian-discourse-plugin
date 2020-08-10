@@ -25,3 +25,6 @@ en:
         communities_header:
           title: Active communities
           text: We are trying to address the issues that people are concerned about right now, and together with the community we are trying to find the answers.
+    user:
+      name:
+        instructions: Your full name
