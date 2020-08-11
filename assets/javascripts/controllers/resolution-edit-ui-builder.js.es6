@@ -10,6 +10,7 @@ export default Controller.extend({
   weekdays: ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
 
   init() {
+    debugger;
     this._super(...arguments);
     this._setupPoll();
   },
@@ -94,19 +95,32 @@ export default Controller.extend({
     );
   },
 
-  _setupPoll() {
-    debugger;
-    this.setProperties({
-      title: "",
-      pollOptions: "",
-      titleMaxLength: this.siteSettings.max_topic_title_length,
-      loading: false,
-      typingTime: 0,
-      firstOpenedTimestamp: new Date(),
-      category: window.location.pathname.match(/c\/.*\/(.*)$/)[1],
-      autoCloseReminder: this._autoCloseReminderText(),
-      activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
-    });
+  _setupPoll(postId = null) {
+    if (postId == null) {
+      this.setProperties({
+        title: "",
+        pollOptions: "",
+        titleMaxLength: this.siteSettings.max_topic_title_length,
+        loading: false,
+        typingTime: 0,
+        firstOpenedTimestamp: new Date(),
+        autoCloseReminder: this._autoCloseReminderText(),
+        activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
+      });
+    } else {
+      this.store.find("post", postId).then((post) =>
+        this.setProperties({
+          pollOptions: this._parseOptionsFromRaw(post.raw),
+          originalText: post.raw,
+          post: post
+        })
+      );
+    }
+  },
+
+  _parseOptionsFromRaw(postRaw) {
+    let options = postRaw.match(/\[.+\]\n((\*\s.+\n)+)\[.+\]/)[1].split("\n");
+    return options.filter(s => s !== "").map(s => s.substring(2)).join("\n");
   },
 
   _autoCloseReminderText() {
@@ -167,15 +181,10 @@ export default Controller.extend({
         data: {
           title: this.title,
           raw: this.pollOutput,
-          category: this.category,
           typing_duration_msecs: this.typingTime,
           composer_open_duration_msecs: totalOpenDuration
         }
-      })
-        .then(response => {
-          window.location = `/t/topic/${response.post.topic_id}`;
-        })
-        .catch(error => {
+      }).catch(error => {
           this.set("loading", false);
           if (error) {
             popupAjaxError(error);
