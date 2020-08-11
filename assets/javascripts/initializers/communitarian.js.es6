@@ -44,9 +44,7 @@ function customizeTopicController(api) {
         if (editingFirst) {
           composer.cancelComposer().then(() => composer.open(opts));
         } else if (post.pollsObject != null) {
-          let controller = showModal("resolution-edit-ui-builder");
-          debugger;
-          controller.set("polls", post.pollsObject);
+          let controller = showModal("resolution-ui-builder");
           controller._setupPoll(post.id);
         } else {
           composer.open(opts);

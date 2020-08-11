@@ -6,6 +6,7 @@ en:
         ui_builder:
           form_title: New Resolution
           create: Create
+          update: Update
           auto_close_and_reopen_reminder: This resolution will be automatically closed at %{close_date} and reopened immediately.
           auto_close_and_reopen_with_delay_reminder: This resolution will be automatically closed at %{close_date} and reopened in %{delay} hour(s).
           active_perion_note: Resolution active during 1 week after reopening.
@@ -17,3 +18,4 @@ en:
             label: Enter resolution options per line
             close_option: Close the poll
         error_while_creating: Sorry, there was an error creating the resolution.
+        error_while_updating: Sorry, there was an error updating the resolution.

@@ -1,6 +1,6 @@
 <div class="resolution-form">
   {{#d-modal-body title="communitarian.resolution.ui_builder.form_title" class="poll-ui-builder"}}
-    <form class="poll-ui-builder-form form-horizontal" {{action "createResolution" on="submit"}}>
+    <form class="poll-ui-builder-form form-horizontal" {{action "submitResolution" on="submit"}}>
       <div class="options">
         <div class="input-group poll-textarea">
           <label>{{i18n "communitarian.resolution.ui_builder.title.label"}}</label>
@@ -29,7 +29,7 @@
 
   <div class="modal-footer">
     <div class="resolution-modal-footer-buttons">
-      {{d-button action=(action "createResolution") icon="chart-bar" class="btn-primary" label="communitarian.resolution.ui_builder.create" disabled=disabledButton}}
+      {{d-button action=(action "submitResolution") icon="chart-bar" class="btn-primary" label=buttonLabel disabled=disabledButton}}
     </div>
     <div class="resolution-modal-footer-reminder">
       <p>{{autoCloseReminder}}</p>

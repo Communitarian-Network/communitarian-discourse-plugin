@@ -94,19 +94,42 @@ export default Controller.extend({
     );
   },
 
-  _setupPoll() {
-    debugger;
-    this.setProperties({
-      title: "",
-      pollOptions: "",
-      titleMaxLength: this.siteSettings.max_topic_title_length,
-      loading: false,
-      typingTime: 0,
-      firstOpenedTimestamp: new Date(),
-      category: window.location.pathname.match(/c\/.*\/(.*)$/)[1],
-      autoCloseReminder: this._autoCloseReminderText(),
-      activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
-    });
+  _setupPoll(postId = null) {
+    if (postId == null) {
+      let slug = window.location.pathname.match(/c\/.*\/(.*)$/);
+      this.setProperties({
+        action: "create",
+        title: "",
+        pollOptions: "",
+        titleMaxLength: this.siteSettings.max_topic_title_length,
+        loading: false,
+        typingTime: 0,
+        firstOpenedTimestamp: new Date(),
+        category: slug && slug[1],
+        autoCloseReminder: this._autoCloseReminderText(),
+        activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
+      });
+    } else {
+      this.set("action", "update");
+      this.store.find("post", postId).then((post) => {
+        this.setProperties({
+          postId: post.id,
+          pollOptions: this._parseOptionsFromRaw(post.raw),
+          category: post.topic.category_id,
+          title: post.topic.title
+        })
+      });
+    }
+    this.set("buttonLabel", `communitarian.resolution.ui_builder.${this.action}`);
+  },
+
+  _parseOptionsFromRaw(postRaw) {
+    let options = postRaw.match(/\[.+\]\n((\*\s.+\n)+)\[.+\]/)[1].split("\n");
+    return options
+      .filter(s => s !== "")
+      .map(s => s.substring(2))
+      .filter(s => s !== I18n.t("communitarian.resolution.ui_builder.poll_options.close_option"))
+      .join("\n");
   },
 
   _autoCloseReminderText() {
@@ -152,8 +175,51 @@ export default Controller.extend({
     return output;
   },
 
+  createResolution(totalOpenDuration) {
+    return ajax("/communitarian/resolutions", {
+      type: "POST",
+      data: {
+        title: this.title,
+        raw: this.pollOutput,
+        category: this.category,
+        typing_duration_msecs: this.typingTime,
+        composer_open_duration_msecs: totalOpenDuration
+      }
+    }).then(response => {
+      window.location = `/t/topic/${response.post.topic_id}`;
+    }).catch(error => {
+      this.set("loading", false);
+      if (error) {
+        popupAjaxError(error);
+      } else {
+        bootbox.alert(I18n.t("communitarian.resolution.error_while_creating"));
+      }
+    });
+  },
+
+  updateResolution(totalOpenDuration) {
+    return ajax(`/communitarian/resolutions/${this.postId}`, {
+      type: "PATCH",
+      data: {
+        title: this.title,
+        raw: this.pollOutput,
+        typing_duration_msecs: this.typingTime,
+        composer_open_duration_msecs: totalOpenDuration
+      }
+    }).then(_ => {
+      closeModal
+    }).catch(error => {
+      this.set("loading", false);
+      if (error) {
+        popupAjaxError(error);
+      } else {
+        bootbox.alert(I18n.t("communitarian.resolution.error_while_updating"));
+      }
+    });
+  },
+
   actions: {
-    createResolution() {
+    submitResolution() {
       if (this.disabledButton || this.loading) {
         return;
       }
@@ -162,27 +228,11 @@ export default Controller.extend({
 
       this.set("loading", true);
 
-      return ajax("/communitarian/resolutions", {
-        type: "POST",
-        data: {
-          title: this.title,
-          raw: this.pollOutput,
-          category: this.category,
-          typing_duration_msecs: this.typingTime,
-          composer_open_duration_msecs: totalOpenDuration
-        }
-      })
-        .then(response => {
-          window.location = `/t/topic/${response.post.topic_id}`;
-        })
-        .catch(error => {
-          this.set("loading", false);
-          if (error) {
-            popupAjaxError(error);
-          } else {
-            bootbox.alert(I18n.t("communitarian.resolution.error_while_creating"));
-          }
-        });
-    }
+      if (this.action === "create") {
+        return this.createResolution(totalOpenDuration);
+      } else if (this.action === "update") {
+        return this.updateResolution(totalOpenDuration);
+      }
+    },
   }
 });
