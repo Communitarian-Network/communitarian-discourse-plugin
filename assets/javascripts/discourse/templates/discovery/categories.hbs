@@ -1,0 +1,6 @@
+{{#discovery-categories refresh=(action "refresh")}}
+  {{component categoryPageStyle
+                categories=(if isHomePage limitedCategories model.categories)
+                latestTopicOnly=latestTopicOnly
+                topics=model.topics}}
+{{/discovery-categories}}
