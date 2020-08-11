@@ -56,6 +56,22 @@ $landing-explore-image-height: 450px;
       }
     }
   }
+  &__link,
+  &__link:visited {
+    display: inline-block;
+    padding: 0.5em 0.8em;
+    font-size: 1em;
+    border-radius: 5px;
+    color: $secondary;
+    background-color: $tertiary;
+    font-weight: 900;
+    line-height: 1.6em;
+
+    @media screen and (min-width: 750px) {
+      padding: 0.7em 1.1em;
+      font-size: 1.2em;
+    }
+  }
 }
 
 .landing-explore {
@@ -107,22 +123,9 @@ $landing-explore-image-height: 450px;
     }
   }
 
-  &__link,
-  &__link:visited {
-    display: inline-block;
+  &__link {
+    @extend .landing-block__link;
     margin-top: 1em;
-    padding: 0.5em 0.8em;
-    font-size: 1em;
-    border-radius: 5px;
-    color: $secondary;
-    background-color: $tertiary;
-    font-weight: 900;
-    line-height: 1.6em;
-
-    @media screen and (min-width: 750px) {
-      padding: 0.7em 1.1em;
-      font-size: 1.2em;
-    }
   }
 
   &__image-wrapper {
@@ -281,6 +284,76 @@ $category-boxes-gap: 1em;
           }
         }
       }
+    }
+  }
+}
+
+.landing-footer {
+  margin: 6em -8px 0;
+  padding: 4em 8px 3em;
+  background-color: $primary;
+
+  &__content {
+    max-width: $large-width;
+    margin-right: auto;
+    margin-left: auto;
+  }
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: $secondary;
+
+    // color: $primary-very-low;
+    // color: $primary-low;
+    // color: $primary-low-mid;
+    // color: $primary-medium;
+    // color: $primary-high;
+    // color: $primary-very-high;
+  }
+
+  &__top-left {
+  }
+
+  &__title {
+    @extend .landing-block__title;
+    @extend .landing-block__blue-dot;
+  }
+
+  &__text {
+    @extend .landing-block__text;
+    padding-left: 1.3em;
+  }
+
+  &__link {
+    @extend .landing-block__link;
+  }
+
+  &__line {
+    margin: 3em 0;
+    width: 100%;
+    height: 1px;
+    background-color: $primary-very-high;
+  }
+
+  &__bottom {
+    display: flex;
+    justify-content: space-between;
+    color: $primary-medium;
+  }
+
+  &__logo {
+  }
+
+  &__icons {
+    display: flex;
+    color: $primary-medium;
+  }
+
+  &__icon {
+    &:not(:first-child) {
+      margin-left: 1em;
     }
   }
 }
