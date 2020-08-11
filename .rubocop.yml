@@ -1,0 +1,4 @@
+DiscourseCops/NoURIEscapeEncode:
+  Enabled: true
+  Exclude:
+    - "plugins/communitarian/*"
