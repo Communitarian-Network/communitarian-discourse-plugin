@@ -33,12 +33,12 @@ export default {
         opts.destinationCategoryId = topic.get("destination_category_id");
       }
 
-      // Cancel and reopen the composer for the first post
-      if (editingFirst) {
-        composer.cancelComposer().then(() => composer.open(opts));
-      } else if (post.pollsObject != null) {
+      if (post.polls && post.polls.length > 0) {
         let controller = showModal("resolution-ui-builder");
         controller._setupPoll(post.id);
+      } else if (editingFirst) {
+        // Cancel and reopen the composer for the first post
+        composer.cancelComposer().then(() => composer.open(opts));
       } else {
         composer.open(opts);
       }
