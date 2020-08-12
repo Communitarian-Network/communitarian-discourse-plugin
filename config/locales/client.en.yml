@@ -28,3 +28,8 @@ en:
     user:
       name:
         instructions: Your full name
+    login:
+      linkedin:
+        name: LinkedIn
+        title: with LinkedIn
+        message: Log in via LinkedIn
