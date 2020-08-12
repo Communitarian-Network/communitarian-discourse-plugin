@@ -1,4 +1,5 @@
-DiscourseCops/NoURIEscapeEncode:
-  Enabled: true
-  Exclude:
-    - "plugins/communitarian/*"
+inherit_gem:
+  rubocop-discourse: default.yml
+
+Discourse/NoURIEscapeEncode:
+  Enabled: false
