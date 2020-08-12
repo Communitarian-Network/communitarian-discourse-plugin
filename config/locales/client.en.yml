@@ -32,3 +32,5 @@ en:
     user:
       name:
         instructions: Your full name
+    sign_up: Join the Conversation
+    log_in: Sign in
