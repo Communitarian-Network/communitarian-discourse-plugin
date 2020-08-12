@@ -22,6 +22,7 @@ register_asset "stylesheets/common/landing.scss"
 PLUGIN_NAME ||= "communitarian"
 
 load File.expand_path("lib/communitarian/engine.rb", __dir__)
+load File.expand_path("lib/communitarian/stripe.rb", __dir__)
 
 after_initialize do
   [

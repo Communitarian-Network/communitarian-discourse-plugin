@@ -44,7 +44,7 @@ function initializeCommunitarian(api) {
 }
 
 function _createAccount(data, self) {
-  return ajax("/communitarian/users/new", { type: "GET", data: data})
+  return ajax("/communitarian/users/new", { type: "GET", data: data })
     .then(response => {
       _createVerificationIntent(data, self);
     })
