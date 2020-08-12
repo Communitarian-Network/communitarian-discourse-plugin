@@ -207,7 +207,7 @@ export default Controller.extend({
         composer_open_duration_msecs: totalOpenDuration
       }
     }).then(_ => {
-      closeModal
+      $(".modal-header button.modal-close").click();
     }).catch(error => {
       this.set("loading", false);
       if (error) {
