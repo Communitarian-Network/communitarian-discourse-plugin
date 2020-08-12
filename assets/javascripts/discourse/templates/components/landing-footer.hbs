@@ -17,11 +17,17 @@
     <div class="landing-footer__line"></div>
 
     <div class="landing-footer__bottom">
-      <div class="landing-footer__logo">{{logoUrl}}</div>
+      <img src={{siteSettings.site_logo_url}} class="landing-footer__logo" />
       <div class="landing-footer__icons">
-        <div class="landing-footer__icon">instagram</div>
-        <div class="landing-footer__icon">facebook</div>
-        <div class="landing-footer__icon">twitter</div>
+        {{#link-to "home" class="landing-footer__icon--instagram"}}
+          {{d-icon "fab-instagram"}}
+        {{/link-to}}
+        {{#link-to "home" class="landing-footer__icon--facebook"}}
+          {{d-icon "fab-facebook-square"}}
+        {{/link-to}}
+        {{#link-to "home" class="landing-footer__icon--twitter"}}
+          {{d-icon "fab-twitter"}}
+        {{/link-to}}
       </div>
     </div>
   </div>

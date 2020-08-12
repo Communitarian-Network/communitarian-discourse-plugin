@@ -24,8 +24,6 @@ function initializeCommunitarian(api) {
       return categories;
     },
   });
-
-  api.modifyClass("controller:navigation/categories", isHomePageField);
 }
 
 export default {
@@ -33,7 +31,7 @@ export default {
 
   initialize(container) {
     withPluginApi("0.8.31", initializeCommunitarian);
-    const currentUser = container.lookup('current-user:main');
-    if (!currentUser || !currentUser.homepage_id) setDefaultHomepage('home');
-  }
+    const currentUser = container.lookup("current-user:main");
+    if (!currentUser || !currentUser.homepage_id) setDefaultHomepage("home");
+  },
 };
