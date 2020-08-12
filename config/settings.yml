@@ -29,3 +29,6 @@ plugins:
   post_delay:
     default: 300
     client: true
+  landing_categories_length:
+    default: 4
+    client: true
