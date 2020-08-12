@@ -1,5 +1,10 @@
-{{#d-section bodyClass="noscroll-x"}}
+{{#d-section bodyClass="noscroll-x" class="homepage"}}
   {{landing-explore}}
   {{landing-communities-header}}
+  {{#discovery-categories refresh=(action "refresh")}}
+    {{component categoryPageStyle
+                categories=limitedCategories
+                latestTopicOnly=false}}
+  {{/discovery-categories}}
   {{landing-footer}}
 {{/d-section}}

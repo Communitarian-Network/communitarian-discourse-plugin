@@ -64,6 +64,7 @@ $landing-desktop-width: 1000px;
     }
   }
   &__link,
+  &__link:hover,
   &__link:visited {
     display: inline-block;
     padding: 0.5em 0.8em;
@@ -186,7 +187,8 @@ $landing-explore-image-height: 450px;
 
 $category-boxes-gap: 1em;
 
-#list-area {
+#list-area,
+.homepage {
   margin-bottom: 0;
 
   .category-boxes {
@@ -306,7 +308,7 @@ $landing-footer-mobile-width: 650px;
 $landing-footer-padding-side: 8px;
 
 .landing-footer {
-  margin: 6em -10px 0;
+  margin: 6em -8px 0;
   padding: 4em $landing-footer-padding-side 3em;
   background-color: $primary;
 
