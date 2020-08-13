@@ -3,5 +3,9 @@
 require_dependency "communitarian_constraint"
 
 Communitarian::Engine.routes.draw do
-  post "/resolutions" => "resolutions#create", constraints: CommunitarianConstraint.new
+  constraints CommunitarianConstraint.new do
+    resources :resolutions, only: :create
+    resources :verification_intents, only: %i(create show), as: :communitarin_verification_intents
+    resources :users, only: :new
+  end
 end
