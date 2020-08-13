@@ -21,7 +21,7 @@ module Communitarian
     end
 
     def resolution_params
-      params.permit(:id, :raw, :title, :category, :composer_open_duration_msecs, :typing_duration_msecs)
+      params.permit(:raw, :title, :category, :composer_open_duration_msecs, :typing_duration_msecs)
     end
 
     def default_params
