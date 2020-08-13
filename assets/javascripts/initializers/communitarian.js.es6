@@ -29,7 +29,7 @@ function initializeCommunitarian(api) {
   api.modifyClass("controller:navigation/categories", isHomePageField);
 }
 
-function customizeTopicController(api) {
+function customizeTopicController() {
   TopicController.reopen(ResolutionController);
 }
 

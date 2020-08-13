@@ -76,9 +76,11 @@ export default Controller.extend({
 
   @discourseComputed("pollOptionsCount", "title", "loading")
   disabledButton(pollOptionsCount, title, loading) {
-    return loading ||
-           pollOptionsCount < 1 ||
-           title.length > this.siteSettings.max_topic_title_length;
+    return (
+      loading ||
+      pollOptionsCount < 1 ||
+      title.length > this.siteSettings.max_topic_title_length
+    );
   },
 
   @observes("title", "pollOptions")
@@ -95,7 +97,7 @@ export default Controller.extend({
   },
 
   _setupPoll(postId = null) {
-    if (postId == null) {
+    if (postId === null) {
       let slug = window.location.pathname.match(/c\/.*\/(.*)$/);
       this.setProperties({
         postId: null,
@@ -118,14 +120,17 @@ export default Controller.extend({
           pollOptions: this._parseOptionsFromRaw(post.raw),
           category: post.topic.category_id,
           title: post.topic.title
-        })
+        });
       });
     }
-    this.set("buttonLabel", `communitarian.resolution.ui_builder.${this.action}`);
+    this.set(
+      "buttonLabel",
+      `communitarian.resolution.ui_builder.${this.action}`
+    );
   },
 
   _parseOptionsFromRaw(postRaw) {
-    let options = postRaw.match(/\[.+\]\n((\*\s.+\n)+)\[.+\]/)[1].split("\n");
+    const options = postRaw.match(/\[.+\]\n((\*\s.+\n)+)\[.+\]/)[1].split("\n");
     return options
       .filter(s => s !== "")
       .map(s => s.substring(2))
@@ -136,8 +141,11 @@ export default Controller.extend({
   _autoCloseReminderText() {
     const closeDate = this._closeDate().format("MMM D, ha");
     const reopenDelay = this.siteSettings.communitarian_resolutions_reopen_delay;
-    if (reopenDelay == 0) {
-      return I18n.t("communitarian.resolution.ui_builder.auto_close_and_reopen_reminder", { close_date: closeDate });
+    if (reopenDelay === 0) {
+      return I18n.t(
+        "communitarian.resolution.ui_builder.auto_close_and_reopen_reminder",
+        { close_date: closeDate }
+      );
     } else {
       return I18n.t(
         "communitarian.resolution.ui_builder.auto_close_and_reopen_with_delay_reminder",
@@ -149,7 +157,9 @@ export default Controller.extend({
   _closeDate() {
     const closeHour = this.siteSettings.communitarian_resolutions_close_hour;
     const closeWeekDay = this.siteSettings.communitarian_resolutions_close_week_day;
-    const closeDate = moment.tz("America/New_York").set({ hours: closeHour, minutes: 0, seconds: 0, millisecond: 0 });
+    const closeDate = moment
+      .tz("America/New_York")
+      .set({ hours: closeHour, minutes: 0, seconds: 0, millisecond: 0 });
     const currentWeekday = this.weekdays[closeDate.weekday()];
     const closeOnNextWeek = () => this.weekdays.indexOf(currentWeekday) >= this.weekdays.indexOf(closeWeekDay);
 
@@ -169,7 +179,7 @@ export default Controller.extend({
         if (option.length !== 0) output += `* ${option}\n`;
       });
       if (this.siteSettings.communitarian_resolutions_close) {
-        output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`
+        output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`;
       }
     }
 
@@ -207,7 +217,7 @@ export default Controller.extend({
         typing_duration_msecs: this.typingTime,
         composer_open_duration_msecs: totalOpenDuration
       }
-    }).then(_ => {
+    }).then(() => {
       this._setupPoll();
       $(".modal-header button.modal-close").click();
     }).catch(error => {

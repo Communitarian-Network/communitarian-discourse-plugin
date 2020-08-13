@@ -1,5 +1,6 @@
 import Composer from "discourse/models/composer";
 import showModal from "discourse/lib/show-modal";
+import I18n from "I18n";
 
 export default {
   actions: {
@@ -11,22 +12,23 @@ export default {
       }
 
       const composer = this.composer;
-      let topic = this.model;
+      const topic = this.model;
       const composerModel = composer.get("model");
-      let editingFirst = composerModel &&
-        (post.get("firstPost") || composerModel.get("editingFirstPost"));
+      const editingFirst =
+        post.get("firstPost") ||
+        (composerModel && composerModel.get("editingFirstPost"));
 
-      let editingSharedDraft = false;
-      let draftsCategoryId = this.get("site.shared_drafts_category_id");
-      if (draftsCategoryId && draftsCategoryId === topic.get("category.id")) {
-        editingSharedDraft = post.get("firstPost");
-      }
+      const draftsCategoryId = this.get("site.shared_drafts_category_id");
+      const editingSharedDraft =
+        draftsCategoryId === topic.get("category.id")
+          ? post.get("firstPost")
+          : null;
 
       const opts = {
         post,
         action: editingSharedDraft ? Composer.EDIT_SHARED_DRAFT : Composer.EDIT,
         draftKey: post.get("topic.draft_key"),
-        draftSequence: post.get("topic.draft_sequence")
+        draftSequence: post.get("topic.draft_sequence"),
       };
 
       if (editingSharedDraft) {
@@ -43,5 +45,5 @@ export default {
         composer.open(opts);
       }
     },
-  }
+  },
 };
