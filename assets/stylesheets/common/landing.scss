@@ -187,6 +187,12 @@ $landing-explore-image-height: 450px;
 
 $category-boxes-gap: 1em;
 
+.homepage {
+  .category-boxes {
+    margin-top: 3em;
+  }
+}
+
 #list-area,
 .homepage {
   margin-bottom: 0;
@@ -195,7 +201,6 @@ $category-boxes-gap: 1em;
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
-    margin-top: 0;
 
     .category-box {
       flex: 0 1 100%;
@@ -254,6 +259,7 @@ $category-boxes-gap: 1em;
         .logo {
           flex: 1;
           border-radius: 50%;
+          overflow: hidden;
 
           img {
             width: 100%;
