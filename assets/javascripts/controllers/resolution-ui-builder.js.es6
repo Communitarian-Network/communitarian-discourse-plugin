@@ -98,6 +98,7 @@ export default Controller.extend({
     if (postId == null) {
       let slug = window.location.pathname.match(/c\/.*\/(.*)$/);
       this.setProperties({
+        postId: null,
         action: "create",
         title: "",
         pollOptions: "",
@@ -198,15 +199,16 @@ export default Controller.extend({
   },
 
   updateResolution(totalOpenDuration) {
-    return ajax(`/communitarian/resolutions/${this.postId}`, {
+    return ajax(`/posts/${this.postId}`, {
       type: "PATCH",
       data: {
         title: this.title,
-        raw: this.pollOutput,
+        post: { raw: this.pollOutput },
         typing_duration_msecs: this.typingTime,
         composer_open_duration_msecs: totalOpenDuration
       }
     }).then(_ => {
+      this._setupPoll();
       $(".modal-header button.modal-close").click();
     }).catch(error => {
       this.set("loading", false);
