@@ -41,3 +41,6 @@ plugins:
   linkedin_secret:
     client: false
     default: ""
+  communitarian_stripe_secret_key:
+    default: ""
+    secret: true
