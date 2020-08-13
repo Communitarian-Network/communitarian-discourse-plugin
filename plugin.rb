@@ -7,7 +7,6 @@
 # url: https://github.com/fs/communitarian-discourse-plugin
 
 gem "omniauth-linkedin-oauth2", "1.0.0"
-require "auth/oauth2_authenticator"
 
 %i[
   communitarian_enabled
@@ -24,6 +23,7 @@ register_svg_icon "fab-linkedin-in" if respond_to?(:register_svg_icon)
 PLUGIN_NAME ||= "communitarian"
 
 load File.expand_path("lib/communitarian/engine.rb", __dir__)
+load File.expand_path("lib/auth/linkedin_authenticator.rb", __dir__)
 
 after_initialize do
   [
@@ -50,46 +50,10 @@ after_initialize do
   end
 end
 
-class LinkedInAuthenticator < ::Auth::OAuth2Authenticator
-  PLUGIN_NAME = 'oauth-linkedin'
-
-  def name
-    'linkedin'
-  end
-
-  def after_authenticate(auth_token)
-    result = super
-
-    if result.user && result.email && (result.user.email != result.email)
-      begin
-        result.user.primary_email.update!(email: result.email)
-      rescue
-        used_by = User.find_by_email(result.email)&.username
-        Rails.logger.warn("FAILED to update email for #{user.username} to #{result.email} cause it is in use by #{used_by}")
-      end
-    end
-
-    result
-  end
-
-  def register_middleware(omniauth)
-    omniauth.provider :linkedin,
-                      setup: lambda { |env|
-                        strategy = env['omniauth.strategy']
-                        strategy.options[:client_id] = SiteSetting.linkedin_client_id
-                        strategy.options[:client_secret] = SiteSetting.linkedin_secret
-                      }
-  end
-
-  def enabled?
-    SiteSetting.linkedin_enabled
-  end
-end
-
 auth_provider frame_width: 920,
               frame_height: 800,
               icon: "fab-linkedin-in",
-              authenticator: LinkedInAuthenticator.new(
+              authenticator: Auth::LinkedinAuthenticator.new(
                 "linkedin",
                 trusted: true,
                 auto_create_account: true
