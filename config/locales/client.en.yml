@@ -19,6 +19,8 @@ en:
             close_option: Close the poll
         error_while_creating: Sorry, there was an error creating the resolution.
         error_while_updating: Sorry, there was an error updating the resolution.
+      verification:
+        error_while_creating: Sorry, there was an error in verification process.
       landing:
         explore:
           title: The communitarian platform for civil agreement on the most pressing issues
