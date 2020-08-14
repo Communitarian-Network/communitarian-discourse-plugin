@@ -4,7 +4,9 @@ en:
       resolution:
         new_button: New Resolution
         ui_builder:
-          form_title: New Resolution
+          form_title:
+            new: New Resolution
+            edit: Edit Resolution
           create: Create
           update: Update
           auto_close_and_reopen_reminder: This resolution will be automatically closed at %{close_date} and reopened immediately.

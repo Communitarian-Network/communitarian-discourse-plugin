@@ -110,7 +110,8 @@ export default Controller.extend({
         firstOpenedTimestamp: new Date(),
         category: slug && slug[1],
         autoCloseReminder: this._autoCloseReminderText(),
-        activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
+        activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note"),
+        formTitle: "communitarian.resolution.ui_builder.form_title.new"
       });
     } else {
       this.set("action", "update");
@@ -119,7 +120,8 @@ export default Controller.extend({
           postId: post.id,
           pollOptions: this._parseOptionsFromRaw(post.raw),
           category: post.topic.category_id,
-          title: post.topic.title
+          title: post.topic.title,
+          formTitle: "communitarian.resolution.ui_builder.form_title.edit"
         });
       });
     }
