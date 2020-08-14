@@ -1,5 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
 import discourseComputed from "discourse-common/utils/decorators";
+import { registerUnbound } from "discourse-common/lib/helpers";
 
 const isHomePageField = {
   isHomePage: window.location.pathname === "/",
@@ -25,6 +26,18 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:navigation/categories", isHomePageField);
+
+  registerUnbound('compare', function(v1, operator, v2) {
+    let operators = {
+      '==': (l, r) => l == r,
+      '!=': (l, r) => l != r,
+      '>':  (l, r) => l >  r,
+      '>=': (l, r) => l >= r,
+      '<':  (l, r) => l <  r,
+      '<=': (l, r) => l <= r,
+    };
+    return operators[operator] && operators[operator](v1, v2);
+  });
 }
 
 export default {

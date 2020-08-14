@@ -1,0 +1,11 @@
+{{#if (compare category.notification_level '<=' 2)}}
+  {{set-category-notification-level
+    category=category
+    notificationLevel=3
+  }}
+{{else}}
+  {{set-category-notification-level
+    category=category
+    notificationLevel=1
+  }}
+{{/if}}
