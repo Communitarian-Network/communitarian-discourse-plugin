@@ -1,4 +1,5 @@
 import I18n from "I18n";
+import { inject as service } from "@ember/service";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
@@ -6,8 +7,18 @@ import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
+import discourseComputed from "discourse-common/utils/decorators";
 
 function initializeCommunitarian(api) {
+  api.modifyClass("controller:navigation/categories", {
+    router: service(),
+
+    @discourseComputed("router.currentRoute.localName")
+    isCommunitiesPage(currentRouteName) {
+      return currentRouteName === "categories";
+    },
+  });
+
   api.modifyClass("controller:create-account", {
     performAccountCreation() {
       const data = {

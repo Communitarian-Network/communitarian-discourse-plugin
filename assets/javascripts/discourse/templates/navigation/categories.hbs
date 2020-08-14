@@ -1,10 +1,11 @@
 {{#d-section bodyClass="navigation-categories" class="navigation-container"}}
+  <h1 class="communities-title">Top communities</h1>
   {{d-navigation
     filterType="categories"
     showCategoryAdmin=showCategoryAdmin
     createCategory=(route-action "createCategory")
     reorderCategories=(route-action "reorderCategories")
-    canCreateTopic=canCreateTopic
+    canCreateTopic=false
     hasDraft=draft
-    createTopic=(route-action "createTopic")}}
+    isCommunitiesPage=isCommunitiesPage}}
 {{/d-section}}

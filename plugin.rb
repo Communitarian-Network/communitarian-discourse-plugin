@@ -18,6 +18,7 @@ require "stripe"
 
 register_asset "stylesheets/common/resolution-form.scss"
 register_asset "stylesheets/common/landing.scss"
+register_asset "stylesheets/common/communities-page.scss"
 
 PLUGIN_NAME ||= "communitarian"
 

@@ -1,0 +1,13 @@
+.navigation-categories {
+  .navigation-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    .communities-title {
+      font-size: 2.4em;
+      letter-spacing: 1px;
+      text-transform: capitalize;
+    }
+  }
+}
