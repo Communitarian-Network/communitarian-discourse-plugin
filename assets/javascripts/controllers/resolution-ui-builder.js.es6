@@ -220,6 +220,7 @@ export default Controller.extend({
     }).then(() => {
       this._setupPoll();
       $(".modal-header button.modal-close").click();
+      this.set("loading", false);
     }).catch(error => {
       this.set("loading", false);
       if (error) {
