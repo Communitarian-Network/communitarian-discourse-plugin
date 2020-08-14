@@ -1,6 +1,9 @@
 import I18n from "I18n";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
+import TopicController from "discourse/controllers/topic";
+import ResolutionController from "../controllers/resolution-controller";
+import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
 
@@ -60,6 +63,10 @@ function _createVerificationIntent(data, self) {
     });
 }
 
+function customizeTopicController() {
+  TopicController.reopen(ResolutionController);
+}
+
 export default {
   name: "communitarian",
 
@@ -67,5 +74,6 @@ export default {
     withPluginApi("0.8.31", initializeCommunitarian);
     const currentUser = container.lookup("current-user:main");
     if (!currentUser || !currentUser.homepage_id) setDefaultHomepage("home");
+    withPluginApi("0.8.31", customizeTopicController);
   },
 };

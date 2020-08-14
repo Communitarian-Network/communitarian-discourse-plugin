@@ -76,9 +76,11 @@ export default Controller.extend({
 
   @discourseComputed("pollOptionsCount", "title", "loading")
   disabledButton(pollOptionsCount, title, loading) {
-    return loading ||
-           pollOptionsCount < 1 ||
-           title.length > this.siteSettings.max_topic_title_length;
+    return (
+      loading ||
+      pollOptionsCount < 1 ||
+      title.length > this.siteSettings.max_topic_title_length
+    );
   },
 
   @observes("title", "pollOptions")
@@ -94,25 +96,56 @@ export default Controller.extend({
     );
   },
 
-  _setupPoll() {
-    this.setProperties({
-      title: "",
-      pollOptions: "",
-      titleMaxLength: this.siteSettings.max_topic_title_length,
-      loading: false,
-      typingTime: 0,
-      firstOpenedTimestamp: new Date(),
-      category: window.location.pathname.match(/c\/.*\/(.*)$/)[1],
-      autoCloseReminder: this._autoCloseReminderText(),
-      activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
-    });
+  _setupPoll(postId = null) {
+    if (postId === null) {
+      let slug = window.location.pathname.match(/c\/.*\/(.*)$/);
+      this.setProperties({
+        postId: null,
+        action: "create",
+        title: "",
+        pollOptions: "",
+        titleMaxLength: this.siteSettings.max_topic_title_length,
+        loading: false,
+        typingTime: 0,
+        firstOpenedTimestamp: new Date(),
+        category: slug && slug[1],
+        autoCloseReminder: this._autoCloseReminderText(),
+        activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
+      });
+    } else {
+      this.set("action", "update");
+      this.store.find("post", postId).then((post) => {
+        this.setProperties({
+          postId: post.id,
+          pollOptions: this._parseOptionsFromRaw(post.raw),
+          category: post.topic.category_id,
+          title: post.topic.title
+        });
+      });
+    }
+    this.set(
+      "buttonLabel",
+      `communitarian.resolution.ui_builder.${this.action}`
+    );
+  },
+
+  _parseOptionsFromRaw(postRaw) {
+    const options = postRaw.match(/\[.+\]\n((\*\s.+\n)+)\[.+\]/)[1].split("\n");
+    return options
+      .filter(s => s !== "")
+      .map(s => s.substring(2))
+      .filter(s => s !== I18n.t("communitarian.resolution.ui_builder.poll_options.close_option"))
+      .join("\n");
   },
 
   _autoCloseReminderText() {
     const closeDate = this._closeDate().format("MMM D, ha");
     const reopenDelay = this.siteSettings.communitarian_resolutions_reopen_delay;
-    if (reopenDelay == 0) {
-      return I18n.t("communitarian.resolution.ui_builder.auto_close_and_reopen_reminder", { close_date: closeDate });
+    if (reopenDelay === 0) {
+      return I18n.t(
+        "communitarian.resolution.ui_builder.auto_close_and_reopen_reminder",
+        { close_date: closeDate }
+      );
     } else {
       return I18n.t(
         "communitarian.resolution.ui_builder.auto_close_and_reopen_with_delay_reminder",
@@ -124,7 +157,9 @@ export default Controller.extend({
   _closeDate() {
     const closeHour = this.siteSettings.communitarian_resolutions_close_hour;
     const closeWeekDay = this.siteSettings.communitarian_resolutions_close_week_day;
-    const closeDate = moment.tz("America/New_York").set({ hours: closeHour, minutes: 0, seconds: 0, millisecond: 0 });
+    const closeDate = moment
+      .tz("America/New_York")
+      .set({ hours: closeHour, minutes: 0, seconds: 0, millisecond: 0 });
     const currentWeekday = this.weekdays[closeDate.weekday()];
     const closeOnNextWeek = () => this.weekdays.indexOf(currentWeekday) >= this.weekdays.indexOf(closeWeekDay);
 
@@ -144,15 +179,60 @@ export default Controller.extend({
         if (option.length !== 0) output += `* ${option}\n`;
       });
       if (this.siteSettings.communitarian_resolutions_close) {
-        output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`
+        output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`;
       }
     }
 
     return output;
   },
 
+  createResolution(totalOpenDuration) {
+    return ajax("/communitarian/resolutions", {
+      type: "POST",
+      data: {
+        title: this.title,
+        raw: this.pollOutput,
+        category: this.category,
+        typing_duration_msecs: this.typingTime,
+        composer_open_duration_msecs: totalOpenDuration
+      }
+    }).then(response => {
+      window.location = `/t/topic/${response.post.topic_id}`;
+    }).catch(error => {
+      this.set("loading", false);
+      if (error) {
+        popupAjaxError(error);
+      } else {
+        bootbox.alert(I18n.t("communitarian.resolution.error_while_creating"));
+      }
+    });
+  },
+
+  updateResolution(totalOpenDuration) {
+    return ajax(`/posts/${this.postId}`, {
+      type: "PATCH",
+      data: {
+        title: this.title,
+        post: { raw: this.pollOutput },
+        typing_duration_msecs: this.typingTime,
+        composer_open_duration_msecs: totalOpenDuration
+      }
+    }).then(() => {
+      this._setupPoll();
+      $(".modal-header button.modal-close").click();
+      this.set("loading", false);
+    }).catch(error => {
+      this.set("loading", false);
+      if (error) {
+        popupAjaxError(error);
+      } else {
+        bootbox.alert(I18n.t("communitarian.resolution.error_while_updating"));
+      }
+    });
+  },
+
   actions: {
-    createResolution() {
+    submitResolution() {
       if (this.disabledButton || this.loading) {
         return;
       }
@@ -161,27 +241,11 @@ export default Controller.extend({
 
       this.set("loading", true);
 
-      return ajax("/communitarian/resolutions", {
-        type: "POST",
-        data: {
-          title: this.title,
-          raw: this.pollOutput,
-          category: this.category,
-          typing_duration_msecs: this.typingTime,
-          composer_open_duration_msecs: totalOpenDuration
-        }
-      })
-        .then(response => {
-          window.location = `/t/topic/${response.post.topic_id}`;
-        })
-        .catch(error => {
-          this.set("loading", false);
-          if (error) {
-            popupAjaxError(error);
-          } else {
-            bootbox.alert(I18n.t("communitarian.resolution.error_while_creating"));
-          }
-        });
-    }
+      if (this.action === "create") {
+        return this.createResolution(totalOpenDuration);
+      } else if (this.action === "update") {
+        return this.updateResolution(totalOpenDuration);
+      }
+    },
   }
 });
