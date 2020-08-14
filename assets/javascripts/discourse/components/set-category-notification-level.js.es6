@@ -1,14 +1,11 @@
-import Component from "@ember/component";
 import { ajax } from "discourse/lib/ajax";
 
-export default Component.extend({
-  actions: {
-    clickLeaveCommunityButton() {
-      ajax(`/category/${this.category.id}/notifications`, {
-        type: "POST",
-        data: { notification_level: this.notificationLevel }
-      }).then(_ => {
-        this.category.notification_level = this.notificationLevel;
-      });
-    }
-}});
+export default function setCategoryNotificationLevel(category, notificationLevel) {
+  return ajax(`/category/${category.id}/notifications`, {
+    type: "POST",
+    data: { notification_level: notificationLevel }
+  }).then(response => {
+    category.set("notification_level", notificationLevel);
+    return response;
+  });
+};

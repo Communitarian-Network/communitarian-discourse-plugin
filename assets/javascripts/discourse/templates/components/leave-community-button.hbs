@@ -1,11 +1,9 @@
-{{#if siteSettings.communitarian_enabled}}
-  {{#if category}}
-    {{d-button
-      class=btnClass
-      id="leave-community"
-      action=(action "clickLeaveCommunityButton")
-      disabled=disabled
-      label="communitarian.community.leave.label"
-    }}
-  {{/if}}
-{{/if}}
+{{d-button
+  class=btnClass
+  id="leave-community"
+  action=(action "clickLeaveCommunityButton")
+  category=category
+  notificationLevel=1
+  disabled=disabled
+  label="communitarian.community.leave.label"
+}}

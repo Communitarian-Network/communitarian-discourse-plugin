@@ -1,11 +1,9 @@
-{{#if siteSettings.communitarian_enabled}}
-  {{#if category}}
-    {{d-button
-      class=btnClass
-      id="join-community"
-      action=(action "clickJoinCommunityButton")
-      disabled=disabled
-      label="communitarian.community.join.label"
-    }}
-  {{/if}}
-{{/if}}
+{{d-button
+  class=btnClass
+  id="join-community"
+  action=(action "clickJoinCommunityButton")
+  category=category
+  notificationLevel=3
+  disabled=disabled
+  label="communitarian.community.join.label"
+}}
