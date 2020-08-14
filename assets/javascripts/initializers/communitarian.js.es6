@@ -7,7 +7,6 @@ import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
-import discourseComputed from "discourse-common/utils/decorators";
 
 function initializeCommunitarian(api) {
   api.modifyClass("controller:navigation/categories", {
