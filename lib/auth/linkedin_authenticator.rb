@@ -9,19 +9,6 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
     'linkedin'
   end
 
-  def register_middleware(omniauth)
-    omniauth.provider :linkedin,
-                      setup: lambda { |env|
-                        strategy = env['omniauth.strategy']
-                        strategy.options[:client_id] = SiteSetting.linkedin_client_id
-                        strategy.options[:client_secret] = SiteSetting.linkedin_secret
-                      }
-  end
-
-  def enabled?
-    SiteSetting.linkedin_enabled
-  end
-
   def after_authenticate(auth_token)
     result = Auth::Result.new
 
@@ -30,7 +17,6 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
     data = auth_token[:info]
     result.email = email = data[:email]
     result.name = name = [data[:first_name], data[:last_name]].join(" ")
-    result.username = username = [data[:first_name], data[:last_name], rand(1, 25)].join(".")[0, SiteSetting.max_username_length.to_i || 20]
     oauth2_user_info = Oauth2UserInfo.find_by(uid: oauth2_uid, provider: oauth2_provider)
 
     if !oauth2_user_info && @opts[:trusted] && user = User.find_by_email(email)
@@ -49,6 +35,10 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
       provider: oauth2_provider
     }
 
+    username_max_length = SiteSetting.max_username_length.to_i || 50
+    username_id = result.user ? result.user.id : Time.current.to_i
+    result.username = username = [data[:first_name], data[:last_name], username_id].join(".")[0, username_max_length]
+
     if result.user && email && (result.user.email != email)
       begin
         result.user.primary_email.update!(email: email)
@@ -60,5 +50,18 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
     end
 
     result
+  end
+
+  def register_middleware(omniauth)
+    omniauth.provider :linkedin,
+                      setup: lambda { |env|
+                        strategy = env['omniauth.strategy']
+                        strategy.options[:client_id] = SiteSetting.linkedin_client_id
+                        strategy.options[:client_secret] = SiteSetting.linkedin_secret
+                      }
+  end
+
+  def enabled?
+    SiteSetting.linkedin_enabled
   end
 end
