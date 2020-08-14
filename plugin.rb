@@ -26,9 +26,11 @@ register_svg_icon "fab-linkedin-in" if respond_to?(:register_svg_icon)
 
 PLUGIN_NAME ||= "communitarian"
 
-load File.expand_path("lib/communitarian/engine.rb", __dir__)
-load File.expand_path("lib/auth/linkedin_authenticator.rb", __dir__)
-load File.expand_path("lib/communitarian/stripe.rb", __dir__)
+[
+  "lib/communitarian/engine.rb",
+  "lib/auth/linkedin_authenticator.rb",
+  "lib/communitarian/stripe.rb"
+].each { |path| load File.expand_path(path, __dir__) }
 
 after_initialize do
   [

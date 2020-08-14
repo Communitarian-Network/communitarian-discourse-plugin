@@ -30,7 +30,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
     data = auth_token[:info]
     result.email = email = data[:email]
     result.name = name = [data[:first_name], data[:last_name]].join(" ")
-    result.username = username = [data[:first_name], data[:last_name], Time.current.to_i].join(".")[0, SiteSetting.max_username_length.to_i || 20]
+    result.username = username = [data[:first_name], data[:last_name], rand(1, 25)].join(".")[0, SiteSetting.max_username_length.to_i || 20]
     oauth2_user_info = Oauth2UserInfo.find_by(uid: oauth2_uid, provider: oauth2_provider)
 
     if !oauth2_user_info && @opts[:trusted] && user = User.find_by_email(email)
