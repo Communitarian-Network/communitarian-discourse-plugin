@@ -1,4 +1,6 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
+import TopicController from "discourse/controllers/topic";
+import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
@@ -73,10 +75,15 @@ function _createVerificationIntent(data, self) {
     });
 }
 
+function customizeTopicController() {
+  TopicController.reopen(ResolutionController);
+}
+
 export default {
   name: "communitarian",
 
   initialize() {
     withPluginApi("0.8.31", initializeCommunitarian);
+    withPluginApi("0.8.31", customizeTopicController);
   },
 };
