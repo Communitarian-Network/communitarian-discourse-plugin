@@ -58,6 +58,14 @@ after_initialize do
     Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
       schedule_jobs(post)
   end
+
+  add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
+
+  require 'homepage_constraint'
+  Discourse::Application.routes.prepend do
+    root to: "communitarian/page#index", constraints: HomePageConstraint.new("home")
+    get "/home" => "communitarian/page#index"
+  end
 end
 
 auth_provider frame_width: 920,

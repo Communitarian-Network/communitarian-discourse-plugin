@@ -1,15 +1,10 @@
-{{#d-section bodyClass="noscroll-x navigation-categories" class="navigation-container"}}
-  {{#if isHomePage}}
-    {{landing-explore}}
-    {{landing-communities-header}}
-  {{else}}
-    {{d-navigation
-      filterType="categories"
-      showCategoryAdmin=showCategoryAdmin
-      createCategory=(route-action "createCategory")
-      reorderCategories=(route-action "reorderCategories")
-      canCreateTopic=canCreateTopic
-      hasDraft=draft
-      createTopic=(route-action "createTopic")}}
-  {{/if}}
+{{#d-section bodyClass="navigation-categories" class="navigation-container"}}
+  {{d-navigation
+    filterType="categories"
+    showCategoryAdmin=showCategoryAdmin
+    createCategory=(route-action "createCategory")
+    reorderCategories=(route-action "reorderCategories")
+    canCreateTopic=canCreateTopic
+    hasDraft=draft
+    createTopic=(route-action "createTopic")}}
 {{/d-section}}
