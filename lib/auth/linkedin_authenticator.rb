@@ -35,7 +35,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
       provider: oauth2_provider
     }
 
-    username_max_length = SiteSetting.max_username_length.to_i || 50
+    username_max_length = SiteSetting.max_username_length.to_i
     username_id = result.user ? result.user.id : Time.current.to_i
     result.username = username = [data[:first_name], data[:last_name], username_id].join(".")[0, username_max_length]
 
