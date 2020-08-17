@@ -25,7 +25,6 @@ function initializeCommunitarian(api) {
     },
   });
 
-  api.modifyClass("controller:navigation/categories", isHomePageField);
 
   registerUnbound('compare', function(v1, operator, v2) {
     let operators = {
