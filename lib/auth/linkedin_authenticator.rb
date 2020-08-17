@@ -65,7 +65,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
   def update_email(result, email)
     if email && (result.user.email != email)
       begin
-          result.user.primary_email.update!(email: email)
+        result.user.primary_email.update!(email: email)
       rescue
         used_by = User.find_by_email(email)&.username
         Rails.logger.warn("FAILED to update email for #{user.username} to #{email} cause it is in use by #{used_by}")
@@ -76,7 +76,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
   def update_username(result, username)
     if username && (result.user.username != username)
       begin
-          result.user.username.update!(username: username)
+        result.user.username.update!(username: username)
       rescue
         used_by = User.find_by_username(username)&.username
         Rails.logger.warn("FAILED to update username for #{user.username} to #{username} cause it is in use by #{used_by}")
