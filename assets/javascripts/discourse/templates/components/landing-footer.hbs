@@ -1,0 +1,34 @@
+{{#if siteSettings.communitarian_enabled}}
+  <div class="landing-footer__content">
+    <div class="landing-footer__top">
+      <div class="landing-footer__top-left">
+        <h2 class="landing-footer__title">
+          {{i18n "communitarian.landing.footer.title"}}
+        </h2>
+        <p class="landing-footer__text">
+          {{i18n "communitarian.landing.footer.text"}}
+        </p>
+      </div>
+      {{#link-to "discovery.categories" class="landing-footer__link"}}
+        {{i18n "communitarian.landing.footer.link"}}
+      {{/link-to}}
+    </div>
+
+    <div class="landing-footer__line"></div>
+
+    <div class="landing-footer__bottom">
+      <img src={{siteSettings.site_logo_url}} class="landing-footer__logo" />
+      <div class="landing-footer__icons">
+        {{#link-to "home" class="landing-footer__icon--instagram"}}
+          {{d-icon "fab-instagram"}}
+        {{/link-to}}
+        {{#link-to "home" class="landing-footer__icon--facebook"}}
+          {{d-icon "fab-facebook-square"}}
+        {{/link-to}}
+        {{#link-to "home" class="landing-footer__icon--twitter"}}
+          {{d-icon "fab-twitter"}}
+        {{/link-to}}
+      </div>
+    </div>
+  </div>
+{{/if}}
