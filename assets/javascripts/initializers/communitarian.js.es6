@@ -54,7 +54,6 @@ function initializeCommunitarian(api) {
     },
   });
 
-  api.modifyClass("controller:navigation/categories", isHomePageField);
 
   api.modifyClass("controller:create-account", {
     performAccountCreation() {
