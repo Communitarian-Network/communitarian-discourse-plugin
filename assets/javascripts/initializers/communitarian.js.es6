@@ -18,14 +18,6 @@ function initializeCommunitarian(api) {
     },
   });
 
-  api.modifyClass("component:d-navigation", {
-    actions: {
-      createNewCategory() {
-        this.createCategory();
-      },
-    },
-  });
-
   api.modifyClass("controller:create-account", {
     performAccountCreation() {
       const data = {
