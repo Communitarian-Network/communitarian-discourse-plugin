@@ -28,7 +28,7 @@ function initializeCommunitarian(api) {
 
   registerUnbound('compare', function(v1, operator, v2) {
     let operators = {
-      '==': (l, r) => l == r,
+      '===': (l, r) => l === r,
       '!=': (l, r) => l != r,
       '>':  (l, r) => l >  r,
       '>=': (l, r) => l >= r,
