@@ -33,6 +33,8 @@ en:
           title: Take a look at the discussions
           text: If you're interested, we're waiting for you in our community!
           link: View Active Communities
+      communities:
+        title: Top communities
     user:
       name:
         instructions: Your full name
