@@ -3,12 +3,19 @@
 {{/unless}}
 
 {{#if showCategoryAdmin}}
-  {{categories-admin-dropdown
-    onChange=(action "selectCategoryAdminDropdownAction")
-    options=(hash
-      triggerOnChangeOnTab=false
-    )
-  }}
+  {{#if isCommunitiesPage}}
+    {{d-button
+      class="btn-primary add-category"
+      action=createCategory
+      label="category.create"}}
+  {{else}}
+    {{categories-admin-dropdown
+      onChange=(action "selectCategoryAdminDropdownAction")
+      options=(hash
+        triggerOnChangeOnTab=false
+      )
+    }}
+  {{/if}}
 {{/if}}
 
 {{#unless isCommunitiesPage}}
