@@ -27,7 +27,8 @@ load File.expand_path("lib/communitarian/stripe.rb", __dir__)
 after_initialize do
   [
     "../app/models/communitarian/post_delay",
-    "../app/models/communitarian/resolution"
+    "../app/models/communitarian/resolution",
+    "../app/models/communitarian/unique_username"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
@@ -49,6 +50,10 @@ after_initialize do
   on(:post_created) do |post, _opts|
     Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
       schedule_jobs(post)
+  end
+
+  on(:user_created) do |user|
+    user.update!(username: Communitarian::UniqueUsername.new(user).to_s)
   end
 
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
