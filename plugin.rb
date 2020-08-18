@@ -54,7 +54,7 @@ after_initialize do
 
   on(:user_created) do |user|
     if user.oauth2_user_infos.blank?
-      user.update!(username: Communitarian::UniqueUsername.new(user).to_s)
+      user.update(username: Communitarian::UniqueUsername.new(user).to_s)
     end
   end
 
