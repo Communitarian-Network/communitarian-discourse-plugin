@@ -53,7 +53,9 @@ after_initialize do
   end
 
   on(:user_created) do |user|
-    user.update!(username: Communitarian::UniqueUsername.new(user).to_s)
+    if user.oauth2_user_infos.blank?
+      user.update!(username: Communitarian::UniqueUsername.new(user).to_s)
+    end
   end
 
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
