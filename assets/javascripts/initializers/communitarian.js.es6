@@ -8,6 +8,7 @@ import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
+import { gt } from "@ember/object/computed";
 
 function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
@@ -29,6 +30,34 @@ function initializeCommunitarian(api) {
     isCommunitiesPage(currentRouteName) {
       return currentRouteName === "categories";
     },
+  });
+
+  api.modifyClass("controller:discovery:topics", {
+    hasDialogs: gt("model.dialogs.length", 0)
+  });
+
+  api.modifyClassStatic("model:topic-list", {
+    munge(json, store) {
+      json.inserted = json.inserted || [];
+      json.can_create_topic = json.topic_list.can_create_topic;
+      json.more_topics_url = json.topic_list.more_topics_url;
+      json.draft_key = json.topic_list.draft_key;
+      json.draft_sequence = json.topic_list.draft_sequence;
+      json.draft = json.topic_list.draft;
+      json.for_period = json.topic_list.for_period;
+      json.loaded = true;
+      json.per_page = json.topic_list.per_page;
+      json.topics = this.topicsFrom(store, json);
+      json.dialogs = this.topicsFrom(store, json, { listKey: "dialogs" });
+
+      if (json.topic_list.shared_drafts) {
+        json.sharedDrafts = this.topicsFrom(store, json, {
+          listKey: "shared_drafts"
+        });
+      }
+
+      return json;
+      },
   });
 
   api.modifyClass("controller:create-account", {

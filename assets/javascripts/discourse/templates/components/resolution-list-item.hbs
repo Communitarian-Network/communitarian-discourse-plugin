@@ -1,0 +1,19 @@
+<div class="resolution-item" style="border:solid;margin:20px;padding-left:20px;">
+  <div>
+    <p>Weekly Pool on {{formattedActionPeriod}}</p>
+    <p style="text-align:right;margin-right:20px;">Votes {{openedPoll.voters}}</p>
+  </div>
+  <p><strong>{{~topic-link resolution class="raw-link raw-topic-link"}}</strong></p>
+  <ul>
+    {{#each openedPoll.options as |poll_option|}}
+      <li style="list-style:none;">
+        <svg class="fa d-icon d-icon-far-circle svg-icon svg-node" aria-hidden="true">
+          <svg id="far-circle" viewBox="0 0 512 512">
+            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"></path>
+          </svg>
+        </svg>
+        {{poll_option.html}}
+      </li>
+    {{/each}}
+  </ul>
+</div>

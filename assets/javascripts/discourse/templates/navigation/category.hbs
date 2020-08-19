@@ -1,0 +1,34 @@
+{{#d-section class="navigation-container"}}
+  {{add-category-tag-classes category=category}}
+
+  <section class="category-heading">
+    <div style="display:flex;">
+      <h2><strong>{{category.name}}</strong></h2>
+      {{community-action category=category}}
+    </div>
+    {{#if category.uploaded_logo.url}}
+      {{cdn-img
+        src=category.uploaded_logo.url
+        class="category-logo"
+        width=category.uploaded_logo.width
+        height=category.uploaded_logo.height}}
+    {{/if}}
+    {{#if category.description}}
+      <span>{{dir-span category.description}}</span>
+    {{/if}}
+  </section>
+
+  <div class="category-navigation">
+    {{d-navigation
+      category=category
+      filterMode=filterMode
+      noSubcategories=noSubcategories
+      canCreateTopic=canCreateTopic
+      createTopic=(route-action "createTopic")
+      createTopicDisabled=cannotCreateTopicOnCategory
+      hasDraft=draft
+      editCategory=(route-action "editCategory" category)}}
+
+    {{plugin-outlet name="category-navigation" args=(hash category=category)}}
+  </div>
+{{/d-section}}

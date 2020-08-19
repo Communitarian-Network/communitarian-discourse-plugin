@@ -1,0 +1,16 @@
+<div style="display:flex;" class="community-details">
+  <div style="width:70%;" class="resolutions-list">
+    {{#each resolutions as |resolution|}}
+      {{resolution-list-item resolution=resolution}}
+    {{/each}}
+  </div>
+  <div style="width:30%;" class="ongoing-dialogs-list">
+    <div>
+      <span style="color:gray;">Ongoing Dialogs</span>
+      <a href="#">View All</a>
+    </div>
+    {{#each dialogs as |dialog|}}
+      {{ongoing-dialog-list-item dialog=dialog}}
+    {{/each}}
+  </div>
+</div>

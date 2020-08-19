@@ -1,7 +1,3 @@
-{{#unless isCommunitiesPage}}
-  {{bread-crumbs categories=categories category=category noSubcategories=noSubcategories}}
-{{/unless}}
-
 {{#if showCategoryAdmin}}
   {{#if isCommunitiesPage}}
     {{d-button
@@ -16,18 +12,6 @@
       )
     }}
   {{/if}}
-{{/if}}
-
-{{#unless isCommunitiesPage}}
-  {{navigation-bar navItems=navItems filterMode=filterMode category=category}}
-{{/unless}}
-
-{{#if showCategoryNotifications}}
-  {{category-notifications-button
-    value=category.notification_level
-    category=category
-    onChange=(action "changeCategoryNotificationLevel")
-  }}
 {{/if}}
 
 {{#unless isCommunitiesPage}}

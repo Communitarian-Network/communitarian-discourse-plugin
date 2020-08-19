@@ -11,3 +11,4 @@ en:
     communitarian_resolutions_reopen_delay: Delay(in hours) between closing and reopening resolutions
     communitarian_stripe_secret_key: "Stripe secret key. NOTE: don't forgot to restart the app after the change"
     post_delay: Minimal time in seconds before user can publish again to a dialog
+    landing_categories_length: Amount of category items on home page

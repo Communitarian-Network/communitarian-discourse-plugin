@@ -1,0 +1,6 @@
+<div class="dialog-item" style="border:solid;margin:0px 0px 20px 0px;">
+  <p><strong>{{~topic-link dialog class="raw-link raw-topic-link"}}</strong></p>
+  <p style="color:gray;">{{formattedCreationDate}}</p>
+  {{raw "list/posters-column" posters=dialog.featuredUsers}}
+  {{raw "list/posts-count-column" topic=dialog}}
+</div>
