@@ -45,7 +45,7 @@ module Communitarian
 
       user ||= User.new
       user.attributes = new_user_params
-      user.username = "user.#{SecureRandom.hex(7)}"
+      user.username = "user.#{Time.current.to_i}"
 
       # Handle API approval and
       # auto approve users based on auto_approve_email_domains setting
