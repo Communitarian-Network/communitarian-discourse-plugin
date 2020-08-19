@@ -18,9 +18,12 @@ require "stripe"
   linkedin_enabled
 ].each { |setting| enabled_site_setting setting }
 
-register_asset "stylesheets/common/resolution-form.scss"
-register_asset "stylesheets/common/landing.scss"
-register_asset "stylesheets/linkedin-login.scss"
+[
+  "stylesheets/common/resolution-form.scss",
+  "stylesheets/common/landing.scss",
+  "stylesheets/common/communities-page.scss",
+  "stylesheets/linkedin-login.scss"
+].each { |file| register_asset file }
 
 register_svg_icon "fab-linkedin-in" if respond_to?(:register_svg_icon)
 
