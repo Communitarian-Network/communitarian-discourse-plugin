@@ -110,7 +110,7 @@ export default Controller.extend({
         firstOpenedTimestamp: new Date(),
         category: slug && slug[1],
         autoCloseReminder: this._autoCloseReminderText(),
-        activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_perion_note")
+        activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_period_note")
       });
     } else {
       this.set("action", "update");
