@@ -12,8 +12,8 @@ module Communitarian
     def to_s
       @username ||= name && ActiveSupport::Inflector.transliterate(name)
         .downcase
-        .gsub(/\W/, ".")
-        .+(".#{id}")
+        .+(".#{id}").gsub(/-+/, "0")
+        .gsub(/\W+/, ".")
     end
   end
 end
