@@ -11,7 +11,7 @@ en:
           update: Update
           auto_close_and_reopen_reminder: This resolution will be automatically closed at %{close_date} and reopened immediately.
           auto_close_and_reopen_with_delay_reminder: This resolution will be automatically closed at %{close_date} and reopened in %{delay} hour(s).
-          active_perion_note: Resolution active during 1 week after reopening.
+          active_period_note: Resolution active during 1 week after reopening.
           title:
             label: Resolution title
           help:
