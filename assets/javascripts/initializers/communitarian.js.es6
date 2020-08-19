@@ -10,7 +10,10 @@ import { extractError } from "discourse/lib/ajax-error";
 function initializeCommunitarian(api) {
   api.modifyClass("controller:create-account", {
     performAccountCreation() {
-      return this._super(...arguments) if(this.get("authOptions.email") == this.accountEmail);
+      if (this.get("authOptions.email") == this.accountEmail) {
+        return this._super(...arguments);
+      }
+
       const data = {
         name: this.accountName,
         email: this.accountEmail,
