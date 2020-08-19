@@ -1,4 +1,5 @@
 import I18n from "I18n";
+import { inject as service } from "@ember/service";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
@@ -19,6 +20,15 @@ function initializeCommunitarian(api) {
       '<=': (l, r) => l <= r,
     };
     return operators[operator] && operators[operator](v1, v2);
+  });
+
+  api.modifyClass("controller:navigation/categories", {
+    router: service(),
+
+    @discourseComputed("router.currentRoute.localName")
+    isCommunitiesPage(currentRouteName) {
+      return currentRouteName === "categories";
+    },
   });
 
   api.modifyClass("controller:create-account", {
