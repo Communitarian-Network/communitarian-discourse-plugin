@@ -1,35 +1,38 @@
 <div class="resolution-form">
   {{#d-modal-body title=formTitle class="poll-ui-builder"}}
     <form class="poll-ui-builder-form form-horizontal" {{action "submitResolution" on="submit"}}>
-      <div class="options">
-        <div class="input-group poll-textarea">
-          <label>{{i18n "communitarian.resolution.ui_builder.title.label"}}</label>
-          {{text-field value=title
-             tabindex="2"
-             id="resolution-title"
-             maxLength=titleMaxLength
-             class="resolution-form-title"
-             aria-label=(I18n "communitarian.resolution.ui_builder.title.label")
-             autocomplete="discourse"}}
-        </div>
-        {{input-tip validation=titleMaxLengthValidation}}
+      <div class="input-group poll-textarea">
+        <label>{{i18n "communitarian.resolution.ui_builder.title.label"}}</label>
+        {{text-field value=title
+          tabindex="2"
+          id="resolution-title"
+          maxLength=titleMaxLength
+          class="resolution-form-title"
+          aria-label=(I18n "communitarian.resolution.ui_builder.title.label")
+          autocomplete="discourse"}}
+      </div>
+      {{input-tip validation=titleMaxLengthValidation}}
 
-        <div class="input-group poll-textarea">
-          <label>{{i18n "communitarian.resolution.ui_builder.poll_options.label"}}</label>
-          {{textarea value=pollOptions autocomplete="discourse"}}
+      <div class="body-content">
+        <div class="options">
+          <div class="input-group poll-textarea">
+            <label>{{i18n "communitarian.resolution.ui_builder.poll_options.label"}}</label>
+            {{textarea value=pollOptions autocomplete="discourse"}}
+          </div>
+          {{input-tip validation=minNumOfOptionsValidation}}
         </div>
-        {{input-tip validation=minNumOfOptionsValidation}}
+
+        <div class="d-editor-preview resolution-form-preview">
+          {{cook-text this.previewText}}
+        </div>
       </div>
 
-      <div class="d-editor-preview resolution-form-preview">
-        {{cook-text this.previewText}}
-      </div>
     </form>
   {{/d-modal-body}}
 
   <div class="modal-footer">
     <div class="resolution-modal-footer-buttons">
-      {{d-button action=(action "submitResolution") icon="chart-bar" class="btn-primary" label=buttonLabel disabled=disabledButton}}
+      {{d-button action=(action "submitResolution") class="btn-primary" label=buttonLabel disabled=disabledButton}}
     </div>
     <div class="resolution-modal-footer-reminder">
       <p>{{autoCloseReminder}} {{activePeriodNote}}</p>
