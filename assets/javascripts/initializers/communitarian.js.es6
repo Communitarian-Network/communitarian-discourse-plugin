@@ -9,22 +9,6 @@ import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
 
 function initializeCommunitarian(api) {
-  api.modifyClass("controller:discovery/categories", {
-    isHomePage: isHomePageField.isHomePage,
-
-    @discourseComputed(
-      "model.categories",
-      "siteSettings.landing_categories_length"
-    )
-    limitedCategories(categories, length) {
-      this.set(
-        "model.categories.content",
-        categories.content.slice(0, length || 4)
-      );
-      return categories;
-    },
-  });
-
   registerUnbound('compare', function(v1, operator, v2) {
     let operators = {
       '===': (l, r) => l === r,
