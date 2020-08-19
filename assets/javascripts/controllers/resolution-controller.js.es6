@@ -4,7 +4,7 @@ import I18n from "I18n";
 
 export default {
   actions: {
-    // Copied from discourse/app/assets/javascripts/discourse/app/controllers/topic.js:621
+    // Modification of discourse/app/assets/javascripts/discourse/app/controllers/topic.js:621
     editPost(post) {
       if (!this.currentUser) {
         return bootbox.alert(I18n.t("post.controls.edit_anonymous"));
@@ -36,6 +36,7 @@ export default {
         opts.destinationCategoryId = topic.get("destination_category_id");
       }
 
+      // Next 2 lines is the modification for editing resolutions with custom modal
       if (post.polls && post.polls.length > 0) {
         showModal("resolution-ui-builder")._setupPoll(post.id);
       } else if (editingFirst) {
