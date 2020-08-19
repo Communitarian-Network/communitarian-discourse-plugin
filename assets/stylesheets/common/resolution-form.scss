@@ -1,17 +1,21 @@
 .resolution-form {
   .modal-body {
-    padding: 2em 2em 3em;
+    padding: 1.5em 2em 2.5em;
 
     .poll-ui-builder-form {
       display: block;
+
+      label {
+        font-weight: normal;
+      }
     }
 
     .body-content {
       display: flex;
     }
 
-    .poll-textarea {
-      font-size: 1.1em;
+    .options .poll-textarea label {
+      font-weight: bold;
     }
 
     .resolution-form-title {
@@ -27,7 +31,7 @@
 
       p {
         margin-bottom: 0;
-        font-size: 1.3em;
+        font-size: 1.2em;
         line-height: 1.2em;
       }
 
@@ -38,7 +42,6 @@
         .poll-container {
           padding: 0;
           border-right: 0;
-          font-size: 1.1em;
 
           li[data-poll-option-id] {
             padding-bottom: 0;
