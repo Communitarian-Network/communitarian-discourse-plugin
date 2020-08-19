@@ -33,6 +33,11 @@ en:
           title: Take a look at the discussions
           text: If you're interested, we're waiting for you in our community!
           link: View Active Communities
+      community:
+        join:
+          label: Join this community
+        leave:
+          label: Leave this community
       communities:
         title: Top communities
     user:

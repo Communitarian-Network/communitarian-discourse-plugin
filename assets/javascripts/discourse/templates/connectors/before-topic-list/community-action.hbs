@@ -1,0 +1,9 @@
+{{#if siteSettings.communitarian_enabled}}
+  {{#if category}}
+    {{#if (compare category.notification_level '<=' 2)}}
+      {{join-community-button category=category}}
+    {{else}}
+      {{leave-community-button category=category}}
+    {{/if}}
+  {{/if}}
+{{/if}}

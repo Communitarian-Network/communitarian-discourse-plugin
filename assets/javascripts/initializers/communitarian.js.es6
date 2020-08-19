@@ -5,10 +5,23 @@ import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
 import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
+import { registerUnbound } from "discourse-common/lib/helpers";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
 
 function initializeCommunitarian(api) {
+  registerUnbound('compare', function(v1, operator, v2) {
+    let operators = {
+      '===': (l, r) => l === r,
+      '!=': (l, r) => l != r,
+      '>':  (l, r) => l >  r,
+      '>=': (l, r) => l >= r,
+      '<':  (l, r) => l <  r,
+      '<=': (l, r) => l <= r,
+    };
+    return operators[operator] && operators[operator](v1, v2);
+  });
+
   api.modifyClass("controller:navigation/categories", {
     router: service(),
 

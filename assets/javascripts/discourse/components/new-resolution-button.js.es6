@@ -6,4 +6,5 @@ export default Component.extend({
     clickCreateResolutionButton() {
       showModal("resolution-ui-builder");
     }
-}});
+  }
+});
