@@ -4,7 +4,7 @@ import Component from "@ember/component";
 export default Component.extend({
   actions: {
     clickCreateResolutionButton() {
-      showModal("resolution-ui-builder");
+      showModal("resolution-ui-builder")._setupPoll();
     }
   }
 });
