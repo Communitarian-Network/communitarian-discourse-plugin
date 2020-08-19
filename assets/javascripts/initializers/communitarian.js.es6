@@ -8,25 +8,21 @@ import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
 
 function initializeCommunitarian(api) {
-  console.log(api);
   api.modifyClass("controller:create-account", {
     performAccountCreation() {
-      if (_.isEmpty(this.get("authOptions"))) {
-        const data = {
-          name: this.accountName,
-          email: this.accountEmail,
-          password: this.accountPassword,
-          username: this.accountUsername,
-          password_confirmation: this.accountHoneypot,
-          challenge: this.accountChallenge,
-          user_fields: this.userFields,
-        };
+      return this._super(...arguments) if(this.get("authOptions.email") == this.accountEmail);
+      const data = {
+        name: this.accountName,
+        email: this.accountEmail,
+        password: this.accountPassword,
+        username: this.accountUsername,
+        password_confirmation: this.accountHoneypot,
+        challenge: this.accountChallenge,
+        user_fields: this.userFields,
+      };
 
-        this.set("formSubmitted", true);
-        _createAccount(data, this);
-      } else {
-        this._super();
-      }
+      this.set("formSubmitted", true);
+      _createAccount(data, this);
     },
   });
 }
