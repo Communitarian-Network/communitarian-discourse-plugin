@@ -16,9 +16,11 @@ require "stripe"
   post_delay
 ].each { |setting| enabled_site_setting setting }
 
-register_asset "stylesheets/common/resolution-form.scss"
-register_asset "stylesheets/common/landing.scss"
-register_asset "stylesheets/common/communities-page.scss"
+[
+  "stylesheets/common/resolution-form.scss",
+  "stylesheets/common/landing.scss",
+  "stylesheets/common/communities-page.scss"
+].each { |file| register_asset file }
 
 PLUGIN_NAME ||= "communitarian"
 
