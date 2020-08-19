@@ -19,7 +19,8 @@ require "stripe"
 [
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
-  "stylesheets/common/communities-page.scss"
+  "stylesheets/common/communities-page.scss",
+  "stylesheets/common/dialog-page.scss"
 ].each { |file| register_asset file }
 
 PLUGIN_NAME ||= "communitarian"

@@ -1,0 +1,23 @@
+.dialog-page {
+  .title-wrapper {
+    .fancy-title {
+      font-size: 1.4em;
+    }
+
+    .join-community-button,
+    .leave-community-button {
+      display: inline-block;
+      margin-left: 0.5em;
+      vertical-align: text-top;
+
+      button {
+        padding: 0.4em 1.3em;
+        font-size: 0.6em;
+        font-weight: bold;
+        color: $tertiary;
+        border: 2px solid $tertiary;
+        border-radius: 6px;
+      }
+    }
+  }
+}
