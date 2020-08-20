@@ -67,10 +67,10 @@ after_initialize do
   end
 
   add_to_serializer(:topic_list_item, :recent_resolution_post, false) do
-    return unless object.custom_fields["is_resolution"]
-    post = object.posts.joins(:_custom_fields).where(post_custom_fields: { name: :is_resolution }).order(:post_number).last
-    PostSerializer.new(post, root: false, embed: :objects, scope: self.scope)
+    PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
   end
+
+  add_preloaded_topic_list_custom_field("is_resolution")
 
   require 'homepage_constraint'
   Discourse::Application.routes.prepend do
@@ -79,6 +79,12 @@ after_initialize do
   end
 
   reloadable_patch do
+    Topic.class_eval do
+      has_one :recent_resolution_post, -> {
+        joins(:_custom_fields).where(post_custom_fields: { name: :is_resolution }).order(post_number: :desc)
+      }, class_name: "Post"
+    end
+
     TopicQuery.class_eval do
       def list_dialogs
         create_list(:dialogs, {}, dialogs_results)
@@ -91,7 +97,6 @@ after_initialize do
         result = remove_muted_tags(result, @user, options)
         result = apply_shared_drafts(result, get_category_id(options[:category]), options)
         result = apply_shared_drafts(result, get_category_id(options[:category]), options)
-        # result = result.left_joins(:_custom_fields).where(topic_custom_fields: { name: :is_resolution }).distinct
         result = result.where.not(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
         result
       end

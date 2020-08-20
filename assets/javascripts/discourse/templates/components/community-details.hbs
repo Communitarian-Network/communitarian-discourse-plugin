@@ -1,9 +1,5 @@
 <div style="display:flex;" class="community-details">
-  <div style="width:70%;" class="resolutions-list">
-    {{#each resolutions as |resolution|}}
-      {{resolution-list-item resolution=resolution}}
-    {{/each}}
-  </div>
+  {{resolutions-list model=model resolutions=resolutions}}
   <div style="width:30%;" class="ongoing-dialogs-list">
     <div>
       <span style="color:gray;">Ongoing Dialogs</span>
