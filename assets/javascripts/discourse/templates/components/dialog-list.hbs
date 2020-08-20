@@ -1,0 +1,13 @@
+<div class="dialog-list__header">
+  <span class="dialog-list__header-title">
+    {{i18n "communitarian.dialogs.header_title"}}
+  </span>
+
+  {{#link-to "discovery.category" class="dialog-list__link"}}
+    {{i18n "communitarian.dialogs.view_all"}}
+  {{/link-to}}
+</div>
+
+{{#each dialogs as |dialog|}}
+  {{dialog-list-item dialog=dialog}}
+{{/each}}
