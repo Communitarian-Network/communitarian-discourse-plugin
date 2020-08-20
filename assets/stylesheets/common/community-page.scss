@@ -1,0 +1,13 @@
+.community-page {
+  &__content {
+    display: flex;
+  }
+
+  &__resolutions {
+    flex: 1 1 70%;
+  }
+
+  &__dialogs {
+    flex: 1 1 30%;
+  }
+}

@@ -1,12 +1,1 @@
-<div style="display:flex;" class="community-details">
-  {{resolutions-list model=model resolutions=resolutions}}
-  <div style="width:30%;" class="ongoing-dialogs-list">
-    <div>
-      <span style="color:gray;">Ongoing Dialogs</span>
-      <a href="#">View All</a>
-    </div>
-    {{#each dialogs as |dialog|}}
-      {{ongoing-dialog-list-item dialog=dialog}}
-    {{/each}}
-  </div>
-</div>
+{{resolutions-list model=model resolutions=resolutions}}

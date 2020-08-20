@@ -1,5 +1,6 @@
 import I18n from "I18n";
 import { inject as service } from "@ember/service";
+import { inject as controller } from "@ember/controller";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
@@ -14,10 +15,10 @@ function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
     let operators = {
       '===': (l, r) => l === r,
-      '!=': (l, r) => l != r,
-      '>':  (l, r) => l >  r,
+      '!==': (l, r) => l !== r,
+      '>': (l, r) => l > r,
       '>=': (l, r) => l >= r,
-      '<':  (l, r) => l <  r,
+      '<':  (l, r) => l < r,
       '<=': (l, r) => l <= r,
     };
     return operators[operator] && operators[operator](v1, v2);
@@ -30,6 +31,21 @@ function initializeCommunitarian(api) {
     isCommunitiesPage(currentRouteName) {
       return currentRouteName === "categories";
     },
+  });
+
+  api.modifyClass("controller:discovery", {
+    discoveryTopics: controller("discovery/topics"),
+    router: service(),
+
+    @discourseComputed("discoveryTopics.model.dialogs")
+    dialogs(dialogs) {
+      return dialogs;
+    },
+
+    @discourseComputed("router.currentRoute.localName")
+    isCommunityPage(currentRouteName) {
+      return currentRouteName === "category";
+    }
   });
 
   api.modifyClass("controller:discovery:topics", {
@@ -57,7 +73,7 @@ function initializeCommunitarian(api) {
       }
 
       return json;
-      },
+    }
   });
 
   api.modifyClass("controller:create-account", {

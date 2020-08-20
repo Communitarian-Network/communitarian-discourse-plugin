@@ -42,6 +42,9 @@ en:
           label: Leave this community
       communities:
         title: Top communities
+      dialogs:
+        header_title: Ongoing Dialogs
+        view_all: View all
     user:
       name:
         instructions: Your full name
