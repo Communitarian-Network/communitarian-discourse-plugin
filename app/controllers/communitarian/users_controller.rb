@@ -9,7 +9,6 @@ module Communitarian
 
     def new
       params.require(:email)
-      params.require(:username)
       params.require(:invite_code) if SiteSetting.require_invite_code
       params.permit(:user_fields)
 
@@ -46,6 +45,7 @@ module Communitarian
 
       user ||= User.new
       user.attributes = new_user_params
+      user.username = "user.#{Time.current.to_i}"
 
       # Handle API approval and
       # auto approve users based on auto_approve_email_domains setting
