@@ -8,19 +8,41 @@ export default Component.extend({
 
   _setupPoll() {
     window.e = this;
-    const openedPoll = this.resolution.recent_resolution_post.polls[0];
-    const creationMonth = moment(this.resolution.created_at).format("MMM");
-    const creationDate = moment(this.resolution.created_at).format("DD");
-    const closeMonth = moment(openedPoll.close).format("MMM");
-    const closeDate = moment(openedPoll.close).format("DD");
-    let actionPeriod = [creationMonth, creationDate, "-"];
-    if (creationMonth != closeMonth) {
+
+    const recentResolution = this.resolution.recent_resolution_post;
+    if (!recentResolution) {
+      return;
+    }
+
+    const [created, closed] = [
+      moment(this.resolution.created_at),
+      moment(openedPoll.close),
+    ];
+
+    const [
+      openedPoll,
+      creationMonth,
+      creationDate,
+      closeMonth,
+      closeDate,
+      actionPeriod,
+    ] = [
+      recentResolution.polls[0],
+      created.format("MMM"),
+      created.date(),
+      closed.format("MMM"),
+      closed.date(),
+      [creationMonth, creationDate, "-"],
+    ];
+
+    if (creationMonth !== closeMonth) {
       actionPeriod.push(closeMonth);
-    };
+    }
     actionPeriod.push(closeDate);
+
     this.setProperties({
-      openedPoll: openedPoll,
-      formattedActionPeriod: actionPeriod.join(" ")
+      openedPoll,
+      formattedActionPeriod: actionPeriod.join(" "),
     });
-  }
+  },
 });

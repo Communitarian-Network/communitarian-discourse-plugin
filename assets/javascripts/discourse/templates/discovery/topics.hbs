@@ -52,6 +52,7 @@
   {{/if}}
   {{plugin-outlet name="before-topic-list" args=(hash category=category)}}
 
+{{!-- custom code started here ↓ --}}
   {{#if hasDialogs}}
     {{community-details
       highlightLastVisited=true
@@ -99,6 +100,7 @@
         onScroll=discoveryTopicList.saveScrollPosition}}
     {{/if}}
   {{/if}}
+{{!-- custom code ended here ↑ --}}
 
   {{plugin-outlet name="after-topic-list" args=(hash category=category)}}
 {{/discovery-topics-list}}

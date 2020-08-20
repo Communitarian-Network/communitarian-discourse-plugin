@@ -1,6 +1,7 @@
 {{#d-section class="navigation-container"}}
   {{add-category-tag-classes category=category}}
 
+{{!-- custom code started here ↓ --}}
   <section class="category-heading">
     <div style="display:flex;">
       <h2><strong>{{category.name}}</strong></h2>
@@ -17,6 +18,7 @@
       <span>{{dir-span category.description}}</span>
     {{/if}}
   </section>
+{{!-- custom code ended here ↑ --}}
 
   <div class="category-navigation">
     {{d-navigation
