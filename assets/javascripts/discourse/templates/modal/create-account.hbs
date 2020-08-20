@@ -29,23 +29,21 @@
                   <td><label>{{i18n "user.email.instructions"}}</label></td>
                 </tr>
 
-                {{#if usernameRequired}}
-                  {{#if hasAuthOptions}}
-                    <span id="new-account-email" class="static new-account-username">{{accountUsername}}</span>
-                  {{else}}
+                {{#unless hasAuthOptions}}
+                  {{#if usernameRequired}}
                     <tr class="input">
                       <td class="label"><label for="new-account-username">{{i18n "user.username.title"}}</label></td>
                       <td>
                         {{input value=accountUsername id="new-account-username" name="username" maxlength=maxUsernameLength autocomplete="discourse"}}
                       </td>
                     </tr>
-                  {{/if}}
                     <tr class="instructions">
                       <td></td>
                       {{input-tip validation=usernameValidation id="username-validation"}}
                       <td><label>{{i18n "user.username.instructions"}}</label></td>
                     </tr>
-                {{/if}}
+                  {{/if}}
+                {{/unless}}
 
                 {{plugin-outlet
                   name="create-account-before-password"
