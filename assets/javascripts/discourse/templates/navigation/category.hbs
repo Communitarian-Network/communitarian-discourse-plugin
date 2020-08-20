@@ -7,13 +7,6 @@
       <h2><strong>{{category.name}}</strong></h2>
       {{community-action category=category}}
     </div>
-    {{#if category.uploaded_logo.url}}
-      {{cdn-img
-        src=category.uploaded_logo.url
-        class="category-logo"
-        width=category.uploaded_logo.width
-        height=category.uploaded_logo.height}}
-    {{/if}}
     {{#if category.description}}
       <span>{{dir-span category.description}}</span>
     {{/if}}

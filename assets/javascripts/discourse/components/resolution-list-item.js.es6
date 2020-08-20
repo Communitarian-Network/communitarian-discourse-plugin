@@ -14,20 +14,20 @@ export default Component.extend({
       return;
     }
 
+    const openedPoll = recentResolution.polls[0];
+
     const [created, closed] = [
       moment(this.resolution.created_at),
       moment(openedPoll.close),
     ];
 
     const [
-      openedPoll,
       creationMonth,
       creationDate,
       closeMonth,
       closeDate,
       actionPeriod,
     ] = [
-      recentResolution.polls[0],
       created.format("MMM"),
       created.date(),
       closed.format("MMM"),
