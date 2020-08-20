@@ -4,7 +4,9 @@ en:
       resolution:
         new_button: New Resolution
         ui_builder:
-          form_title: New Resolution
+          form_title:
+            new: New Resolution
+            edit: Edit Resolution
           create: Create
           update: Update
           auto_close_and_reopen_reminder: This resolution will be automatically closed at %{close_date} and reopened immediately.
@@ -33,8 +35,17 @@ en:
           title: Take a look at the discussions
           text: If you're interested, we're waiting for you in our community!
           link: View Active Communities
+      community:
+        join:
+          label: Join this community
+        leave:
+          label: Leave this community
+      communities:
+        title: Top communities
     user:
       name:
         instructions: Your full name
     sign_up: Join the Conversation
     log_in: Sign in
+    category:
+      create: New Community
