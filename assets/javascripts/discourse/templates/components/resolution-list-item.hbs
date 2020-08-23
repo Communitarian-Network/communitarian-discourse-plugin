@@ -1,19 +1,23 @@
-<div class="resolution-list-item" style="border:solid;margin:20px;padding-left:20px;">
-  <div>
-    <p>Weekly Pool on {{formattedActionPeriod}}</p>
-    <p style="text-align:right;margin-right:20px;">Votes {{openedPoll.voters}}</p>
+<div class="resolution-list-item">
+  <div class="resolution-list-item__header">
+    <span>Weekly Poll on {{formattedActionPeriod}}</span>
+    <span>{{openedPoll.voters}} votes</span>
   </div>
-  <p><strong>{{~topic-link resolution class="raw-link raw-topic-link"}}</strong></p>
-  <ul>
+  <p class="resolution-list-item__name">
+    {{~topic-link resolution class="raw-link raw-topic-link"}}
+  </p>
+  <ul class="resolution-list-item__options-list">
     {{#each openedPoll.options as |poll_option|}}
-      <li style="list-style:none;">
-        <svg class="fa d-icon d-icon-far-circle svg-icon svg-node" aria-hidden="true">
-          <svg id="far-circle" viewBox="0 0 512 512">
-            <path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200z"></path>
-          </svg>
-        </svg>
+    <li class="resolution-list-item__option">
+      <label for="votes" class="resolution-list-item__option-name">
         {{poll_option.html}}
-      </li>
+      </label>
+      {{!-- <div class="resolution-list-item__option-value">
+        {{poll_option.votes}}
+      </div> --}}
+      <input class="resolution-list-item__option-value" type="range" id="votes"
+             name="votes" min="0" max="5" value={{poll_option.votes}}>
+    </li>
     {{/each}}
   </ul>
 </div>

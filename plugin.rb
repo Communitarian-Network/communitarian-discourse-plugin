@@ -22,7 +22,8 @@ require "stripe"
   "stylesheets/common/communities-page.scss",
   "stylesheets/common/community-page.scss",
   "stylesheets/common/dialog-list.scss",
-  "stylesheets/common/dialog-list-item.scss"
+  "stylesheets/common/dialog-list-item.scss",
+  "stylesheets/common/resolution-list-item.scss"
 ].each { |file| register_asset file }
 
 PLUGIN_NAME ||= "communitarian"
