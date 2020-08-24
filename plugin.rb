@@ -39,7 +39,8 @@ after_initialize do
   [
     "../app/models/communitarian/post_delay",
     "../app/models/communitarian/resolution",
-    "../app/models/communitarian/unique_username"
+    "../app/models/communitarian/unique_username",
+    "../lib/guardian/category_guardian"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key

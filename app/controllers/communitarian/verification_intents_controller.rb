@@ -37,7 +37,7 @@ module Communitarian
 
     def verification_intent_params
       {
-        return_url: URI.unescape(communitarian_verification_intents_url("{VERIFICATION_INTENT_ID}")),
+        return_url: URI.unescape(communitarian_verification_intent_url("{VERIFICATION_INTENT_ID}")),
         refresh_url: request.origin,
         requested_verifications: ["identity_document"],
         person_data: person_data_params,
