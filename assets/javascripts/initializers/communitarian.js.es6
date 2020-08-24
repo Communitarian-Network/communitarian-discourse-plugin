@@ -33,6 +33,10 @@ function initializeCommunitarian(api) {
 
   api.modifyClass("controller:create-account", {
     performAccountCreation() {
+      if (this.get("authOptions.email") == this.accountEmail) {
+        return this._super(...arguments);
+      }
+
       const data = {
         name: this.accountName,
         email: this.accountEmail,

@@ -9,5 +9,8 @@ en:
     communitarian_resolutions_close_week_day: Day of the week for closing resolutions
     communitarian_resolutions_close_hour: Hour(0-23) for closing resolutions
     communitarian_resolutions_reopen_delay: Delay(in hours) between closing and reopening resolutions
-    communitarian_stripe_secret_key: "Stripe secret key. NOTE: don't forgot to restart the app after the change"
     post_delay: Minimal time in seconds before user can publish again to a dialog
+    linkedin_enabled: Allow users to authenticate using LinkedIn?
+    linkedin_client_id: 'LinkedIn Client ID (need one? visit <a href="https://developer.linkedin.com/docs/oauth2">https://developer.linkedin.com/docs/oauth2</a>)'
+    linkedin_secret: LinkedIn Secret Key
+    communitarian_stripe_secret_key: "Stripe secret key. NOTE: don't forgot to restart the app after the change"
