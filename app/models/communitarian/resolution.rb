@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../jobs/regular/reopen_resolution"
-
 module Communitarian
   class Resolution
     REOPENED_RESOLUTION_ATTRIBUTES = %w[
@@ -15,7 +13,7 @@ module Communitarian
     end
 
     def reopen_weekly_resolution!(original_post)
-      return if to_be_closed?(original_post)
+      return if to_be_closed?(original_post) || !reopen(original_post)
 
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
@@ -25,15 +23,15 @@ module Communitarian
     end
 
     def schedule_jobs(post)
+      ::DiscoursePoll::Poll.schedule_jobs(post)
       return if to_be_closed?(post)
 
-      ::DiscoursePoll::Poll.schedule_jobs(post)
-
-      poll = post.reload.polls.first
       job_args = { post_id: post.id }
-
       Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
-      Jobs.enqueue_at(resolution_schedule.reopen_delay.since(poll.close_at), :reopen_resolution, job_args)
+
+      if reopen?(post)
+        Jobs.enqueue_at(resolution_schedule.next_reopen_time(post.created_at), :reopen_resolution, job_args)
+      end
     end
 
     private
@@ -50,6 +48,11 @@ module Communitarian
 
     def resolution?(post)
       post.topic.custom_fields["is_resolution"] && post.polls.exists?
+    end
+
+    def reopen?(post)
+      resolution_polls = Poll.includes(:post).where("post.topic_id = ?", post.topic_id).order(:created_at)
+      !to_be_closed?(post) && resolution_polls.last.created_at < 5.days.ago
     end
   end
 end
