@@ -32,8 +32,7 @@ PLUGIN_NAME ||= "communitarian"
 [
   "lib/communitarian/engine.rb",
   "lib/auth/linkedin_authenticator.rb",
-  "lib/communitarian/stripe.rb",
-  "lib/guardian/category_guardian.rb"
+  "lib/communitarian/stripe.rb"
 ].each { |path| load File.expand_path(path, __dir__) }
 
 after_initialize do

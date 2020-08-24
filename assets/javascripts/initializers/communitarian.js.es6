@@ -68,7 +68,7 @@ function initializeCommunitarian(api) {
       });
 
       showModal("edit-category", { model }).set("selectedTab", "general");
-  }
+    },
   });
 }
 
