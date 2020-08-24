@@ -48,6 +48,11 @@ en:
     user:
       name:
         instructions: Your full name
+    login:
+      linkedin:
+        name: LinkedIn
+        title: with LinkedIn
+        message: Log in via LinkedIn
     sign_up: Join the Conversation
     log_in: Sign in
     category:

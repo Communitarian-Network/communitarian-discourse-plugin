@@ -3,7 +3,7 @@
 module Communitarian
   class VerificationIntentsController < ::ApplicationController
     requires_plugin Communitarian
-    skip_before_action :verify_authenticity_token
+    skip_before_action :verify_authenticity_token, :redirect_to_login_if_required
     skip_before_action :check_xhr, only: %i(show)
     before_action :ensure_not_logged_in, only: %i(show)
 
