@@ -32,14 +32,16 @@ PLUGIN_NAME ||= "communitarian"
 [
   "lib/communitarian/engine.rb",
   "lib/auth/linkedin_authenticator.rb",
-  "lib/communitarian/stripe.rb"
+  "lib/communitarian/stripe.rb",
+  "lib/guardian/category_guardian.rb"
 ].each { |path| load File.expand_path(path, __dir__) }
 
 after_initialize do
   [
     "../app/models/communitarian/post_delay",
     "../app/models/communitarian/resolution",
-    "../app/models/communitarian/unique_username"
+    "../app/models/communitarian/unique_username",
+    "../lib/guardian/category_guardian"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
