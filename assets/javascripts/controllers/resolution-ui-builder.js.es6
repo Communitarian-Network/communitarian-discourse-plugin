@@ -101,7 +101,7 @@ export default Controller.extend({
       let slug = window.location.pathname.match(/c\/.*\/(.*)$/);
       this.setProperties({
         action: "create",
-        buttonLabel: "communitarian.resolution.ui_builder.create"
+        buttonLabel: "communitarian.resolution.ui_builder.create",
         formTitle: "communitarian.resolution.ui_builder.form_title.new",
         postId: null,
         title: "",
