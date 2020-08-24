@@ -65,7 +65,6 @@ function initializeCommunitarian(api) {
 
 //Override openNewCategoryModal due to the fact that all members can create category
 export function openNewCategoryModal(context) {
-  console.log("comm launch")
   const groups = context.site.groups,
     groupName = groups.findBy("id", 11).name;
   const model = context.store.createRecord("category", {
