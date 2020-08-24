@@ -100,8 +100,10 @@ export default Controller.extend({
     if (postId === null) {
       let slug = window.location.pathname.match(/c\/.*\/(.*)$/);
       this.setProperties({
-        postId: null,
         action: "create",
+        buttonLabel: "communitarian.resolution.ui_builder.create",
+        formTitle: "communitarian.resolution.ui_builder.form_title.new",
+        postId: null,
         title: "",
         pollOptions: "",
         titleMaxLength: this.siteSettings.max_topic_title_length,
@@ -111,24 +113,22 @@ export default Controller.extend({
         category: slug && slug[1],
         autoCloseReminder: this._autoCloseReminderText(),
         activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_period_note"),
-        formTitle: "communitarian.resolution.ui_builder.form_title.new"
       });
     } else {
-      this.set("action", "update");
+      this.setProperties({
+        action: "update",
+        buttonLabel: "communitarian.resolution.ui_builder.update",
+        formTitle: "communitarian.resolution.ui_builder.form_title.edit",
+      });
       this.store.find("post", postId).then((post) => {
         this.setProperties({
           postId: post.id,
           pollOptions: this._parseOptionsFromRaw(post.raw),
           category: post.topic.category_id,
           title: post.topic.title,
-          formTitle: "communitarian.resolution.ui_builder.form_title.edit"
         });
       });
     }
-    this.set(
-      "buttonLabel",
-      `communitarian.resolution.ui_builder.${this.action}`
-    );
   },
 
   _parseOptionsFromRaw(postRaw) {

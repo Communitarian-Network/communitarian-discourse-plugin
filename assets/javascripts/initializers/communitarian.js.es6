@@ -10,6 +10,8 @@ import { registerUnbound } from "discourse-common/lib/helpers";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
 import { gt } from "@ember/object/computed";
+import { SEARCH_PRIORITIES } from "discourse/lib/constants";
+import showModal from "discourse/lib/show-modal";
 
 function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
@@ -96,6 +98,32 @@ function initializeCommunitarian(api) {
       _createAccount(data, this);
     },
   });
+
+  api.modifyClass("route:discovery-categories", {
+    actions: {
+      createCategory() {
+        openNewCategoryModal(this);
+      }
+    }
+  });
+}
+
+//Override openNewCategoryModal due to the fact that all members can create category
+export function openNewCategoryModal(context) {
+  const groups = context.site.groups,
+    groupName = groups.findBy("id", 11).name;
+  const model = context.store.createRecord("category", {
+    color: "0088CC",
+    text_color: "FFFFFF",
+    group_permissions: [{ group_name: groupName, permission_type: 1 }],
+    available_groups: groups.map(g => g.name),
+    allow_badges: true,
+    topic_featured_link_allowed: true,
+    custom_fields: {},
+    search_priority: SEARCH_PRIORITIES.normal
+  });
+
+  showModal("edit-category", { model }).set("selectedTab", "general");
 }
 
 function _createAccount(data, self) {
