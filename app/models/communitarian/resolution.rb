@@ -49,8 +49,10 @@ module Communitarian
     end
 
     def has_recent_polls?(topic_id)
-      resolution_polls = Poll.joins(:post).where("posts.topic_id = ?", topic_id).order(:created_at)
-      resolution_polls.last.created_at > 1.day.ago
+      Poll.joins(:post)
+        .where("posts.topic_id = ?", 1)
+        .where("polls.created_at > ?", 1.day.ago)
+        .exists?
     end
   end
 end
