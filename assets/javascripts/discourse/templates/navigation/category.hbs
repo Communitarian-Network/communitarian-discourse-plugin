@@ -2,13 +2,13 @@
   {{add-category-tag-classes category=category}}
 
 {{!-- custom code started here ↓ --}}
-  <section class="category-heading">
-    <div style="display:flex;">
-      <h2><strong>{{category.name}}</strong></h2>
-      {{community-action category=category}}
+  <section class="category-header">
+    <div class="page-header__title-wrap">
+      <h2 class="page-header__title">{{category.name}}</h2>
+      {{community-action category=category class="page-header__button"}}
     </div>
     {{#if category.description}}
-      <span>{{dir-span category.description}}</span>
+      <span class="page-header__description">{{dir-span category.description}}</span>
     {{/if}}
   </section>
 {{!-- custom code ended here ↑ --}}
