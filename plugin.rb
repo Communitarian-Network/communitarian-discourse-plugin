@@ -12,11 +12,7 @@ gem "stripe_event", "2.3.1"
 
 require "stripe"
 
-%i[
-  communitarian_enabled
-  post_delay
-  linkedin_enabled
-].each { |setting| enabled_site_setting setting }
+enabled_site_setting :communitarian_enabled
 
 [
   "stylesheets/common/resolution-form.scss",
