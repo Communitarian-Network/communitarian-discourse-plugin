@@ -29,8 +29,10 @@
                   <td><label>{{i18n "user.email.instructions"}}</label></td>
                 </tr>
 
-                {{#unless hasAuthOptions}}
-                  {{#if usernameRequired}}
+                {{#if usernameRequired}}
+                  {{#if hasAuthOptions}}
+                    <span name="username" id="new-account-username" class="static" style="display: none;">{{accountUsername}}</span>
+                  {{else}}
                     <tr class="input">
                       <td class="label"><label for="new-account-username">{{i18n "user.username.title"}}</label></td>
                       <td>
@@ -43,7 +45,7 @@
                       <td><label>{{i18n "user.username.instructions"}}</label></td>
                     </tr>
                   {{/if}}
-                {{/unless}}
+                {{/if}}
 
                 {{plugin-outlet
                   name="create-account-before-password"
