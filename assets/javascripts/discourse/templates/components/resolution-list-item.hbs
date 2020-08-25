@@ -1,7 +1,7 @@
 <div class="resolution-list-item">
   <div class="resolution-list-item__header">
-    <span>Weekly Poll on {{formattedActionPeriod}}</span>
-    <span>{{openedPoll.voters}} votes</span>
+    <span>{{i18n "communitarian.resolution.list.date" period=formattedActionPeriod}}</span>
+    <span>{{i18n "communitarian.resolution.list.votes" voters=openedPoll.voters}}</span>
   </div>
   <p class="resolution-list-item__name">
     {{~topic-link resolution class="raw-link raw-topic-link"}}
@@ -12,11 +12,14 @@
       <label for="votes" class="resolution-list-item__option-name">
         {{poll_option.html}}
       </label>
-      {{!-- <div class="resolution-list-item__option-value">
-        {{poll_option.votes}}
-      </div> --}}
-      <input class="resolution-list-item__option-value" type="range" id="votes"
-             name="votes" min="0" max="5" value={{poll_option.votes}}>
+      <div class="resolution-list-item__option-value-wrap">
+        <div class="resolution-list-item__option-value {{if (compare poll_option.votes '===' mostPopularOption) "max"}}"
+             style={{getPercentWidth poll_option.votes mostPopularOption}}>
+          <span class="resolution-list-item__option-value-votes">
+            {{poll_option.votes}}
+          </span>
+        </div>
+      </div>
     </li>
     {{/each}}
   </ul>

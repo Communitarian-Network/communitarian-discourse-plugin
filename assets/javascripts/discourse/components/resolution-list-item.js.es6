@@ -21,27 +21,26 @@ export default Component.extend({
       moment(openedPoll.close),
     ];
 
-    const [
-      creationMonth,
-      creationDate,
-      closeMonth,
-      closeDate,
-      actionPeriod,
-    ] = [
+    const [creationMonth, creationDate, closeMonth, closeDate] = [
       created.format("MMM"),
       created.date(),
       closed.format("MMM"),
       closed.date(),
-      [creationMonth, creationDate, "-"],
     ];
 
+    const actionPeriod = [creationMonth, creationDate, "-"];
     if (creationMonth !== closeMonth) {
       actionPeriod.push(closeMonth);
     }
     actionPeriod.push(closeDate);
 
+    const mostPopularOption = Math.max(
+      ...openedPoll.options.map(({ votes }) => votes)
+    );
+
     this.setProperties({
       openedPoll,
+      mostPopularOption,
       formattedActionPeriod: actionPeriod.join(" "),
     });
   },
