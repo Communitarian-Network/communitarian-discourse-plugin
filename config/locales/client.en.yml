@@ -1,6 +1,8 @@
 en:
   js:
     communitarian:
+      dialog:
+        new_button: New Dialog
       resolution:
         new_button: New Resolution
         ui_builder:

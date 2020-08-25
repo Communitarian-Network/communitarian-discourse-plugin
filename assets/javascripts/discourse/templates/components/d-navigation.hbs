@@ -38,6 +38,13 @@
       createTopicDisabled=createTopicDisabled
       createTopicLabel=createTopicLabel)
   }}
+  {{new-dropdown
+    onChange=(action "selectCategoryAdminDropdownAction")
+    action=(action "clickCreateResolutionButton")
+    options=(hash
+      triggerOnChangeOnTab=false
+    )
+  }}
 {{/unless}}
 
 {{create-topic-button
