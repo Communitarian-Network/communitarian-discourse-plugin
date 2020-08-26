@@ -11,5 +11,9 @@
   &__dialogs {
     flex: 1 1 30%;
     margin-left: 2.5em;
+
+    @media screen and (max-width: 750px) {
+      display: none;
+    }
   }
 }

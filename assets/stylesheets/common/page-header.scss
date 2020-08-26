@@ -11,11 +11,21 @@
 
   &__button {
     margin-left: 1.5em;
+
+    .community-action .toggle-community-button {
+      margin: 0;
+    }
   }
 
-  &__description p {
+  &__description {
+    display: block;
     margin-top: 0.4em;
+    margin-bottom: 1em;
     font-size: 1.2em;
     line-height: 1.3em;
+
+    p {
+      margin: 0;
+    }
   }
 }
