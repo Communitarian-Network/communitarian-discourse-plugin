@@ -8,16 +8,16 @@
   </p>
   <ul class="resolution-list-item__options-list">
     {{#each openedPoll.options as |poll_option|}}
-    <li class="resolution-list-item__option">
-      <label for="votes" class="resolution-list-item__option-name">
-        {{poll_option.html}}
-      </label>
-      <div class="resolution-list-item__option-value-wrap">
-        <div class="resolution-list-item__option-value {{if (compare poll_option.votes '===' mostPopularOption) "max"}}"
-             style={{getPercentWidth poll_option.votes mostPopularOption}}>
+      <li class="resolution-list-item__option">
+        <label for="votes" class="resolution-list-item__option-name">
+          {{poll_option.html}}
+        </label>
+        <div class="resolution-list-item__option-value-wrap">
+          <div class="resolution-list-item__option-value {{if (compare poll_option.votes '===' mostPopularOption) "max"}}"
+              style={{getPercentWidth poll_option.votes mostPopularOption}}>
+          </div>
         </div>
-      </div>
-    </li>
+      </li>
     {{/each}}
   </ul>
 </div>
