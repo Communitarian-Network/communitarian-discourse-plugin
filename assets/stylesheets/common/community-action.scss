@@ -1,0 +1,17 @@
+.community-action {
+  .toggle-community-button,
+  .toggle-community-button:hover {
+    margin: 0;
+    padding-left: 1em;
+    padding-right: 1em;
+    border: 2px solid $tertiary;
+    border-radius: 5px;
+    color: $tertiary;
+    background-color: transparent;
+    font-size: 1em;
+    font-weight: 900;
+    float: none;
+    outline: none;
+    white-space: nowrap;
+  }
+}

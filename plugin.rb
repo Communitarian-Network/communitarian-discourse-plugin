@@ -27,6 +27,7 @@ require "stripe"
   "stylesheets/common/dialog-list-item.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",
+  "stylesheets/common/community-action.scss",
   "stylesheets/linkedin-login.scss"
 ].each { |file| register_asset file }
 
