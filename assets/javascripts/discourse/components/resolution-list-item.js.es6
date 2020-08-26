@@ -40,7 +40,7 @@ export default Component.extend({
 
     this.setProperties({
       openedPoll,
-      mostPopularOption,
+      mostPopularOption: mostPopularOption === 0 ? null : mostPopularOption,
       formattedActionPeriod: actionPeriod.join(" "),
     });
   },
