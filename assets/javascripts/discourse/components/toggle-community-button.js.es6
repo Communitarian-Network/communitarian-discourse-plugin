@@ -14,7 +14,7 @@ export default Component.extend({
   actions: {
     clickToggleCommunityButton() {
       const newNotificationLevel =
-        this.category.notification_level === 1 ? 3 : 1;
+        this.category.notification_level <= 2 ? 3 : 1;
       setCategoryNotificationLevel(this.category, newNotificationLevel);
     },
   },
