@@ -1,50 +1,52 @@
 import I18n from "I18n";
-import DropdownSelectBoxComponent from "select-kit/components/dropdown-select-box";
 import { computed } from "@ember/object";
 import { setting } from "discourse/lib/computed";
 import showModal from "discourse/lib/show-modal";
+import DropdownSelectBox from "select-kit/components/dropdown-select-box";
 
-export default DropdownSelectBoxComponent.extend({
-  pluginApiIdentifiers: ["categories-admin-dropdown"],
-  classNames: ["categories-admin-dropdown"],
+export default DropdownSelectBox.extend({
+  classNames: ["new-dropdown", "categories-admin-dropdown"],
 
   selectKitOptions: {
-    icon: "plus",
-    showFullTitle: false,
-    autoFilterable: false,
-    filterable: false
-  },
-
-  defaultDropdownActions: {
-    createResolution: () => {
-      showModal("resolution-ui-builder")._setupPoll();
-    },
-    createDialog: () => {},
+    icon: "reply",
+    title: "New",
+    showCaret: true
   },
 
   content: computed(function() {
-    let items = [];
+    const items = [];
+
     items.push({
       id: "createResolution",
       name: I18n.t("communitarian.resolution.new_button"),
-      description: I18n.t("category.create_long"),
-      icon: "plus"
+      icon: "bars"
     });
-    items.push({
-      id: "createDialog",
-      name: I18n.t("communitarian.dialog.new_button"),
-      description: "Hey",
-      icon: "plus"
-    });
+
+    let allowedToCreateTopic = this.get("createTopicButtonDisabled") !== true || this.get("canCreateTopic") === true || this.get("createTopicDisabled") !== true;
+
+    if (allowedToCreateTopic) {
+      items.push({
+        id: "createDialog",
+        name: I18n.t("communitarian.dialog.new_button"),
+        icon: "far-comment"
+      });
+    }
+
     return items;
   }),
 
-  _onChange(value, item) {
-    let onClick = this.get(`${value}Action`);
-    if (onClick) {
-      onClick();
-    } else {
-      this.defaultDropdownActions[value]();
+  createResolution() {
+    showModal("resolution-ui-builder")._setupPoll();
+  },
+
+  createDialog() {
+    let dNavigation = this.parentView;
+    dNavigation.actions.clickCreateTopicButton.call(dNavigation);
+  },
+
+  actions: {
+    onChange(action) {
+      this[action]();
     }
   }
 });

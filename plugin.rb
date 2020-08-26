@@ -18,6 +18,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
+  "stylesheets/common/new-dropdown.scss",
   "stylesheets/linkedin-login.scss"
 ].each { |file| register_asset file }
 
