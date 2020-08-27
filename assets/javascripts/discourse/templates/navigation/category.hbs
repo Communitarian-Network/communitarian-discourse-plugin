@@ -5,7 +5,9 @@
   <section class="category-header">
     <div class="page-header__title-wrap">
       <h2 class="page-header__title">{{category.name}}</h2>
-      {{community-action category=category class="page-header__button"}}
+      {{#if isAuthorized}}
+        {{community-action category=category class="page-header__button"}}
+      {{/if}}
     </div>
     {{#if category.description}}
       <span class="page-header__description">{{dir-span category.description}}</span>

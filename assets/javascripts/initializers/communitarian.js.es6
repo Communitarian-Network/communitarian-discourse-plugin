@@ -39,6 +39,13 @@ function initializeCommunitarian(api) {
     },
   });
 
+  api.modifyClass("controller:navigation/category", {
+    @discourseComputed()
+    isAuthorized() {
+      return !!this.currentUser;
+    },
+  });
+
   api.modifyClass("controller:discovery", {
     discoveryTopics: controller("discovery/topics"),
     router: service(),
