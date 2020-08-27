@@ -12,12 +12,16 @@
           <form>
             <table>
               <tbody>
-                <tr class="input create-account-email">
-                  <td class="label"><label for="new-account-email">{{i18n "user.email.title"}}</label></td>
-                  <td>
-                    {{input type="email" value=accountEmail id="new-account-email" disabled=emailValidated name="email" autofocus="autofocus"}}
-                  </td>
-                </tr>
+                {{#if hasAuthOptions}}
+                  <span id="new-account-email" class="static create-account-email">{{accountEmail}}</span>
+                {{else}}
+                  <tr class="input create-account-email">
+                    <td class="label"><label for="new-account-email">{{i18n "user.email.title"}}</label></td>
+                    <td>
+                      {{input type="email" value=accountEmail id="new-account-email" disabled=emailValidated name="email" autofocus="autofocus"}}
+                    </td>
+                  </tr>
+                {{/if}}
 
                 <tr class="instructions create-account-email">
                   <td></td>
@@ -26,17 +30,21 @@
                 </tr>
 
                 {{#if usernameRequired}}
-                  <tr class="input">
-                    <td class="label"><label for="new-account-username">{{i18n "user.username.title"}}</label></td>
-                    <td>
-                      {{input value=accountUsername id="new-account-username" name="username" maxlength=maxUsernameLength autocomplete="discourse"}}
-                    </td>
-                  </tr>
-                  <tr class="instructions">
-                    <td></td>
-                    {{input-tip validation=usernameValidation id="username-validation"}}
-                    <td><label>{{i18n "user.username.instructions"}}</label></td>
-                  </tr>
+                  {{#if hasAuthOptions}}
+                    <span name="username" id="new-account-username" class="static" style="display: none;">{{accountUsername}}</span>
+                  {{else}}
+                    <tr class="input">
+                      <td class="label"><label for="new-account-username">{{i18n "user.username.title"}}</label></td>
+                      <td>
+                        {{input value=accountUsername id="new-account-username" name="username" maxlength=maxUsernameLength autocomplete="discourse"}}
+                      </td>
+                    </tr>
+                    <tr class="instructions">
+                      <td></td>
+                      {{input-tip validation=usernameValidation id="username-validation"}}
+                      <td><label>{{i18n "user.username.instructions"}}</label></td>
+                    </tr>
+                  {{/if}}
                 {{/if}}
 
                 {{plugin-outlet

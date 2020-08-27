@@ -3,7 +3,7 @@
 module Communitarian
   class VerificationIntentsController < ::ApplicationController
     requires_plugin Communitarian
-    skip_before_action :verify_authenticity_token
+    skip_before_action :verify_authenticity_token, :redirect_to_login_if_required
     skip_before_action :check_xhr, only: %i(show)
     before_action :ensure_not_logged_in, only: %i(show)
 
@@ -37,7 +37,7 @@ module Communitarian
 
     def verification_intent_params
       {
-        return_url: URI.unescape(communitarin_verification_intent_url("{VERIFICATION_INTENT_ID}")),
+        return_url: URI.unescape(communitarian_verification_intent_url("{VERIFICATION_INTENT_ID}")),
         refresh_url: request.origin,
         requested_verifications: ["identity_document"],
         person_data: person_data_params,
