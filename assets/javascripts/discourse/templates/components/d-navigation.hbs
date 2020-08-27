@@ -7,7 +7,9 @@
     {{d-button
       class="btn-primary add-category"
       action=createCategory
-      label="category.create"}}
+      label="category.create"
+    }}
+    {{create-community-button canCreateCommunity=true}}
   {{else}}
     {{categories-admin-dropdown
       onChange=(action "selectCategoryAdminDropdownAction")
