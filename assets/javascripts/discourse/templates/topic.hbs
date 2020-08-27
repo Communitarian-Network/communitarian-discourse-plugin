@@ -1,4 +1,6 @@
+{{!-- added custom class --}}
 {{#discourse-topic multiSelect=multiSelect enteredAt=enteredAt topic=model hasScrolled=hasScrolled class="dialog-page"}}
+{{!-- /added custom class --}}
   {{#if model}}
     {{add-category-tag-classes category=model.category tags=model.tags}}
     <div class="container">
@@ -82,14 +84,16 @@
               <a href {{action "editTopic"}} class="edit-topic" title={{i18n "edit"}}>{{d-icon "pencil-alt"}}</a>
             {{/if}}
 
-            {{#if (compare model.category.notification_level '<=' 2)}}
-              {{join-community-button category=model.category}}
-            {{else}}
-              {{leave-community-button category=model.category}}
+            {{!-- custom code --}}
+            {{#if isAuthorized}}
+              {{community-action category=model.category class="page-header__button"}}
             {{/if}}
+            {{!-- /custom code --}}
           </h1>
 
-          {{topic-category topic=model class="topic-category"}}
+          {{!-- custom code --}}
+          {{!-- {{topic-category topic=model class="topic-category"}} --}}
+          {{!-- /custom code --}}
         {{/if}}
       {{/topic-title}}
 

@@ -1,11 +1,12 @@
 .dialog-page {
+  margin-top: 2em;
+
   .title-wrapper {
     .fancy-title {
-      font-size: 1.4em;
+      font-size: 1.3em;
     }
 
-    .join-community-button,
-    .leave-community-button {
+    .page-header__button {
       display: inline-block;
       margin-left: 0.5em;
       vertical-align: text-top;
@@ -13,10 +14,72 @@
       button {
         padding: 0.4em 1.3em;
         font-size: 0.6em;
-        font-weight: bold;
-        color: $tertiary;
-        border: 2px solid $tertiary;
-        border-radius: 6px;
+      }
+    }
+  }
+
+  .timeline-container {
+    .timeline-footer-controls {
+      display: none;
+    }
+  }
+
+  .topic-area {
+    .post-stream {
+      .topic-post {
+        .cooked {
+          padding-bottom: 0;
+        }
+
+        .post-menu-area {
+          margin: 0;
+        }
+
+        .embedded-posts {
+          border-width: 0;
+          border-left-width: 1px;
+
+          .topic-avatar,
+          .topic-body {
+            padding-top: 1.7em;
+            border-top: 0;
+          }
+
+          .cooked {
+            margin-top: 0;
+
+            p {
+              margin-bottom: 0;
+            }
+          }
+
+          &.bottom .collapse-up {
+            transform: translate(-50%, -100%);
+          }
+        }
+
+        &:first-child {
+          .topic-avatar,
+          .topic-meta-data,
+          .topic-map,
+          .post-menu-area {
+            display: none;
+          }
+
+          .topic-body {
+            padding-top: 0;
+            border-top: 0;
+
+            .regular {
+              margin-top: 0;
+            }
+          }
+
+          .cooked {
+            padding: 0;
+            font-size: 1.15em;
+          }
+        }
       }
     }
   }

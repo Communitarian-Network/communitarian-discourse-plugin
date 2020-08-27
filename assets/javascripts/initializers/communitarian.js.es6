@@ -39,12 +39,16 @@ function initializeCommunitarian(api) {
     },
   });
 
-  api.modifyClass("controller:navigation/category", {
-    @discourseComputed()
-    isAuthorized() {
-      return !!this.currentUser;
-    },
-  });
+  const _isAuthorizedComputed = () => {
+    return {
+      @discourseComputed()
+      isAuthorized() {
+        return !!this.currentUser;
+      },
+    };
+  };
+  api.modifyClass("controller:navigation/category", _isAuthorizedComputed());
+  api.modifyClass("controller:topic", _isAuthorizedComputed());
 
   api.modifyClass("controller:discovery", {
     discoveryTopics: controller("discovery/topics"),
