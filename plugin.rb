@@ -83,7 +83,7 @@ after_initialize do
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
 
   add_to_serializer(:topic_list, :dialogs, false) do
-    object.dialogs.map do |dialog|
+    object.dialogs.to_a.map do |dialog|
       TopicListItemSerializer.new(dialog, root: false, embed: :objects, scope: self.scope)
     end
   end
@@ -129,6 +129,16 @@ after_initialize do
         result.where(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
       else
         result
+      end
+    end
+
+    Discourse.class_eval do
+      def self.filters
+        @filters ||= [:latest, :unread, :new, :read, :posted, :bookmarks, :dialogs]
+      end
+
+      def self.anonymous_filters
+        @anonymous_filters ||= [:latest, :top, :categories, :dialogs]
       end
     end
 
@@ -195,12 +205,13 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? dialogs(category: @category.id).topics.first(5) : []
+        list.dialogs = @category ? dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
       def dialogs(options = nil)
+        without_respond = options ? options.delete(:without_respond) : false
         filter = :dialogs
         list_opts = build_topic_list_options
         list_opts.merge!(options) if options
@@ -237,6 +248,8 @@ after_initialize do
         list.draft_sequence = DraftSequence.current(current_user, Draft::NEW_TOPIC)
         list.draft = Draft.get(current_user, list.draft_key, list.draft_sequence) if current_user
         list
+
+        without_respond ? list : respond_with_list(list)
       end
     end
   end
