@@ -9,6 +9,7 @@
 gem "omniauth-linkedin-oauth2", "1.0.0"
 gem "stripe", "5.22.0"
 gem "stripe_event", "2.3.1"
+gem "interactor", "3.1.2"
 
 require "stripe"
 

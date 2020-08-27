@@ -10,6 +10,8 @@ import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
 import { SEARCH_PRIORITIES } from "discourse/lib/constants";
 import showModal from "discourse/lib/show-modal";
+import Site from "discourse/models/site";
+import LoginMethod from "discourse/models/login-method";
 
 function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
@@ -34,6 +36,19 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:create-account", {
+    @discourseComputed
+    authButtons() {
+      window.q = this;
+      let methods = [];
+
+      if(this.get("siteSettings.linkedin_enabled")) {
+        const linkedinProvider = Site.currentProp("auth_providers").find(provider => provider.name == "linkedin");
+        methods.pushObject(LoginMethod.create(linkedinProvider));
+      };
+
+      return methods;
+    },
+
     performAccountCreation() {
       if (this.get("authOptions.email") == this.accountEmail) {
         return this._super(...arguments);
@@ -52,6 +67,12 @@ function initializeCommunitarian(api) {
       this.set("formSubmitted", true);
       _createAccount(data, this);
     },
+
+    actions: {
+      showNextStep() {
+        showModal("choose-verification-way");
+      }
+    }
   });
 
   api.modifyClass("route:discovery-categories", {
