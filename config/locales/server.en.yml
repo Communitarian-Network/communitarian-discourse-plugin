@@ -10,6 +10,7 @@ en:
     communitarian_resolutions_close_hour: Hour(0-23) for closing resolutions
     communitarian_resolutions_reopen_delay: Delay(in hours) between closing and reopening resolutions
     post_delay: Minimal time in seconds before user can publish again to a dialog
+    landing_categories_length: Amount of category items on home page
     linkedin_enabled: Allow users to authenticate using LinkedIn?
     linkedin_client_id: 'LinkedIn Client ID (need one? visit <a href="https://developer.linkedin.com/docs/oauth2">https://developer.linkedin.com/docs/oauth2</a>)'
     linkedin_secret: LinkedIn Secret Key

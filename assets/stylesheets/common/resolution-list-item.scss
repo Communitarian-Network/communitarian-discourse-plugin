@@ -1,0 +1,59 @@
+.resolution-list-item {
+  margin-bottom: 1.3em;
+  padding: 1em 2em 1em 1.3em;
+  border: 1px solid #dcdcdc;
+  border-radius: 0.5em;
+  background-color: #f0f0f0;
+
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    color: #646464;
+    font-size: 1.05em;
+  }
+
+  &__name {
+    margin-top: 0.5em;
+    margin-bottom: 0.75em;
+    max-width: 18.5em;
+    font-size: 1.4em;
+    font-weight: 900;
+
+    a,
+    a:visited {
+      color: $primary;
+    }
+  }
+
+  &__options-list {
+    margin-left: 0;
+  }
+
+  &__option {
+    width: 80%;
+    margin-bottom: 1em;
+    list-style: none;
+  }
+
+  &__option-name {
+    margin-bottom: 0;
+    font-size: 0.9em;
+  }
+
+  &__option-value {
+    position: relative;
+    height: 1.3em;
+    background-color: $tertiary-medium;
+    border: 1px solid $tertiary-medium;
+
+    &.max {
+      background-color: $tertiary;
+      border: 1px solid $tertiary;
+    }
+  }
+
+  &__option-value-votes {
+    position: absolute;
+    right: -1.5em;
+  }
+}

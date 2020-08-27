@@ -1,0 +1,19 @@
+.community-page {
+  &__content {
+    margin-top: 2em;
+    display: flex;
+  }
+
+  &__resolutions {
+    flex: 1 1 70%;
+  }
+
+  &__dialogs {
+    flex: 1 1 30%;
+    margin-left: 2.5em;
+
+    @media screen and (max-width: 750px) {
+      display: none;
+    }
+  }
+}
