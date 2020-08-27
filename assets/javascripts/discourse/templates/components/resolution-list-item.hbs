@@ -1,7 +1,15 @@
 <div class="resolution-list-item">
   <div class="resolution-list-item__header">
-    <span>{{i18n "communitarian.resolution.list.date" period=formattedActionPeriod}}</span>
-    <span>{{i18n "communitarian.resolution.list.votes" voters=openedPoll.voters}}</span>
+    <span>
+      {{#if formattedActionPeriod}}
+        {{i18n "communitarian.resolution.list.date" period=formattedActionPeriod}}
+      {{/if}}
+    </span>
+    <span>
+      {{#if openedPoll}}
+        {{i18n "communitarian.resolution.list.votes" voters=openedPoll.voters}}
+      {{/if}}
+    </span>
   </div>
   <p class="resolution-list-item__name">
     {{~topic-link resolution class="raw-link raw-topic-link"}}
