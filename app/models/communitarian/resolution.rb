@@ -13,7 +13,7 @@ module Communitarian
     end
 
     def reopen_weekly_resolution!(original_post)
-      return if to_be_closed?(original_post) || has_recent_polls?(original_post.topic_id)
+      return if to_be_closed?(original_post)
 
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
@@ -28,7 +28,6 @@ module Communitarian
 
       job_args = { post_id: post.id }
       Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
-      Jobs.enqueue_at(1.minute.from_now, :open_poll, job_args.merge(poll_name: "poll"))
       Jobs.enqueue_at(resolution_schedule.next_reopen_time, :reopen_resolution, job_args)
     end
 
@@ -39,20 +38,13 @@ module Communitarian
     end
 
     def close_by_vote?(post)
-      @resolution_stats ||= Communitarian::ResolutionStats.new(post.polls.first)
+      resolution_stats = Communitarian::ResolutionStats.new(post.polls.first)
 
-      @resolution_stats.to_close?
+      resolution_stats.to_close?
     end
 
     def resolution?(post)
       post.topic.custom_fields["is_resolution"] && post.polls.exists?
-    end
-
-    def has_recent_polls?(topic_id)
-      Poll.joins(:post)
-        .where("posts.topic_id = ?", 1)
-        .where("polls.created_at > ?", 1.day.ago)
-        .exists?
     end
   end
 end
