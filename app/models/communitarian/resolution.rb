@@ -17,6 +17,8 @@ module Communitarian
 
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
+      post.custom_fields["is_resolution"] = true
+      post.save_custom_fields(true)
       poll = post.reload.polls.first
       poll.update!(close_at: resolution_schedule.next_close_time)
       self.schedule_jobs(post)
@@ -44,7 +46,7 @@ module Communitarian
     end
 
     def resolution?(post)
-      post.topic.custom_fields["is_resolution"] && post.polls.exists?
+      post.custom_fields["is_resolution"] && post.polls.exists?
     end
   end
 end

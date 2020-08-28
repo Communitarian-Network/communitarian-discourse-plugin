@@ -1,0 +1,13 @@
+{{~topic-link dialog class="raw-link raw-topic-link dialog-list-item__name"}}
+<p class="dialog-list-item__date">{{formattedCreationDate}}</p>
+
+<div class="dialog-list-item__activity">
+  <div class="dialog-list-item__posters">
+    {{raw "list/posters-column" posters=dialog.featuredUsers }}
+  </div>
+
+  <div class="dialog-list-item__posts">
+    {{d-icon "far-comment"}}
+    {{raw "list/posts-count-column" topic=dialog}}
+  </div>
+</div>

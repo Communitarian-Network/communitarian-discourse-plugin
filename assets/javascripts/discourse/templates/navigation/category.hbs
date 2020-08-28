@@ -1,0 +1,31 @@
+{{#d-section class="navigation-container"}}
+  {{add-category-tag-classes category=category}}
+
+  {{!-- custom code started here ↓ --}}
+  <section class="category-header">
+    <div class="page-header__title-wrap">
+      <h2 class="page-header__title">{{category.name}}</h2>
+      {{#if isAuthorized}}
+        {{community-action category=category class="page-header__button"}}
+      {{/if}}
+    </div>
+    {{#if category.description}}
+      <span class="page-header__description">{{dir-span category.description}}</span>
+    {{/if}}
+  </section>
+  {{!-- custom code ended here ↑ --}}
+
+  <div class="category-navigation">
+    {{d-navigation
+      category=category
+      filterMode=filterMode
+      noSubcategories=noSubcategories
+      canCreateTopic=canCreateTopic
+      createTopic=(route-action "createTopic")
+      createTopicDisabled=cannotCreateTopicOnCategory
+      hasDraft=draft
+      editCategory=(route-action "editCategory" category)}}
+
+    {{plugin-outlet name="category-navigation" args=(hash category=category)}}
+  </div>
+{{/d-section}}

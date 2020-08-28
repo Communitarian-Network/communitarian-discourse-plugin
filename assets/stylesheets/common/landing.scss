@@ -307,6 +307,10 @@ $category-boxes-gap: 1em;
         }
       }
     }
+
+    &.no-logos .logo {
+      display: block;
+    }
   }
 }
 
