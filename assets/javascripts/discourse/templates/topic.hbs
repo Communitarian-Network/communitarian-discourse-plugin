@@ -197,10 +197,12 @@
         <section class="topic-area" id="topic" data-topic-id={{model.id}}>
 
           <div class="resolution-list-item__header--dialog">
-            {{#if actionPeriod}}
-              <span>
-                {{i18n "communitarian.resolution.list.date" period=actionPeriod}}
-              </span>
+            {{#if isResolutionPage}}
+              {{#if actionPeriod}}
+                <span>
+                  {{i18n "communitarian.resolution.list.date" period=actionPeriod}}
+                </span>
+              {{/if}}
             {{/if}}
           </div>
 

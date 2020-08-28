@@ -56,8 +56,13 @@ function initializeCommunitarian(api) {
     },
 
     @discourseComputed("postsToRender.posts")
+    isResolutionPage(posts) {
+      return posts.length && posts[0].polls;
+    },
+
+    @discourseComputed("postsToRender.posts")
     actionPeriod(posts) {
-      if (!posts.length || !posts[0].polls.length) {
+      if (!posts.length || (posts[0].polls && !posts[0].polls.length)) {
         return false;
       }
 
