@@ -4,7 +4,7 @@
       <div class="input-group poll-textarea">
         <label>{{i18n "communitarian.resolution.ui_builder.title.label"}}</label>
         {{text-field value=title
-          tabindex="2"
+          tabindex="1"
           id="resolution-title"
           maxLength=titleMaxLength
           class="resolution-form-title"
@@ -17,7 +17,7 @@
         <div class="options">
           <div class="input-group poll-textarea">
             <label>{{i18n "communitarian.resolution.ui_builder.poll_options.label"}}</label>
-            {{textarea value=pollOptions autocomplete="discourse"}}
+            {{textarea tabindex="2" value=pollOptions autocomplete="discourse"}}
           </div>
           {{input-tip validation=minNumOfOptionsValidation}}
         </div>
@@ -32,7 +32,7 @@
 
   <div class="modal-footer">
     <div class="resolution-modal-footer-buttons">
-      {{d-button action=(action "submitResolution") class="btn-primary" label=buttonLabel disabled=disabledButton}}
+      {{d-button tabindex="3" action=(action "submitResolution") class="btn-primary" label=buttonLabel disabled=disabledButton}}
     </div>
     <div class="resolution-modal-footer-reminder">
       <p>{{autoCloseReminder}} {{activePeriodNote}}</p>

@@ -9,7 +9,7 @@
       action=createCategory
       label="category.create"
     }}
-    {{create-community-button canCreateCommunity=true}}
+    {{new-community-button canCreateCommunity=true}}
   {{else}}
     {{categories-admin-dropdown
       onChange=(action "selectCategoryAdminDropdownAction")

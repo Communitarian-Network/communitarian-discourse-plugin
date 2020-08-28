@@ -1,10 +1,10 @@
 import Component from "@ember/component";
-import setCategoryNotificationLevel from "./set-category-notification-level";
+import showModal from "discourse/lib/show-modal";
 
 export default Component.extend({
   actions: {
     clickCreateCommunityButton() {
-      alert("Hey!");
+      showModal("community-ui-builder");
     }
   }
 });
