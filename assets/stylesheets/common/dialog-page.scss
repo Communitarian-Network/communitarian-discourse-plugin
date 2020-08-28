@@ -1,5 +1,6 @@
 .dialog-page {
   margin-top: 2em;
+  margin-bottom: 2em;
 
   .title-wrapper {
     .fancy-title {
@@ -78,6 +79,80 @@
           .cooked {
             padding: 0;
             font-size: 1.15em;
+          }
+        }
+
+        .poll {
+          padding: 0;
+          border: 1px solid #dcdcdc;
+          border-radius: 0.5em;
+          background-color: #f0f0f0;
+          font-size: 0.85em;
+
+          .poll-container {
+            border-right: 0;
+            padding-top: 2em;
+            padding-bottom: 2em;
+
+            .results {
+              li {
+                padding: 0.5em 0;
+                font-size: 1em;
+
+                .percentage {
+                  display: none;
+                }
+
+                .bar {
+                  height: 1.4em;
+                }
+              }
+            }
+
+            li[data-poll-option-id] {
+              padding: 0.3em 0;
+
+              svg {
+                margin-right: 0.4em;
+                background-color: $secondary;
+                border-radius: 50%;
+              }
+            }
+          }
+
+          .poll-info {
+            padding-top: 0.5em;
+            padding-right: 1.5em;
+            padding-left: 1.5em;
+            min-width: unset;
+            vertical-align: unset;
+            color: #515151;
+
+            .info-number {
+              font-size: 1.2em;
+            }
+
+            .info-label {
+              display: inline;
+              padding-left: 0.5em;
+              font-size: 1.2em;
+            }
+          }
+
+          .poll-buttons {
+            border-top-color: #dcdcdc;
+
+            .toggle-results {
+              border-color: #dcdcdc;
+
+              &[disabled] {
+                opacity: 0.8;
+              }
+            }
+
+            .info-text {
+              color: #515151;
+            }
           }
         }
       }

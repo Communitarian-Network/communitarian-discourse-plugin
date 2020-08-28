@@ -1,17 +1,20 @@
 import I18n from "I18n";
 import { inject as service } from "@ember/service";
 import { inject as controller } from "@ember/controller";
+import { gt } from "@ember/object/computed";
+
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
-import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
-import { gt } from "@ember/object/computed";
 import { SEARCH_PRIORITIES } from "discourse/lib/constants";
 import showModal from "discourse/lib/show-modal";
+
+import ResolutionController from "../controllers/resolution-controller";
+import getResolutionPeriod from "../discourse/components/get-resolution-period";
 
 function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
@@ -39,16 +42,33 @@ function initializeCommunitarian(api) {
     },
   });
 
-  const _isAuthorizedComputed = () => {
-    return {
-      @discourseComputed()
-      isAuthorized() {
-        return !!this.currentUser;
-      },
-    };
-  };
-  api.modifyClass("controller:navigation/category", _isAuthorizedComputed());
-  api.modifyClass("controller:topic", _isAuthorizedComputed());
+  api.modifyClass("controller:navigation/category", {
+    @discourseComputed()
+    isAuthorized() {
+      return !!this.currentUser;
+    },
+  });
+
+  api.modifyClass("controller:topic", {
+    @discourseComputed()
+    isAuthorized() {
+      return !!this.currentUser;
+    },
+
+    @discourseComputed("postsToRender.posts")
+    actionPeriod(posts) {
+      if (!posts.length || !posts[0].polls.length) {
+        return false;
+      }
+
+      const post = posts[0];
+      const poll = post.polls[0];
+      const created = moment(post.created_at);
+      const closed = moment(poll.close);
+
+      return getResolutionPeriod(created, closed);
+    }
+  });
 
   api.modifyClass("controller:discovery", {
     discoveryTopics: controller("discovery/topics"),
