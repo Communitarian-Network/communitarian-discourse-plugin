@@ -73,7 +73,7 @@ after_initialize do
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
 
   add_to_serializer(:topic_list, :dialogs, false) do
-    object.dialogs&.map do |dialog|
+    object.dialogs.to_a.map do |dialog|
       TopicListItemSerializer.new(dialog, root: false, embed: :objects, scope: self.scope)
     end
   end
@@ -87,7 +87,7 @@ after_initialize do
   require 'homepage_constraint'
   Discourse::Application.routes.prepend do
     scope path: 'c/*category_slug_path_with_id' do
-      get "/l/dialogs" => "list#category_dialogs", as: "category_dialogs", constraints: { format: 'html' }
+      get "/l/dialogs" => "list#category_dialogs"
     end
     root to: "communitarian/page#index", constraints: HomePageConstraint.new("home")
     get "/home" => "communitarian/page#index"
@@ -122,6 +122,16 @@ after_initialize do
         result.where(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
       else
         result
+      end
+    end
+
+    Discourse.class_eval do
+      def self.filters
+        @filters ||= [:latest, :unread, :new, :read, :posted, :bookmarks, :dialogs]
+      end
+
+      def self.anonymous_filters
+        @anonymous_filters ||= [:latest, :top, :categories, :dialogs]
       end
     end
 
@@ -204,65 +214,14 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? dialogs(category: @category.id).topics.first(5) : []
+        list.dialogs = @category ? category_dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
       def category_dialogs(options = nil)
-        filter = :dialogs
-        list_opts = build_topic_list_options
-        list_opts.merge!(options) if options
-        user = list_target_user
-        list_opts[:no_definitions] = true if params[:category].blank? && filter == :latest
+        without_respond = options ? options.delete(:without_respond) : false
 
-        list = TopicQuery.new(user, list_opts).public_send("list_#{filter}")
-
-        if guardian.can_create_shared_draft? && @category.present?
-          if @category.id == SiteSetting.shared_drafts_category.to_i
-            # On shared drafts, show the destination category
-            list.topics.each do |t|
-              t.includes_destination_category = true
-            end
-          else
-            # When viewing a non-shared draft category, find topics whose
-            # destination are this category
-            shared_drafts = TopicQuery.new(
-              user,
-              category: SiteSetting.shared_drafts_category,
-              destination_category_id: list_opts[:category]
-            ).list_latest
-
-            if shared_drafts.present? && shared_drafts.topics.present?
-              list.shared_drafts = shared_drafts.topics
-            end
-          end
-        end
-
-        list.more_topics_url = construct_url_with(:next, list_opts)
-        list.prev_topics_url = construct_url_with(:prev, list_opts)
-        if Discourse.anonymous_filters.include?(filter)
-          @description = SiteSetting.site_description
-          @rss = filter
-
-          # Note the first is the default and we don't add a title
-          if (filter.to_s != current_homepage) && use_crawler_layout?
-            filter_title = I18n.t("js.filters.#{filter.to_s}.title", count: 0)
-            if list_opts[:category] && @category
-              @title = I18n.t('js.filters.with_category', filter: filter_title, category: @category.name)
-            else
-              @title = I18n.t('js.filters.with_topics', filter: filter_title)
-            end
-            @title << " - #{SiteSetting.title}"
-          elsif @category.blank? && (filter.to_s == current_homepage) && SiteSetting.short_site_description.present?
-            @title = "#{SiteSetting.title} - #{SiteSetting.short_site_description}"
-          end
-        end
-
-        respond_with_list(list)
-      end
-
-      def dialogs(options = nil)
         filter = :dialogs
         list_opts = build_topic_list_options
         list_opts.merge!(options) if options
@@ -295,10 +254,14 @@ after_initialize do
         list.more_topics_url = construct_url_with(:next, list_opts)
         list.prev_topics_url = construct_url_with(:prev, list_opts)
 
-        list.draft_key = Draft::NEW_TOPIC
-        list.draft_sequence = DraftSequence.current(current_user, Draft::NEW_TOPIC)
-        list.draft = Draft.get(current_user, list.draft_key, list.draft_sequence) if current_user
-        list
+        if without_respond
+          list.draft_key = Draft::NEW_TOPIC
+          list.draft_sequence = DraftSequence.current(current_user, Draft::NEW_TOPIC)
+          list.draft = Draft.get(current_user, list.draft_key, list.draft_sequence) if current_user
+          list
+        else
+          respond_with_list(list)
+        end
       end
     end
   end
