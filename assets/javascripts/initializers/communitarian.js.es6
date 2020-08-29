@@ -1,8 +1,6 @@
 import I18n from "I18n";
 import { inject as service } from "@ember/service";
 import { inject as controller } from "@ember/controller";
-import { gt } from "@ember/object/computed";
-
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
@@ -10,6 +8,7 @@ import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
+import { gt } from "@ember/object/computed";
 import { SEARCH_PRIORITIES } from "discourse/lib/constants";
 import showModal from "discourse/lib/show-modal";
 

@@ -4,7 +4,7 @@ en:
       delay:
         error: "You can't post more than once in %{period} to this dialog"
   site_settings:
-    communitarian_enabled: Enable communitarian plugin
+    communitarian_enabled: Enable Civil dialogues plugin
     communitarian_resolutions_close: Enable close resolutions
     communitarian_resolutions_close_week_day: Day of the week for closing resolutions
     communitarian_resolutions_close_hour: Hour(0-23) for closing resolutions

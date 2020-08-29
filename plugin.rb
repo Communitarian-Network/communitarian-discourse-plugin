@@ -80,7 +80,7 @@ after_initialize do
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
 
   add_to_serializer(:topic_list, :dialogs, false) do
-    object.dialogs.map do |dialog|
+    object.dialogs.to_a.map do |dialog|
       TopicListItemSerializer.new(dialog, root: false, embed: :objects, scope: self.scope)
     end
   end
