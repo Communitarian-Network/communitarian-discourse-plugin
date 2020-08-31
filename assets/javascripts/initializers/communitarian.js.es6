@@ -7,7 +7,6 @@ import TopicController from "discourse/controllers/topic";
 import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
-import { endWith } from "discourse/lib/computed";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
 import { gt } from "@ember/object/computed";
@@ -63,8 +62,7 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:discovery:topics", {
-    hasDialogs: gt("model.dialogs.length", 0),
-    dialogs: endWith("model.filter", "dialogs")
+    hasDialogs: gt("model.dialogs.length", 0)
   });
 
   api.modifyClassStatic("model:topic-list", {

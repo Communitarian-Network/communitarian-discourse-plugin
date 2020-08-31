@@ -48,6 +48,10 @@ en:
       dialogs:
         header_title: Ongoing Dialogs
         view_all: View all
+    filters:
+      dialogs:
+        title: All dialogs
+        help: All dialogs
     user:
       name:
         instructions: Your full name
