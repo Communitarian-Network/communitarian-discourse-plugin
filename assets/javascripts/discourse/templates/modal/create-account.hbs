@@ -106,20 +106,20 @@
     {{#if showCreateForm}}
       <div class="modal-footer">
         {{d-button
-          class="btn-large btn-primary"
+          class="btn-large btn-primary verification-continue"
           action=(action "showNextStep")
           disabled=submitDisabled
           label="communitarian.create_account.continue"
         }}
 
-        <span>{{i18n "communitarian.create_account.next_verification"}}</span>
+        <span class="verification-next-step">{{i18n "communitarian.create_account.next_verification"}}</span>
 
         {{#unless hasAuthOptions}}
           {{login-buttons externalLogin=(action "externalLogin") buttons=authButtons}}
         {{/unless}}
-
-        <div class="disclaimer">{{html-safe disclaimerHtml}}</div>
       </div>
+      
+      <div class="disclaimer">{{html-safe disclaimerHtml}}</div>
 
       {{plugin-outlet name="create-account-after-modal-footer" tagName=""}}
     {{/if}}

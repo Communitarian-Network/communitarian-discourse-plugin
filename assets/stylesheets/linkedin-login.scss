@@ -1,3 +1,8 @@
 .btn-social.linkedin {
   background: #46698f;
 }
+
+.btn-social.linkedin:hover,
+.btn-social.linkedin:focus {
+  background: dark-light-diff(#46698f, #46698f, 0, -20%);
+}

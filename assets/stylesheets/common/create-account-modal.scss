@@ -1,0 +1,212 @@
+.modal.create-account {
+  background-color: transparent;
+
+  .modal-inner-container {
+    max-width: 32em;
+    border-radius: 5px;
+    background-color: $secondary;
+    box-shadow: 0 0 6em 0 rgba(0, 0, 0, 0.04);
+
+    .modal-header {
+      padding: 2em 1em 1em;
+      position: relative;
+      border-bottom: 0;
+
+      @media screen and (max-width: 500px) {
+        padding-top: 1.5em;
+      }
+
+      .modal-close {
+        position: absolute;
+        right: 1em;
+        top: 1em;
+        font-size: 1.3em;
+      }
+
+      .title {
+        flex: 1;
+        text-align: center;
+        font-size: 1.2em;
+        line-height: 2em;
+
+        @media screen and (max-width: 500px) {
+          font-size: 1em;
+        }
+
+        h3 {
+          font-weight: 900;
+          letter-spacing: 1px;
+
+          @media screen and (max-width: 500px) {
+            letter-spacing: unset;
+          }
+        }
+
+        &:before {
+          content: "Join Civil Dialogues";
+        }
+      }
+    }
+
+    .modal-body {
+      padding-top: 0;
+      padding-bottom: 0;
+
+      .login-form {
+        &:after {
+          display: none;
+        }
+
+        & > form {
+          padding-left: 3em;
+          padding-right: 3em;
+          padding-bottom: 0;
+
+          @media screen and (max-width: 500px) {
+            padding-left: 1em;
+            padding-right: 1em;
+          }
+        }
+
+        tr.input:not(:first-of-type) {
+          margin-top: 1em;
+        }
+
+        .label {
+          display: flex;
+          justify-content: flex-start;
+          align-items: baseline;
+
+          @media screen and (max-width: 500px) {
+            font-size: 0.9em;
+          }
+
+          label {
+            margin-top: 0;
+            width: auto;
+            font-size: 1.2em;
+            font-weight: 500;
+            line-height: 1.7em;
+          }
+
+          .instructions {
+            font-family: "Avenir Light", sans-serif;
+            padding-left: 0.6em;
+            opacity: 0.5;
+            font-weight: 100;
+            line-height: 1.7em;
+          }
+        }
+
+        .instructions {
+          .tip {
+            font-family: "Avenir Light", sans-serif;
+
+            @media screen and (max-width: 500px) {
+              font-size: 0.9em;
+            }
+          }
+        }
+
+        .ember-text-field {
+          padding-top: 0.4em;
+          padding-bottom: 0.4em;
+          border: 1px solid #cdcdcd;
+          border-radius: 6px;
+          background-color: $secondary;
+          font-size: 1.2em;
+          font-weight: 500;
+          line-height: 1.7em;
+
+          @media screen and (max-width: 500px) {
+            font-size: 1em;
+          }
+        }
+      }
+    }
+
+    .modal-footer {
+      padding-top: 1.5em;
+      padding-left: 3em;
+      padding-right: 3em;
+      border-top: 0;
+
+      @media screen and (max-width: 500px) {
+        padding-top: 1em;
+        padding-left: 2em;
+        padding-right: 2em;
+      }
+
+      .verification-continue {
+        margin: 0;
+        padding: 0.9em 2em;
+
+        @media screen and (max-width: 500px) {
+          padding: 0.7em 1.5em;
+        }
+      }
+
+      .verification-next-step {
+        font-family: "Avenir Light", sans-serif;
+        padding-left: 1em;
+        opacity: 0.5;
+        font-weight: 100;
+        font-size: 1.1em;
+        line-height: 1.7em;
+      }
+
+      #login-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2em 0 1.4em;
+        min-height: unset;
+
+        @media screen and (max-width: 500px) {
+          padding: 1.2em 0.5em 0.4em;
+        }
+
+        .linkedin,
+        .linkedin:hover {
+          font-family: "Avenir Light", sans-serif;
+          margin: 0;
+          padding: 0.6em 1.3em 0.6em 1em;
+          color: $secondary;
+          font-size: 1.3em;
+          font-weight: 100;
+          border-radius: 5px;
+
+          @media screen and (max-width: 500px) {
+            display: flex;
+            align-items: center;
+            padding: 0.6em 1.3em 0.6em 1em;
+            font-size: 1.1em;
+          }
+
+          .d-icon {
+            padding-bottom: 0.1em;
+            font-size: 1.3em;
+
+            @media screen and (max-width: 500px) {
+              padding-bottom: 0.2em;
+            }
+          }
+        }
+      }
+    }
+
+    .disclaimer {
+      margin: 0;
+      padding: 1.4em 3em;
+      color: $primary;
+      border-radius: 0.5em;
+      background-color: #f0f0f0;
+      font-family: "Avenir Heavy", sans-serif;
+      font-size: 1.05em;
+
+      @media screen and (max-width: 500px) {
+        padding: 1em 1.75em;
+        font-size: 1em;
+      }
+    }
+  }
+}
