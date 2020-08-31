@@ -4,11 +4,6 @@
 
 {{#if showCategoryAdmin}}
   {{#if isCommunitiesPage}}
-    {{d-button
-      class="btn-primary add-category"
-      action=createCategory
-      label="category.create"
-    }}
     {{new-community-button canCreateCommunity=true}}
   {{else}}
     {{categories-admin-dropdown
