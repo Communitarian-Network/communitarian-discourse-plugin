@@ -1,0 +1,13 @@
+.dialog-list {
+  &__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: .75em;
+  }
+
+  &__header-title {
+    color: #959595;
+    font-size: 1.2em;
+  }
+}

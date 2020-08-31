@@ -1,5 +1,6 @@
 import I18n from "I18n";
 import { inject as service } from "@ember/service";
+import { inject as controller } from "@ember/controller";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
@@ -9,6 +10,7 @@ import { registerUnbound } from "discourse-common/lib/helpers";
 import { endWith } from "discourse/lib/computed";
 import { ajax } from "discourse/lib/ajax";
 import { extractError } from "discourse/lib/ajax-error";
+import { gt } from "@ember/object/computed";
 import { SEARCH_PRIORITIES } from "discourse/lib/constants";
 import showModal from "discourse/lib/show-modal";
 
@@ -16,13 +18,17 @@ function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
     let operators = {
       '===': (l, r) => l === r,
-      '!=': (l, r) => l != r,
-      '>':  (l, r) => l >  r,
+      '!==': (l, r) => l !== r,
+      '>': (l, r) => l > r,
       '>=': (l, r) => l >= r,
-      '<':  (l, r) => l <  r,
+      '<':  (l, r) => l < r,
       '<=': (l, r) => l <= r,
     };
     return operators[operator] && operators[operator](v1, v2);
+  });
+
+  registerUnbound('getPercentWidth', function(currentValue, maxValue) {
+    return `width: ${maxValue ? (currentValue / maxValue) * 100 : 0}%`;
   });
 
   api.modifyClass("controller:navigation/categories", {
@@ -34,8 +40,30 @@ function initializeCommunitarian(api) {
     },
   });
 
+  api.modifyClass("controller:navigation/category", {
+    @discourseComputed()
+    isAuthorized() {
+      return !!this.currentUser;
+    },
+  });
 
-api.modifyClass("controller:discovery:topics", {
+  api.modifyClass("controller:discovery", {
+    discoveryTopics: controller("discovery/topics"),
+    router: service(),
+
+    @discourseComputed("discoveryTopics.model.dialogs")
+    dialogs(dialogs) {
+      return dialogs;
+    },
+
+    @discourseComputed("router.currentRoute.localName")
+    isCommunityPage(currentRouteName) {
+      return currentRouteName === "category";
+    }
+  });
+
+  api.modifyClass("controller:discovery:topics", {
+    hasDialogs: gt("model.dialogs.length", 0),
     dialogs: endWith("model.filter", "dialogs")
   });
 

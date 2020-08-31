@@ -18,6 +18,12 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
+  "stylesheets/common/community-page.scss",
+  "stylesheets/common/dialog-list.scss",
+  "stylesheets/common/dialog-list-item.scss",
+  "stylesheets/common/resolution-list-item.scss",
+  "stylesheets/common/page-header.scss",
+  "stylesheets/common/community-action.scss",
   "stylesheets/linkedin-login.scss"
 ].each { |file| register_asset file }
 
@@ -137,26 +143,10 @@ after_initialize do
     end
 
     ListController.class_eval do
-      before_action :set_category, only: [
-        :category_default,
-        # filtered topics lists
-        Discourse.filters.map { |f| :"category_#{f}" },
-        Discourse.filters.map { |f| :"category_none_#{f}" },
-        # top summaries
-        :category_top,
-        :category_none_top,
-        # top pages (ie. with a period)
-        TopTopic.periods.map { |p| :"category_top_#{p}" },
-        TopTopic.periods.map { |p| :"category_none_top_#{p}" },
-        # category feeds
-        :category_feed,
-        :dialogs,
-      ].flatten
-
       def category_default
         canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
         view_method = @category.default_view
-        view_method = 'latest' unless %w(latest top dialogs).include?(view_method)
+        view_method = 'latest' unless %w(latest top).include?(view_method)
 
         self.public_send(view_method, category: @category.id)
       end
