@@ -1,11 +1,7 @@
-{{#create-account email=accountEmail disabled=submitDisabled action=(action "createAccount")}}
+{{#create-account email=accountEmail disabled=submitDisabled action=(action "showNextStep")}}
   {{#unless complete}}
     {{plugin-outlet name="create-account-before-modal-body"}}
-    {{#d-modal-body title="create_account.title" class=(concat (if hasAtLeastOneLoginButton "has-alt-auth") " " (if userFields "has-user-fields"))}}
-
-      {{#unless hasAuthOptions}}
-        {{login-buttons externalLogin=(action "externalLogin")}}
-      {{/unless}}
+    {{#d-modal-body title="communitarian.create_account.title" class=(concat (if hasAtLeastOneLoginButton "has-alt-auth") " " (if userFields "has-user-fields"))}}
 
       {{#if showCreateForm}}
         <div class="login-form">
@@ -16,7 +12,10 @@
                   <span id="new-account-email" class="static create-account-email">{{accountEmail}}</span>
                 {{else}}
                   <tr class="input create-account-email">
-                    <td class="label"><label for="new-account-email">{{i18n "user.email.title"}}</label></td>
+                    <td class="label">
+                      <label for="new-account-email">{{i18n "user.email.title"}}</label>
+                      <span class="instructions">{{i18n "user.email.instructions"}}</span>
+                    </td>
                     <td>
                       {{input type="email" value=accountEmail id="new-account-email" disabled=emailValidated name="email" autofocus="autofocus"}}
                     </td>
@@ -26,26 +25,7 @@
                 <tr class="instructions create-account-email">
                   <td></td>
                   {{input-tip validation=emailValidation id="account-email-validation"}}
-                  <td><label>{{i18n "user.email.instructions"}}</label></td>
                 </tr>
-
-                {{#if usernameRequired}}
-                  {{#if hasAuthOptions}}
-                    <span name="username" id="new-account-username" class="static" style="display: none;">{{accountUsername}}</span>
-                  {{else}}
-                    <tr class="input">
-                      <td class="label"><label for="new-account-username">{{i18n "user.username.title"}}</label></td>
-                      <td>
-                        {{input value=accountUsername id="new-account-username" name="username" maxlength=maxUsernameLength autocomplete="discourse"}}
-                      </td>
-                    </tr>
-                    <tr class="instructions">
-                      <td></td>
-                      {{input-tip validation=usernameValidation id="username-validation"}}
-                      <td><label>{{i18n "user.username.instructions"}}</label></td>
-                    </tr>
-                  {{/if}}
-                {{/if}}
 
                 {{plugin-outlet
                   name="create-account-before-password"
@@ -61,7 +41,10 @@
 
                 {{#if passwordRequired}}
                   <tr class="input">
-                    <td class="label"><label for="new-account-password">{{i18n "user.password.title"}}</label></td>
+                    <td class="label">
+                    <label for="new-account-password">{{i18n "user.password.title"}}</label>
+                    <span class="instructions">{{passwordInstructions}}</span>
+                    </td>
                     <td>
                       {{password-field value=accountPassword type="password" id="new-account-password" capsLockOn=capsLockOn}}
                     </td>
@@ -70,7 +53,6 @@
                     <td></td>
                     {{input-tip validation=passwordValidation}}
                     <td>
-                      <label>{{passwordInstructions}}</label>
                       <div class="caps-lock-warning {{unless capsLockOn "hidden"}}">
                         {{d-icon "exclamation-triangle"}} {{i18n "login.caps_lock_warning"}}
                       </div>
@@ -125,16 +107,16 @@
       <div class="modal-footer">
         {{d-button
           class="btn-large btn-primary"
-          action=(action "createAccount")
+          action=(action "showNextStep")
           disabled=submitDisabled
-          label="create_account.title"
+          label="communitarian.create_account.continue"
         }}
 
-        {{#conditional-loading-spinner condition=formSubmitted size="small"}}
-          {{#d-button class="btn-large" id="login-link" action=(route-action "showLogin")}}
-            {{i18n "log_in"}}
-          {{/d-button}}
-        {{/conditional-loading-spinner}}
+        <span>{{i18n "communitarian.create_account.next_verification"}}</span>
+
+        {{#unless hasAuthOptions}}
+          {{login-buttons externalLogin=(action "externalLogin") buttons=authButtons}}
+        {{/unless}}
 
         <div class="disclaimer">{{html-safe disclaimerHtml}}</div>
       </div>

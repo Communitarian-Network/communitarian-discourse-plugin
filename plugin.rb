@@ -29,6 +29,10 @@ enabled_site_setting :communitarian_enabled
 
 register_svg_icon "fab-linkedin-in" if respond_to?(:register_svg_icon)
 
+register_html_builder("server:before-head-close") do
+  "<script src='https://js.stripe.com/v3/'></script>"
+end
+
 PLUGIN_NAME ||= "communitarian"
 
 [

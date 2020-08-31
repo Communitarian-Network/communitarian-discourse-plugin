@@ -12,6 +12,9 @@ import { extractError } from "discourse/lib/ajax-error";
 import { gt } from "@ember/object/computed";
 import { SEARCH_PRIORITIES } from "discourse/lib/constants";
 import showModal from "discourse/lib/show-modal";
+import Site from "discourse/models/site";
+import LoginMethod from "discourse/models/login-method";
+import { reopenWidget } from "discourse/widgets/widget";
 
 function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
@@ -25,7 +28,7 @@ function initializeCommunitarian(api) {
     };
     return operators[operator] && operators[operator](v1, v2);
   });
-  
+
   registerUnbound('getPercentWidth', function(currentValue, maxValue) {
     return `width: ${maxValue ? (currentValue / maxValue) * 100 : 0}%`;
   });
@@ -90,6 +93,24 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:create-account", {
+    onShow() {
+      this.setProperties({
+        accountUsername: Date.now()
+      });
+    },
+
+    @discourseComputed
+    authButtons() {
+      let methods = [];
+
+      if(this.get("siteSettings.linkedin_enabled")) {
+        const linkedinProvider = Site.currentProp("auth_providers").find(provider => provider.name == "linkedin");
+        methods.pushObject(LoginMethod.create(linkedinProvider));
+      };
+
+      return methods;
+    },
+
     performAccountCreation() {
       if (this.get("authOptions.email") == this.accountEmail) {
         return this._super(...arguments);
@@ -108,6 +129,60 @@ function initializeCommunitarian(api) {
       this.set("formSubmitted", true);
       _createAccount(data, this);
     },
+
+    fieldsValid() {
+      this.clearFlash();
+
+      const validation = [
+        this.emailValidation,
+        this.nameValidation,
+        this.passwordValidation,
+        this.userFieldsValidation
+      ].find(v => v.failed);
+
+      if (validation) {
+        if (validation.message) {
+          this.flash(validation.message, "error");
+        }
+
+        const element = validation.element;
+        if (element.tagName === "DIV") {
+          if (element.scrollIntoView) {
+            element.scrollIntoView();
+          }
+          element.click();
+        } else {
+          element.focus();
+        }
+
+        return false;
+      }
+      return true;
+    },
+
+    actions: {
+      showNextStep() {
+        this.clearFlash();
+
+        if (this.fieldsValid()) {
+          if (this.siteSettings.sign_up_with_credit_card && this.siteSettings.sign_up_with_stripe_identity) {
+            showModal("choose-verification-way");
+          } else if (this.siteSettings.sign_up_with_credit_card){
+            if (this.fieldsValid()) {
+              showModal("payment-details");
+            }
+          } else {
+            if (new Date() - this._challengeDate > 1000 * this._challengeExpiry) {
+              this.fetchConfirmationValue().then(() =>
+                this.performAccountCreation()
+              );
+            } else {
+              this.performAccountCreation();
+            }
+          }
+        }
+      },
+    }
   });
 
   api.modifyClass("route:discovery-categories", {
@@ -178,13 +253,72 @@ function customizeTopicController() {
   TopicController.reopen(ResolutionController);
 }
 
+function customizeHeaderButtonsWidget() {
+  reopenWidget("header-buttons", {
+    // start new changes
+    linkedinLogin() {
+      const linkedinProvider = Site.currentProp("auth_providers").find(provider => provider.name == "linkedin");
+      const loginMethod = LoginMethod.create(linkedinProvider);
+      loginMethod.doLogin();
+    },
+    // end new changes
+
+    html(attrs) {
+      if (this.currentUser) {
+        return;
+      }
+
+
+      const buttons = [];
+
+      // start new changes
+      if (this.siteSettings.linkedin_enabled && !(this.siteSettings.sign_up_with_credit_card || this.siteSettings.sign_up_with_stripe_identity)) {
+        buttons.push(
+          this.attach("button", {
+            className: "btn btn-social",
+            icon: "fab-linkedin-in",
+            label: "login.linkedin.title",
+            action: "linkedinLogin"
+          })
+        );
+
+        return buttons;
+      }
+      // end new changes
+
+      if (attrs.canSignUp && !attrs.topic) {
+        buttons.push(
+          this.attach("button", {
+            label: "sign_up",
+            className: "btn-primary btn-small sign-up-button",
+            action: "showCreateAccount"
+          })
+        );
+      }
+
+      buttons.push(
+        this.attach("button", {
+          label: "log_in",
+          className: "btn-primary btn-small login-button",
+          action: "showLogin",
+          icon: "user"
+        })
+      );
+      return buttons;
+    }
+  })
+}
+
 export default {
   name: "communitarian",
 
   initialize(container) {
     withPluginApi("0.8.31", initializeCommunitarian);
+    const stripePublicKey = container.lookup("site-settings:main").communitarian_stripe_public_key;
+    if (stripePublicKey) window.stripe = Stripe(stripePublicKey);
     const currentUser = container.lookup("current-user:main");
     if (!currentUser || !currentUser.homepage_id) setDefaultHomepage("home");
     withPluginApi("0.8.31", customizeTopicController);
+    withPluginApi("0.8.31", customizeHeaderButtonsWidget);
   },
 };
