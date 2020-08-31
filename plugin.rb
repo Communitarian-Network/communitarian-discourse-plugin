@@ -86,9 +86,6 @@ after_initialize do
 
   require 'homepage_constraint'
   Discourse::Application.routes.prepend do
-    scope path: 'c/*category_slug_path_with_id' do
-      get "/l/dialogs" => "list#category_dialogs"
-    end
     root to: "communitarian/page#index", constraints: HomePageConstraint.new("home")
     get "/home" => "communitarian/page#index"
   end
@@ -153,7 +150,7 @@ after_initialize do
         TopTopic.periods.map { |p| :"category_none_top_#{p}" },
         # category feeds
         :category_feed,
-        :category_dialogs,
+        :dialogs,
       ].flatten
 
       def category_default
@@ -214,12 +211,12 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? category_dialogs(category: @category.id, without_respond: true).topics.first(5) : []
+        list.dialogs = @category ? dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
-      def category_dialogs(options = nil)
+      def dialogs(options = nil)
         without_respond = options ? options.delete(:without_respond) : false
 
         filter = :dialogs
