@@ -32,6 +32,12 @@ plugins:
   landing_categories_length:
     default: 4
     client: true
+  sign_up_with_credit_card:
+    default: true
+    client: true
+  sign_up_with_stripe_identity:
+    default: true
+    client: true
   linkedin_enabled:
     client: true
     default: false
@@ -43,4 +49,8 @@ plugins:
     default: ""
   communitarian_stripe_secret_key:
     default: ""
+    secret: true
+  communitarian_stripe_public_key:
+    default: ""
+    client: true
     secret: true

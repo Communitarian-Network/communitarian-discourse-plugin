@@ -21,11 +21,14 @@ en:
             close_option: Close the poll
         error_while_creating: Sorry, there was an error creating the resolution.
         error_while_updating: Sorry, there was an error updating the resolution.
+        list:
+          date: Weekly Poll on %{period}
+          votes: "%{voters} votes"
       verification:
         error_while_creating: Sorry, there was an error in verification process.
       landing:
         explore:
-          title: The communitarian platform for civil agreement on the most pressing issues
+          title: The Civil Dialogues platform for civil agreement on the most pressing issues
           text: We believe in presenting your real self, productive conversation, and seeking to find common ground and undoing toxic polarization in our nation.
           link: Explore Communities
         communities_header:
@@ -42,6 +45,9 @@ en:
           label: Leave this community
       communities:
         title: Top communities
+      dialogs:
+        header_title: Ongoing Dialogs
+        view_all: View all
       create_account:
         join: Join Communitarian
         title: Create Your Account
@@ -49,6 +55,7 @@ en:
         next_verification: Next Verification
         payment_details:
           title: Payment Details
+          submit_button: Pay $1.00
         choose_verification_way:
           title: Choose the Way of Verification
           description: We believe that the core to a civil conversation is to present your point-of-view and stand behind it without concealing your identity.

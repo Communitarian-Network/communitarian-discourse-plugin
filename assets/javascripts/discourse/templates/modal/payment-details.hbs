@@ -1,17 +1,14 @@
-<div class="payment-details">
+{{#payment-details class="payment-details" action=(action "submitPaymentDetails")}}
   {{#d-modal-body title="communitarian.create_account.payment_details.title"}}
     <p>{{I18n "communitarian.create_account.choose_verification_way.card_description" }}</p>
 
-    <form class="form-horizontal" {{action "submitPaymentDetails" on="submit"}}>
+    <form id="payment-form">
       <div class="input-group">
         <label for="name-on-card">Name on Card</label>
         {{input type="text" value=name id="name-on-card" name="name-on-card" autofocus="autofocus"}}
       </div>
-
-      <div class="input-group">
-        <label for="name-on-card">Credit or Debit Card</label>
-        {{input type="text" id="card-details" name="card-details"}}
-      </div>
+      <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+      <p id="card-error" role="alert">{{errorMessage}}</p>
     </form>
   {{/d-modal-body}}
 
@@ -20,8 +17,8 @@
       class="btn-large btn-primary"
       action=(action "submitPaymentDetails")
       disabled=submitDisabled
-      label="Pay $1.00"
+      label="communitarian.create_account.payment_details.submit_button"
     }}
     <span>{{i18n "communitarian.create_account.next_verification"}}</span>
   </div>
-</div>
+{{/payment-details}}
