@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "../../jobs/regular/reopen_resolution"
-
 module Communitarian
   class Resolution
     REOPENED_RESOLUTION_ATTRIBUTES = %w[
@@ -19,21 +17,20 @@ module Communitarian
 
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
+      post.custom_fields["is_resolution"] = true
+      post.save_custom_fields(true)
       poll = post.reload.polls.first
-      poll.update!(close_at: resolution_schedule.next_close_time(poll.close_at))
+      poll.update!(close_at: resolution_schedule.next_close_time)
       self.schedule_jobs(post)
     end
 
     def schedule_jobs(post)
+      ::DiscoursePoll::Poll.schedule_jobs(post)
       return if to_be_closed?(post)
 
-      ::DiscoursePoll::Poll.schedule_jobs(post)
-
-      poll = post.reload.polls.first
       job_args = { post_id: post.id }
-
       Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
-      Jobs.enqueue_at(resolution_schedule.reopen_delay.since(poll.close_at), :reopen_resolution, job_args)
+      Jobs.enqueue_at(resolution_schedule.next_reopen_time, :reopen_resolution, job_args)
     end
 
     private
@@ -43,13 +40,13 @@ module Communitarian
     end
 
     def close_by_vote?(post)
-      @resolution_stats ||= Communitarian::ResolutionStats.new(post.polls.first)
+      resolution_stats = Communitarian::ResolutionStats.new(post.polls.first)
 
-      @resolution_stats.to_close?
+      resolution_stats.to_close?
     end
 
     def resolution?(post)
-      post.topic.custom_fields["is_resolution"] && post.polls.exists?
+      post.custom_fields["is_resolution"] && post.polls.exists?
     end
   end
 end
