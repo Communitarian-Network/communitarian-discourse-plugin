@@ -1,6 +1,7 @@
 import I18n from "I18n";
 import { inject as service } from "@ember/service";
 import { inject as controller } from "@ember/controller";
+import { htmlSafe } from "@ember/template";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
@@ -26,8 +27,22 @@ function initializeCommunitarian(api) {
     return operators[operator] && operators[operator](v1, v2);
   });
 
-  registerUnbound('getPercentWidth', function(currentValue, maxValue) {
+  registerUnbound('get-percent-width', function(currentValue, maxValue) {
     return `width: ${maxValue ? (currentValue / maxValue) * 100 : 0}%`;
+  });
+
+  registerUnbound("format-dialog-date", function (val) {
+    if (val) {
+      var date = new Date(val);
+      const formattedDate = moment(date).format("MMM ‘DD");
+      return htmlSafe(
+        `<span class='relative-date' data-time='${date.getTime()}'>${formattedDate}</span>`
+      );
+    }
+  });
+
+  api.modifyClass("component:topic-list", {
+    listTitle: "communitarian.dialogs.header_title",
   });
 
   api.modifyClass("controller:navigation/categories", {
