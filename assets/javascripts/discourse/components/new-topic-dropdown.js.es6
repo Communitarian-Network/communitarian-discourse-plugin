@@ -7,9 +7,9 @@ export default DropdownSelectBox.extend({
   classNames: ["new-topic-dropdown", "categories-admin-dropdown"],
 
   selectKitOptions: {
-    icon: "reply",
-    title: "New",
-    showCaret: true
+    icon: null,
+    showCaret: true,
+    none: "communitarian.community.new_button",
   },
 
   content: computed(function() {
@@ -18,16 +18,16 @@ export default DropdownSelectBox.extend({
     items.push({
       id: "createResolution",
       name: I18n.t("communitarian.resolution.new_button"),
-      icon: "bars"
+      icon: "list"
     });
 
-    let allowedToCreateTopic = this.get("createTopicButtonDisabled") !== true || this.get("canCreateTopic") === true || this.get("createTopicDisabled") !== true;
+    const allowedToCreateTopic = !this.get("createTopicButtonDisabled") || this.get("canCreateTopic") || !this.get("createTopicDisabled");
 
     if (allowedToCreateTopic) {
       items.push({
         id: "createDialog",
         name: I18n.t("communitarian.dialog.new_button"),
-        icon: "far-comment"
+        icon: "comment"
       });
     }
 

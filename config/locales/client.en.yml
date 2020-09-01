@@ -2,9 +2,9 @@ en:
   js:
     communitarian:
       dialog:
-        new_button: New Dialog
+        new_button: Dialog
       resolution:
-        new_button: New Resolution
+        new_button: Resolution
         ui_builder:
           form_title:
             new: New Resolution
@@ -45,6 +45,7 @@ en:
           label: Join this community
         leave:
           label: Leave this community
+        new_button: New
       communities:
         title: Top communities
       dialogs:
