@@ -4,7 +4,7 @@ import showModal from "discourse/lib/show-modal";
 import DropdownSelectBox from "select-kit/components/dropdown-select-box";
 
 export default DropdownSelectBox.extend({
-  classNames: ["new-dropdown", "categories-admin-dropdown"],
+  classNames: ["new-topic-dropdown", "categories-admin-dropdown"],
 
   selectKitOptions: {
     icon: "reply",
@@ -39,8 +39,7 @@ export default DropdownSelectBox.extend({
   },
 
   createDialog() {
-    let dNavigation = this.parentView;
-    dNavigation.actions.clickCreateTopicButton.call(dNavigation);
+    this.createTopic();
   },
 
   actions: {
