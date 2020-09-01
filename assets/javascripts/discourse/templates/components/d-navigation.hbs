@@ -1,7 +1,3 @@
-{{#unless isCommunitiesPage}}
-  {{bread-crumbs categories=categories category=category noSubcategories=noSubcategories}}
-{{/unless}}
-
 {{#if showCategoryAdmin}}
   {{#if isCommunitiesPage}}
     {{d-button
@@ -16,41 +12,4 @@
       )
     }}
   {{/if}}
-{{/if}}
-
-{{#unless isCommunitiesPage}}
-  {{navigation-bar navItems=navItems filterMode=filterMode category=category}}
-{{/unless}}
-
-{{#if showCategoryNotifications}}
-  {{category-notifications-button
-    value=category.notification_level
-    category=category
-    onChange=(action "changeCategoryNotificationLevel")
-  }}
-{{/if}}
-
-{{#unless isCommunitiesPage}}
-  {{plugin-outlet name="before-create-topic-button"
-    args=(hash
-      category=category
-      canCreateTopic=canCreateTopic
-      createTopicDisabled=createTopicDisabled
-      createTopicLabel=createTopicLabel)
-  }}
-  {{new-dropdown
-    args=(hash
-      canCreateTopic=canCreateTopic
-      createTopicDisabled=createTopicDisabled
-      createTopicButtonDisabled=createTopicButtonDisabled
-    )
-  }}
-{{/unless}}
-
-{{#if showCategoryEdit}}
-  {{d-button
-    class="btn-default edit-category"
-    action=editCategory
-    icon="wrench"
-    label="category.edit"}}
 {{/if}}

@@ -1,0 +1,13 @@
+{{#if siteSettings.communitarian_enabled}}
+  {{#if category}}
+    {{toggle-community-button category=category class="community-action" btnClass="toggle-community-button"}}
+
+    {{new-topic-dropdown
+      args=(hash
+        canCreateTopic=canCreateTopic
+        createTopicDisabled=createTopicDisabled
+        createTopicButtonDisabled=createTopicButtonDisabled
+      )
+    }}
+  {{/if}}
+{{/if}}

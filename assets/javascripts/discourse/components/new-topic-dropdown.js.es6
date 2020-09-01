@@ -1,6 +1,5 @@
 import I18n from "I18n";
 import { computed } from "@ember/object";
-import { setting } from "discourse/lib/computed";
 import showModal from "discourse/lib/show-modal";
 import DropdownSelectBox from "select-kit/components/dropdown-select-box";
 

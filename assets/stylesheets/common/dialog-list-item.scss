@@ -1,0 +1,63 @@
+.dialog-list-item {
+  padding: 1em 0;
+  border-top: 1px solid rgba(149, 149, 149, 0.2);
+
+  &__name,
+  &__name:visited {
+    max-width: 18.5em;
+    color: $primary;
+    font-size: 1.1em;
+    font-weight: 900;
+  }
+
+  &__date {
+    margin-top: 0;
+    margin-bottom: 0.75em;
+    color: #bebebe;
+    font-size: 1.1em;
+    font-weight: 900;
+    letter-spacing: 1px;
+  }
+
+  &__activity {
+    display: flex;
+    align-items: center;
+  }
+
+  &__posters {
+    display: flex;
+
+    a {
+      &:not(:first-child) {
+        margin-left: -0.7em;
+      }
+
+      &:last-child {
+        img {
+          margin-right: 0.8em;
+        }
+      }
+
+      img {
+        width: 33px;
+        height: 33px;
+      }
+    }
+  }
+
+  &__posts {
+    display: flex;
+    align-items: center;
+    font-size: 1.2em;
+    color: $tertiary;
+
+    .d-icon {
+      font-size: 1.3em;
+    }
+
+    .badge-posts {
+      margin-left: 0.3em;
+      color: $tertiary;
+    }
+  }
+}

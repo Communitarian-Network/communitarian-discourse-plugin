@@ -20,8 +20,8 @@ module Communitarian
       next_close_day.change(hour: self.close_hour)
     end
 
-    def next_reopen_time(close_time = self.class.current_time)
-      self.next_close_time(close_time) + self.reopen_delay
+    def next_reopen_time(post_created_at = self.class.current_time)
+      self.next_close_time(post_created_at) + self.reopen_delay
     end
 
     def close_weekday
