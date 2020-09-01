@@ -1,5 +1,5 @@
 <div class="resolution-form">
-  {{#d-modal-body title=formTitle class="poll-ui-builder"}}
+  {{#d-modal-body title=formTitle class="poll-ui-builder community-ui-builder"}}
     <form class="poll-ui-builder-form form-horizontal" {{action "submitCommunity" on="submit"}}>
       <section class="input-group poll-textarea">
         <label>{{i18n "communitarian.community.ui_builder.title.label"}}</label>
@@ -32,7 +32,7 @@
           value=tenets
           autocomplete="discourse"
           placeholder=(I18n "communitarian.community.ui_builder.tenets.placeholder")
-          rows="3"
+          rows="2"
         }}
       </section>
 
@@ -52,9 +52,6 @@
   <div class="modal-footer">
     <div class="resolution-modal-footer-buttons">
       {{d-button tabindex="4" action=(action "submitCommunity") class="btn-primary" label=buttonLabel disabled=disabledButton}}
-    </div>
-    <div class="resolution-modal-footer-reminder">
-      <p>{{autoCloseReminder}} {{activePeriodNote}}</p>
     </div>
   </div>
 </div>

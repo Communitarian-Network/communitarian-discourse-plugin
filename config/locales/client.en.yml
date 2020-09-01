@@ -20,7 +20,7 @@ en:
             label: Community Tenets
             placeholder: Optional
           cover:
-            label: Cover (Optional)
+            label: Cover (optional)
       communities:
         title: Top communities
       resolution:
