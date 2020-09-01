@@ -2,19 +2,41 @@
   margin-top: 2em;
   margin-bottom: 2em;
 
-  .title-wrapper {
-    .fancy-title {
-      font-size: 1.3em;
+  &__title {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 0.7em;
+
+    @media screen and (max-width: 750px) {
+      flex-direction: column;
+      align-items: stretch;
     }
 
     .page-header__button {
       display: inline-block;
-      margin-left: 0.5em;
+      margin-left: 1em;
       vertical-align: text-top;
 
-      button {
-        padding: 0.4em 1.3em;
-        font-size: 0.6em;
+      @media screen and (max-width: 750px) {
+        margin-left: 0;
+      }
+    }
+  }
+
+  #topic-title {
+    margin-bottom: 0;
+    padding: 0;
+
+    .title-wrapper {
+      width: 100%;
+
+      .fancy-title {
+        font-size: 1.3em;
+
+        @media screen and (max-width: 1000px) {
+          font-size: 1em;
+        }
       }
     }
   }
@@ -22,6 +44,16 @@
   .timeline-container {
     .timeline-footer-controls {
       display: none;
+    }
+  }
+
+  #topic-progress {
+    .nums {
+      top: 7px;
+
+      h4 {
+        font-size: 1em;
+      }
     }
   }
 
@@ -62,12 +94,15 @@
         &:first-child {
           .topic-avatar,
           .topic-meta-data,
-          .topic-map,
-          .post-menu-area {
+          .topic-map {
             display: none;
           }
 
           .topic-body {
+            width: calc(
+              #{$topic-body-width} + (#{$topic-body-width-padding} * 2) + 45px
+            );
+            max-width: 95%;
             padding-top: 0;
             border-top: 0;
 
@@ -79,6 +114,10 @@
           .cooked {
             padding: 0;
             font-size: 1.15em;
+
+            @media screen and (max-width: 1000px) {
+              font-size: 1em;
+            }
           }
         }
 
