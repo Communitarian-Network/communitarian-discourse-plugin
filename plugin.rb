@@ -59,7 +59,7 @@ after_initialize do
 
   on(:category_created) do |category|
     about_post = category.topic.posts.first
-    about =  "#{category.custom_fields["introduction_raw"]}\n\n#{category.custom_fields["tenets_raw"]}\n\n#{about_post.raw}"
+    about = "#{category.custom_fields["introduction_raw"]}\n\n#{category.custom_fields["tenets_raw"]}\n\n#{about_post.raw}"
     about_post.update!(raw: about)
   end
 
