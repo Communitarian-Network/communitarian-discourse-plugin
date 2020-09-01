@@ -129,6 +129,15 @@ after_initialize do
       end
     end
 
+    SuggestedTopicsBuilder.class_eval do
+      def initialize(topic)
+        @excluded_topic_ids = (TopicCustomField.where(name: :is_resolution).pluck(:topic_id) << topic.id).uniq
+        @category_id = topic.category_id
+        @category_topic_ids = Category.topic_ids
+        @results = []
+      end
+    end
+
     TopicList.class_eval do
       attr_accessor :dialogs
     end
