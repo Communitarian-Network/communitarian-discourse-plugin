@@ -21,6 +21,8 @@ en:
             placeholder: Optional
           cover:
             label: Cover (optional)
+        error_while_creating: Sorry, there was an error creating the community.
+        error_while_updating: Sorry, there was an error updating the community.
       communities:
         title: Top communities
       resolution:

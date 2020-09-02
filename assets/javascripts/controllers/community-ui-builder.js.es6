@@ -16,6 +16,7 @@ export default Controller.extend({
     this.setProperties({
       formTitle: "communitarian.community.ui_builder.form_title.new",
       buttonLabel: "communitarian.community.ui_builder.create",
+      loading: false,
       title: "",
       introduction: "",
       tenets: "",
@@ -24,12 +25,19 @@ export default Controller.extend({
     });
   },
 
+  @discourseComputed("title", "introduction", "loading")
+  disabledButton(title, introduction, loading) {
+    return loading || title.trim().length === 0 || introduction.trim().length === 0;
+  },
+
   actions: {
     submitCommunity() {
       const randInt = bound => Math.floor(Math.random() * bound);
       const hexAlphabet = "0123456789ABCDEF";
       const pickRandom = collection => collection[randInt(collection.length)];
       const randomHexString = length => Array.from({ length }, _ => pickRandom(hexAlphabet)).join("");
+
+      this.set("loading", true);
 
       ajax("/categories", {
         type: "POST",
@@ -51,6 +59,14 @@ export default Controller.extend({
         },
       }).then(({ category }) => {
         window.location.href = `/c/${category.slug}`;
+        this.set("loading", false);
+      }).catch(error => {
+        this.set("loading", false);
+        if (error) {
+          popupAjaxError(error);
+        } else {
+          bootbox.alert(I18n.t("communitarian.community.error_while_creating"));
+        }
       });
     },
 
