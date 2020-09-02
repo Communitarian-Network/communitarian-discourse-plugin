@@ -63,10 +63,3 @@ en:
     log_in: Sign in
     category:
       create: New Community
-    poll:
-      multiple:
-        help:
-          up_to_max_options:
-            one: "Choose up to <strong>%{count}</strong> option."
-            two: "Choose 1 option from resolution and whteter to close it."
-            other: "Choose up to <strong>%{count}</strong> options."
