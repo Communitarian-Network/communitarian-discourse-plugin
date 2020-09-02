@@ -43,10 +43,20 @@
       }
     }
 
+    #modal-alert {
+      padding: 0.5em 2em;
+
+      @media screen and (max-width: 500px) {
+        margin-bottom: 1em;
+        padding-left: 1em;
+        padding-right: 1em;
+        text-align: center;
+      }
+    }
+
     .choose-verification-way {
       background-color: $secondary;
       border-radius: 5px;
-      max-height: 75vh;
 
       .modal-body {
         padding: 0 3em 0 2em;
