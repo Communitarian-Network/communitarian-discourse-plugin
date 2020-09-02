@@ -157,8 +157,8 @@ export default Controller.extend({
   },
 
   _closeDate() {
-    const closeHour = this.siteSettings.communitarian_resolutions_close_hour;
-    const closeWeekDay = this.siteSettings.communitarian_resolutions_close_week_day;
+    const closeHour = this.siteSettings.civil_dialogs_resolutions_close_hour;
+    const closeWeekDay = this.siteSettings.civil_dialogs_resolutions_close_week_day;
     const closeDate = moment
       .tz("America/New_York")
       .set({ hours: closeHour, minutes: 0, seconds: 0, millisecond: 0 });
@@ -180,7 +180,7 @@ export default Controller.extend({
       pollOptions.split("\n").forEach(option => {
         if (option.length !== 0) output += `* ${option}\n`;
       });
-      if (this.siteSettings.communitarian_resolutions_close) {
+      if (this.siteSettings.civil_dialogs_resolutions_close) {
         output += `* ${I18n.t("communitarian.resolution.ui_builder.poll_options.close_option")}\n`;
       }
     }

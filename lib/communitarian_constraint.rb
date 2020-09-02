@@ -2,6 +2,6 @@
 
 class CommunitarianConstraint
   def matches?(request)
-    SiteSetting.communitarian_enabled
+    SiteSetting.civil_dialogs_enabled
   end
 end

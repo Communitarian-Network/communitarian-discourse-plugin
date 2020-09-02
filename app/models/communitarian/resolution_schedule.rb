@@ -33,11 +33,11 @@ module Communitarian
     end
 
     def self.close_weekday
-      Date::DAYS_INTO_WEEK[SiteSetting.communitarian_resolutions_close_week_day.downcase.to_sym] || 0
+      Date::DAYS_INTO_WEEK[SiteSetting.civil_dialogs_resolutions_close_week_day.downcase.to_sym] || 0
     end
 
     def self.close_hour
-      SiteSetting.communitarian_resolutions_close_hour.to_i % 24
+      SiteSetting.civil_dialogs_resolutions_close_hour.to_i % 24
     end
 
     def self.reopen_delay

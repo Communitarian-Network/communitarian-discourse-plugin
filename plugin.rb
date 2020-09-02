@@ -12,7 +12,7 @@ gem "stripe_event", "2.3.1"
 
 require "stripe"
 
-enabled_site_setting :communitarian_enabled
+enabled_site_setting :civil_dialogs_enabled
 
 [
   "stylesheets/common/resolution-form.scss",
