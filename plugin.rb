@@ -56,6 +56,8 @@ after_initialize do
   Stripe.api_version = '2020-03-02; identity_beta=v3'
 
   Topic.register_custom_field_type("is_resolution", :boolean)
+  Category.register_custom_field_type("introduction_raw", :text)
+  Category.register_custom_field_type("tenets_raw", :text)
 
   NewPostManager.add_handler(10) { |manager| Communitarian::PostDelay.new.call(manager) }
 
@@ -68,11 +70,20 @@ after_initialize do
     end
   end
 
+  on(:category_created) do |category|
+    about_post = category.topic.posts.first
+    about = "#{category.custom_fields["introduction_raw"]}\n\n#{category.custom_fields["tenets_raw"]}\n\n#{about_post.raw}"
+    about_post.update!(raw: about)
+  end
+
   on(:post_created) do |post, opts|
     if opts[:is_resolution] != nil
       post.custom_fields["is_resolution"] = opts[:is_resolution]
       post.save_custom_fields(true)
     end
+  end
+
+  on(:post_created) do |post, _opts|
     Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
       schedule_jobs(post)
   end

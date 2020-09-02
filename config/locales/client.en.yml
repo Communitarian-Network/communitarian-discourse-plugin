@@ -1,6 +1,30 @@
 en:
   js:
     communitarian:
+      community:
+        join:
+          label: Join this community
+        leave:
+          label: Leave this community
+        ui_builder:
+          form_title:
+            new: New Community
+          create: Create
+          title:
+            label: Title
+            placeholder: One or two words maximum
+          introduction:
+            label: Introduction
+            placeholder: One or two lines maximum
+          tenets:
+            label: Community Tenets
+            placeholder: Optional
+          cover:
+            label: Cover (optional)
+        error_while_creating: Sorry, there was an error creating the community.
+        error_while_updating: Sorry, there was an error updating the community.
+      communities:
+        title: Top communities
       resolution:
         new_button: New Resolution
         ui_builder:
@@ -38,13 +62,6 @@ en:
           title: Take a look at the discussions
           text: If you're interested, we're waiting for you in our community!
           link: View Active Communities
-      community:
-        join:
-          label: Join this community
-        leave:
-          label: Leave this community
-      communities:
-        title: Top communities
       dialogs:
         header_title: Ongoing Dialogs
         view_all: View all
