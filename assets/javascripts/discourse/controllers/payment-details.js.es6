@@ -31,6 +31,7 @@ export default Controller.extend({
       if (event) event.preventDefault();
       if (this.submitDisabled) return;
       this.set("loading", true);
+      this.set("errorMessage", "");
       if (this.paymentConfirmed) {
         self._createAccount();
       } else {
@@ -85,9 +86,6 @@ export default Controller.extend({
   _showError(errorMsgText) {
     this.set("loading", false)
     this.set("errorMessage", errorMsgText);
-    setTimeout(() => {
-      this.set("errorMessage", "");
-    }, 4000);
   },
   _createPaymentIntent() {
     ajax("/communitarian/payment_intents", {
