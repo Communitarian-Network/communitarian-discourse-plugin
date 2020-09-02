@@ -4,9 +4,9 @@
       <a class="posters-more-count">{{poster.moreCount}}</a>
     {{else}}
       {{!-- custom code --}}
-      {{#if (compare poster.user_id '>=' 0)}}
+      {{!-- {{#if (compare poster.user_id '>=' 0)}} --}}
         <a href="{{poster.user.path}}" data-user-card="{{poster.user.username}}" class="{{poster.extraClasses}}">{{avatar poster avatarTemplatePath="user.avatar_template" usernamePath="user.username" namePath="user.name" imageSize="small"}}</a>
-      {{/if}}
+      {{!-- {{/if}} --}}
       {{!-- /custom code --}}
     {{/if}}
   {{/each}}

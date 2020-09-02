@@ -1,30 +1,11 @@
-{{!-- prepared code --}}
-{{!--
-<div class="ongoing-dialog-list__header">
-  <span class="ongoing-dialog-list__header-title">
-    {{i18n "communitarian.dialogs.header_title"}}
-  </span>
-</div>
 
-{{#unless topic.isPrivateMessage}}
-  {{#each topic.suggestedTopics as |dialog|}}
-  {{dialog-list-item dialog=dialog}}
-  {{/each}}
-{{/unless}}
---}}
-{{!-- /prepared code --}}
-
-{{!-- /default code --}}
-<div id="suggested-topics" class="suggested-topics" role="complementary" aria-labelledby="suggested-topics-title">
+<div id="suggested-topics" class="suggested-topics" role="complementary"
+     aria-labelledby="suggested-dialogs-title">
   <div class="topics">
-    {{#if topic.isPrivateMessage}}
     {{basic-topic-list
-        hideCategory="true"
-        showPosters="true"
-        topics=topic.suggestedTopics
-      }}
-    {{else}}
-    {{basic-topic-list topics=topic.suggestedTopics}}
-    {{/if}}
+      hideCategory="true"
+      showPosters="true"
+      topics=topic.suggestedTopics
+    }}
   </div>
 </div>
