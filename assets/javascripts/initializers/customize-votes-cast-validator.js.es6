@@ -38,7 +38,5 @@ export default {
         return selectedOptionCount > 0;
       },
     });
-
-    console.debug(`${this.name} initialized.`);
   },
 };
