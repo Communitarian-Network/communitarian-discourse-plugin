@@ -30,7 +30,7 @@ export default Controller.extend({
     submitPaymentDetails(event) {
       if (event) event.preventDefault();
       if (this.submitDisabled) return;
-      this.set("loading", true)
+      this.set("loading", true);
       if (this.paymentConfirmed) {
         self._createAccount();
       } else {
@@ -60,7 +60,7 @@ export default Controller.extend({
     });
   },
   _createAccount() {
-    var attrs = {
+    let attrs = {
       accountName: this.name,
       accountEmail: this.createAccount.accountEmail,
       accountPassword: this.createAccount.accountPassword,

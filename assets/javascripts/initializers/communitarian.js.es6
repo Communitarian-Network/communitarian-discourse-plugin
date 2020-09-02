@@ -1,4 +1,3 @@
-import I18n from "I18n";
 import { inject as service } from "@ember/service";
 import { inject as controller } from "@ember/controller";
 import { withPluginApi } from "discourse/lib/plugin-api";
@@ -7,14 +6,13 @@ import TopicController from "discourse/controllers/topic";
 import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
-import { ajax } from "discourse/lib/ajax";
-import { extractError } from "discourse/lib/ajax-error";
 import { gt } from "@ember/object/computed";
 import { SEARCH_PRIORITIES } from "discourse/lib/constants";
 import showModal from "discourse/lib/show-modal";
 import Site from "discourse/models/site";
 import LoginMethod from "discourse/models/login-method";
 import { reopenWidget } from "discourse/widgets/widget";
+import CreateAccount from "../modifications/controllers/create_account";
 
 function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
@@ -92,98 +90,7 @@ function initializeCommunitarian(api) {
     }
   });
 
-  api.modifyClass("controller:create-account", {
-    onShow() {
-      this.setProperties({
-        accountUsername: Date.now()
-      });
-    },
-
-    @discourseComputed
-    authButtons() {
-      let methods = [];
-
-      if(this.get("siteSettings.linkedin_enabled")) {
-        const linkedinProvider = Site.currentProp("auth_providers").find(provider => provider.name == "linkedin");
-        methods.pushObject(LoginMethod.create(linkedinProvider));
-      };
-
-      return methods;
-    },
-
-    performAccountCreation() {
-      if (this.get("authOptions.email") == this.accountEmail) {
-        return this._super(...arguments);
-      }
-
-      const data = {
-        name: this.accountName,
-        email: this.accountEmail,
-        password: this.accountPassword,
-        username: this.accountUsername,
-        password_confirmation: this.accountHoneypot,
-        challenge: this.accountChallenge,
-        user_fields: this.userFields,
-      };
-
-      this.set("formSubmitted", true);
-      _createAccount(data, this);
-    },
-
-    fieldsValid() {
-      this.clearFlash();
-
-      const validation = [
-        this.emailValidation,
-        this.nameValidation,
-        this.passwordValidation,
-        this.userFieldsValidation
-      ].find(v => v.failed);
-
-      if (validation) {
-        if (validation.message) {
-          this.flash(validation.message, "error");
-        }
-
-        const element = validation.element;
-        if (element.tagName === "DIV") {
-          if (element.scrollIntoView) {
-            element.scrollIntoView();
-          }
-          element.click();
-        } else {
-          element.focus();
-        }
-
-        return false;
-      }
-      return true;
-    },
-
-    actions: {
-      showNextStep() {
-        this.clearFlash();
-
-        if (this.fieldsValid()) {
-          if (this.siteSettings.sign_up_with_credit_card && this.siteSettings.sign_up_with_stripe_identity) {
-            showModal("choose-verification-way");
-          } else if (this.siteSettings.sign_up_with_credit_card){
-            if (this.fieldsValid()) {
-              showModal("payment-details");
-            }
-          } else {
-            if (new Date() - this._challengeDate > 1000 * this._challengeExpiry) {
-              this.fetchConfirmationValue().then(() =>
-                this.performAccountCreation()
-              );
-            } else {
-              this.performAccountCreation();
-            }
-          }
-        }
-      },
-    }
-  });
+  api.modifyClass("controller:create-account", CreateAccount);
 
   api.modifyClass("route:discovery-categories", {
     actions: {
@@ -212,43 +119,6 @@ export function openNewCategoryModal(context) {
   showModal("edit-category", { model }).set("selectedTab", "general");
 }
 
-function _createAccount(data, self) {
-  return ajax("/communitarian/users/new", { type: "GET", data: data })
-    .then(() => {
-      _createVerificationIntent(data, self);
-    })
-    .catch((error) => {
-      self.set("formSubmitted", false);
-      if (error) {
-        self.flash(extractError(error), "error");
-      } else {
-        bootbox.alert(
-          I18n.t("communitarian.verification.error_while_creating")
-        );
-      }
-    });
-}
-
-function _createVerificationIntent(data, self) {
-  return ajax("/communitarian/verification_intents", {
-    type: "POST",
-    data: data,
-  })
-    .then((response) => {
-      window.location = response.verification_intent.verification_url;
-    })
-    .catch((error) => {
-      self.set("formSubmitted", false);
-      if (error) {
-        self.flash(extractError(error), "error");
-      } else {
-        bootbox.alert(
-          I18n.t("communitarian.verification.error_while_creating")
-        );
-      }
-    });
-}
-
 function customizeTopicController() {
   TopicController.reopen(ResolutionController);
 }
@@ -272,7 +142,7 @@ function customizeHeaderButtonsWidget() {
       const buttons = [];
 
       // start new changes
-      if (this.siteSettings.linkedin_enabled && !(this.siteSettings.sign_up_with_credit_card || this.siteSettings.sign_up_with_stripe_identity)) {
+      if (this.siteSettings.linkedin_enabled && !(this.siteSettings.sign_up_with_credit_card_enabled || this.siteSettings.sign_up_with_stripe_identity_enabled)) {
         buttons.push(
           this.attach("button", {
             className: "btn btn-social",
@@ -315,7 +185,7 @@ export default {
   initialize(container) {
     withPluginApi("0.8.31", initializeCommunitarian);
     const stripePublicKey = container.lookup("site-settings:main").communitarian_stripe_public_key;
-    if (stripePublicKey) window.stripe = Stripe(stripePublicKey);
+    if (stripePublicKey && typeof(Stripe) !== "undefined") window.stripe = Stripe(stripePublicKey);
     const currentUser = container.lookup("current-user:main");
     if (!currentUser || !currentUser.homepage_id) setDefaultHomepage("home");
     withPluginApi("0.8.31", customizeTopicController);
