@@ -21,7 +21,9 @@ export default {
           selected: (attrs.vote.indexOf(option.id) !== -1)
         }));
 
-        let closeOption = selection.find(option => option.html === "Close the poll");
+        const closeText = I18n.t("communitarian.resolution.ui_builder.poll_options.close_option");
+
+        let closeOption = selection.find(option => option.html === closeText);
         let isResolution = this.isMultiple() && closeOption && this.min() === 1 && this.max() === 2;
 
         if (isResolution) {
