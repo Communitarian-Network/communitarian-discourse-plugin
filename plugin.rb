@@ -9,6 +9,7 @@
 gem "omniauth-linkedin-oauth2", "1.0.0"
 gem "stripe", "5.22.0"
 gem "stripe_event", "2.3.1"
+gem "interactor", "3.1.2"
 
 require "stripe"
 
@@ -18,6 +19,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
+  "stylesheets/common/create-account-modal.scss",
   "stylesheets/common/community-page.scss",
   "stylesheets/common/dialog-list.scss",
   "stylesheets/common/dialog-list-item.scss",
@@ -28,6 +30,10 @@ enabled_site_setting :communitarian_enabled
 ].each { |file| register_asset file }
 
 register_svg_icon "fab-linkedin-in" if respond_to?(:register_svg_icon)
+
+register_html_builder("server:before-head-close") do
+  "<script src='https://js.stripe.com/v3/'></script>"
+end
 
 PLUGIN_NAME ||= "communitarian"
 
