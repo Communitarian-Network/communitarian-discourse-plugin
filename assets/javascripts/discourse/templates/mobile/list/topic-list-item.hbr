@@ -28,7 +28,7 @@
             <span class="topic-post-badges">&nbsp;<span class="badge-notification new-topic"></span></span>
           {{~/if~}}
           {{~#if expandPinned~}}
-          {{~raw "list/topic-excerpt" topic=topic~}}
+            {{~raw "list/topic-excerpt" topic=topic~}}
           {{~/if~}}
         </div>
         <div class='pull-right'>
