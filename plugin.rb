@@ -20,6 +20,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/communities-page.scss",
   "stylesheets/common/community-page.scss",
   "stylesheets/common/dialog-list.scss",
+  "stylesheets/common/dialog-list-page.scss",
   "stylesheets/common/dialog-list-item.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",

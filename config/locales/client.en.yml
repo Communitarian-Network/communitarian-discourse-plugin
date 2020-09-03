@@ -64,3 +64,5 @@ en:
     log_in: Sign in
     category:
       create: New Community
+    activity:
+      Recent Activity

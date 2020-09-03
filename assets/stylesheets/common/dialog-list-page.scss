@@ -1,0 +1,103 @@
+.dialog-list-page-content {
+  thead {
+    font-size: 1.2em;
+
+    @media screen and (max-width: 500px) {
+      font-size: 1em;
+    }
+
+    .default {
+      .bulk-select {
+        margin-right: 0.5em;
+      }
+    }
+
+    .activity {
+      @media screen and (max-width: 500px) {
+        white-space: break-spaces;
+      }
+    }
+  }
+
+  tbody {
+    border-width: 2px;
+
+    .main-link .link-top-line .raw-topic-link,
+    .main-link .raw-topic-link:not(.badge-notification) {
+      font-family: "Avenir Heavy", sans-serif;
+      color: $primary;
+
+      @media screen and (max-width: 500px) {
+        font-size: 0.9em;
+      }
+    }
+
+    .posters {
+      .avatar {
+        width: 2.2em;
+        height: 2.2em;
+
+        @media screen and (max-width: 500px) {
+          width: 1.8em;
+          height: 1.8em;
+        }
+      }
+
+      a:first-child .avatar.latest:not(.single) {
+        box-shadow: none;
+        border: 0;
+        top: 0;
+        left: 0;
+      }
+    }
+
+    .posts,
+    .views,
+    .age {
+      font-size: 1.2em;
+      font-weight: 900;
+      color: #bebebe;
+
+      @media screen and (max-width: 500px) {
+        font-size: 1em;
+      }
+    }
+
+    .posts {
+      text-align: left;
+
+      .badge-posts {
+        color: $tertiary;
+
+        .d-icon {
+          margin-right: 0.1em;
+          font-size: 1.3em;
+          vertical-align: text-top;
+
+          @media screen and (max-width: 500px) {
+            margin-right: 0;
+            font-size: 0.9em;
+            vertical-align: top;
+          }
+        }
+      }
+    }
+
+    .views,
+    .age {
+      color: #bebebe;
+    }
+
+    .age {
+      text-align: left;
+    }
+  }
+
+  .posters {
+    width: 11em;
+
+    @media screen and (max-width: 850px) {
+      width: 2em;
+    }
+  }
+}
