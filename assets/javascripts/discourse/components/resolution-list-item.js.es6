@@ -9,8 +9,6 @@ export default Component.extend({
   },
 
   _setupPoll() {
-    window.e = this;
-
     const recentResolution = this.resolution.recent_resolution_post;
     if (!recentResolution) {
       return;

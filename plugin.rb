@@ -9,6 +9,7 @@
 gem "omniauth-linkedin-oauth2", "1.0.0"
 gem "stripe", "5.22.0"
 gem "stripe_event", "2.3.1"
+gem "interactor", "3.1.2"
 
 require "stripe"
 
@@ -19,8 +20,10 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
   "stylesheets/common/dialog-page.scss",
+  "stylesheets/common/create-account-modal.scss",
   "stylesheets/common/community-page.scss",
   "stylesheets/common/dialog-list.scss",
+  "stylesheets/common/dialog-list-page.scss",
   "stylesheets/common/dialog-list-item.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",
@@ -29,6 +32,10 @@ enabled_site_setting :communitarian_enabled
 ].each { |file| register_asset file }
 
 register_svg_icon "fab-linkedin-in" if respond_to?(:register_svg_icon)
+
+register_html_builder("server:before-head-close") do
+  "<script src='https://js.stripe.com/v3/'></script>"
+end
 
 PLUGIN_NAME ||= "communitarian"
 
@@ -50,6 +57,8 @@ after_initialize do
   Stripe.api_version = '2020-03-02; identity_beta=v3'
 
   Topic.register_custom_field_type("is_resolution", :boolean)
+  Category.register_custom_field_type("introduction_raw", :text)
+  Category.register_custom_field_type("tenets_raw", :text)
 
   NewPostManager.add_handler(10) { |manager| Communitarian::PostDelay.new.call(manager) }
 
@@ -62,11 +71,20 @@ after_initialize do
     end
   end
 
+  on(:category_created) do |category|
+    about_post = category.topic.posts.first
+    about = "#{category.custom_fields["introduction_raw"]}\n\n#{category.custom_fields["tenets_raw"]}\n\n#{about_post.raw}"
+    about_post.update!(raw: about)
+  end
+
   on(:post_created) do |post, opts|
     if opts[:is_resolution] != nil
       post.custom_fields["is_resolution"] = opts[:is_resolution]
       post.save_custom_fields(true)
     end
+  end
+
+  on(:post_created) do |post, _opts|
     Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
       schedule_jobs(post)
   end
@@ -213,6 +231,16 @@ after_initialize do
         @results = []
       end
     end
+      
+    Discourse.class_eval do
+      def self.filters
+        @filters ||= [:latest, :dialogs]
+      end
+
+      def self.anonymous_filters
+        @anonymous_filters ||= [:latest, :top, :categories, :dialogs]
+      end
+    end
 
     TopicList.class_eval do
       attr_accessor :dialogs
@@ -277,12 +305,14 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? dialogs(category: @category.id).topics.first(5) : []
+        list.dialogs = @category ? category_dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
-      def dialogs(options = nil)
+      def category_dialogs(options = nil)
+        without_respond = options ? options.delete(:without_respond) : false
+
         filter = :dialogs
         list_opts = build_topic_list_options
         list_opts.merge!(options) if options
@@ -315,10 +345,9 @@ after_initialize do
         list.more_topics_url = construct_url_with(:next, list_opts)
         list.prev_topics_url = construct_url_with(:prev, list_opts)
 
-        list.draft_key = Draft::NEW_TOPIC
-        list.draft_sequence = DraftSequence.current(current_user, Draft::NEW_TOPIC)
-        list.draft = Draft.get(current_user, list.draft_key, list.draft_sequence) if current_user
-        list
+        return list if without_respond
+
+        respond_with_list(list)
       end
     end
   end

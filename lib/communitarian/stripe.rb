@@ -26,6 +26,12 @@ module Communitarian
       end
     end
 
+    def created_payment_intent(params)
+      call_with_rescue do
+        ::Stripe::PaymentIntent.create(params)
+      end
+    end
+
     protected
 
     def call_with_rescue(&block)
