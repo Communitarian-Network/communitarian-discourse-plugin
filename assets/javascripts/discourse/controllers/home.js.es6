@@ -31,13 +31,17 @@ export default Ember.Controller.extend({
 
   @discourseComputed("model.categories")
   landingCategories(categories) {
-  const landingCategoryIds = this.siteSettings.landing_categories.split("|");
+    const landingCategories = this.siteSettings.landing_categories;
+    const landingCategoryIds =
+      landingCategories && landingCategories.split("|");
 
-  if (landingCategoryIds) {
-    categories = landingCategoryIds.map(scid =>
+    if (landingCategoryIds) {
+      categories = landingCategoryIds.map((scid) =>
         categories.findBy("id", parseInt(scid, 10))
       );
-  }
+    } else {
+      this.set("model.categories.content", categories.content.slice(0, 4));
+    }
 
     return categories;
   },
