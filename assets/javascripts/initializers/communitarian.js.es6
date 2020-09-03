@@ -27,7 +27,7 @@ function initializeCommunitarian(api) {
     return operators[operator] && operators[operator](v1, v2);
   });
 
-  registerUnbound('getPercentWidth', function(currentValue, maxValue) {
+  registerUnbound("get-percent-width", function(currentValue, maxValue) {
     return `width: ${maxValue ? (currentValue / maxValue) * 100 : 0}%`;
   });
 
