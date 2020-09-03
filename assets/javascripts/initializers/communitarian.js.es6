@@ -3,6 +3,7 @@ import { inject as controller } from "@ember/controller";
 import { htmlSafe } from "@ember/template";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
+import DiscourseURL from "discourse/lib/url";
 import TopicController from "discourse/controllers/topic";
 import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
@@ -41,7 +42,7 @@ function initializeCommunitarian(api) {
   }
 
   api.modifyClass("component:topic-list", {
-    listTitle: "communitarian.dialogs.header_title",
+    listTitle: "communitarian.dialog.header_title",
   });
 
   api.modifyClass("component:topic-list-item", {
@@ -65,6 +66,12 @@ function initializeCommunitarian(api) {
     isAuthorized() {
       return !!this.currentUser;
     },
+
+    actions: {
+      goToResolutionsPage() {
+        DiscourseURL.routeTo(`${window.location.pathname.replace('/l/dialogs','')}`);
+      }
+    }
   });
 
   api.modifyClass("controller:topic", {

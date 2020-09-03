@@ -62,9 +62,10 @@ en:
           title: Take a look at the discussions
           text: If you're interested, we're waiting for you in our community!
           link: View Active Communities
-      dialogs:
+      dialog:
         header_title: Ongoing Dialogs
         view_all: View all
+        resolutions_link: Vote on resolutions
       create_account:
         join: Join Communitarian
         title: Create Your Account
