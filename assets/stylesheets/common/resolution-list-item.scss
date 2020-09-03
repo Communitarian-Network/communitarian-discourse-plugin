@@ -14,6 +14,7 @@
     &--dialog {
       @extend .resolution-list-item__header;
       width: calc(#{$topic-body-width} + (#{$topic-body-width-padding} * 2));
+      max-width: 100%;
       margin-bottom: 1em;
       padding: 0 0.2em;
       box-sizing: border-box;
