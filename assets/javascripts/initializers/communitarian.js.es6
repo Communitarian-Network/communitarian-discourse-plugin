@@ -33,18 +33,22 @@ function initializeCommunitarian(api) {
     return `width: ${maxValue ? (currentValue / maxValue) * 100 : 0}%`;
   });
 
-  registerUnbound("format-dialog-date", function (val) {
+  const getFormattedDialogDate = (val) => {
     if (val) {
       var date = new Date(val);
-      const formattedDate = moment(date).format("MMM ‘DD");
-      return htmlSafe(
-        `<span class='relative-date' data-time='${date.getTime()}'>${formattedDate}</span>`
-      );
+      return moment(date).format("MMM ‘DD");
     }
-  });
+  }
 
   api.modifyClass("component:topic-list", {
     listTitle: "communitarian.dialogs.header_title",
+  });
+
+  api.modifyClass("component:topic-list-item", {
+    init() {
+      this._super(...arguments);
+      this.set("topic.bumped_at", getFormattedDialogDate(this.topic.bumped_at));
+    },
   });
 
   api.modifyClass("controller:navigation/categories", {

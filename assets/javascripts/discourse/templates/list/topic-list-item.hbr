@@ -37,11 +37,9 @@
       {{/unless}}
     {{/unless}}
     {{!-- custom code --}}
-    {{#if true}}
-      <a class="dialog-page__suggested-activity" href="{{topic.lastPostUrl}}">
-        {{~format-dialog-date topic.bumpedAt~}}
-      </a>
-    {{/if}}
+    <a class="bottom-line-activity" href="{{topic.lastPostUrl}}">
+      {{~topic.bumped_at~}}
+    </a>
     {{!-- /custom code --}}
     {{discourse-tags topic mode="list" tagsForUser=tagsForUser}}
     {{raw "list/action-list" topic=topic postNumbers=topic.liked_post_numbers className="likes" icon="heart"}}

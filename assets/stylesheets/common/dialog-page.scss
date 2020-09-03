@@ -1,3 +1,7 @@
+.bottom-line-activity {
+  display: none;
+}
+
 .dialog-page {
   margin-top: 2em;
   margin-bottom: 2em;
@@ -60,6 +64,11 @@
   .topic-area {
     .post-stream {
       .topic-post {
+        .boxed {
+          border-top: 0;
+          padding-top: 0;
+        }
+
         .cooked {
           padding-bottom: 0;
         }
@@ -102,7 +111,7 @@
             width: calc(
               #{$topic-body-width} + (#{$topic-body-width-padding} * 2) + 45px
             );
-            max-width: 95%;
+            max-width: 100%;
             padding-top: 0;
             border-top: 0;
 
@@ -202,7 +211,85 @@
     display: none;
   }
 
-  &__suggested-activity {
-    color: #919191;
+  .suggested-topics {
+    width: calc(
+      #{$topic-body-width} + (#{$topic-body-width-padding} * 2) + 45px
+    );
+    max-width: 100%;
+
+    table {
+      margin-top: 0;
+
+      thead {
+        font-size: 1.2em;
+
+        @media screen and (max-width: 500px) {
+          font-size: 1em;
+        }
+
+        .posters,
+        .posts,
+        .views,
+        .activity {
+          display: none;
+        }
+      }
+
+      tbody {
+        border-width: 2px;
+
+        .link-top-line {
+          font-weight: 900;
+        }
+
+        .main-link {
+          @media screen and (max-width: 500px) {
+            font-size: 1em;
+          }
+        }
+
+        .bottom-line-activity {
+          display: block;
+          color: #bebebe;
+          margin-top: 0.5em;
+          font-size: 1.1em;
+        }
+
+        .posters {
+          a {
+            margin-right: 0;
+
+            &:not(:first-child) {
+              .avatar {
+                margin-left: -0.7em;
+              }
+            }
+
+            .avatar {
+              width: 2.2em;
+              height: 2.2em;
+            }
+          }
+        }
+
+        .posts .badge-posts {
+          font-size: 1.2em;
+          color: $tertiary;
+
+          @media screen and (max-width: 500px) {
+            font-size: 1em;
+          }
+
+          .d-icon {
+            font-size: 1.2em;
+          }
+        }
+
+        .views,
+        .activity {
+          display: none;
+        }
+      }
+    }
   }
 }

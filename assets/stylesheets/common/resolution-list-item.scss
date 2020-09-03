@@ -17,6 +17,10 @@
       margin-bottom: 1em;
       padding: 0 0.2em;
       box-sizing: border-box;
+
+      @media screen and (max-width: 500px) {
+        margin-bottom: 0;
+      }
     }
   }
 

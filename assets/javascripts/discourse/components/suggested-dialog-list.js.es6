@@ -1,6 +1,5 @@
 import Component from "@ember/component";
 
 export default Component.extend({
-	tagName: "",
-	classNames: ["ongoing-dialog-list"]
+	classNames: ["suggested-dialog-list"]
 });

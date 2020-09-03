@@ -2,7 +2,7 @@
   <a class="post-activity" href="{{topic.lastPostUrl}}">
     {{~raw-plugin-outlet name="topic-list-before-relative-date"~}}
     {{!-- custom code --}}
-    {{~format-dialog-date topic.bumpedAt~}}
+    {{~topic.bumped_at~}}
     {{!-- /custom code --}}
   </a>
 </{{tagName}}>

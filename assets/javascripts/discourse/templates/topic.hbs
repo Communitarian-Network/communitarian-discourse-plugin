@@ -385,7 +385,9 @@
                   {{related-messages topic=model}}
                 {{/if}}
                 {{#if model.suggestedTopics.length}}
-                  {{ongoing-dialog-list topic=model}}
+                  {{!-- custom code --}}
+                  {{suggested-dialog-list topic=model}}
+                  {{!-- /custom code --}}
                 {{/if}}
               </div>
             {{/if}}
