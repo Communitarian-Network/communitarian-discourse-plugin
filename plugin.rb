@@ -149,11 +149,11 @@ after_initialize do
 
     Discourse.class_eval do
       def self.filters
-        @filters ||= [:latest, :dialogs]
+        @filters = [:latest, :dialogs]
       end
 
       def self.anonymous_filters
-        @anonymous_filters ||= [:latest, :top, :categories, :dialogs]
+        @anonymous_filters = [:latest, :top, :categories, :dialogs]
       end
     end
 
