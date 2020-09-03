@@ -13,7 +13,7 @@ gem "interactor", "3.1.2"
 
 require "stripe"
 
-enabled_site_setting :civil_dialogs_enabled
+enabled_site_setting :communitarian_enabled
 
 [
   "stylesheets/common/resolution-form.scss",

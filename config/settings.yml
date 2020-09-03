@@ -1,11 +1,11 @@
 plugins:
-  civil_dialogs_enabled:
+  communitarian_enabled:
     default: true
     client: true
-  civil_dialogs_resolutions_close:
+  communitarian_resolutions_close:
     default: true
     client: true
-  civil_dialogs_resolutions_close_week_day:
+  communitarian_resolutions_close_week_day:
     default: Sunday
     client: true
     type: enum
@@ -17,7 +17,7 @@ plugins:
       - Thursday
       - Friday
       - Saturday
-  civil_dialogs_resolutions_close_hour:
+  communitarian_resolutions_close_hour:
     default: 12
     client: true
     min: 0

@@ -4,10 +4,10 @@ en:
       delay:
         error: "You can't post more than once in %{period} to this dialog"
   site_settings:
-    civil_dialogs_enabled: Enable Civil dialogues plugin
-    civil_dialogs_resolutions_close: Enable close resolutions
-    civil_dialogs_resolutions_close_week_day: Day of the week for closing resolutions
-    civil_dialogs_resolutions_close_hour: Hour(0-23) for closing resolutions
+    communitarian_enabled: Enable Civil dialogues plugin
+    communitarian_resolutions_close: Enable close resolutions
+    communitarian_resolutions_close_week_day: Day of the week for closing resolutions
+    communitarian_resolutions_close_hour: Hour(0-23) for closing resolutions
     communitarian_resolutions_reopen_delay: Delay(in hours) between closing and reopening resolutions
     sign_up_with_credit_card_enabled: Allow users to sign up with credit card?
     sign_up_with_stripe_identity_enabled: Allow users to sign up with identity verification?
