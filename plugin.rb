@@ -241,14 +241,9 @@ after_initialize do
         list.more_topics_url = construct_url_with(:next, list_opts)
         list.prev_topics_url = construct_url_with(:prev, list_opts)
 
-        if without_respond
-          list.draft_key = Draft::NEW_TOPIC
-          list.draft_sequence = DraftSequence.current(current_user, Draft::NEW_TOPIC)
-          list.draft = Draft.get(current_user, list.draft_key, list.draft_sequence) if current_user
-          list
-        else
-          respond_with_list(list)
-        end
+        return list if without_respond
+
+        respond_with_list(list)
       end
     end
   end
