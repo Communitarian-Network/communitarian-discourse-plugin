@@ -6,7 +6,10 @@
     <div class="page-header__title-wrap">
       <h2 class="page-header__title">{{category.name}}</h2>
       {{#if isAuthorized}}
-        {{community-action category=category class="page-header__button"}}
+        {{community-action
+          category=category class="page-header__button"
+          createTopic=(route-action "createTopic")
+        }}
       {{/if}}
     </div>
     {{#if category.description}}

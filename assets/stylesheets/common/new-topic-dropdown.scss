@@ -1,0 +1,35 @@
+.new-topic-dropdown {
+  &.select-kit.dropdown-select-box {
+    margin-bottom: 2.3em;
+
+    .dropdown-select-box-header,
+    .dropdown-select-box-header:hover {
+      margin: 0;
+      padding: 0.6em 1.2em 0.6em 1.7em;
+      background-color: $tertiary;
+      border-radius: 5px;
+      color: $secondary;
+      outline: none;
+
+      .d-icon {
+        padding-left: 0;
+        color: $secondary;
+      }
+    }
+
+    .select-kit-row {
+      .texts .name {
+        color: $primary-high;
+        font-weight: 100;
+      }
+
+      .icons .d-icon {
+        fill: $primary-medium;
+      }
+    }
+
+    .select-kit-selected-name.selected-name.choice {
+      display: inline;
+    }
+  }
+}
