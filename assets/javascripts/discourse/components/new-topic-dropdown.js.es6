@@ -38,10 +38,6 @@ export default DropdownSelectBox.extend({
     showModal("resolution-ui-builder")._setupPoll();
   },
 
-  createDialog() {
-    this.createTopic();
-  },
-
   actions: {
     onChange(action) {
       this[action]();
