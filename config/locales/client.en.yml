@@ -79,6 +79,10 @@ en:
           card_description: For $1 to create an account - a one-time fee to signal you commitment to civil discussion on the pressing issues of our day.
           identity_description: "You'll need a government-issued photo ID."
           identity_example: "Ex: Driver's license, Identity Card, Passport"
+    filters:
+      dialogs:
+        title: All dialogs
+        help: All dialogs
     user:
       name:
         instructions: Your full name
@@ -91,3 +95,5 @@ en:
     log_in: Sign in
     category:
       create: New Community
+    activity:
+      Recent Activity

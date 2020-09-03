@@ -22,6 +22,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/create-account-modal.scss",
   "stylesheets/common/community-page.scss",
   "stylesheets/common/dialog-list.scss",
+  "stylesheets/common/dialog-list-page.scss",
   "stylesheets/common/dialog-list-item.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",
@@ -145,6 +146,16 @@ after_initialize do
       end
     end
 
+    Discourse.class_eval do
+      def self.filters
+        @filters ||= [:latest, :dialogs]
+      end
+
+      def self.anonymous_filters
+        @anonymous_filters ||= [:latest, :top, :categories, :dialogs]
+      end
+    end
+
     TopicList.class_eval do
       attr_accessor :dialogs
     end
@@ -208,12 +219,14 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? dialogs(category: @category.id).topics.first(5) : []
+        list.dialogs = @category ? category_dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
-      def dialogs(options = nil)
+      def category_dialogs(options = nil)
+        without_respond = options ? options.delete(:without_respond) : false
+
         filter = :dialogs
         list_opts = build_topic_list_options
         list_opts.merge!(options) if options
@@ -246,10 +259,9 @@ after_initialize do
         list.more_topics_url = construct_url_with(:next, list_opts)
         list.prev_topics_url = construct_url_with(:prev, list_opts)
 
-        list.draft_key = Draft::NEW_TOPIC
-        list.draft_sequence = DraftSequence.current(current_user, Draft::NEW_TOPIC)
-        list.draft = Draft.get(current_user, list.draft_key, list.draft_sequence) if current_user
-        list
+        return list if without_respond
+
+        respond_with_list(list)
       end
     end
   end
