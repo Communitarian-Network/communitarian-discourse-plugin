@@ -231,7 +231,7 @@ after_initialize do
         @results = []
       end
     end
-      
+
     Discourse.class_eval do
       def self.filters
         @filters ||= [:latest, :dialogs]
