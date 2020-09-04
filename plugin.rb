@@ -24,7 +24,6 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/dialog-list.scss",
   "stylesheets/common/dialog-list-page.scss",
   "stylesheets/common/dialog-list-item.scss",
-  "stylesheets/common/new-topic-dropdown.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",
   "stylesheets/common/community-action.scss",
@@ -150,11 +149,11 @@ after_initialize do
 
     Discourse.class_eval do
       def self.filters
-        @filters ||= [:latest, :dialogs]
+        @filters = [:latest, :dialogs]
       end
 
       def self.anonymous_filters
-        @anonymous_filters ||= [:latest, :top, :categories, :dialogs]
+        @anonymous_filters = [:latest, :top, :categories, :dialogs]
       end
     end
 

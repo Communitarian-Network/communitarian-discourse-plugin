@@ -58,7 +58,7 @@ export default Controller.extend({
           },
         },
       }).then(({ category }) => {
-        window.location.href = `/c/${category.slug}`;
+        window.location.href = `/c/${category.slug}/${category.id}`;
         this.set("loading", false);
       }).catch(error => {
         this.set("loading", false);
