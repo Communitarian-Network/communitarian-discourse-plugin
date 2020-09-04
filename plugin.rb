@@ -73,8 +73,9 @@ after_initialize do
 
   on(:category_created) do |category|
     about_post = category.topic.posts.first
+    revisor = PostRevisor.new(about_post, about_post.topic)
     about = "#{category.custom_fields["introduction_raw"]}\n\n#{category.custom_fields["tenets_raw"]}\n\n#{about_post.raw}"
-    about_post.update!(raw: about)
+    revisor.revise!(about_post.user, { raw: about }, skip_validations: true)
   end
 
   on(:post_created) do |post, opts|
