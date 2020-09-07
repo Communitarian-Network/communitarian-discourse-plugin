@@ -20,6 +20,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
   "stylesheets/common/create-account-modal.scss",
+  "stylesheets/common/login-modal.scss",
   "stylesheets/common/choose-verification-way-modal.scss",
   "stylesheets/common/verification-intents-modal.scss",
   "stylesheets/common/payment-details-modal.scss",

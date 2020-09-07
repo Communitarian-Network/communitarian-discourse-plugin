@@ -101,6 +101,8 @@ en:
           payment:
             name: Name on Card
             card: Credit or Debit Card
+      login:
+        title: Welcome back!
     filters:
       dialogs:
         title: All dialogs
