@@ -56,6 +56,21 @@ en:
           votes: "%{voters} votes"
       verification:
         error_while_creating: Sorry, there was an error in verification process.
+        processing:
+          title: Processing ID
+          text: Your verification currently in progress...
+          hint: This can take no more than 5 minutes. Feel free to keep working in other tabs or apps.
+        requiresAction:
+          title: ID Verification Failed
+          button: Try again
+        canceled:
+          title: ID Verification Canceled
+          text: Your verification has been canceled.
+          hint: Please contact with us to solve this issue.
+        succeeded:
+          title: ID Verification Completed
+          text: Your verification has been completed.
+          hint: You will be redirected to email verification step soon.
       landing:
         explore:
           title: The Civil Dialogues platform for civil agreement on the most pressing issues
@@ -99,5 +114,4 @@ en:
     log_in: Sign in
     category:
       create: New Community
-    activity:
-      Recent Activity
+    activity: Recent Activity

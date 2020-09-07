@@ -1,36 +1,71 @@
-{{#if model.processing}}
-  <p style="text-align:center;">
-    Your verification currently in progress. Please wait...
-  </p>
-  <div class="spinner"></div>
-{{/if}}
-{{#if model.requiresAction}}
-  <p style="text-align:center;">
-    Your verification has been failed.
-  </p>
-  <p style="text-align:center;">
-    <strong>Reason: {{model.error}}</strong>
-  </p>
-  <p style="text-align:center;">
-    Please click the link below and repeat verification process.
-  </p>
-  <a href={{model.verification_url}} style="text-align: center;display: block;margin: 0 auto;">
-    Verify
-  </a>
-{{/if}}
-{{#if model.canceled}}
-  <p style="text-align:center;">
-    Your verification has been cenceled.
-  </p>
-  <p style="text-align:center;">
-    Please contact with us to solve this issue.
-  </p>
-{{/if}}
-{{#if model.succeeded}}
-  <p style="text-align:center;">
-    Your verification has been completed.
-  </p>
-  <p style="text-align:center;">
-    You will be redirected to email verification step soon.
-  </p>
-{{/if}}
+<div class="verification-intents__wrap">
+  {{#if model.processing}}
+    <div class="verification-intents__header--has-progress">
+      <h1 class="verification-intents__title">
+        {{i18n "communitarian.verification.processing.title"}}
+      </h1>
+      <div class="spinner"></div>
+    </div>
+    <div class="verification-intents__content">
+      <p class="verification-intents__text">
+        {{i18n "communitarian.verification.processing.text"}}
+      </p>
+    </div>
+    <p class="verification-intents__hint">
+      {{i18n "communitarian.verification.processing.hint"}}
+    </p>
+  {{/if}}
+
+  {{#if model.requiresAction}}
+    <div class="verification-intents__header">
+      <h1 class="verification-intents__title">
+        {{i18n "communitarian.verification.requiresAction.title"}}
+      </h1>
+    </div>
+    {{#if model.error}}
+      <div class="verification-intents__content">
+        <img src={{closeIconUrl}} class="verification-intents__icon failure" />
+        <p class="verification-intents__text--short">
+          {{model.error}}
+        </p>
+      </div>
+    {{/if}}
+    <a href={{model.verification_url}} class="verification-intents__button">
+      {{i18n "communitarian.verification.requiresAction.button"}}
+    </a>
+  {{/if}}
+
+  {{#if model.canceled}}
+    <div class="verification-intents__header">
+      <h1 class="verification-intents__title">
+        {{i18n "communitarian.verification.canceled.title"}}
+      </h1>
+    </div>
+    <div class="verification-intents__content">
+      <img src={{closeIconUrl}} class="verification-intents__icon failure" />
+      <p class="verification-intents__text--short">
+        {{i18n "communitarian.verification.canceled.text"}}
+      </p>
+    </div>
+    <p class="verification-intents__hint">
+      {{i18n "communitarian.verification.canceled.hint"}}
+    </p>
+  {{/if}}
+
+  {{#if model.succeeded}}
+    <div class="verification-intents__header">
+      <h1 class="verification-intents__title">
+        {{i18n "communitarian.verification.succeeded.title"}}
+      </h1>
+    </div>
+    <div class="verification-intents__content">
+      <img src={{checkIconUrl}} class="verification-intents__icon success" />
+      <p class="verification-intents__text--short">
+        {{i18n "communitarian.verification.succeeded.text"}}
+      </p>
+    </div>
+    <p class="verification-intents__hint">
+      {{i18n "communitarian.verification.succeeded.hint"}}
+    </p>
+  {{/if}}
+</div>

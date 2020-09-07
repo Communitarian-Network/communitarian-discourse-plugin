@@ -8,21 +8,21 @@ export default RestModel.extend({
 
   @discourseComputed("status")
   processing(status) {
-    return status == "processing";
+    return status === "processing";
   },
 
   @discourseComputed("status")
   requiresAction(status) {
-    return status == "requires_action";
+    return status === "requires_action";
   },
 
   @discourseComputed("status")
   canceled(status) {
-    return status == "canceled";
+    return status === "canceled";
   },
 
   @discourseComputed("status")
   succeeded(status) {
-    return status == "succeeded";
+    return status === "succeeded";
   },
 });
