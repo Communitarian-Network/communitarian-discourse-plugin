@@ -151,15 +151,11 @@
       }
 
       .modal-footer {
-        padding-top: 1.5em;
-        padding-left: 3em;
-        padding-right: 3em;
+        padding: 1.5em 3em;
         border-top: 0;
 
         @media screen and (max-width: 500px) {
-          padding-top: 1em;
-          padding-left: 2em;
-          padding-right: 2em;
+          padding: 1em 2em;
         }
 
         .verification-continue {
