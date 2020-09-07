@@ -33,12 +33,10 @@ export default Controller.extend({
 
   @discourseComputed("pollOptions")
   pollOutput(pollOptions) {
-    let pollHeader = "[poll type=regular results=always chartType=bar";
+    let closeDateString = this._closeDate().toISOString();
+    let pollHeader = `[poll type=multiple results=always min=1 max=2 chartType=bar close=${closeDateString}]`;
+
     let output = "";
-
-    pollHeader += ` close=${this._closeDate().toISOString()}`;
-    pollHeader += "]";
-
     output += `${pollHeader}\n`;
     output += this._parsedPollOptions(pollOptions);
     output += "[/poll]\n";

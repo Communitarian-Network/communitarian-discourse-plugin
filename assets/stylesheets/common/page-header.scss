@@ -12,6 +12,10 @@
   &__button {
     margin-left: 1.5em;
 
+    .community-action {
+      display: inline;
+    }
+
     .community-action .toggle-community-button {
       margin: 0;
     }
