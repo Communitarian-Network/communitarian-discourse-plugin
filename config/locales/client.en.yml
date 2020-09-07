@@ -98,6 +98,9 @@ en:
           card_description: For $1 to create an account - a one-time fee to signal you commitment to civil discussion on the pressing issues of our day.
           identity_title: Verification with ID
           identity_description: "You'll need a government-issued photo ID.<br>Ex: Driver's license, Identity Card, Passport"
+          payment:
+            name: Name on Card
+            card: Credit or Debit Card
     filters:
       dialogs:
         title: All dialogs
