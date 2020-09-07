@@ -1,11 +1,14 @@
 en:
   js:
     communitarian:
+      communities:
+        title: Top communities
       community:
         join:
           label: Join this community
         leave:
           label: Leave this community
+        new_button: New
         ui_builder:
           form_title:
             new: New Community
@@ -23,10 +26,13 @@ en:
             label: Cover (optional)
         error_while_creating: Sorry, there was an error creating the community.
         error_while_updating: Sorry, there was an error updating the community.
-      communities:
-        title: Top communities
+      dialog:
+        new_button: Dialog
+      dialogs:
+        header_title: Ongoing Dialogs
+        view_all: View all
       resolution:
-        new_button: New Resolution
+        new_button: Resolution
         ui_builder:
           form_title:
             new: New Resolution
@@ -62,9 +68,6 @@ en:
           title: Take a look at the discussions
           text: If you're interested, we're waiting for you in our community!
           link: View Active Communities
-      dialogs:
-        header_title: Ongoing Dialogs
-        view_all: View all
       create_account:
         join: Join Communitarian
         title: Create Your Account
