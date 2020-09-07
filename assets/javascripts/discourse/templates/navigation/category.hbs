@@ -8,7 +8,11 @@
       <div class="page-header__button-list">
         <div class="page-header__button-list-left">
           {{#if isAuthorized}}
-            {{community-action category=category}}
+            {{community-action
+              category=category
+              class="page-header__button"
+              createTopic=(route-action "createTopic")
+            }}
           {{/if}}
         </div>
 

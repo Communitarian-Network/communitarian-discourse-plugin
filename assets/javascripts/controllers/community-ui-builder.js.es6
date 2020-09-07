@@ -46,7 +46,7 @@ export default Controller.extend({
           uploaded_logo_id: this.coverImageId,
           color: randomHexString(6),
           text_color: randomHexString(6),
-          permissions: { trust_level_1: 1 },
+          permissions: { everyone: 0 },
           allow_badges: false,
           topic_template: "",
           required_tag_group_name: "",
@@ -58,7 +58,7 @@ export default Controller.extend({
           },
         },
       }).then(({ category }) => {
-        window.location.href = `/c/${category.slug}`;
+        window.location.href = `/c/${category.slug}/${category.id}`;
         this.set("loading", false);
       }).catch(error => {
         this.set("loading", false);

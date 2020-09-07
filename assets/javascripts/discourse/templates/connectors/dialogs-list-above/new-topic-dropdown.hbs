@@ -1,0 +1,10 @@
+{{#if currentUser}}
+  {{new-topic-dropdown
+    createDialog=(route-action "createTopic")
+    args=(hash
+      canCreateTopic=canCreateTopic
+      createTopicDisabled=createTopicDisabled
+      createTopicButtonDisabled=createTopicButtonDisabled
+    )
+  }}
+{{/if}}
