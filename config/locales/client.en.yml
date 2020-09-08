@@ -102,6 +102,13 @@ en:
             name: Name on Card
             card: Credit or Debit Card
             address: Billing address
+        activation_email:
+          title: Check your inbox
+          description: Your name & location will be a part of all your post.
+          address: from %{address}
+          instructions: Instructions has been sent to email
+          change_email: Edit
+          check_span: If it doesn’t arrive, check your spam folder or
     filters:
       dialogs:
         title: All dialogs
