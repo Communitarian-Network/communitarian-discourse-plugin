@@ -45,7 +45,7 @@
             <div class='num activity last'>
               <span class="age activity" title="{{topic.bumpedAtTitle}}">
                 {{!-- custom code --}}
-                <a href="{{topic.lastPostUrl}}">{{format-dialog-date topic.bumpedAt}}</a>
+                <a href="{{topic.lastPostUrl}}">{{topic.bumped_at}}</a>
                 {{!-- /custom code --}}
               </span>
             </div>

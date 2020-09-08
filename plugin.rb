@@ -19,6 +19,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
+  "stylesheets/common/dialog-page.scss",
   "stylesheets/common/create-account-modal.scss",
   "stylesheets/common/community-page.scss",
   "stylesheets/common/dialog-list.scss",
@@ -123,6 +124,30 @@ after_initialize do
     end
 
     TopicQuery.class_eval do
+      def self.public_valid_options
+        @public_valid_options ||=
+          %i(page
+            before
+            bumped_before
+            topic_ids
+            category
+            order
+            ascending
+            min_posts
+            max_posts
+            status
+            filter
+            state
+            search
+            q
+            group_name
+            tags
+            match_all_tags
+            only_resolutions
+            no_subcategories
+            no_tags)
+      end
+
       def list_dialogs
         create_list(:dialogs, {}, dialogs_results)
       end
@@ -139,11 +164,72 @@ after_initialize do
       end
     end
 
+    # Return a list of suggested topics for a topic
+    def list_suggested_for(topic, pm_params: nil)
+
+      # Don't suggest messages unless we have a user, and private messages are
+      # enabled.
+      return if topic.private_message? &&
+        (@user.blank? || !SiteSetting.enable_personal_messages?)
+
+      builder = SuggestedTopicsBuilder.new(topic)
+
+      pm_params = pm_params || get_pm_params(topic)
+
+      # When logged in we start with different results
+      if @user
+        if topic.private_message?
+
+          builder.add_results(new_messages(
+            pm_params.merge(count: builder.results_left)
+          )) unless builder.full?
+
+          builder.add_results(unread_messages(
+            pm_params.merge(count: builder.results_left)
+          )) unless builder.full?
+
+        else
+
+          builder.add_results(
+            unread_results(
+              topic: topic,
+              per_page: builder.results_left,
+              max_age: SiteSetting.suggested_topics_unread_max_days_old
+            ), :high
+          )
+
+          builder.add_results(new_results(topic: topic, per_page: builder.category_results_left)) unless builder.full?
+        end
+      end
+
+      if !topic.private_message?
+        builder.add_results(random_suggested(topic, builder.results_left, builder.excluded_topic_ids)) unless builder.full?
+      end
+
+      # add only_resolutions param
+      params = { unordered: true, only_resolutions: false }
+      if topic.private_message?
+        params[:preload_posters] = true
+      end
+      create_list(:suggested, params, builder.results)
+    end
+
     TopicQuery.results_filter_callbacks << Proc.new do |filter_name, result, user, options|
-      if filter_name == :latest
+      options[:only_resolutions] ||= true
+
+      if filter_name == :latest && options[:only_resolutions]
         result.where(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
       else
         result
+      end
+    end
+
+    SuggestedTopicsBuilder.class_eval do
+      def initialize(topic)
+        @excluded_topic_ids = (TopicCustomField.where(name: :is_resolution).pluck(:topic_id) << topic.id).uniq
+        @category_id = topic.category_id
+        @category_topic_ids = Category.topic_ids
+        @results = []
       end
     end
 
