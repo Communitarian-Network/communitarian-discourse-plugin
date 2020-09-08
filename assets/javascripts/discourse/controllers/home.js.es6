@@ -29,15 +29,20 @@ export default Ember.Controller.extend({
     return dasherize(componentName);
   },
 
-  @discourseComputed(
-    "model.categories",
-    "siteSettings.landing_categories_length"
-  )
-  limitedCategories(categories, length) {
-    this.set(
-      "model.categories.content",
-      categories.content.slice(0, length || 4)
-    );
+  @discourseComputed("model.categories")
+  landingCategories(categories) {
+    const landingCategories = this.siteSettings.landing_categories;
+    const landingCategoryIds =
+      landingCategories && landingCategories.split("|");
+
+    if (landingCategoryIds) {
+      categories = landingCategoryIds.map((scid) =>
+        categories.findBy("id", parseInt(scid, 10))
+      );
+    } else {
+      this.set("model.categories.content", categories.content.slice(0, 4));
+    }
+
     return categories;
   },
 

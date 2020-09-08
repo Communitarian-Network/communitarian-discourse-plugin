@@ -12,7 +12,7 @@ en:
     sign_up_with_credit_card_enabled: Allow users to sign up with credit card?
     sign_up_with_stripe_identity_enabled: Allow users to sign up with identity verification?
     post_delay: Minimal time in seconds before user can publish again to a dialog
-    landing_categories_length: Amount of category items on home page
+    landing_categories: Displayed categories on homepage
     linkedin_enabled: Allow users to authenticate using LinkedIn?
     linkedin_client_id: 'LinkedIn Client ID (need one? visit <a href="https://developer.linkedin.com/docs/oauth2">https://developer.linkedin.com/docs/oauth2</a>)'
     linkedin_secret: LinkedIn Secret Key
