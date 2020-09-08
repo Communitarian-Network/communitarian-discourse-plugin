@@ -52,6 +52,13 @@ function initializeCommunitarian(api) {
     },
   });
 
+  api.modifyClass("component:topic-list-item", {
+    init() {
+      this._super(...arguments);
+      this.set("topic.bumped_at", getFormattedDialogDate(this.topic.bumped_at));
+    },
+  });
+
   api.modifyClass("controller:navigation/categories", {
     router: service(),
 
@@ -71,6 +78,32 @@ function initializeCommunitarian(api) {
       goToResolutionsPage() {
         DiscourseURL.routeTo(`${window.location.pathname.replace('/l/dialogs','')}`);
       }
+    }
+  });
+
+  api.modifyClass("controller:topic", {
+    @discourseComputed()
+    isAuthorized() {
+      return !!this.currentUser;
+    },
+
+    @discourseComputed("postsToRender.posts")
+    isResolutionPage(posts) {
+      return posts.length && posts[0].polls;
+    },
+
+    @discourseComputed("postsToRender.posts")
+    actionPeriod(posts) {
+      if (!posts.length || (posts[0].polls && !posts[0].polls.length)) {
+        return false;
+      }
+
+      const post = posts[0];
+      const poll = post.polls[0];
+      const created = moment(post.created_at);
+      const closed = moment(poll.close);
+
+      return getResolutionPeriod(created, closed);
     }
   });
 
