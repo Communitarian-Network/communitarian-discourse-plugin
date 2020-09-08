@@ -29,11 +29,10 @@ en:
       dialog:
         new_button: Dialog
         header_title: Ongoing Dialogs
-        view_all: View all
         resolutions_link: Vote on resolutions
       dialogs:
         header_title: Ongoing Dialogs
-        view_all: View all
+        view_dialogs: View dialogs
       resolution:
         new_button: Resolution
         ui_builder:

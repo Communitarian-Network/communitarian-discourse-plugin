@@ -1,6 +1,5 @@
 import { inject as service } from "@ember/service";
 import { inject as controller } from "@ember/controller";
-import { htmlSafe } from "@ember/template";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import DiscourseURL from "discourse/lib/url";
@@ -52,13 +51,6 @@ function initializeCommunitarian(api) {
     },
   });
 
-  api.modifyClass("component:topic-list-item", {
-    init() {
-      this._super(...arguments);
-      this.set("topic.bumped_at", getFormattedDialogDate(this.topic.bumped_at));
-    },
-  });
-
   api.modifyClass("controller:navigation/categories", {
     router: service(),
 
@@ -77,33 +69,11 @@ function initializeCommunitarian(api) {
     actions: {
       goToResolutionsPage() {
         DiscourseURL.routeTo(`${window.location.pathname.replace('/l/dialogs','')}`);
-      }
-    }
-  });
+      },
 
-  api.modifyClass("controller:topic", {
-    @discourseComputed()
-    isAuthorized() {
-      return !!this.currentUser;
-    },
-
-    @discourseComputed("postsToRender.posts")
-    isResolutionPage(posts) {
-      return posts.length && posts[0].polls;
-    },
-
-    @discourseComputed("postsToRender.posts")
-    actionPeriod(posts) {
-      if (!posts.length || (posts[0].polls && !posts[0].polls.length)) {
-        return false;
-      }
-
-      const post = posts[0];
-      const poll = post.polls[0];
-      const created = moment(post.created_at);
-      const closed = moment(poll.close);
-
-      return getResolutionPeriod(created, closed);
+      goToDialogsPage() {
+        DiscourseURL.routeTo(`${window.location.pathname}/l/dialogs`);
+      },
     }
   });
 
@@ -143,8 +113,14 @@ function initializeCommunitarian(api) {
     },
 
     @discourseComputed("router.currentRoute.localName")
-    isCommunityPage(currentRouteName) {
+    isResolutionsPage(currentRouteName) {
       return currentRouteName === "category";
+    },
+
+    actions: {
+      goToDialogsPage() {
+        DiscourseURL.routeTo(`${window.location.pathname}/l/dialogs`);
+      },
     }
   });
 

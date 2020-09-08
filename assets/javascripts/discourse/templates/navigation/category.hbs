@@ -16,12 +16,20 @@
           {{/if}}
         </div>
 
-        <div class="page-header__button-list-right">
+        <div class="page-header__button-list-right show-on-resolutions">
           {{d-button
-            action=(action "goToResolutionsPage")
-            label="communitarian.dialog.resolutions_link"
-            class="link-button page-header__button"
+            action=(action "goToDialogsPage")
+            label="communitarian.dialogs.view_dialogs"
+            class="link-button--dialogs page-header__button"
           }}
+          {{#if currentUser.admin}}
+            {{d-button
+              class="btn-default edit-category page-header__button"
+              action=(route-action "editCategory" category)
+              icon="wrench"
+              label="category.edit"
+            }}
+          {{/if}}
           {{new-topic-dropdown
             class="page-header__button"
             createDialog=(route-action "createTopic")
@@ -31,6 +39,25 @@
               createTopicButtonDisabled=createTopicButtonDisabled
             )
           }}
+        </div>
+
+        <div class="page-header__button-list-right show-on-dialogs">
+          {{d-button
+            action=(action "goToResolutionsPage")
+            label="communitarian.dialog.resolutions_link"
+            class="link-button--resolutions page-header__button"
+          }}
+          {{#if currentUser}}
+            {{new-topic-dropdown
+              class="page-header__button"
+              createDialog=(route-action "createTopic")
+              args=(hash
+                canCreateTopic=canCreateTopic
+                createTopicDisabled=createTopicDisabled
+                createTopicButtonDisabled=createTopicButtonDisabled
+              )
+            }}
+          {{/if}}
         </div>
       </div>
     </div>
