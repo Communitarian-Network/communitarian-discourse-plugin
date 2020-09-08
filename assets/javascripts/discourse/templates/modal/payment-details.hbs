@@ -11,12 +11,21 @@
         </label>
         {{input type="text" value=name id="name-on-card" name="name-on-card" autofocus="autofocus"}}
       </div>
+
       <div class="payment-details__input-group">
         <label for="card-element" class="payment-details__label">
           {{I18n "communitarian.create_account.choose_verification_way.payment.card" }}
         </label>
         <div id="card-element"><!--Stripe.js injects the Card Element--></div>
       </div>
+
+      <div class="payment-details__input-group">
+        <label for="billing-address" class="payment-details__label">
+          {{I18n "communitarian.create_account.choose_verification_way.payment.address" }}
+        </label>
+        {{input type="text" value=address id="billing-address" name="billing-address"}}
+      </div>
+
       <p id="card-error" role="alert">{{errorMessage}}</p>
     </form>
   {{/d-modal-body}}
