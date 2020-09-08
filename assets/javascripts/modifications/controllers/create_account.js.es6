@@ -12,6 +12,15 @@ export default {
   },
 
   @discourseComputed
+  nextStepLabel() {
+    if (this.get("authOptions.email")) {
+      return "create_account.title";
+    } else {
+      return "communitarian.create_account.continue";
+    }
+  },
+
+  @discourseComputed
   authButtons() {
     let methods = [];
 
@@ -75,6 +84,10 @@ export default {
   actions: {
     showNextStep() {
       this.clearFlash();
+
+      if (this.get("authOptions.email") == this.accountEmail) {
+        return this.performAccountCreation();
+      }
 
       if (this.fieldsValid()) {
         if (this.siteSettings.sign_up_with_credit_card_enabled && this.siteSettings.sign_up_with_stripe_identity_enabled) {
