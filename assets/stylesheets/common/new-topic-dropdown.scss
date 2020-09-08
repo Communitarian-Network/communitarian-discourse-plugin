@@ -1,10 +1,7 @@
-.dialogs-list-above-outlet {
-  display: inline-flex;
-}
-
 .new-topic-dropdown {
   &.select-kit.dropdown-select-box {
-    margin-bottom: 2.3em;
+    // margin-bottom: 2.3em;
+    float: none;
 
     .dropdown-select-box-header,
     .dropdown-select-box-header:hover {

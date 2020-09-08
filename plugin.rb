@@ -25,6 +25,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/dialog-list.scss",
   "stylesheets/common/dialog-list-page.scss",
   "stylesheets/common/dialog-list-item.scss",
+  "stylesheets/common/new-topic-dropdown.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",
   "stylesheets/common/community-action.scss",
