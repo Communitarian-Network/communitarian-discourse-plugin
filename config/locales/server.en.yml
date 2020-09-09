@@ -117,7 +117,7 @@ en:
   category:
     topic_prefix: About the %{category} community
     replace_paragraph: "(Replace this first paragraph with a brief description of
-      your new category. This guidance will appear in the category selection area,
+      your new community. This guidance will appear in the community selection area,
       so try to keep it below 200 characters.)"
     errors:
       uncategorized_parent: Uncategorized can't have a parent community
@@ -125,14 +125,14 @@ en:
         '%{category_name}'."
       description_incomplete: The community description post must have at least one
         paragraph.
-      permission_conflict: 'Any group that is allowed to access a subcategory must
+      permission_conflict: 'Any group that is allowed to access a subcommunity must
         also be allowed to access the parent category. The following groups have access
-        to one of the subcategories, but no access to parent community: %{group_names}.'
+        to one of the subcommunities, but no access to parent community: %{group_names}.'
       disallowed_topic_tags: 'This dialog has tags not allowed by this community: ''%{tags}'''
       disallowed_tags_generic: This dialog has disallowed tags.
     cannot_delete:
       uncategorized: This community is special. it is intended as a holding area for
-        topics that have no category; it cannot be deleted.
+        dialogs that have no community; it cannot be deleted.
       has_subcategories: Can't delete this community because it has sub-communities.
       topic_exists:
         one: Can't delete this community because it has %{count} dialog. oldest dialog
@@ -141,7 +141,7 @@ en:
           is %{topic_link}.
       topic_exists_no_oldest: Can't delete this community because dialog count is %{count}.
     uncategorized_description: Topics that don't need a community, or don't fit into
-      any other existing category.
+      any other existing community.
   rate_limiter:
     by_type:
       first_day_topics_per_day: You’ve reached the maximum number of dialogs a new
@@ -159,7 +159,7 @@ en:
       long_form: flagged this as off-dialog
     spam:
       description: This post is an advertisement, or vandalism. It is not useful or
-        relevant to the current topic.
+        relevant to the current dialog.
   draft_backup:
     pm_title: Backup Drafts from ongoing dialogs
   user_activity:
@@ -190,9 +190,9 @@ en:
           top of every page.
   unsubscribed:
     topic_description: To re-subscribe to %{link}, use the notification control at
-      the bottom or right of the topic.
+      the bottom or right of the dialog.
     private_topic_description: To re-subscribe, use the notification control at the
-      bottom or right of the topic.
+      bottom or right of the dialog.
   unsubscribe:
     stop_watching_topic: Stop watching this dialog, %{link}
     mute_topic: Mute all notifications for this dialog, %{link}
@@ -200,7 +200,7 @@ en:
   reports:
     moderators_activity:
       description: List of moderator activity including flags reviewed, reading time,
-        topics created, posts created, personal messages created, and revisions.
+        dialogs created, posts created, personal messages created, and revisions.
     topics:
       yaxis: Number of new dialogs
       description: New dialogs created during this period.
@@ -224,7 +224,7 @@ en:
   redirected_to_top_reasons:
     new_user: Welcome to our community! These are the most popular recent dialogs.
     not_seen_in_a_month: Welcome back! We haven't seen you in a while. These are the
-      most popular topics since you've been away.
+      most popular dialogs since you've been away.
   merge_posts:
     errors:
       different_topics: Posts belonging to different dialogs cannot be merged.
@@ -293,11 +293,11 @@ en:
     autoclosed_disabled_lastpost: This dialog is now opened. new replies are allowed.
   flag_reasons:
     off_topic: 'Your post was flagged as **off-dialog**: the community feels it is
-      not a good fit for the topic, as currently defined by the title and the first
+      not a good fit for the dialog, as currently defined by the title and the first
       post.'
     spam: 'Your post was flagged as **spam**: the community feels it is an advertisement,
       something that is overly promotional in nature instead of being useful or relevant
-      to the topic as expected.'
+      to the dialog as expected.'
   temporarily_closed_due_to_flags:
     one: This dialog is temporarily closed for at least %{count} hour due to a large
       number of community flags.
@@ -325,7 +325,7 @@ en:
       category: Posts in this community require manual approval by staff. see the community
         settings.
       suspect_user: This new user entered profile information without reading any
-        topics or posts, which strongly suggests they may be a spammer. See `approve_suspect_users`.
+        dialogs or posts, which strongly suggests they may be a spammer. See `approve_suspect_users`.
     actions:
       delete_spammer:
         description: Remove the user and all their posts and dialogs.
@@ -335,11 +335,11 @@ en:
         description: Delete post; if the first post, delete the dialog as well
       delete_and_ignore_replies:
         description: Delete post and all of its replies; if the first post, delete
-          the topic as well
+          the dialog as well
       delete_and_agree:
         description: Delete post; if the first post, delete the dialog as well
       delete_and_agree_replies:
         description: Delete post and all of its replies; if the first post, delete
-          the topic as well
+          the dialog as well
       approve_post:
         confirm_closed: This dialog is closed. would you like to create the post anyway?

@@ -799,7 +799,7 @@ en:
         help: This dialog is unpinned for you; it will display in regular order
       pinned_globally:
         help: This dialog is pinned globally; it will display at the top of latest
-          and its category
+          and its community
       pinned:
         help: This dialog is pinned for you; it will display at the top of its community
       unlisted:
