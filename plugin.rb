@@ -108,6 +108,10 @@ after_initialize do
     PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
   end
 
+  add_to_serializer(:category, :tenets_raw, false) do
+    object.custom_fields["tenets_raw"]
+  end
+
   add_preloaded_topic_list_custom_field("is_resolution")
 
   require 'homepage_constraint'
