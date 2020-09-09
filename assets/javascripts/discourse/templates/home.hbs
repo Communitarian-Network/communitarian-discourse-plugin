@@ -1,10 +1,26 @@
 {{#d-section bodyClass="noscroll-x" class="homepage"}}
-  {{landing-explore}}
-  {{landing-communities-header}}
-  {{#discovery-categories refresh=(action "refresh")}}
+<div class="landing-explore">
+  <div class="landing-explore__left">
+    <h2 class="landing-explore__title">
+      {{i18n "communitarian.landing.explore.title"}}
+    </h2>
+    <p class="landing-explore__text">
+      {{i18n "communitarian.landing.explore.text"}}
+    </p>
+    {{#link-to "discovery.categories" class="landing-explore__link"}}
+    {{i18n "communitarian.landing.explore.link"}}
+    {{/link-to}}
+  </div>
+
+  <div class="landing-explore__right">
+    {{landing-communities-header}}
+    {{#discovery-categories refresh=(action "refresh")}}
     {{component categoryPageStyle
-                categories=landingCategories
-                latestTopicOnly=false}}
-  {{/discovery-categories}}
-  {{landing-footer}}
+                  categories=landingCategories
+                  latestTopicOnly=false}}
+    {{/discovery-categories}}
+  </div>
+</div>
+
+{{landing-footer}}
 {{/d-section}}
