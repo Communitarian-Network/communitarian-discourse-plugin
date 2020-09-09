@@ -1,7 +1,11 @@
 .community-page {
   &__content {
-    margin-top: 2em;
     display: flex;
+    margin-bottom: 3em;
+
+    &.with-mt {
+      margin-top: 2em;
+    }
   }
 
   &__resolutions {
