@@ -111,6 +111,8 @@ en:
           instructions: Instructions has been sent to email
           change_email: Edit
           check_span: If it doesn’t arrive, check your spam folder or
+      login:
+        title: Welcome back!
     filters:
       dialogs:
         title: All dialogs
