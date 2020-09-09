@@ -14,7 +14,7 @@
       </div>
       <div class="activation-email__info">
         <span class="activation-email__name">
-          Armstrong Thomas
+          {{accountCreated.name}}
         </span>
         <span class="activation-email__address">
           {{i18n "communitarian.create_account.activation_email.address" address="Washington, DC"}}
@@ -28,7 +28,7 @@
       <span class="instructions">
         {{i18n "communitarian.create_account.activation_email.instructions"}}
       </span>
-      <span class="email">john.smith@gmail.com.</span>
+      <span class="email">{{accountCreated.email}}.</span>
       {{activation-controls editActivationEmail=(action "editActivationEmail")}}
     </div>
   {{/if}}
