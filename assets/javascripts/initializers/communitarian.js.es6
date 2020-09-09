@@ -4,7 +4,6 @@ import { htmlSafe } from "@ember/template";
 import { withPluginApi } from "discourse/lib/plugin-api";
 import { setDefaultHomepage } from "discourse/lib/utilities";
 import TopicController from "discourse/controllers/topic";
-import ResolutionController from "../controllers/resolution-controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
 import { gt } from "@ember/object/computed";
@@ -13,6 +12,9 @@ import showModal from "discourse/lib/show-modal";
 import { reopenWidget } from "discourse/widgets/widget";
 import CreateAccount from "../modifications/controllers/create_account";
 import HeaderButtons from "../modifications/widgets/header-buttons";
+
+import ResolutionController from "../controllers/resolution-controller";
+import getResolutionPeriod from "../discourse/components/get-resolution-period";
 
 function initializeCommunitarian(api) {
   registerUnbound('compare', function(v1, operator, v2) {
@@ -31,18 +33,22 @@ function initializeCommunitarian(api) {
     return `width: ${maxValue ? (currentValue / maxValue) * 100 : 0}%`;
   });
 
-  registerUnbound("format-dialog-date", function (val) {
+  const getFormattedDialogDate = (val) => {
     if (val) {
       var date = new Date(val);
-      const formattedDate = moment(date).format("MMM ‘DD");
-      return htmlSafe(
-        `<span class='relative-date' data-time='${date.getTime()}'>${formattedDate}</span>`
-      );
+      return moment(date).format("MMM ‘DD");
     }
-  });
+  }
 
   api.modifyClass("component:topic-list", {
     listTitle: "communitarian.dialogs.header_title",
+  });
+
+  api.modifyClass("component:topic-list-item", {
+    init() {
+      this._super(...arguments);
+      this.set("topic.bumped_at", getFormattedDialogDate(this.topic.bumped_at));
+    },
   });
 
   api.modifyClass("controller:navigation/categories", {
@@ -59,6 +65,32 @@ function initializeCommunitarian(api) {
     isAuthorized() {
       return !!this.currentUser;
     },
+  });
+
+  api.modifyClass("controller:topic", {
+    @discourseComputed()
+    isAuthorized() {
+      return !!this.currentUser;
+    },
+
+    @discourseComputed("postsToRender.posts")
+    isResolutionPage(posts) {
+      return posts.length && posts[0].polls;
+    },
+
+    @discourseComputed("postsToRender.posts")
+    actionPeriod(posts) {
+      if (!posts.length || (posts[0].polls && !posts[0].polls.length)) {
+        return false;
+      }
+
+      const post = posts[0];
+      const poll = post.polls[0];
+      const created = moment(post.created_at);
+      const closed = moment(poll.close);
+
+      return getResolutionPeriod(created, closed);
+    }
   });
 
   api.modifyClass("controller:discovery", {

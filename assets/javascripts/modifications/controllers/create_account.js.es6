@@ -13,6 +13,15 @@ export default {
   },
 
   @discourseComputed
+  nextStepLabel() {
+    if (this.get("authOptions.email")) {
+      return "create_account.title";
+    } else {
+      return "communitarian.create_account.continue";
+    }
+  },
+
+  @discourseComputed
   authButtons() {
     const methods = [];
 
@@ -76,6 +85,10 @@ export default {
   actions: {
     showNextStep() {
       this.clearFlash();
+
+      if (this.get("authOptions.email") == this.accountEmail) {
+        return this.performAccountCreation();
+      }
 
       if (this.fieldsValid()) {
         const {

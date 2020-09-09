@@ -1,0 +1,44 @@
+<div class="activation-email__card">
+  <div class="activation-email__card-body">
+    <h1 class="activation-email__title">
+      {{i18n "communitarian.create_account.activation_email.title"}}
+    </h1>
+
+    <span class="activation-email__description">
+      {{i18n "communitarian.create_account.activation_email.description"}}
+    </span>
+
+    <div class="activation-email__person">
+      <div class="activation-email__avatar">
+        <img src={{siteSettings.favicon}} alt="avatar">
+      </div>
+      <div class="activation-email__info">
+        <span class="activation-email__name">
+          Armstrong Thomas
+        </span>
+        <span class="activation-email__address">
+          {{i18n "communitarian.create_account.activation_email.address" address="Washington, DC"}}
+        </span>
+      </div>
+    </div>
+  </div>
+
+  {{#if accountCreated.show_controls}}
+    <div class="activation-email__card-footer">
+      <span class="instructions">
+        {{i18n "communitarian.create_account.activation_email.instructions"}}
+      </span>
+      <span class="email">john.smith@gmail.com.</span>
+      {{activation-controls editActivationEmail=(action "editActivationEmail")}}
+    </div>
+  {{/if}}
+</div>
+
+{{#if accountCreated.show_controls}}
+  <div class="activation-email__resend">
+    <span class="activation-email__resend-text">
+      {{i18n "communitarian.create_account.activation_email.check_span"}}
+    </span>
+    {{activation-controls sendActivationEmail=(action "sendActivationEmail")}}
+  </div>
+{{/if}}

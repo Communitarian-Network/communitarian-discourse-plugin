@@ -1,5 +1,7 @@
 import Component from "@ember/component";
 
+import getResolutionPeriod from "./get-resolution-period";
+
 export default Component.extend({
   init() {
     this._super(...arguments);
@@ -19,19 +21,6 @@ export default Component.extend({
       moment(openedPoll.close),
     ];
 
-    const [creationMonth, creationDate, closeMonth, closeDate] = [
-      created.format("MMM"),
-      created.date(),
-      closed.format("MMM"),
-      closed.date(),
-    ];
-
-    const actionPeriod = [creationMonth, creationDate, "-"];
-    if (creationMonth !== closeMonth) {
-      actionPeriod.push(closeMonth);
-    }
-    actionPeriod.push(closeDate);
-
     const mostPopularOption = Math.max(
       ...openedPoll.options.map(({ votes }) => votes)
     );
@@ -39,7 +28,7 @@ export default Component.extend({
     this.setProperties({
       openedPoll,
       mostPopularOption: mostPopularOption === 0 ? null : mostPopularOption,
-      formattedActionPeriod: actionPeriod.join(" "),
+      formattedActionPeriod: getResolutionPeriod(created, closed)
     });
   },
 });
