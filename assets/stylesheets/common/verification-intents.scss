@@ -1,0 +1,107 @@
+.verification-intents {
+  &__wrap {
+    margin: 5% auto;
+    padding: 2em 2.3em;
+    box-sizing: border-box;
+    width: 480px;
+    max-width: 100%;
+    border: 1px solid #dcdcdc;
+    border-radius: 8px;
+    font-size: 1.2em;
+
+    @media screen and (max-width: 500px) {
+      padding: 1.5em;
+      font-size: 1em;
+    }
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.2em;
+
+    .spinner {
+      margin-left: 1em;
+
+      @media screen and (max-width: 500px) {
+        width: 1em;
+        height: 1em;
+      }
+    }
+
+    &--has-progress {
+      @extend .verification-intents__header;
+      margin-top: -1em;
+      margin-bottom: 0;
+    }
+  }
+
+  &__title {
+    margin-bottom: 0;
+    font-size: 1.8em;
+
+    @media screen and (max-width: 500px) {
+      font-size: 1.4em;
+    }
+  }
+
+  &__content {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5em;
+
+    @media screen and (max-width: 500px) {
+      margin-bottom: 0;
+    }
+  }
+
+  &__icon {
+    margin-right: 0.75em;
+    padding: 0.8em;
+    height: 4em;
+    width: 4em;
+    box-sizing: border-box;
+    border: 2px solid;
+    border-radius: 50%;
+
+    &.success {
+      border-color: #009900;
+    }
+
+    &.failure {
+      border-color: #ffc280;
+    }
+  }
+
+  &__text {
+    font-family: "Avenir Heavy", sans-serif;
+    font-weight: 900;
+
+    &--short {
+      @extend .verification-intents__text;
+
+      @media screen and (max-width: 500px) {
+        width: auto;
+      }
+    }
+  }
+
+  &__hint {
+    font-family: "Avenir Light", sans-serif;
+    font-weight: 900;
+  }
+
+  &__button,
+  &__button:hover {
+    display: inline-block;
+    padding: 0.75em;
+    width: 100%;
+    border-radius: 5px;
+    background-color: $tertiary;
+    color: $secondary;
+    text-align: center;
+    font-family: "Avenir Light", sans-serif;
+    font-weight: 900;
+    box-sizing: border-box;
+  }
+}

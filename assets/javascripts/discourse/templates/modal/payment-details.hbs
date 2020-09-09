@@ -1,24 +1,44 @@
 {{#payment-details class="payment-details" action=(action "submitPaymentDetails")}}
   {{#d-modal-body title="communitarian.create_account.payment_details.title"}}
-    <p>{{I18n "communitarian.create_account.choose_verification_way.card_description" }}</p>
+    <p class="payment-details__description">
+      {{I18n "communitarian.create_account.choose_verification_way.card_description" }}
+    </p>
 
-    <form id="payment-form">
-      <div class="input-group">
-        <label for="name-on-card">Name on Card</label>
+    <form id="payment-form" class="payment-details__form">
+      <div class="payment-details__input-group">
+        <label for="name-on-card" class="payment-details__label">
+          {{I18n "communitarian.create_account.choose_verification_way.payment.name" }}
+        </label>
         {{input type="text" value=name id="name-on-card" name="name-on-card" autofocus="autofocus"}}
       </div>
-      <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+
+      <div class="payment-details__input-group">
+        <label for="card-element" class="payment-details__label">
+          {{I18n "communitarian.create_account.choose_verification_way.payment.card" }}
+        </label>
+        <div id="card-element"><!--Stripe.js injects the Card Element--></div>
+      </div>
+
+      <div class="payment-details__input-group">
+        <label for="billing-address" class="payment-details__label">
+          {{I18n "communitarian.create_account.choose_verification_way.payment.address" }}
+        </label>
+        {{input type="text" value=address id="billing-address" name="billing-address"}}
+      </div>
+
       <p id="card-error" role="alert">{{errorMessage}}</p>
     </form>
   {{/d-modal-body}}
 
   <div class="modal-footer">
     {{d-button
-      class="btn-large btn-primary"
+      class="btn-large btn-primary pay-btn"
       action=(action "submitPaymentDetails")
       disabled=submitDisabled
       label="communitarian.create_account.payment_details.submit_button"
     }}
-    <span>{{i18n "communitarian.create_account.next_verification"}}</span>
+    <span class="next-step">
+      {{i18n "communitarian.create_account.next_verification"}}
+    </span>
   </div>
 {{/payment-details}}

@@ -1,5 +1,5 @@
 import Controller from "@ember/controller";
-import discourseComputed, { observes } from "discourse-common/utils/decorators";
+import discourseComputed from "discourse-common/utils/decorators";
 import showModal from "discourse/lib/show-modal";
 
 export default Controller.extend({
@@ -26,7 +26,7 @@ export default Controller.extend({
     },
     showNextStep() {
       this.set("loading", true);
-      if (this.get("verificationChoice") == "card") {
+      if (this.get("verificationChoice") === "card") {
         showModal("payment-details");
       } else {
         this.createAccount.performAccountCreation();

@@ -3,6 +3,7 @@ import showModal from "discourse/lib/show-modal";
 import Site from "discourse/models/site";
 import LoginMethod from "discourse/models/login-method";
 import { ajax } from "discourse/lib/ajax";
+import { extractError } from "discourse/lib/ajax-error";
 
 export default {
   onShow() {
@@ -22,10 +23,10 @@ export default {
 
   @discourseComputed
   authButtons() {
-    let methods = [];
+    const methods = [];
 
-    if(this.get("siteSettings.linkedin_enabled")) {
-      const linkedinProvider = Site.currentProp("auth_providers").find(provider => provider.name == "linkedin");
+    if (this.get("siteSettings.linkedin_enabled")) {
+      const linkedinProvider = Site.currentProp("auth_providers").find(provider => provider.name === "linkedin");
       methods.pushObject(LoginMethod.create(linkedinProvider));
     };
 
@@ -33,7 +34,7 @@ export default {
   },
 
   performAccountCreation() {
-    if (this.get("authOptions.email") == this.accountEmail) {
+    if (this.get("authOptions.email") === this.accountEmail) {
       return this._super(...arguments);
     }
 
@@ -90,12 +91,15 @@ export default {
       }
 
       if (this.fieldsValid()) {
-        if (this.siteSettings.sign_up_with_credit_card_enabled && this.siteSettings.sign_up_with_stripe_identity_enabled) {
+        const {
+          sign_up_with_credit_card_enabled: creditCardIdentity,
+          sign_up_with_stripe_identity_enabled: stripeIdentity,
+        } = this.siteSettings;
+
+        if (creditCardIdentity && stripeIdentity) {
           showModal("choose-verification-way");
-        } else if (this.siteSettings.sign_up_with_credit_card_enabled){
-          if (this.fieldsValid()) {
-            showModal("payment-details");
-          }
+        } else if (creditCardIdentity) {
+          showModal("payment-details");
         } else {
           if (new Date() - this._challengeDate > 1000 * this._challengeExpiry) {
             this.fetchConfirmationValue().then(() =>
