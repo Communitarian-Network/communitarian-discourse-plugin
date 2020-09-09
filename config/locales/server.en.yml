@@ -313,24 +313,6 @@ en:
       restricted_to:
         one: '"%{tag_name}" is restricted to the "%{category_names}" community'
         other: '"%{tag_name}" is restricted to the following communities: %{category_names}'
-  wizard:
-    step:
-      homepage:
-        description: We recommend showing the latest dialogs on your homepage, but
-          you can also show categories (groups of topics) on the homepage if you prefer.
-        fields:
-          homepage_style:
-            choices:
-              latest:
-                label: Latest Dialogs
-              categories_with_featured_topics:
-                label: Categories with Featured Dialogs
-              categories_and_latest_topics:
-                label: Categories and Latest Dialogs
-              categories_and_top_topics:
-                label: Categories and Top Dialogs
-              categories_boxes_with_topics:
-                label: Categories boxes with Dialogs
   discourse_push_notifications:
     popup:
       watching_first_post: '%{username} created a new dialog "%{topic}" - %{site_title}'
