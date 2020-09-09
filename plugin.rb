@@ -307,12 +307,12 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? category_dialogs(category: @category.id, without_respond: true).topics.first(5) : []
+        list.dialogs = @category ? dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
-      def category_dialogs(options = nil)
+      def dialogs(options = nil)
         without_respond = options ? options.delete(:without_respond) : false
 
         filter = :dialogs
