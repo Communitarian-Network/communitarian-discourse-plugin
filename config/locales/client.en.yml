@@ -89,9 +89,9 @@ en:
       categories:
         title: "Communities"
         title_in: "Community - %{categoryName}"
-        help: "all topics grouped by community"
+        help: "all dialogs grouped by community"
       category:
-        help: "latest topics in the %{categoryName} community"
+        help: "latest dialogs in the %{categoryName} community"
 
     login:
       linkedin:
@@ -103,7 +103,7 @@ en:
     activity:
       Recent Activity
 # overrides:
-    edit: "edit the title and community of this topic"
+    edit: "edit the title and community of this dialog"
     review:
       filters:
         all_categories: "(all communities)"
@@ -128,14 +128,14 @@ en:
       toggle_ordering: "toggle ordering control"
       subcategories: "Subcategories"
       topic_sentence:
-        one: "%{count} topic"
-        other: "%{count} topics"
+        one: "%{count} dialog"
+        other: "%{count} dialogs"
       topic_stat_sentence_week:
-        one: "%{count} new topic in the past week."
-        other: "%{count} new topics in the past week."
+        one: "%{count} new dialog in the past week."
+        other: "%{count} new dialogs in the past week."
       topic_stat_sentence_month:
-        one: "%{count} new topic in the past month."
-        other: "%{count} new topics in the past month."
+        one: "%{count} new dialog in the past month."
+        other: "%{count} new dialogs in the past month."
       n_more: "Communities (%{count} more) ..."
     user:
       mailing_list_mode:
@@ -143,14 +143,14 @@ en:
         enabled: "Enable mailing list mode"
         instructions: |
           This setting overrides the activity summary.<br />
-          Muted topics and categories are not included in these emails.
+          Muted dialogs and categories are not included in these emails.
       name:
         instructions: Your full name
-      watched_categories_instructions: "You will automatically watch all topics in these communities. You will be notified of all new posts and topics, and a count of new posts will also appear next to the topic."
-      tracked_categories_instructions: "You will automatically track all topics in these communities. A count of new posts will appear next to the topic."
-      watched_first_post_categories_instructions: "You will be notified of the first post in each new topic in these communities."
-      muted_categories_instructions: "You will not be notified of anything about new topics in these communities, and they will not appear on the communities or latest pages."
-      muted_categories_instructions_dont_hide: "You will not be notified of anything about new topics in these communities."
+      watched_categories_instructions: "You will automatically watch all dialogs in these communities. You will be notified of all new posts and dialogs, and a count of new posts will also appear next to the dialog."
+      tracked_categories_instructions: "You will automatically track all dialogs in these communities. A count of new posts will appear next to the dialog."
+      watched_first_post_categories_instructions: "You will be notified of the first post in each new dialog in these communities."
+      muted_categories_instructions: "You will not be notified of anything about new dialogs in these communities, and they will not appear on the communities or latest pages."
+      muted_categories_instructions_dont_hide: "You will not be notified of anything about new dialogs in these communities."
       no_category_access: "As a moderator you have limited community access, save is disabled."
       preferences_nav:
         categories: "Communities"
@@ -164,13 +164,13 @@ en:
       categories_and_top_topics: "Communities and Top Topics"
       categories_boxes: "Boxes with Subcategories"
     category_row:
-      topic_count: "%{count} topics in this community"
+      topic_count: "%{count} dialogs in this community"
     select_kit:
       components:
         categories_admin_dropdown:
           title: "Communities admin dropdown"
     shared_drafts:
-      notice: "This topic is only visible to those who can see the <b>%{category}</b> community."
+      notice: "This dialogs is only visible to those who can see the <b>%{category}</b> community."
       destination_category: "Destination Community"
     composer:
       cannot_see_mention:
@@ -179,14 +179,14 @@ en:
         category_missing: "You must choose a community"
       reply_placeholder_choose_category: "Select a community before typing here."
     search:
-      title: "search topics, posts, users, or communities"
+      title: "search dialogs, posts, users, or communities"
       context:
         category: "Search the #%{category} community"
-    hamburger_menu: "go to another topic list or community"
+    hamburger_menu: "go to another dialog list or community"
     topics:
       bulk:
         change_category: "Set Community"
-        choose_new_category: "Choose the new community for the topics:"
+        choose_new_category: "Choose the new community for the dialogs:"
     topic:
       browse_all_categories: Browse all categories
       publish_to_category:
@@ -199,12 +199,12 @@ en:
           "0_7": "You are ignoring all notifications in this community."
       make_public:
         title: "Convert to Public Topic"
-        choose_category: "Please choose a community for the public topic:"
+        choose_category: "Please choose a community for the public dialog:"
       feature_topic:
-        pin: "Make this topic appear at the top of the %{categoryLink} community until"
-        confirm_pin: "You already have %{count} pinned topics. Too many pinned topics may be a burden for new and anonymous users. Are you sure you want to pin another topic in this community?"
-        unpin: "Remove this topic from the top of the %{categoryLink} community."
-        unpin_until: "Remove this topic from the top of the %{categoryLink} community or wait until <strong>%{until}</strong>."
+        pin: "Make this dialog appear at the top of the %{categoryLink} community until"
+        confirm_pin: "You already have %{count} pinned dialogs. too many pinned dialogs may be a burden for new and anonymous users. are you sure you want to pin another dialog in this community?"
+        unpin: "Remove this dialog from the top of the %{categoryLink} community."
+        unpin_until: "Remove this dialog from the top of the %{categoryLink} community or wait until <strong>%{until}</strong>."
 
     category:
       none: "(no community)"
@@ -213,7 +213,7 @@ en:
       view: "View Topics in Community"
       tags_allowed_tags: "Restrict these tags to this community:"
       tags_allowed_tag_groups: "Restrict these tag groups to this community:"
-      tags_tab_description: "Tags and tag groups specified above will only be available in this category and other categories that also specify them. They won't be available for use in other communities."
+      tags_tab_description: "Tags and tag groups specified above will only be available in this community and other communities that also specify them. they won't be available for use in other communities."
       topic_featured_link_allowed: "Allow featured links in this community"
       delete: "Delete Community"
       create: "New Community"
@@ -223,7 +223,7 @@ en:
       creation_error: There has been an error during the creation of the community.
       save_error: There was an error saving the community.
       name: "Community Name"
-      topic: "community topic"
+      topic: "community dialog"
       logo: "Community Logo Image"
       background_image: "Community Background Image"
       delete_confirm: "Are you sure you want to delete this community?"
@@ -233,15 +233,15 @@ en:
       change_in_category_topic: "Edit Description"
       already_used: "This color has been used by another community"
       security: "Security"
-      special_warning: "Warning: This category is a pre-seeded category and the security settings cannot be edited. If you do not wish to use this community, delete it instead of repurposing it."
-      uncategorized_security_warning: "This category is special. It is intended as holding area for topics that have no community; it cannot have security settings."
-      uncategorized_general_warning: 'This category is special. It is used as the default category for new topics that do not have a category selected. If you want to prevent this behavior and force community selection, <a href="%{settingLink}">please disable the setting here</a>. If you want to change the name or description, go to <a href="%{customizeLink}">Customize / Text Content</a>.'
+      special_warning: "Warning: This community is a pre-seeded community and the security settings cannot be edited. if you do not wish to use this community, delete it instead of repurposing it."
+      uncategorized_security_warning: "This community is special. it is intended as holding area for dialogs that have no community; it cannot have security settings."
+      uncategorized_general_warning: 'This community is special. it is used as the default community for new dialogs that do not have a community selected. if you want to prevent this behavior and force community selection, <a href="%{setTinglink}">please disable the setting here</a>. if you want to change the name or description, go to <a href="%{custoMizelink}">customize / text content</a>.'
       pending_permission_change_alert: "You haven't added %{group} to this community; click this button to add them."
       mailinglist_mirror: "Community mirrors a mailing list"
-      show_subcategory_list: "Show subcategory list above topics in this community."
-      read_only_banner: "Banner text when a user cannot create a topic in this community:"
-      num_featured_topics: "Number of topics shown on the communities page:"
-      subcategory_num_featured_topics: "Number of featured topics on parent community's page:"
+      show_subcategory_list: "Show subcategory list above dialogs in this community."
+      read_only_banner: "Banner text when a user cannot create a dialog in this community:"
+      num_featured_topics: "Number of dialogs shown on the communities page:"
+      subcategory_num_featured_topics: "Number of featured dialogs on parent community's page:"
       subcategory_list_style: "Subcategory List Style:"
       allow_badges_label: "Allow badges to be awarded in this community"
       reviewable_by_group: "In addition to staff, posts and flags in this community can be also be reviewed by:"
@@ -251,22 +251,22 @@ en:
       parent: "Parent Community"
       notifications:
         watching:
-          description: "You will automatically watch all topics in these communities. You will be notified of every new post in every topic, and a count of new replies will be shown."
+          description: "You will automatically watch all dialogs in these communities. you will be notified of every new post in every dialog, and a count of new replies will be shown."
         watching_first_post:
-          description: "You will be notified of new topics in this community but not replies to the topics."
+          description: "You will be notified of new topics in this community but not replies to the dialogs."
         tracking:
-          description: "You will automatically track all topics in these communities. You will be notified if someone mentions your @name or replies to you, and a count of new replies will be shown."
+          description: "You will automatically track all dialogs in these communities. you will be notified if someone mentions your @name or replies to you, and a count of new replies will be shown."
         muted:
-          description: "You will never be notified of anything about new topics in these communities, and they will not appear in latest."
+          description: "You will never be notified of anything about new dialogs in these communities, and they will not appear in latest."
       sort_options:
         category: "Community"
       list_filters:
         none: "no subcategories"
     topic_statuses:
       pinned_globally:
-        help: "This topic is pinned globally; it will display at the top of latest and its community"
+        help: "This dialog is pinned globally; it will display at the top of latest and its community"
       pinned:
-        help: "This topic is pinned for you; it will display at the top of its community"
+        help: "This dialog is pinned for you; it will display at the top of its community"
     category_title: "Community"
     categories_list: "Communities List"
     keyboard_shortcuts_help:
