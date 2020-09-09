@@ -5,12 +5,61 @@
   <section class="category-header">
     <div class="page-header__title-wrap">
       <h2 class="page-header__title">{{category.name}}</h2>
-      {{#if isAuthorized}}
-        {{community-action
-          category=category class="page-header__button"
-          createTopic=(route-action "createTopic")
-        }}
-      {{/if}}
+      <div class="page-header__button-list">
+        <div class="page-header__button-list-left">
+          {{#if isAuthorized}}
+            {{community-action
+              category=category
+              class="page-header__button"
+              createTopic=(route-action "createTopic")
+            }}
+          {{/if}}
+        </div>
+
+        <div class="page-header__button-list-right show-on-resolutions">
+          {{d-button
+            action=(action "goToDialogsPage")
+            label="communitarian.dialogs.view_dialogs"
+            class="link-button--dialogs page-header__button"
+          }}
+          {{#if currentUser.admin}}
+            {{d-button
+              class="btn-default edit-category page-header__button"
+              action=(route-action "editCategory" category)
+              icon="wrench"
+              label="category.edit"
+            }}
+          {{/if}}
+          {{new-topic-dropdown
+            class="page-header__button"
+            createDialog=(route-action "createTopic")
+            args=(hash
+              canCreateTopic=canCreateTopic
+              createTopicDisabled=createTopicDisabled
+              createTopicButtonDisabled=createTopicButtonDisabled
+            )
+          }}
+        </div>
+
+        <div class="page-header__button-list-right show-on-dialogs">
+          {{d-button
+            action=(action "goToResolutionsPage")
+            label="communitarian.dialog.resolutions_link"
+            class="link-button--resolutions page-header__button"
+          }}
+          {{#if currentUser}}
+            {{new-topic-dropdown
+              class="page-header__button"
+              createDialog=(route-action "createTopic")
+              args=(hash
+                canCreateTopic=canCreateTopic
+                createTopicDisabled=createTopicDisabled
+                createTopicButtonDisabled=createTopicButtonDisabled
+              )
+            }}
+          {{/if}}
+        </div>
+      </div>
     </div>
     {{#if category.description}}
       <span class="page-header__description">{{dir-span category.description}}</span>

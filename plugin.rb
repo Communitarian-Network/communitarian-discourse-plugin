@@ -31,6 +31,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/dialog-list.scss",
   "stylesheets/common/dialog-list-page.scss",
   "stylesheets/common/dialog-list-item.scss",
+  "stylesheets/common/new-topic-dropdown.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",
   "stylesheets/common/community-action.scss",
@@ -253,6 +254,44 @@ after_initialize do
       attr_accessor :dialogs
     end
 
+    UsersController.class_eval do
+      def account_created
+        if current_user.present?
+          if SiteSetting.enable_sso_provider && payload = cookies.delete(:sso_payload)
+            return redirect_to(session_sso_provider_url + "?" + payload)
+          elsif destination_url = cookies.delete(:destination_url)
+            return redirect_to(destination_url)
+          else
+            return redirect_to(path('/'))
+          end
+        end
+
+        @custom_body_class = "static-account-created"
+        @message = session['user_created_message'] || I18n.t('activation.missing_session')
+        @account_created = { message: @message, show_controls: false }
+
+        if session_user_id = session[SessionController::ACTIVATE_USER_KEY]
+          if user = User.where(id: session_user_id.to_i).first
+            # custom logic >>>>
+            @account_created[:name] = user.name
+            # custom logic <<<<
+            @account_created[:username] = user.username
+            @account_created[:email] = user.email
+            @account_created[:show_controls] = !user.from_staged?
+            @account_created[:show_controls] = !user.from_staged?
+          end
+        end
+
+        store_preloaded("accountCreated", MultiJson.dump(@account_created))
+        expires_now
+
+        respond_to do |format|
+          format.html { render "default/empty" }
+          format.json { render json: success_json }
+        end
+      end
+    end
+
     ListController.class_eval do
       def category_default
         canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
@@ -312,12 +351,12 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? category_dialogs(category: @category.id, without_respond: true).topics.first(5) : []
+        list.dialogs = @category ? dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
-      def category_dialogs(options = nil)
+      def dialogs(options = nil)
         without_respond = options ? options.delete(:without_respond) : false
 
         filter = :dialogs
