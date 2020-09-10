@@ -165,7 +165,6 @@ after_initialize do
         result = remove_muted_categories(result, @user, exclude: options[:category])
         result = remove_muted_tags(result, @user, options)
         result = apply_shared_drafts(result, get_category_id(options[:category]), options)
-        result = apply_shared_drafts(result, get_category_id(options[:category]), options)
         result = result.where.not(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
         result
       end
@@ -254,6 +253,12 @@ after_initialize do
       attr_accessor :dialogs
     end
 
+    User.class_eval do
+      def billing_address
+        UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
+      end
+    end
+
     UsersController.class_eval do
       def account_created
         if current_user.present?
@@ -274,6 +279,7 @@ after_initialize do
           if user = User.where(id: session_user_id.to_i).first
             # custom logic >>>>
             @account_created[:name] = user.name
+            @account_created[:billing_address] = user.billing_address
             # custom logic <<<<
             @account_created[:username] = user.username
             @account_created[:email] = user.email
@@ -293,14 +299,6 @@ after_initialize do
     end
 
     ListController.class_eval do
-      def category_default
-        canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
-        view_method = @category.default_view
-        view_method = 'latest' unless %w(latest top).include?(view_method)
-
-        self.public_send(view_method, category: @category.id)
-      end
-
       def latest(options = nil)
         filter = :latest
         list_opts = build_topic_list_options
@@ -365,7 +363,7 @@ after_initialize do
         user = list_target_user
         list_opts[:no_definitions] = true if params[:category].blank? && filter == :latest
 
-        list = TopicQuery.new(user, list_opts).public_send("list_#{filter}")
+        list = TopicQuery.new(user, list_opts).list_dialogs
 
         if guardian.can_create_shared_draft? && @category.present?
           if @category.id == SiteSetting.shared_drafts_category.to_i
@@ -393,7 +391,32 @@ after_initialize do
 
         return list if without_respond
 
+        @description = SiteSetting.site_description
+        @rss = filter
+
+        # Note the first is the default and we don't add a title
+        if (filter.to_s != current_homepage) && use_crawler_layout?
+          filter_title = I18n.t("js.filters.#{filter.to_s}.title", count: 0)
+          if list_opts[:category] && @category
+            @title = I18n.t('js.filters.with_category', filter: filter_title, category: @category.name)
+          else
+            @title = I18n.t('js.filters.with_topics', filter: filter_title)
+          end
+          @title << " - #{SiteSetting.title}"
+        elsif @category.blank? && (filter.to_s == current_homepage) && SiteSetting.short_site_description.present?
+          @title = "#{SiteSetting.title} - #{SiteSetting.short_site_description}"
+        end
+
         respond_with_list(list)
+      end
+
+      def category_dialogs
+        canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
+        dialogs(category: @category.id)
+      end
+
+      def category_none_dialogs
+        dialogs(category: @category.id, no_subcategories: true)
       end
     end
   end
