@@ -37,13 +37,15 @@ export default DiscourseRoute.extend({
 
   _finishSignUp(accountName) {
     const signupData = PreloadStore.get("signupData");
+
     const attrs = {
-      accountName,
+      accountName: accountName,
       accountEmail: signupData.email,
       accountPassword: signupData.password,
       accountUsername: signupData.username,
       accountPasswordConfirm: signupData.password_confirmation,
       accountChallenge: signupData.challenge,
+      userFields: signupData.user_fields
     };
 
     return User.createAccount(attrs)
