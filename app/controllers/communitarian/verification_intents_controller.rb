@@ -73,7 +73,7 @@ module Communitarian
     def identity_billing_address
       verification_intent.response
         .dig(:verification_reports, :identity_document, :person_details, :address)
-        .select {|key, value| [:city, :country, :postal_code].include?(key) }
+        .select { |key, value| [:city, :country, :postal_code].include?(key) }
     end
 
     def billing_address
