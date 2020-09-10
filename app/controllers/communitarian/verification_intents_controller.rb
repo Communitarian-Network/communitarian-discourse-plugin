@@ -68,7 +68,7 @@ module Communitarian
 
     def permitted_params
       params.permit(:username, :email, :password, :password_confirmation,
-                                    :challenge, :invite_code).merge(user_fields: [ {"123001": get_billing_address}])
+                                    :challenge, :invite_code).merge(user_fields: [ { "123001" : get_billing_address }])
     end
 
     def get_billing_address
