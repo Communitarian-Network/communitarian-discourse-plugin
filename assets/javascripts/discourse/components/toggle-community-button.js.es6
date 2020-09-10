@@ -8,17 +8,16 @@ import setCategoryNotificationLevel from "./set-category-notification-level";
 export default Component.extend({
   @discourseComputed("category.notification_level")
   buttonLabel(notificationLevel) {
-    return this.communityJoined()
-      ? "communitarian.community.leave.label"
-      : "communitarian.community.join.label";
+    let action = this.communityJoined() ? "leave" : "join";
+    return `communitarian.community.${action}.label`;
   },
 
   joinCommunity() {
-    // showModal("community-tenets").setCategory(this.category);
-    debugger;
-    ajax(`/c/${this.category.slug}`).then((category) => {
-      debugger;
-      console.log(category.custom);
+    ajax(`/c/${this.category.id}/show`).then(({ category }) => {
+      let tenets = category.custom_fields.tenets_raw || "";
+      if (tenets.length > 0) {
+        showModal("community-tenets-modal").setTenets(tenets);
+      }
     });
     setCategoryNotificationLevel(this.category, 3);
   },
