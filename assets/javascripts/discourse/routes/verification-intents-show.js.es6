@@ -20,12 +20,14 @@ export default DiscourseRoute.extend({
       .find("verification-intent", params.id, { backgroundReload: true })
       .then((item) => {
         if (item.status == "succeeded") {
-          this._finishSignUp(item.full_name);
+          later(() => {
+            this._finishSignUp(item.full_name);
+          }, 5000);
         }
         if (item.status == "processing") {
           later(() => {
             self.model({ id: params.id });
-          }, 3000);
+          }, 5000);
         }
         return item;
       });
@@ -45,13 +47,13 @@ export default DiscourseRoute.extend({
       accountUsername: signupData.username,
       accountPasswordConfirm: signupData.password_confirmation,
       accountChallenge: signupData.challenge,
-      userFields: signupData.user_fields
+      userFields: signupData.user_fields[0]
     };
 
     return User.createAccount(attrs)
       .then((result) => {
         if (result.success) {
-          later(() => window.location = "/u/account-created", 5000);
+          later(() => window.location = "/u/account-created", 10000);
         } else {
           popupAjaxError(result);
         }

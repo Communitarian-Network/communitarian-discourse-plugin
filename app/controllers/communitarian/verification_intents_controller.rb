@@ -14,7 +14,7 @@ module Communitarian
     end
 
     def show
-      preloaded_data = Marshal.load(session[:signup_data]).merge(user_fields: [ {"123001": get_billing_address}])
+      preloaded_data = Marshal.load(session[:signup_data]).merge(user_fields: [ { 123001 => billing_address }])
       respond_to do |format|
         format.html do
           store_preloaded("signupData", MultiJson.dump(preloaded_data))
@@ -67,16 +67,19 @@ module Communitarian
     end
 
     def permitted_params
-      params.permit(:username, :email, :password, :password_confirmation,
-                                    :challenge, :invite_code).merge(user_fields: [ { "123001": get_billing_address }])
+      params.permit(:username, :email, :password, :password_confirmation, :challenge, :invite_code)
     end
 
-    def get_billing_address
-      return "" unless params[:id]
+    def identity_billing_address
+      verification_intent.response
+        .dig(:verification_reports, :identity_document, :person_details, :address)
+        .select {|key, value| [:city, :country, :postal_code].include?(key) }
+    end
 
-      identity_billing_address = verification_intent.response.dig(:verification_reports, :identity_document, :person_details, :address)
+    def billing_address
+      return "US" unless identity_billing_address.present?
 
-      identity_billing_address.slice(:city, :country, :postal_code).values.reject(&:blank?).join(", ")
+      identity_billing_address.values.reject(&:blank?).join(", ")
     end
   end
 end
