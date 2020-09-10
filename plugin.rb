@@ -253,12 +253,6 @@ after_initialize do
       attr_accessor :dialogs
     end
 
-    User.class_eval do
-      def billing_address
-        UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
-      end
-    end
-
     UsersController.class_eval do
       def account_created
         if current_user.present?
@@ -279,7 +273,6 @@ after_initialize do
           if user = User.where(id: session_user_id.to_i).first
             # custom logic >>>>
             @account_created[:name] = user.name
-            @account_created[:billing_address] = user.billing_address
             # custom logic <<<<
             @account_created[:username] = user.username
             @account_created[:email] = user.email
