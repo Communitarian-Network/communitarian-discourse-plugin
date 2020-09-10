@@ -74,7 +74,7 @@ module Communitarian
     def get_billing_address
       return "" unless params[:id]
 
-      identity_billing_address = verification_intent.response[:verification_reports][:identity_document][:person_details][:address]
+      identity_billing_address = verification_intent.response.dig(:verification_reports, :identity_document, :person_details, :address)
 
       identity_billing_address.slice(:city, :country, :postal_code).values.reject(&:blank?).join(", ")
     end
