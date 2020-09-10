@@ -14,7 +14,7 @@ module Communitarian
     end
 
     def show
-      preloaded_data = Marshal.load(session[:signup_data]).merge(user_fields: [ { 123001 => billing_address }])
+      preloaded_data = Marshal.load(session[:signup_data]).merge(user_fields: [{ 123001 => billing_address }])
       respond_to do |format|
         format.html do
           store_preloaded("signupData", MultiJson.dump(preloaded_data))
