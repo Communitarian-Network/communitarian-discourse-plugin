@@ -58,8 +58,7 @@ export default {
     const validation = [
       this.emailValidation,
       this.nameValidation,
-      this.passwordValidation,
-      this.userFieldsValidation
+      this.passwordValidation
     ].find(v => v.failed);
 
     if (validation) {
