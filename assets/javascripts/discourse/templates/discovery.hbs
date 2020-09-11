@@ -49,7 +49,7 @@
             label="communitarian.dialogs.view_dialogs"
             class="link-button page-header__button"
           }}
-          {{#if currentUser.admin}}
+          {{#if category.can_edit}}
             {{d-button
               class="btn-default edit-category page-header__button"
               action=(route-action "editCategory" category)
