@@ -45,7 +45,6 @@ export default {
       username: this.accountUsername,
       password_confirmation: this.accountHoneypot,
       challenge: this.accountChallenge,
-      user_fields: this.userFields,
     };
 
     this.set("formSubmitted", true);
