@@ -21,9 +21,10 @@
           {{input-tip validation=minNumOfOptionsValidation}}
         </div>
 
-        <div class="d-editor-preview resolution-form-preview">
-          {{cook-text this.previewText}}
-        </div>
+        <details class="d-editor-preview resolution-form-preview" open>
+          <summary>Resolution Preview</summary>
+          <div class="resolution-preview">{{cook-text this.previewText}}</div>
+        </details>
       </div>
 
     </form>

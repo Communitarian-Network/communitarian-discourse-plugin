@@ -53,10 +53,20 @@
       label {
         font-weight: normal;
       }
+
+      @media screen and (max-width: 500px) {
+        .options {
+          width: 100%;
+        }
+      }
     }
 
     .body-content {
       display: flex;
+
+      @media screen and (max-width: 500px) {
+        flex-direction: column;
+      }
     }
 
     .options {
@@ -64,6 +74,10 @@
 
       .poll-textarea label {
         font-weight: bold;
+      }
+
+      @media (max-width: 700px) {
+        width: 50%;
       }
     }
 
@@ -77,6 +91,22 @@
       background-color: #f0f0f0;
       border-radius: 5px;
       padding: 0 1.3em;
+
+      summary {
+        @media (min-width: 500px) {
+          display: none;
+        }
+
+        @media (max-width: 500px) {
+          display: block;
+        }
+
+        &:before {
+          font-size: 11px;
+          margin-left: -10px;
+          margin-right: 5px;
+        }
+      }
 
       p {
         margin-bottom: 0;
@@ -100,6 +130,18 @@
         .poll-info {
           display: none;
         }
+      }
+
+      @media (max-width: 700px) {
+        width: 100%;
+        max-width: 50%;
+      }
+      
+      @media (max-width: 500px) {
+        margin-left: 0;
+        padding: .5em 1.3em .3em;
+        width: 100%;
+        max-width: 100%;
       }
     }
   }
