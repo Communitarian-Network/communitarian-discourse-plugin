@@ -41,7 +41,7 @@ export default DiscourseRoute.extend({
     const signupData = PreloadStore.get("signupData");
 
     const attrs = {
-      accountName: accountName,
+      accountName,
       accountEmail: signupData.email,
       accountPassword: signupData.password,
       accountUsername: signupData.username,

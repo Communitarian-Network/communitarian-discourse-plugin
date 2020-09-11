@@ -73,11 +73,11 @@ module Communitarian
     def identity_billing_address
       verification_intent.response
         .dig(:verification_reports, :identity_document, :person_details, :address)
-        .try(:select) { |key, value| [:city, :country, :postal_code].include?(key) }
+        .try(:select) { |key, _| [:city, :country, :postal_code].include?(key) }
     end
 
     def billing_address
-      return "US" unless identity_billing_address.present?
+      return "unknown" unless identity_billing_address.present?
 
       identity_billing_address.values.reject(&:blank?).join(", ")
     end
