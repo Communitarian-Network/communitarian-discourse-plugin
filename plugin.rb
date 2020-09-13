@@ -299,6 +299,8 @@ after_initialize do
     end
 
     ListController.class_eval do
+      skip_before_action :ensure_logged_in, only: [:category_dialogs, :category_none_dialogs]
+
       def latest(options = nil)
         filter = :latest
         list_opts = build_topic_list_options
@@ -391,26 +393,29 @@ after_initialize do
 
         return list if without_respond
 
-        @description = SiteSetting.site_description
-        @rss = filter
+        if Discourse.anonymous_filters.include?(filter)
+          @description = SiteSetting.site_description
+          @rss = filter
 
-        # Note the first is the default and we don't add a title
-        if (filter.to_s != current_homepage) && use_crawler_layout?
-          filter_title = I18n.t("js.filters.#{filter.to_s}.title", count: 0)
-          if list_opts[:category] && @category
-            @title = I18n.t('js.filters.with_category', filter: filter_title, category: @category.name)
-          else
-            @title = I18n.t('js.filters.with_topics', filter: filter_title)
+          # Note the first is the default and we don't add a title
+          if (filter.to_s != current_homepage) && use_crawler_layout?
+            filter_title = I18n.t("js.filters.#{filter.to_s}.title", count: 0)
+            if list_opts[:category] && @category
+              @title = I18n.t('js.filters.with_category', filter: filter_title, category: @category.name)
+            else
+              @title = I18n.t('js.filters.with_topics', filter: filter_title)
+            end
+            @title << " - #{SiteSetting.title}"
+          elsif @category.blank? && (filter.to_s == current_homepage) && SiteSetting.short_site_description.present?
+            @title = "#{SiteSetting.title} - #{SiteSetting.short_site_description}"
           end
-          @title << " - #{SiteSetting.title}"
-        elsif @category.blank? && (filter.to_s == current_homepage) && SiteSetting.short_site_description.present?
-          @title = "#{SiteSetting.title} - #{SiteSetting.short_site_description}"
         end
 
         respond_with_list(list)
       end
 
       def category_dialogs
+        set_category
         canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
         dialogs(category: @category.id)
       end
