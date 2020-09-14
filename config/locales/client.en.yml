@@ -51,6 +51,7 @@ en:
           poll_options:
             label: Enter resolution options per line
             close_option: Close the poll
+          preview_title: Resolution Preview
         error_while_creating: Sorry, there was an error creating the resolution.
         error_while_updating: Sorry, there was an error updating the resolution.
         list:
