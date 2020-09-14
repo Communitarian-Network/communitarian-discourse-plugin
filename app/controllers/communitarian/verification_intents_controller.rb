@@ -15,8 +15,7 @@ module Communitarian
     end
 
     def show
-      preloaded_data = Marshal.load(session[:signup_data])
-                                                         .merge(user_fields: [{ 123001 => billing_address(identity_billing_address) }])
+      preloaded_data = Marshal.load(session[:signup_data]).merge(user_fields: [{ 123001 => billing_address }])
 
       respond_to do |format|
         format.html do
@@ -81,8 +80,8 @@ module Communitarian
         .try(:select) { |key, _| [:city, :country, :postal_code].include?(key) }
     end
 
-    def billing_address(address)
-      address ||= { country: "unknown" }
+    def billing_address
+      address = identity_billing_address || { country: "unknown" }
 
       address.values.reject(&:blank?).join(", ")
     end
