@@ -6,7 +6,6 @@ module Communitarian
     skip_before_action :verify_authenticity_token, :redirect_to_login_if_required
     skip_before_action :check_xhr, only: %i(show)
     before_action :ensure_not_logged_in, only: %i(show)
-    before_action :verification_intent, only: %i(show)
 
     def create
       session[:signup_data] = Marshal.dump(permitted_params)
@@ -15,11 +14,9 @@ module Communitarian
     end
 
     def show
-      preloaded_data = Marshal.load(session[:signup_data]).merge(user_fields: [{ 123001 => billing_address }])
-
       respond_to do |format|
         format.html do
-          store_preloaded("signupData", MultiJson.dump(preloaded_data))
+          store_preloaded("signupData", MultiJson.dump(Marshal.load(session[:signup_data])))
           render "default/empty"
         end
         format.json do
@@ -35,7 +32,7 @@ module Communitarian
     end
 
     def created_verification_intent
-      Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
+      @created_verification_intent ||= Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
     end
 
     def verification_intent_params
@@ -70,20 +67,6 @@ module Communitarian
 
     def permitted_params
       params.permit(:username, :email, :password, :password_confirmation, :challenge, :invite_code)
-    end
-
-    def identity_billing_address
-      return unless verification_intent.success?
-
-      verification_intent.response
-        .dig(:verification_reports, :identity_document, :person_details, :address)
-        .try(:select) { |key, _| [:city, :country, :postal_code].include?(key) }
-    end
-
-    def billing_address
-      address = identity_billing_address || { country: "unknown" }
-
-      address.values.reject(&:blank?).join(", ")
     end
   end
 end
