@@ -124,6 +124,13 @@ function initializeCommunitarian(api) {
     }
   });
 
+  api.modifyClass("controller:account-created-index", {
+    @discourseComputed("accountCreated.billing_address")
+    isUnknownAddress(billing_address) {
+      return billing_address === "unknown";
+    },
+  });
+
   api.modifyClass("controller:discovery:topics", {
     hasDialogs: gt("model.dialogs.length", 0)
   });
