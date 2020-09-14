@@ -29,11 +29,11 @@ module Communitarian
     private
 
     def verification_intent
-      @verification_intent ||= Communitarian::Stripe.new.get_verification_intent(params[:id])
+      Communitarian::Stripe.new.get_verification_intent(params[:id])
     end
 
     def created_verification_intent
-      @created_verification_intent ||= Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
+      Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
     end
 
     def verification_intent_params
