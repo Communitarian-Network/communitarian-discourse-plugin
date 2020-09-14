@@ -21,7 +21,21 @@ module Communitarian
       post.save_custom_fields(true)
       poll = post.reload.polls.first
       poll.update!(close_at: resolution_schedule.next_close_time)
+      self.reorder_resolutions!(original_post.topic)
       self.schedule_jobs(post)
+    end
+
+    def reorder_resolutions!(topic)
+      resolutions = topic.posts.select { |p| p.custom_fields["is_resolution"] }
+
+      sort_orders = resolutions.pluck(:sort_order).sort
+      resolutions.sort! { |r1, r2| r2.created_at <=> r1.created_at }
+
+      Post.transaction do
+        resolutions.zip(sort_orders) do |resolution, order|
+          resolution.update(sort_order: order)
+        end
+      end
     end
 
     def schedule_jobs(post)
