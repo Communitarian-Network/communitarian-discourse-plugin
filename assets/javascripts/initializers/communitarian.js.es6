@@ -12,7 +12,6 @@ import showModal from "discourse/lib/show-modal";
 import { reopenWidget } from "discourse/widgets/widget";
 import CreateAccount from "../modifications/controllers/create_account";
 import HeaderButtons from "../modifications/widgets/header-buttons";
-import I18n from "I18n";
 
 import ResolutionController from "../controllers/resolution-controller";
 import getResolutionPeriod from "../discourse/components/get-resolution-period";
