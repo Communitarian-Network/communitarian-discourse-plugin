@@ -300,6 +300,7 @@ after_initialize do
 
     ListController.class_eval do
       skip_before_action :ensure_logged_in, only: [:category_dialogs, :category_none_dialogs]
+      before_action :set_category, only: [:category_dialogs, :category_none_dialogs]
 
       def latest(options = nil)
         filter = :latest
@@ -333,6 +334,7 @@ after_initialize do
 
         list.more_topics_url = construct_url_with(:next, list_opts)
         list.prev_topics_url = construct_url_with(:prev, list_opts)
+
         if Discourse.anonymous_filters.include?(filter)
           @description = SiteSetting.site_description
           @rss = filter
@@ -415,7 +417,6 @@ after_initialize do
       end
 
       def category_dialogs
-        set_category
         canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
         dialogs(category: @category.id)
       end
