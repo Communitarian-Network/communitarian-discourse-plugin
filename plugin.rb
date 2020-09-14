@@ -299,8 +299,49 @@ after_initialize do
     end
 
     ListController.class_eval do
-      skip_before_action :ensure_logged_in, only: [:category_dialogs, :category_none_dialogs]
-      before_action :set_category, only: [:category_dialogs, :category_none_dialogs]
+      before_action :ensure_logged_in, except: [
+        :topics_by,
+        # anonymous filters
+        Discourse.anonymous_filters,
+        Discourse.anonymous_filters.map { |f| "#{f}_feed" },
+        # anonymous categorized filters
+        :category_default,
+        Discourse.anonymous_filters.map { |f| :"category_#{f}" },
+        Discourse.anonymous_filters.map { |f| :"category_none_#{f}" },
+        # category feeds
+        :category_feed,
+        # user topics feed
+        :user_topics_feed,
+        # top summaries
+        :top,
+        :category_top,
+        :category_none_top,
+        # top pages (ie. with a period)
+        TopTopic.periods.map { |p| :"top_#{p}" },
+        TopTopic.periods.map { |p| :"top_#{p}_feed" },
+        TopTopic.periods.map { |p| :"category_top_#{p}" },
+        TopTopic.periods.map { |p| :"category_none_top_#{p}" },
+        :group_topics,
+        :category_dialogs,
+        :category_none_dialogs
+      ].flatten
+
+      before_action :set_category, only: [
+        :category_default,
+        # filtered topics lists
+        Discourse.filters.map { |f| :"category_#{f}" },
+        Discourse.filters.map { |f| :"category_none_#{f}" },
+        # top summaries
+        :category_top,
+        :category_none_top,
+        # top pages (ie. with a period)
+        TopTopic.periods.map { |p| :"category_top_#{p}" },
+        TopTopic.periods.map { |p| :"category_none_top_#{p}" },
+        # category feeds
+        :category_feed,
+        :category_dialogs,
+        :category_none_dialogs
+      ].flatten
 
       def latest(options = nil)
         filter = :latest
