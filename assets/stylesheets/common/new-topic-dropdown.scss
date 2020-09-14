@@ -1,13 +1,11 @@
-.dialogs-list-above-outlet {
-  display: inline-flex;
-}
-
 .new-topic-dropdown {
   &.select-kit.dropdown-select-box {
-    margin-bottom: 2.3em;
+    // margin-bottom: 2.3em;
+    float: none;
 
     .dropdown-select-box-header,
     .dropdown-select-box-header:hover {
+      display: flex;
       margin: 0;
       padding: 0.6em 1.2em 0.6em 1.7em;
       background-color: $tertiary;
@@ -15,7 +13,12 @@
       color: $secondary;
       outline: none;
 
+      @media screen and (max-width: 500px) {
+        font-size: 0.9em;
+      }
+
       .d-icon {
+        margin-left: 0.3em;
         padding-left: 0;
         color: $secondary;
       }

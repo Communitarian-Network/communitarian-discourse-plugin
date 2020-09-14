@@ -1,0 +1,211 @@
+.modal.login-modal {
+  background-color: transparent;
+
+  .modal-inner-container {
+    max-width: 32em;
+    max-height: 100%;
+    border-radius: 5px;
+    box-shadow: 0 0 6em 0 rgba(0, 0, 0, 0.04);
+
+    .modal-header {
+      padding: 2em 1em 1em;
+      position: relative;
+      border-bottom: 0;
+
+      @media screen and (max-width: 500px) {
+        padding-top: 1.5em;
+      }
+
+      .modal-close {
+        position: absolute;
+        right: 1em;
+        top: 1em;
+        font-size: 1.3em;
+      }
+
+      .title {
+        flex: 1;
+        text-align: center;
+        font-size: 1.2em;
+        line-height: 2em;
+
+        @media screen and (max-width: 500px) {
+          font-size: 1em;
+        }
+
+        h3 {
+          font-weight: 900;
+          letter-spacing: 1px;
+
+          @media screen and (max-width: 500px) {
+            letter-spacing: unset;
+          }
+        }
+      }
+    }
+
+    #modal-alert {
+      padding: 0.5em 3em;
+
+      @media screen and (max-width: 500px) {
+        margin-bottom: 0.5em;
+        padding-left: 1.75em;
+        padding-right: 1.75em;
+        text-align: center;
+      }
+    }
+
+    .modal-body.login-modal {
+      display: block;
+      background-color: $secondary;
+      border-radius: 5px;
+      padding-top: 0;
+      padding-bottom: 0;
+      max-height: none !important;
+
+      #login-form {
+        padding-left: 3em;
+        padding-right: 3em;
+        padding-bottom: 0;
+        max-height: none;
+
+        @media screen and (max-width: 500px) {
+          padding-left: 1em;
+          padding-right: 1em;
+        }
+
+        table {
+          margin-bottom: 0;
+        }
+
+        #credentials {
+          padding-bottom: 0;
+        }
+      }
+
+      tr.input:not(:first-of-type) {
+        margin-top: 1em;
+      }
+
+      label {
+        margin-top: 0;
+        width: auto;
+        font-size: 1.2em;
+        font-weight: 500;
+        line-height: 1.7em;
+      }
+
+      .ember-text-field {
+        padding-top: 0.4em;
+        padding-bottom: 0.4em;
+        border: 1px solid #cdcdcd;
+        border-radius: 6px;
+        background-color: $secondary;
+        font-size: 1.2em;
+        font-weight: 500;
+        line-height: 1.7em;
+
+        @media screen and (max-width: 500px) {
+          font-size: 1em;
+        }
+      }
+
+      #forgot-password-link {
+        display: inline-block;
+        margin-top: 0.5em;
+        font-size: 1.2em;
+        color: $tertiary;
+      }
+    }
+
+    .modal-footer {
+      background-color: $secondary;
+      border-radius: 5px;
+      padding: 1.5em 3em;
+      border-top: 0;
+
+      @media screen and (max-width: 500px) {
+        padding: 1em 2em;
+      }
+
+      .default-buttons {
+        display: flex;
+        align-items: center;
+
+        @media screen and (max-width: 500px) {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        button {
+          margin: 0;
+        }
+
+        #login-button {
+          margin-right: 1em;
+
+          @media screen and (max-width: 500px) {
+            margin-right: 0;
+            margin-bottom: 1em;
+
+            .d-icon {
+              display: none;
+            }
+          }
+        }
+
+        #new-account-link {
+          border: 0;
+          color: $tertiary;
+        }
+      }
+
+      #login-buttons {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2em 0 1.4em;
+        min-height: unset;
+        box-sizing: border-box;
+        width: 100%;
+
+        @media screen and (max-width: 500px) {
+          align-items: stretch;
+          margin-left: 0;
+          padding: 1.2em 0 0.4em;
+        }
+
+        .linkedin,
+        .linkedin:hover {
+          font-family: "Avenir Light", sans-serif;
+          margin: 0;
+          padding: 0.6em 1.3em 0.6em 1em;
+          color: $secondary;
+          font-size: 1.3em;
+          font-weight: 100;
+          border-radius: 5px;
+
+          @media screen and (max-width: 500px) {
+            display: flex;
+            align-items: center;
+            padding: 0.6em 1.3em 0.6em 1em;
+            max-width: none;
+            font-size: 1.1em;
+          }
+
+          .d-icon {
+            padding-bottom: 0.1em;
+            font-size: 1.3em;
+
+            @media screen and (max-width: 500px) {
+              padding-bottom: 0.2em;
+            }
+          }
+        }
+
+        .login-with-email-button {
+          display: none;
+        }
+      }
+    }
+  }
+}

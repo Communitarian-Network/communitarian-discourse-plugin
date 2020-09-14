@@ -8,8 +8,6 @@
 
   &__title {
     display: flex;
-    align-items: center;
-    flex-wrap: wrap;
     margin-bottom: 0.7em;
 
     @media screen and (max-width: 750px) {

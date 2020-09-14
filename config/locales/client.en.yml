@@ -28,9 +28,11 @@ en:
         error_while_updating: Sorry, there was an error updating the community.
       dialog:
         new_button: Dialog
+        header_title: Ongoing Dialogs
+        resolutions_link: Vote on resolutions
       dialogs:
         header_title: Ongoing Dialogs
-        view_all: View all
+        view_dialogs: View dialogs
       resolution:
         new_button: Resolution
         ui_builder:
@@ -49,6 +51,7 @@ en:
           poll_options:
             label: Enter resolution options per line
             close_option: Close the poll
+          preview_title: Resolution Preview
         error_while_creating: Sorry, there was an error creating the resolution.
         error_while_updating: Sorry, there was an error updating the resolution.
         list:
@@ -56,6 +59,21 @@ en:
           votes: "%{voters} votes"
       verification:
         error_while_creating: Sorry, there was an error in verification process.
+        processing:
+          title: Processing ID
+          text: Your verification currently in progress...
+          hint: This can take no more than 5 minutes. Feel free to keep working in other tabs or apps.
+        requiresAction:
+          title: ID Verification Failed
+          button: Try again
+        canceled:
+          title: ID Verification Canceled
+          text: Your verification has been canceled.
+          hint: Please contact with us to solve this issue.
+        succeeded:
+          title: ID Verification Completed
+          text: Your verification has been completed.
+          hint: You will be redirected to email verification step soon.
       landing:
         explore:
           title: The Civil Dialogues platform for civil agreement on the most pressing issues
@@ -79,9 +97,23 @@ en:
         choose_verification_way:
           title: Choose the Way of Verification
           description: We believe that the core to a civil conversation is to present your point-of-view and stand behind it without concealing your identity.
+          card_title: Verification with Debit or Credit Card
           card_description: For $1 to create an account - a one-time fee to signal you commitment to civil discussion on the pressing issues of our day.
-          identity_description: "You'll need a government-issued photo ID."
-          identity_example: "Ex: Driver's license, Identity Card, Passport"
+          identity_title: Verification with ID
+          identity_description: "You'll need a government-issued photo ID.<br>Ex: Driver's license, Identity Card, Passport"
+          payment:
+            name: Name on Card
+            card: Credit or Debit Card
+            address: Billing address
+        activation_email:
+          title: Check your inbox
+          description: Your name & location will be a part of all your post.
+          address: from %{address}
+          instructions: Instructions has been sent to email
+          change_email: Edit
+          check_span: If it doesn’t arrive, check your spam folder or
+      login:
+        title: Welcome back!
     filters:
       dialogs:
         title: All dialogs
@@ -119,9 +151,7 @@ en:
         message: Log in via LinkedIn
     sign_up: Join the Conversation
     log_in: Sign in
-    activity:
-      Recent Activity
-
+    activity: Recent Activity
     share:
       topic_html: 'Dialog: <span class="topic-title">%{topicTitle}</span>'
     action_codes:

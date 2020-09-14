@@ -7,7 +7,7 @@
   </div>
 
   {{!-- custom code started here ↓ --}}
-  <div class="community-page__content {{if isCommunityPage "with-mt"}}">
+  <div class="community-page__content {{if isResolutionsPage "resolutions"}}">
     <div class="community-page__resolutions">
       <div class="list-controls">
         <div class="container">
@@ -39,9 +39,37 @@
       </div>
     </div>
 
-    {{#if isCommunityPage}}
+    {{#if isResolutionsPage}}
       <div class="community-page__dialogs {{if loading "hidden"}}">
         {{plugin-outlet name="dialogs-list-above" args=(hash category=category)}}
+
+        <div class="community-page__dialogs-buttons">
+          {{d-button
+            action=(action "goToDialogsPage")
+            label="communitarian.dialogs.view_dialogs"
+            class="link-button page-header__button"
+          }}
+          {{#if category.can_edit}}
+            {{d-button
+              class="btn-default edit-category page-header__button"
+              action=(route-action "editCategory" category)
+              icon="wrench"
+              label="category.edit"
+            }}
+          {{/if}}
+          {{#if currentUser}}
+            {{new-topic-dropdown
+              class="page-header__button"
+              createDialog=(route-action "createTopic")
+              args=(hash
+                canCreateTopic=canCreateTopic
+                createTopicDisabled=createTopicDisabled
+                createTopicButtonDisabled=createTopicButtonDisabled
+              )
+            }}
+          {{/if}}
+        </div>
+
         {{dialog-list dialogs=dialogs}}
       </div>
     {{/if}}

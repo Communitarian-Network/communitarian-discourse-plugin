@@ -21,10 +21,17 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/communities-page.scss",
   "stylesheets/common/dialog-page.scss",
   "stylesheets/common/create-account-modal.scss",
+  "stylesheets/common/login-modal.scss",
+  "stylesheets/common/forgot-password-modal.scss",
+  "stylesheets/common/choose-verification-way-modal.scss",
+  "stylesheets/common/payment-details-modal.scss",
+  "stylesheets/common/verification-intents.scss",
+  "stylesheets/common/activation-email.scss",
   "stylesheets/common/community-page.scss",
   "stylesheets/common/dialog-list.scss",
   "stylesheets/common/dialog-list-page.scss",
   "stylesheets/common/dialog-list-item.scss",
+  "stylesheets/common/new-topic-dropdown.scss",
   "stylesheets/common/resolution-list-item.scss",
   "stylesheets/common/page-header.scss",
   "stylesheets/common/community-action.scss",
@@ -158,7 +165,6 @@ after_initialize do
         result = remove_muted_categories(result, @user, exclude: options[:category])
         result = remove_muted_tags(result, @user, options)
         result = apply_shared_drafts(result, get_category_id(options[:category]), options)
-        result = apply_shared_drafts(result, get_category_id(options[:category]), options)
         result = result.where.not(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
         result
       end
@@ -247,14 +253,95 @@ after_initialize do
       attr_accessor :dialogs
     end
 
-    ListController.class_eval do
-      def category_default
-        canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
-        view_method = @category.default_view
-        view_method = 'latest' unless %w(latest top).include?(view_method)
-
-        self.public_send(view_method, category: @category.id)
+    User.class_eval do
+      def billing_address
+        UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
       end
+    end
+
+    UsersController.class_eval do
+      def account_created
+        if current_user.present?
+          if SiteSetting.enable_sso_provider && payload = cookies.delete(:sso_payload)
+            return redirect_to(session_sso_provider_url + "?" + payload)
+          elsif destination_url = cookies.delete(:destination_url)
+            return redirect_to(destination_url)
+          else
+            return redirect_to(path('/'))
+          end
+        end
+
+        @custom_body_class = "static-account-created"
+        @message = session['user_created_message'] || I18n.t('activation.missing_session')
+        @account_created = { message: @message, show_controls: false }
+
+        if session_user_id = session[SessionController::ACTIVATE_USER_KEY]
+          if user = User.where(id: session_user_id.to_i).first
+            # custom logic >>>>
+            @account_created[:name] = user.name
+            @account_created[:billing_address] = user.billing_address
+            # custom logic <<<<
+            @account_created[:username] = user.username
+            @account_created[:email] = user.email
+            @account_created[:show_controls] = !user.from_staged?
+            @account_created[:show_controls] = !user.from_staged?
+          end
+        end
+
+        store_preloaded("accountCreated", MultiJson.dump(@account_created))
+        expires_now
+
+        respond_to do |format|
+          format.html { render "default/empty" }
+          format.json { render json: success_json }
+        end
+      end
+    end
+
+    ListController.class_eval do
+      before_action :ensure_logged_in, except: [
+        :topics_by,
+        # anonymous filters
+        Discourse.anonymous_filters,
+        Discourse.anonymous_filters.map { |f| "#{f}_feed" },
+        # anonymous categorized filters
+        :category_default,
+        Discourse.anonymous_filters.map { |f| :"category_#{f}" },
+        Discourse.anonymous_filters.map { |f| :"category_none_#{f}" },
+        # category feeds
+        :category_feed,
+        # user topics feed
+        :user_topics_feed,
+        # top summaries
+        :top,
+        :category_top,
+        :category_none_top,
+        # top pages (ie. with a period)
+        TopTopic.periods.map { |p| :"top_#{p}" },
+        TopTopic.periods.map { |p| :"top_#{p}_feed" },
+        TopTopic.periods.map { |p| :"category_top_#{p}" },
+        TopTopic.periods.map { |p| :"category_none_top_#{p}" },
+        :group_topics,
+        :category_dialogs,
+        :category_none_dialogs
+      ].flatten
+
+      before_action :set_category, only: [
+        :category_default,
+        # filtered topics lists
+        Discourse.filters.map { |f| :"category_#{f}" },
+        Discourse.filters.map { |f| :"category_none_#{f}" },
+        # top summaries
+        :category_top,
+        :category_none_top,
+        # top pages (ie. with a period)
+        TopTopic.periods.map { |p| :"category_top_#{p}" },
+        TopTopic.periods.map { |p| :"category_none_top_#{p}" },
+        # category feeds
+        :category_feed,
+        :category_dialogs,
+        :category_none_dialogs
+      ].flatten
 
       def latest(options = nil)
         filter = :latest
@@ -288,6 +375,7 @@ after_initialize do
 
         list.more_topics_url = construct_url_with(:next, list_opts)
         list.prev_topics_url = construct_url_with(:prev, list_opts)
+
         if Discourse.anonymous_filters.include?(filter)
           @description = SiteSetting.site_description
           @rss = filter
@@ -306,12 +394,12 @@ after_initialize do
           end
         end
 
-        list.dialogs = @category ? category_dialogs(category: @category.id, without_respond: true).topics.first(5) : []
+        list.dialogs = @category ? dialogs(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
 
-      def category_dialogs(options = nil)
+      def dialogs(options = nil)
         without_respond = options ? options.delete(:without_respond) : false
 
         filter = :dialogs
@@ -320,7 +408,7 @@ after_initialize do
         user = list_target_user
         list_opts[:no_definitions] = true if params[:category].blank? && filter == :latest
 
-        list = TopicQuery.new(user, list_opts).public_send("list_#{filter}")
+        list = TopicQuery.new(user, list_opts).list_dialogs
 
         if guardian.can_create_shared_draft? && @category.present?
           if @category.id == SiteSetting.shared_drafts_category.to_i
@@ -348,7 +436,34 @@ after_initialize do
 
         return list if without_respond
 
+        if Discourse.anonymous_filters.include?(filter)
+          @description = SiteSetting.site_description
+          @rss = filter
+
+          # Note the first is the default and we don't add a title
+          if (filter.to_s != current_homepage) && use_crawler_layout?
+            filter_title = I18n.t("js.filters.#{filter.to_s}.title", count: 0)
+            if list_opts[:category] && @category
+              @title = I18n.t('js.filters.with_category', filter: filter_title, category: @category.name)
+            else
+              @title = I18n.t('js.filters.with_topics', filter: filter_title)
+            end
+            @title << " - #{SiteSetting.title}"
+          elsif @category.blank? && (filter.to_s == current_homepage) && SiteSetting.short_site_description.present?
+            @title = "#{SiteSetting.title} - #{SiteSetting.short_site_description}"
+          end
+        end
+
         respond_with_list(list)
+      end
+
+      def category_dialogs
+        canonical_url "#{Discourse.base_url_no_prefix}#{@category.url}"
+        dialogs(category: @category.id)
+      end
+
+      def category_none_dialogs
+        dialogs(category: @category.id, no_subcategories: true)
       end
     end
   end

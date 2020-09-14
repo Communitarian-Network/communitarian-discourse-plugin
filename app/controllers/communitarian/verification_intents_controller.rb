@@ -14,9 +14,10 @@ module Communitarian
     end
 
     def show
+      preloaded_data = Marshal.load(session[:signup_data]).merge(user_fields: [{ 123001 => billing_address }])
       respond_to do |format|
         format.html do
-          store_preloaded("signupData", MultiJson.dump(Marshal.load(session[:signup_data])))
+          store_preloaded("signupData", MultiJson.dump(preloaded_data))
           render "default/empty"
         end
         format.json do
@@ -28,11 +29,11 @@ module Communitarian
     private
 
     def verification_intent
-      Communitarian::Stripe.new.get_verification_intent(params[:id])
+      @verification_intent ||= Communitarian::Stripe.new.get_verification_intent(params[:id])
     end
 
     def created_verification_intent
-      Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
+      @created_verification_intent ||= Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
     end
 
     def verification_intent_params
@@ -66,10 +67,19 @@ module Communitarian
     end
 
     def permitted_params
-      params.permit(
-        :username, :email, :password, :password_confirmation,
-        :challenge, :user_fields, :invite_code
-      )
+      params.permit(:username, :email, :password, :password_confirmation, :challenge, :invite_code)
+    end
+
+    def identity_billing_address
+      verification_intent.response
+        .dig(:verification_reports, :identity_document, :person_details, :address)
+        .try(:select) { |key, _| [:city, :country, :postal_code].include?(key) }
+    end
+
+    def billing_address
+      return "unknown" unless identity_billing_address.present?
+
+      identity_billing_address.values.reject(&:blank?).join(", ")
     end
   end
 end

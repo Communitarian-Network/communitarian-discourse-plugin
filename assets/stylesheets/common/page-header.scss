@@ -2,15 +2,30 @@
   &__title-wrap {
     display: flex;
     align-items: center;
+
+    @media screen and (max-width: 1000px) {
+      flex-direction: column;
+      align-items: flex-start;
+    }
   }
 
   &__title {
     margin: 0;
     font-size: 2.3em;
+    word-break: break-word;
   }
 
-  &__button {
+  &__button-list {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
     margin-left: 1.5em;
+
+    @media screen and (max-width: 1000px) {
+      margin-left: 0;
+      flex-wrap: wrap;
+    }
 
     .community-action {
       display: inline;
@@ -21,12 +36,89 @@
     }
   }
 
+  &__button-list-left,
+  &__button-list-right {
+    @media screen and (min-width: 500px) and (max-width: 1000px) {
+      margin-top: 1em;
+    }
+  }
+
+  &__button-list-left {
+    margin-right: 1em;
+  }
+
+  &__button-list-right {
+    display: flex;
+
+    @media screen and (max-width: 500px) {
+      flex-wrap: wrap;
+    }
+
+    .link-button,
+    button.link-button {
+      float: none;
+
+      &--resolutions,
+      &--dialogs {
+        @extend .link-button;
+      }
+    }
+  }
+
+  &__button {
+    @media screen and (max-width: 500px) {
+      margin-top: 1em !important;
+      margin-bottom: 0 !important;
+    }
+
+    &.btn {
+      margin-bottom: 0;
+      margin-left: 0;
+      padding: 0.5em 1em;
+      border: 2px solid $tertiary;
+      border-radius: 5px;
+      color: $tertiary;
+      background-color: transparent;
+      font-weight: 900;
+      white-space: nowrap;
+
+      @media screen and (max-width: 500px) {
+        font-size: 0.9em;
+      }
+
+      &:hover {
+        color: $tertiary;
+        background-color: transparent;
+      }
+
+      .d-icon {
+        color: $tertiary;
+      }
+
+      &:hover .d-icon {
+        color: $tertiary;
+      }
+    }
+
+    &:nth-child(n + 2) {
+      margin-left: 1em;
+
+      @media screen and (max-width: 500px) {
+        margin-left: 0.75em;
+      }
+    }
+  }
+
   &__description {
     display: block;
     margin-top: 0.4em;
     margin-bottom: 1em;
     font-size: 1.2em;
     line-height: 1.4em;
+
+    @media screen and (max-width: 1000px) {
+      margin-top: 1em;
+    }
 
     p {
       margin: 0;

@@ -1,10 +1,37 @@
 .community-page {
   &__content {
     display: flex;
+    margin-top: 2em;
     margin-bottom: 3em;
 
-    &.with-mt {
-      margin-top: 2em;
+    .show-on-resolutions {
+      display: none;
+    }
+
+    &.resolutions {
+      .page-header {
+        &__title-wrap {
+          align-items: flex-start;
+        }
+
+        &__button-list-left {
+          margin-top: 0.5em;
+
+          @media screen and (max-width: 1000px) {
+            margin-top: 1em;
+          }
+        }
+      }
+
+      .show-on-resolutions {
+        @media screen and (max-width: 750px) {
+          display: flex;
+        }
+      }
+
+      .show-on-dialogs {
+        display: none;
+      }
     }
   }
 
@@ -13,11 +40,22 @@
   }
 
   &__dialogs {
-    flex: 1 1 30%;
+    flex: 1 0 400px;
     margin-left: 2.5em;
+
+    @media screen and (max-width: 1000px) {
+      flex-basis: 350px;
+      margin-left: 1.5em;
+    }
 
     @media screen and (max-width: 750px) {
       display: none;
     }
+  }
+
+  &__dialogs-buttons {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 2em;
   }
 }
