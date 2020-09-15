@@ -5,6 +5,7 @@
 $landing-mobile-width: 500px;
 $landing-tablet-width: 750px;
 $landing-desktop-width: 1024px;
+$landing-desktop-hd-width: 1300px;
 
 .landing-block-wrap {
   max-width: $large-width;
@@ -142,12 +143,20 @@ $landing-explore-image-height: 450px;
 .categories-placeholders {
   background-image: url("data:image/svg+xml,%3Csvg width='618' height='189' viewBox='0 0 618 189' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg opacity='0.5'%3E%3Cg filter='url(%23filter0_d)'%3E%3Crect x='19' y='17' width='580' height='150.974' rx='8' fill='white'/%3E%3Crect x='19' y='17' width='580' height='150.974' rx='8' stroke='%23DCDCDC'/%3E%3C/g%3E%3Ccircle cx='88.5' cy='86.5' r='44.5' fill='%23D8D8D8'/%3E%3Cmask id='mask0' mask-type='alpha' maskUnits='userSpaceOnUse' x='44' y='42' width='89' height='89'%3E%3Ccircle cx='88.5' cy='86.5' r='44.5' fill='white'/%3E%3C/mask%3E%3Cg mask='url(%23mask0)'%3E%3C/g%3E%3C/g%3E%3Cg opacity='0.2'%3E%3Cpath d='M409 45.3333H159V73.6666H409V45.3333Z' fill='%237C7C7C'/%3E%3Cpath d='M241 85H159V100.867H241V85Z' fill='%237C7C7C'/%3E%3Cpath d='M248 85H288V100.867H248V85Z' fill='%237C7C7C'/%3E%3Cpath d='M293 109.933H256V125.8H293V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M297 109.933H337V125.8H297V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M400 109.933H343V125.8H400V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M406 109.933H419V125.8H406V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M447 109.933H425V125.8H447V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M454 109.933H510V125.8H454V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M414 85H388V100.867H414V85Z' fill='%237C7C7C'/%3E%3Cpath d='M419 85H495V100.867H419V85Z' fill='%237C7C7C'/%3E%3Cpath d='M382 85H293V100.867H382V85Z' fill='%237C7C7C'/%3E%3Cpath d='M159 109.933H210V125.8H159V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M250 109.933H216V125.8H250V109.933Z' fill='%237C7C7C'/%3E%3Cpath d='M159 134.867H226V150.733H159V134.867Z' fill='%237C7C7C'/%3E%3Cpath d='M297 134.867H230V150.733H297V134.867Z' fill='%237C7C7C'/%3E%3Cpath d='M310 134.867H360V150.733H310V134.867Z' fill='%237C7C7C'/%3E%3Cpath d='M403 134.867H366V150.733H403V134.867Z' fill='%237C7C7C'/%3E%3Cpath d='M411 134.867H466V150.733H411V134.867Z' fill='%237C7C7C'/%3E%3Cpath d='M519 134.867H472V150.733H519V134.867Z' fill='%237C7C7C'/%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='filter0_d' x='0.5' y='0.5' width='617' height='187.974' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0'/%3E%3CfeOffset dy='2'/%3E%3CfeGaussianBlur stdDeviation='9'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.1 0'/%3E%3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow'/%3E%3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow' result='shape'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E%0A");
   flex: 1 0 auto;
-  background-size: 95% auto;
+  background-size: 100% auto;
+  background-repeat: repeat-y;
   height: 100%;
-  width: calc(100% + 50px);
-  padding-right: 20px;
-  margin-left: -20px;
   margin-top: -20px;
+
+  @media screen and (min-width: $landing-desktop-width) {
+    margin-left: -18px;
+    margin-right: -12px;
+  }
+
+  @media screen and (min-width: $landing-tablet-width) {
+    margin-left: -15px;
+    margin-right: -12px;
+  }
 }
 
 .section-hero {
@@ -238,6 +247,10 @@ $category-boxes-gap: 1em;
       box-shadow: 0px 2px 18px rgba(0, 0, 0, 0.1);
       border-radius: 8px;
       transition: all 0.2s;
+
+      @media screen and (min-width: $landing-desktop-hd-width) {
+        margin-right: .45vw;
+      }
 
       @media screen and (min-width: $landing-mobile-width) {
         flex-basis: calc(50% - #{$category-boxes-gap} / 2);
@@ -405,6 +418,10 @@ $category-boxes-gap: 1em;
         background-size: cover;
         background-repeat: no-repeat;
         background-position: center center;
+        background-color: #dcdcdc;
+        border-radius: 50%;
+        position: relative;
+        box-shadow: inset 0 0 0 10px #fff;
 
         @media screen and (min-width: $landing-tablet-width) {
           flex: 0 0 6em;
@@ -420,6 +437,10 @@ $category-boxes-gap: 1em;
             width: 100%;
             height: 100%;
           }
+        }
+
+        .placeholder {
+          width: 90%;
         }
       }
 
