@@ -29,10 +29,6 @@ function initializeCommunitarian(api) {
     return operators[operator] && operators[operator](v1, v2);
   });
 
-  registerUnbound("get-percent-width", function(currentValue, maxValue) {
-    return `width: ${maxValue ? (currentValue / maxValue) * 100 : 0}%`;
-  });
-
   const getFormattedDialogDate = (val) => {
     if (val) {
       var date = new Date(val);
