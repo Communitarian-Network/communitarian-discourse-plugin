@@ -75,6 +75,9 @@ en:
           text: Your verification has been completed.
           hint: You will be redirected to email verification step soon.
       landing:
+        about:
+          title: About Civil Dialogues
+          description: Professor Amitai Etzioni is the founder and curator of Civil Dialogues. Professor Etzioni taught at Columbia, Harvard, and Berkley, and was a Senior Advisor to the Carter White House. His books include The Spirit of Community and Reclaiming Patriotism. This site was launched by the Communitarian Network, a non-profit corporation dedicated to finding constructive solutions to social problems through morally informed policy analysis and moral dialogue.
         explore:
           title: The Civil Dialogues platform for civil agreement on the most pressing issues
           text: We believe in presenting your real self, productive conversation, and seeking to find common ground and undoing toxic polarization in our nation.
