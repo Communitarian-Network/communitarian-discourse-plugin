@@ -1,15 +1,18 @@
-{{#d-section bodyClass="noscroll-x" class="homepage"}}
+{{#d-section bodyClass="noscroll-x intro" class="homepage"}}
 <div class="landing-explore">
   <div class="landing-explore__left">
-    <h2 class="landing-explore__title">
-      {{i18n "communitarian.landing.explore.title"}}
-    </h2>
-    <p class="landing-explore__text">
-      {{i18n "communitarian.landing.explore.text"}}
-    </p>
-    {{#link-to "discovery.categories" class="landing-explore__link"}}
-    {{i18n "communitarian.landing.explore.link"}}
-    {{/link-to}}
+    <div class="section-hero">
+      <h2 class="landing-explore__title">
+        {{i18n "communitarian.landing.explore.title"}}
+      </h2>
+      <p class="landing-explore__text">
+        {{i18n "communitarian.landing.explore.text"}}
+      </p>
+      {{#link-to "discovery.categories" class="landing-explore__link"}}
+      {{i18n "communitarian.landing.explore.link"}}
+      {{/link-to}}
+    </div>
+    {{about}}
   </div>
 
   <div class="landing-explore__right">
@@ -19,6 +22,7 @@
                   categories=landingCategories
                   latestTopicOnly=false}}
     {{/discovery-categories}}
+    <div class="categories-placeholders"></div>
   </div>
 </div>
 
