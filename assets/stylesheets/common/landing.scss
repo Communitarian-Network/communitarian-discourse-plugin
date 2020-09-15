@@ -80,7 +80,7 @@ $landing-desktop-width: 1024px;
 $landing-explore-image-height: 450px;
 
 .intro {
-  .wrap {
+  .wrap[role="main"] {
     max-width: 100%;
   }  
 }
