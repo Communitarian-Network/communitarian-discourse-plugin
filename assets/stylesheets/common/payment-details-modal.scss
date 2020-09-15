@@ -1,0 +1,290 @@
+.payment-details-modal {
+  background-color: transparent;
+
+  .modal-inner-container {
+    max-width: 36em;
+    max-height: 100%;
+    border-radius: 5px;
+    box-shadow: 0 0 6em 0 rgba(0, 0, 0, 0.04);
+
+    .modal-header {
+      position: relative;
+      padding: 2.5em 3em 1em;
+      border-bottom: 0;
+
+      @media screen and (max-width: 500px) {
+        padding: 1.5em 1em;
+      }
+
+      .modal-close {
+        position: absolute;
+        right: 1em;
+        top: 1em;
+        font-size: 1.3em;
+      }
+
+      .title {
+        flex: 1;
+        font-size: 1.2em;
+        line-height: 2em;
+
+        @media screen and (max-width: 500px) {
+          font-size: 1em;
+        }
+
+        h3 {
+          font-weight: 900;
+
+          @media screen and (max-width: 500px) {
+            letter-spacing: unset;
+          }
+        }
+      }
+    }
+
+    .payment-details {
+      background-color: $secondary;
+      border-radius: 5px;
+
+      .modal-body {
+        padding: 0 3em;
+        max-height: none !important;
+
+        @media screen and (max-width: 500px) {
+          padding: 0 1em;
+        }
+      }
+
+      &__description {
+        margin: 0;
+        font-family: "Avenir Light", sans-serif;
+        font-size: 1.2em;
+        font-weight: 900;
+
+        @media screen and (max-width: 500px) {
+          font-size: 1em;
+          text-align: justify;
+        }
+      }
+
+      &__form {
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      &__input-group {
+        margin-top: 1.5em;
+        box-sizing: border-box;
+
+        @media screen and (max-width: 500px) {
+          margin-top: 1em;
+        }
+
+        &:first-child {
+          margin-top: 2em;
+
+          @media screen and (max-width: 500px) {
+            margin-top: 1.5em;
+          }
+        }
+
+        .StripeElement {
+          box-sizing: border-box;
+        }
+      }
+
+      &__label {
+        font-family: "Avenir Light", sans-serif;
+        font-size: 1.2em;
+        font-weight: 900;
+
+        @media screen and (max-width: 500px) {
+          font-size: 1em;
+        }
+      }
+
+      .modal-footer {
+        display: flex;
+        align-items: center;
+        padding: 0.75em 3em 2.5em;
+        border-top: 0;
+
+        @media screen and (max-width: 500px) {
+          padding: 0.75em 1em 2em;
+        }
+
+        .pay-btn {
+          margin: 0;
+          padding: 1em 2em;
+          width: auto;
+          font-size: 1.1em;
+          font-weight: 100;
+          border-radius: 4px;
+
+          @media screen and (max-width: 500px) {
+            padding: 0.7em 1.5em;
+          }
+        }
+
+        .next-step {
+          font-family: "Avenir Light", sans-serif;
+          padding-left: 1em;
+          opacity: 0.5;
+          font-weight: 100;
+          font-size: 1.1em;
+          line-height: 1.7em;
+        }
+      }
+
+      input {
+        border-radius: 6px;
+        margin-bottom: 6px;
+        padding: 12px;
+        border: 1px solid rgba(50, 50, 93, 0.1);
+        height: 44px;
+        font-size: 16px;
+        width: 100%;
+        background: white;
+      }
+
+      .result-message {
+        line-height: 22px;
+        font-size: 16px;
+      }
+
+      .result-message a {
+        color: rgb(89, 111, 214);
+        font-weight: 600;
+        text-decoration: none;
+      }
+
+      .hidden {
+        display: none;
+      }
+
+      #card-error {
+        color: rgb(105, 115, 134);
+        text-align: left;
+        font-size: 13px;
+        line-height: 17px;
+        margin-top: 12px;
+      }
+
+      #card-element {
+        border-radius: 4px 4px 0 0;
+        padding: 12px;
+        border: 1px solid rgba(50, 50, 93, 0.1);
+        height: 44px;
+        width: 100%;
+        background: white;
+      }
+
+      #payment-request-button {
+        margin-bottom: 32px;
+      }
+
+      /* Buttons and links */
+      button {
+        background: $tertiary;
+        color: #ffffff;
+        font-family: Arial, sans-serif;
+        border-radius: 0 0 4px 4px;
+        border: 0;
+        padding: 12px 16px;
+        font-size: 16px;
+        font-weight: 600;
+        cursor: pointer;
+        display: block;
+        transition: all 0.2s ease;
+        box-shadow: 0px 4px 5.5px 0px rgba(0, 0, 0, 0.07);
+        width: 100%;
+      }
+
+      button:hover {
+        filter: contrast(125%);
+      }
+
+      button:disabled {
+        opacity: 0.5;
+        cursor: default;
+      }
+
+      /* spinner/processing state, errors */
+      .spinner,
+      .spinner:before,
+      .spinner:after {
+        border-radius: 50%;
+      }
+
+      .spinner {
+        color: #ffffff;
+        font-size: 22px;
+        text-indent: -99999px;
+        margin: 0px auto;
+        position: relative;
+        width: 20px;
+        height: 20px;
+        box-shadow: inset 0 0 0 2px;
+        -webkit-transform: translateZ(0);
+        -ms-transform: translateZ(0);
+        transform: translateZ(0);
+      }
+
+      .spinner:before,
+      .spinner:after {
+        position: absolute;
+        content: "";
+      }
+
+      .spinner:before {
+        width: 10.4px;
+        height: 20.4px;
+        background: #5469d4;
+        border-radius: 20.4px 0 0 20.4px;
+        top: -0.2px;
+        left: -0.2px;
+        -webkit-transform-origin: 10.4px 10.2px;
+        transform-origin: 10.4px 10.2px;
+        -webkit-animation: loading 2s infinite ease 1.5s;
+        animation: loading 2s infinite ease 1.5s;
+      }
+
+      .spinner:after {
+        width: 10.4px;
+        height: 10.2px;
+        background: #5469d4;
+        border-radius: 0 10.2px 10.2px 0;
+        top: -0.1px;
+        left: 10.2px;
+        -webkit-transform-origin: 0px 10.2px;
+        transform-origin: 0px 10.2px;
+        -webkit-animation: loading 2s infinite ease;
+        animation: loading 2s infinite ease;
+      }
+
+      @-webkit-keyframes loading {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+
+      @keyframes loading {
+        0% {
+          -webkit-transform: rotate(0deg);
+          transform: rotate(0deg);
+        }
+
+        100% {
+          -webkit-transform: rotate(360deg);
+          transform: rotate(360deg);
+        }
+      }
+    }
+  }
+}

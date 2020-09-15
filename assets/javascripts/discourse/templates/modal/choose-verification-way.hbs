@@ -1,28 +1,48 @@
 <div class="choose-verification-way">
   {{#d-modal-body title="communitarian.create_account.choose_verification_way.title"}}
-    <p>We believe that the core to a civil conversation is to present your point-of-view and stand behind it without concealing your identity.</p>
-    <div class="radios">
-      <label class="radio-label" for="verification-choice-card" style="display:block;">
+    <p class="choose-verification-way__description">
+      {{I18n "communitarian.create_account.choose_verification_way.description" }}
+    </p>
+
+    <ul class="choose-verification-way__radio-list">
+      <li class="choose-verification-way__radio-item">
         {{radio-button
           name="verification-choice"
           id="verification-choice-card"
           value="card"
-          onChange=(action "changeVerificationChoice")}}
-        <b>Verification with Debit or Credit Card</b>
-        <p style="margin-left:25px;">{{I18n "communitarian.create_account.choose_verification_way.card_description" }}</p>
-      </label>
+          onChange=(action "changeVerificationChoice")
+        }}
 
-      <label class="radio-label" for="verification-choice-identity" style="display:block;">
+        <label for="verification-choice-card"
+              class="choose-verification-way__radio-label">
+          <span class="choose-verification-way__radio-title">
+            {{I18n "communitarian.create_account.choose_verification_way.card_title" }}
+          </span>
+          <span class="choose-verification-way__radio-description">
+            {{I18n "communitarian.create_account.choose_verification_way.card_description" }}
+          </span>
+        </label>
+      </li>
+
+      <li class="choose-verification-way__radio-item">
         {{radio-button
           name="verification-choice"
           id="verification-choice-identity"
           value="identity"
-          onChange=(action "changeVerificationChoice")}}
-        <b>Verification with ID</b>
-        <p style="margin-left:25px;">{{I18n "communitarian.create_account.choose_verification_way.identity_description" }}</p>
-        <p style="margin-left:25px;">{{I18n "communitarian.create_account.choose_verification_way.identity_example" }}</p>
-      </label>
-    </div>
+          onChange=(action "changeVerificationChoice")
+        }}
+
+        <label for="verification-choice-identity"
+              class="choose-verification-way__radio-label">
+          <span class="choose-verification-way__radio-title">
+            {{I18n "communitarian.create_account.choose_verification_way.identity_title" }}
+          </span>
+          <span class="choose-verification-way__radio-description">
+            {{{I18n "communitarian.create_account.choose_verification_way.identity_description" }}}
+          </span>
+        </label>
+      </li>
+    </ul>
   {{/d-modal-body}}
 
   <div class="modal-footer">

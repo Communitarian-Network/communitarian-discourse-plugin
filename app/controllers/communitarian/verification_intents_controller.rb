@@ -28,11 +28,11 @@ module Communitarian
     private
 
     def verification_intent
-      Communitarian::Stripe.new.get_verification_intent(params[:id])
+      @verification_intent ||= Communitarian::Stripe.new.get_verification_intent(params[:id])
     end
 
     def created_verification_intent
-      Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
+      @created_verification_intent ||= Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
     end
 
     def verification_intent_params
@@ -66,10 +66,7 @@ module Communitarian
     end
 
     def permitted_params
-      params.permit(
-        :username, :email, :password, :password_confirmation,
-        :challenge, :user_fields, :invite_code
-      )
+      params.permit(:username, :email, :password, :password_confirmation, :challenge, :invite_code)
     end
   end
 end

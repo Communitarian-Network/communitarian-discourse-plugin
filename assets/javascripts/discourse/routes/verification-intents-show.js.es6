@@ -1,56 +1,71 @@
-import DiscourseRoute from "discourse/routes/discourse";
 import { later } from "@ember/runloop";
+import getURL from "discourse-common/lib/get-url";
 import PreloadStore from "discourse/lib/preload-store";
-import User from "discourse/models/user";
 import { popupAjaxError } from "discourse/lib/ajax-error";
+import DiscourseRoute from "discourse/routes/discourse";
+import User from "discourse/models/user";
 
 export default DiscourseRoute.extend({
+  setupController(controller, model) {
+    controller.setProperties({
+      closeIconUrl: getURL("/plugins/communitarian/images/close-icon.svg"),
+      checkIconUrl: getURL("/plugins/communitarian/images/check-icon.svg"),
+      model,
+    });
+  },
+
   model(params) {
-    self = this;
-    return this.store.find("verification-intent", params.id, { backgroundReload: true }).then(item => {
-      if (item.status == "succeeded") {
-        this._finishSignUp(item.full_name);
-      }
-      if (item.status == "processing") {
-        later(function() {
-          self.model({ id: params.id });
-        }, 3000);
-      }
-      return item;
-    })
+    const self = this;
+    return this.store
+      .find("verification-intent", params.id, { backgroundReload: true })
+      .then((item) => {
+        if (item.status == "succeeded") {
+          later(() => {
+            this._finishSignUp(item.full_name, item.billing_address);
+          }, 5000);
+        }
+        if (item.status == "processing") {
+          later(() => {
+            self.model({ id: params.id });
+          }, 5000);
+        }
+        return item;
+      });
   },
 
   renderTemplate() {
     this.render("verification-intents/show");
   },
 
-  _finishSignUp(accountName) {
+  _finishSignUp(accountName, billingAddress) {
     const signupData = PreloadStore.get("signupData");
+
     const attrs = {
-      accountName: accountName,
+      accountName,
       accountEmail: signupData.email,
       accountPassword: signupData.password,
       accountUsername: signupData.username,
       accountPasswordConfirm: signupData.password_confirmation,
-      accountChallenge: signupData.challenge
+      accountChallenge: signupData.challenge,
+      userFields: { 123001: billingAddress }
     };
 
     return User.createAccount(attrs)
-      .then(result => {
+      .then((result) => {
         if (result.success) {
           later(() => window.location = "/u/account-created", 5000);
         } else {
           popupAjaxError(result);
         }
       })
-      .catch(error => {
+      .catch((error) => {
         window.location.reload();
-      });;
+      });
   },
 
   actions: {
     error(error) {
       window.location = "/";
-    }
+    },
   },
 });
