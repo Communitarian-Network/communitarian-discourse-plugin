@@ -55,3 +55,12 @@ plugins:
     default: ""
     client: true
     secret: true
+  socials_twitter_url:
+    client: true
+    default: "https://twitter.com/civildialogues"
+  socials_facebook_url:
+    client: true
+    default: "https://www.facebook.com/Civildialoguesorg-106269701225894/"
+  socials_instagram_url:
+    client: true
+    default: "/"
