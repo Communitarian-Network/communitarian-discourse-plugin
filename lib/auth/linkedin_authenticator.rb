@@ -17,6 +17,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
     data = auth_token[:info]
     result.email = email = data[:email]
     result.name = name = [data[:first_name], data[:last_name]].join(" ")
+    address = parse_billing_address(data.dig(:address, :localized))
 
     oauth2_user_info = Oauth2UserInfo.find_by(uid: oauth2_uid, provider: oauth2_provider)
 
@@ -40,7 +41,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
 
     if result.user && (result.user.email != email)
       ActiveRecord::Base.transaction do
-        update_billing_address(result.user, data[:address])
+        update_billing_address(result.user, address)
         update_email(result.user, email)
         update_username(result.user, username)
       end
@@ -101,5 +102,9 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
     username_id = user&.id || Time.current.to_i
 
     [data[:first_name], data[:last_name], username_id].join(".")[0, username_max_length]
+  end
+
+  def parse_billing_address(address = {})
+    address.slice(:en, :en_US).values.first || address.values.first || "unknown"
   end
 end
