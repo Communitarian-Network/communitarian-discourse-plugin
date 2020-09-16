@@ -1,5 +1,5 @@
 {{#each categories as |c|}}
-  <div style={{unless noCategoryStyle (border-color c.color)}} data-category-id={{c.id}} data-notification-level={{c.notificationLevelString}} data-url={{c.url}} class="category category-box category-box-{{c.slug}} {{if c.isMuted "muted"}} {{if noCategoryStyle "no-category-boxes-style"}}">
+  <div data-category-id={{c.id}} data-notification-level={{c.notificationLevelString}} data-url={{c.url}} class="category category-box category-box-{{c.slug}} {{if c.isMuted "muted"}} {{if noCategoryStyle "no-category-boxes-style"}}">
     <div class="category-box-inner">
       {{#unless c.isMuted}}
         <div class="category-logo">
@@ -11,7 +11,7 @@
               height=c.uploaded_logo.height
             }}
           {{else}}
-            <img src={{siteSettings.favicon}} class="logo" alt="community icon">
+            <img src={{siteSettings.favicon}} class="placeholder" alt={{c.name}}>
           {{/if}}
         </div>
       {{/unless}}

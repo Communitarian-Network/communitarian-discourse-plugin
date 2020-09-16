@@ -94,7 +94,9 @@
         {{/topic-title}}
 
         {{#if isAuthorized}}
-          {{community-action category=model.category class="page-header__button"}}
+          {{#if isCommunityPage}}
+            {{community-action category=model.category class="page-header__button"}}
+          {{/if}}
         {{/if}}
       </div>
       {{!-- /custom code --}}
