@@ -17,6 +17,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
     data = auth_token[:info]
     result.email = email = data[:email]
     result.name = name = [data[:first_name], data[:last_name]].join(" ")
+
     oauth2_user_info = Oauth2UserInfo.find_by(uid: oauth2_uid, provider: oauth2_provider)
 
     if !oauth2_user_info && @opts[:trusted] && user = User.find_by_email(email)
@@ -39,6 +40,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
 
     if result.user && (result.user.email != email)
       ActiveRecord::Base.transaction do
+        update_billing_address(result.user, data[:address])
         update_email(result.user, email)
         update_username(result.user, username)
       end
@@ -53,7 +55,7 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
                         strategy = env['omniauth.strategy']
                         strategy.options[:client_id] = SiteSetting.linkedin_client_id
                         strategy.options[:client_secret] = SiteSetting.linkedin_secret
-                      }
+                      }, scope: 'r_fullprofile'
   end
 
   def enabled?
@@ -69,6 +71,16 @@ class Auth::LinkedinAuthenticator < ::Auth::OAuth2Authenticator
       rescue
         used_by = User.find_by_email(email)&.username
         Rails.logger.warn("FAILED to update email for #{user.username} to #{email} cause it is in use by #{used_by}")
+      end
+    end
+  end
+
+  def update_billing_address(user, address)
+    if address
+      begin
+        UserCustomField.find_or_create_by(user_id: user.id, name: :user_field_123001).update(value: address)
+      rescue
+        Rails.logger.warn("FAILED to update billing address for #{user.username}")
       end
     end
   end
