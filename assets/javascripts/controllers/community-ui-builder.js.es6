@@ -46,7 +46,7 @@ export default Controller.extend({
           uploaded_logo_id: this.coverImageId,
           color: randomHexString(6),
           text_color: randomHexString(6),
-          permissions: { everyone: 0 },
+          permissions: { everyone: 1 },
           allow_badges: false,
           topic_template: "",
           required_tag_group_name: "",

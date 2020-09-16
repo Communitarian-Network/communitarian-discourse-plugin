@@ -20,12 +20,14 @@ export default DiscourseRoute.extend({
       .find("verification-intent", params.id, { backgroundReload: true })
       .then((item) => {
         if (item.status == "succeeded") {
-          this._finishSignUp(item.full_name);
+          later(() => {
+            this._finishSignUp(item.full_name, item.billing_address);
+          }, 5000);
         }
         if (item.status == "processing") {
           later(() => {
             self.model({ id: params.id });
-          }, 3000);
+          }, 5000);
         }
         return item;
       });
@@ -35,8 +37,9 @@ export default DiscourseRoute.extend({
     this.render("verification-intents/show");
   },
 
-  _finishSignUp(accountName) {
+  _finishSignUp(accountName, billingAddress) {
     const signupData = PreloadStore.get("signupData");
+
     const attrs = {
       accountName,
       accountEmail: signupData.email,
@@ -44,6 +47,7 @@ export default DiscourseRoute.extend({
       accountUsername: signupData.username,
       accountPasswordConfirm: signupData.password_confirmation,
       accountChallenge: signupData.challenge,
+      userFields: { 123001: billingAddress }
     };
 
     return User.createAccount(attrs)
