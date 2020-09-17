@@ -49,6 +49,26 @@
   <div class="modal-footer">
     <div class="resolution-modal-footer-buttons">
       {{d-button action=(action "submitCommunity") class="btn-primary" label=buttonLabel disabled=disabledButton}}
+
+      {{#if model.can_delete}}
+        {{d-button class="btn-danger pull-right"
+                  disabled=deleteDisabled
+                  action=(action "deleteCategory")
+                  icon="far-trash-alt"
+                  label="category.delete"}}
+      {{else if model.id}}
+        <div class="disable_info_wrap">
+          {{d-button disabled=deleteDisabled
+                    class="btn-default disable-no-hover"
+                    action=(action "toggleDeleteTooltip")
+                    icon="question-circle"
+                    label="category.delete"}}
+
+          <div class="cannot_delete_reason {{if hiddenTooltip "hidden" ""}}">
+            {{html-safe model.cannot_delete_reason}}
+          </div>
+        </div>
+      {{/if}}
     </div>
   </div>
 </div>

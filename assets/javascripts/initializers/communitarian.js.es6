@@ -7,7 +7,6 @@ import TopicController from "discourse/controllers/topic";
 import discourseComputed from "discourse-common/utils/decorators";
 import { registerUnbound } from "discourse-common/lib/helpers";
 import { gt } from "@ember/object/computed";
-import { SEARCH_PRIORITIES } from "discourse/lib/constants";
 import showModal from "discourse/lib/show-modal";
 import { reopenWidget } from "discourse/widgets/widget";
 import CreateAccount from "../modifications/controllers/create_account";
@@ -175,7 +174,8 @@ function initializeCommunitarian(api) {
 //Override openNewCategoryModal due to the fact that all members can create category
 export function openNewCategoryModal(context) {
   const groups = context.site.groups,
-    groupName = groups.findBy("id", 11).name;
+    groupName = groups.findBy("id", 0).name;
+
   const model = context.store.createRecord("category", {
     color: "0088CC",
     text_color: "FFFFFF",
@@ -184,7 +184,7 @@ export function openNewCategoryModal(context) {
     allow_badges: true,
     topic_featured_link_allowed: true,
     custom_fields: {},
-    search_priority: SEARCH_PRIORITIES.normal
+    search_priority: 0
   });
 
   showModal("edit-category", { model }).set("selectedTab", "general");
