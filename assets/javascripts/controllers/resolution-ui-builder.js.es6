@@ -109,7 +109,6 @@ export default Controller.extend({
         typingTime: 0,
         firstOpenedTimestamp: new Date(),
         category: slug && slug[1],
-        autoCloseReminder: this._autoCloseReminderText(),
         activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_period_note"),
       });
     } else {
@@ -136,22 +135,6 @@ export default Controller.extend({
       .map(s => s.substring(2))
       .filter(s => s !== I18n.t("communitarian.resolution.ui_builder.poll_options.close_option"))
       .join("\n");
-  },
-
-  _autoCloseReminderText() {
-    const closeDate = this._closeDate().format("MMM D, ha");
-    const reopenDelay = this.siteSettings.communitarian_resolutions_reopen_delay;
-    if (reopenDelay === 0) {
-      return I18n.t(
-        "communitarian.resolution.ui_builder.auto_close_and_reopen_reminder",
-        { close_date: closeDate }
-      );
-    } else {
-      return I18n.t(
-        "communitarian.resolution.ui_builder.auto_close_and_reopen_with_delay_reminder",
-        { close_date: closeDate, delay: reopenDelay }
-      );
-    }
   },
 
   _closeDate() {
