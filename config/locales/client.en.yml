@@ -27,12 +27,12 @@ en:
         error_while_creating: Sorry, there was an error creating the community.
         error_while_updating: Sorry, there was an error updating the community.
       dialog:
-        new_button: Dialog
-        header_title: Ongoing Dialogs
+        new_button: Dialogue
+        header_title: Ongoing Dialogues
         resolutions_link: Vote on resolutions
       dialogs:
-        header_title: Ongoing Dialogs
-        view_dialogs: View dialogs
+        header_title: Ongoing Dialogues
+        view_dialogs: View dialogues
       resolution:
         new_button: Resolution
         ui_builder:
@@ -50,12 +50,12 @@ en:
             options_count: Enter at least 1 option
           poll_options:
             label: Enter resolution options per line
-            close_option: Close the poll
+            close_option: Close the resolution
           preview_title: Resolution Preview
         error_while_creating: Sorry, there was an error creating the resolution.
         error_while_updating: Sorry, there was an error updating the resolution.
         list:
-          date: Weekly Poll on %{period}
+          date: Weekly Resolution on %{period}
           votes: "%{voters} votes"
       verification:
         error_while_creating: Sorry, there was an error in verification process.
@@ -80,7 +80,7 @@ en:
           description: Professor Amitai Etzioni is the founder and curator of Civil Dialogues. Professor Etzioni taught at Columbia, Harvard, and Berkley, and was a Senior Advisor to the Carter White House. His books include The Spirit of Community and Reclaiming Patriotism. This site was launched by the Communitarian Network, a non-profit corporation dedicated to finding constructive solutions to social problems through morally informed policy analysis and moral dialogue.
         explore:
           title: The Civil Dialogues platform for civil agreement on the most pressing issues
-          text: We believe in presenting your real self, productive conversation, and seeking to find common ground and undoing toxic polarization in our nation.
+          text: Civil Dialogues is an online agora, a place people meet to deliberate and to form a consensus on urgent matters. No aliases, no fakes; only people who are willing to show their true face. Identities are verified. A place to allow the kind of continued, extended deliberations that democracy requires. A site to make a record once consensus has been reached. A platform on which online communities are formed that carry over offline.
           link: Explore Communities
         communities_header:
           title: Active communities
@@ -101,7 +101,7 @@ en:
           title: Choose the Way of Verification
           description: We believe that the core to a civil conversation is to present your point-of-view and stand behind it without concealing your identity.
           card_title: Verification with Debit or Credit Card
-          card_description: For $1 to create an account - a one-time fee to signal you commitment to civil discussion on the pressing issues of our day.
+          card_description: The one-time $1 fee is used in order to verify your identity.
           identity_title: Verification with ID
           identity_description: "You'll need a government-issued photo ID.<br>Ex: Driver's license, Identity Card, Passport"
           payment:
@@ -119,34 +119,34 @@ en:
         title: Welcome back!
     filters:
       dialogs:
-        title: All dialogs
-        help: All dialogs
+        title: All dialogues
+        help: All dialogues
       categories:
         title: "Communities"
         title_in: "Community - %{categoryName}"
-        help: "all dialogs grouped by community"
+        help: "all dialogues grouped by community"
       category:
-        help: "latest dialogs in the %{categoryName} community"
+        help: "latest dialogues in the %{categoryName} community"
         title: "%{categoryName}"
         title_with_count:
           one: "%{categoryName} (%{count})"
           other: "%{categoryName} (%{count})"
-      with_topics: "%{filter} dialogs"
-      with_category: "%{filter} %{category} dialogs"
+      with_topics: "%{filter} dialogues"
+      with_category: "%{filter} %{category} dialogues"
       latest:
-        help: dialogs with recent posts
+        help: dialogues with recent posts
       read:
-        help: dialogs you've read, in the order that you last read them
+        help: dialogues you've read, in the order that you last read them
       unread:
-        help: dialogs you are currently watching or tracking with unread posts
+        help: dialogues you are currently watching or tracking with unread posts
       new:
-        help: dialogs created in the last few days
+        help: dialogues created in the last few days
       posted:
-        help: dialogs you have posted in
+        help: dialogues you have posted in
       bookmarks:
-        help: dialogs you have bookmarked
+        help: dialogues you have bookmarked
       top:
-        help: the most active dialogs in the last year, month, week or day
+        help: the most active dialogues in the last year, month, week or day
     login:
       linkedin:
         name: LinkedIn
@@ -156,84 +156,84 @@ en:
     log_in: Sign in
     activity: Recent Activity
     share:
-      topic_html: 'Dialog: <span class="topic-title">%{topicTitle}</span>'
+      topic_html: 'Dialogue: <span class="topic-title">%{topicTitle}</span>'
     action_codes:
-      public_topic: made this dialog public %{when}
-      private_topic: made this dialog a personal message %{when}
-      split_topic: split this dialog %{when}
-    topic_admin_menu: dialog actions
-    edit: edit the title and community of this dialog
+      public_topic: made this dialogue public %{when}
+      private_topic: made this dialogue a personal message %{when}
+      split_topic: split this dialogue %{when}
+    topic_admin_menu: dialogue actions
+    edit: edit the title and community of this dialogue
     suggested_topics:
-      title: Suggested Dialogs
+      title: Suggested Dialogues
     about:
-      topic_count: Dialogs
+      topic_count: Dialogues
     bookmarked:
       help:
-        bookmark: Click to bookmark the first post on this dialog
-        unbookmark: Click to remove all bookmarks in this dialog
+        bookmark: Click to bookmark the first post on this dialogue
+        unbookmark: Click to remove all bookmarks in this dialogue
         unbookmark_with_reminder: Click to remove all bookmarks and reminders in this
           topic. You have a reminder set %{reminder_at} for this topic.
     bookmarks:
-      confirm_clear: Are you sure you want to clear all your bookmarks from this dialog?
+      confirm_clear: Are you sure you want to clear all your bookmarks from this dialogue?
     drafts:
-      new_topic: New dialog draft
+      new_topic: New dialogue draft
       abandon:
-        confirm: You already opened another draft in this dialog. Are you sure you
+        confirm: You already opened another draft in this dialogue. Are you sure you
           want to abandon it?
     topic_count_latest:
-      one: See %{count} new or updated dialog
-      other: See %{count} new or updated dialogs
+      one: See %{count} new or updated dialogue
+      other: See %{count} new or updated dialogues
     topic_count_unread:
-      one: See %{count} unread dialog
-      other: See %{count} unread dialogs
+      one: See %{count} unread dialogue
+      other: See %{count} unread dialogues
     topic_count_new:
-      one: See %{count} new dialog
-      other: See %{count} new dialogs
+      one: See %{count} new dialogue
+      other: See %{count} new dialogues
     choose_topic:
-      none_found: No dialogs found.
+      none_found: No dialogues found.
       title:
-        search: Search for a Dialog
+        search: Search for a Dialogue
         placeholder: type the dialog title, url or id here
     review:
       claim:
-        title: claim this dialog
-      grouped_by_topic: Grouped by Dialog
+        title: claim this dialogue
+      grouped_by_topic: Grouped by Dialogue
       topic_has_pending:
-        one: This dialog has <b>%{count}</b> post pending approval
-        other: This dialog has <b>%{count}</b> posts pending approval
-      topic: 'Dialog:'
-      filtered_topic: You have filtered to reviewable content in a single dialog.
-      show_all_topics: show all dialogs
+        one: This dialogue has <b>%{count}</b> post pending approval
+        other: This dialogues has <b>%{count}</b> posts pending approval
+      topic: 'Dialogue:'
+      filtered_topic: You have filtered to reviewable content in a single dialogue.
+      show_all_topics: show all dialogues
       topics:
-        topic: Dialog
-        deleted: "[Dialog deleted]"
-        original: "(original dialog)"
-      new_topic: Approving this item will create a new dialog
+        topic: Dialogue
+        deleted: "[Dialogue deleted]"
+        original: "(original dialogue)"
+      new_topic: Approving this item will create a new dialogue
       filters:
         all_categories: "(all communities)"
         category: Community
       types:
         reviewable_queued_topic:
-          title: Queued Dialog
+          title: Queued Dialogue
     user_action:
       user_posted_topic: "<a href='%{userUrl}'>%{user}</a> posted <a href='%{topicUrl}'>the
-        dialog</a>"
+        dialogue</a>"
       you_posted_topic: "<a href='%{userUrl}'>You</a> posted <a href='%{topicUrl}'>the
-        dialog</a>"
+        dialogue</a>"
       user_replied_to_topic: "<a href='%{userUrl}'>%{user}</a> replied to <a href='%{topicUrl}'>the
-        dialog</a>"
+        dialogue</a>"
       you_replied_to_topic: "<a href='%{userUrl}'>You</a> replied to <a href='%{topicUrl}'>the
-        dialog</a>"
+        dialogue</a>"
     directory:
-      topics_entered_long: Dialogs Viewed
-      topic_count: Dialogs
-      topic_count_long: Dialogs Created
+      topics_entered_long: Dialogues Viewed
+      topic_count: Dialogues
+      topic_count_long: Dialogues Created
     groups:
       empty:
-        topics: There are no dialogs by members of this group.
-      topics: Dialogs
+        topics: There are no dialogues by members of this group.
+      topics: Dialogues
     user_action_groups:
-      '4': Dialogs
+      '4': Dialogues
     categories:
       all: all communities
       category: Community
@@ -241,47 +241,47 @@ en:
       reorder:
         title: Reorder Communities
         title_long: Reorganize the community list
-      topics: Dialogs
+      topics: Dialogues
       subcategories: Subcommunities
       topic_sentence:
-        one: "%{count} dialog"
-        other: "%{count} dialogs"
+        one: "%{count} dialogue"
+        other: "%{count} dialogues"
       topic_stat_sentence_week:
-        one: "%{count} new dialog in the past week."
-        other: "%{count} new dialogs in the past week."
+        one: "%{count} new dialogue in the past week."
+        other: "%{count} new dialogues in the past week."
       topic_stat_sentence_month:
-        one: "%{count} new dialog in the past month."
-        other: "%{count} new dialogs in the past month."
+        one: "%{count} new dialogue in the past month."
+        other: "%{count} new dialogues in the past month."
       n_more: Communities (%{count} more) ...
     ip_lookup:
-      topics_entered: dialogs entered
+      topics_entered: dialogues entered
     user:
       user_notifications:
         ignore_option_title: You will not receive notifications related to this user
           and all of their topics and replies will be hidden.
       feature_topic_on_profile:
-        open_search: Select a New Dialog
-        title: Select a Dialog
-        search_label: Search for Dialog by title
+        open_search: Select a New Dialogue
+        title: Select a Dialogue
+        search_label: Search for Dialogue by title
         clear:
-          warning: Are you sure you want to clear your featured dialog?
-      enable_defer: Enable defer to mark dialogs unread
-      featured_topic: Featured Dialog
+          warning: Are you sure you want to clear your featured dialogue?
+      enable_defer: Enable defer to mark dialogues unread
+      featured_topic: Featured Dialogue
       mailing_list_mode:
         instructions: |
           This setting overrides the activity summary.<br />
           Muted topics and categories are not included in these emails.
-      watched_tags_instructions: You will automatically watch all dialogs with these
+      watched_tags_instructions: You will automatically watch all dialogues with these
         tags. You will be notified of all new posts and topics, and a count of new
         posts will also appear next to the topic.
-      tracked_tags_instructions: You will automatically track all dialogs with these
+      tracked_tags_instructions: You will automatically track all dialogues with these
         tags. A count of new posts will appear next to the topic.
-      muted_tags_instructions: You will not be notified of anything about new dialogs
+      muted_tags_instructions: You will not be notified of anything about new dialogues
         with these tags, and they will not appear in latest.
-      watched_categories_instructions: You will automatically watch all dialogs in
+      watched_categories_instructions: You will automatically watch all dialogues in
         these categories. You will be notified of all new posts and topics, and a
         count of new posts will also appear next to the topic.
-      tracked_categories_instructions: You will automatically track all dialogs in
+      tracked_categories_instructions: You will automatically track all dialogues in
         these categories. A count of new posts will appear next to the topic.
       watched_first_post_categories_instructions: You will be notified of the first
         post in each new topic in these categories.
@@ -294,71 +294,71 @@ en:
         about new topics in these categories.
       no_category_access: As a moderator you have limited community access, save is
         disabled.
-      automatically_unpin_topics: Automatically unpin dialogs when I reach the bottom.
+      automatically_unpin_topics: Automatically unpin dialogues when I reach the bottom.
       preferences_nav:
         categories: Communities
       change_featured_topic:
-        title: Featured Dialog
-        instructions: A link to this dialog will be on your user card, and profile.
+        title: Featured Dialogue
+        instructions: A link to this dialogue will be on your user card, and profile.
       email_digests:
-        title: When I don’t visit here, send me an email summary of popular dialogs
+        title: When I don’t visit here, send me an email summary of popular dialogues
           and replies
       email_level:
         title: Send me an email when someone quotes me, replies to my post, mentions
           my @username, or invites me to a topic
       categories_settings: Communities
       new_topic_duration:
-        label: Consider dialogs new when
-      auto_track_topics: Automatically track dialogs I enter
-      notification_level_when_replying: When I post in a dialog, set that dialog to
+        label: Consider dialogues new when
+      auto_track_topics: Automatically track dialogues I enter
+      notification_level_when_replying: When I post in a dialogue, set that dialogue to
       invited:
-        topics_entered: Dialogs Viewed
+        topics_entered: Dialogues Viewed
       summary:
         topic_count:
-          one: dialog created
-          other: dialogs created
+          one: dialogue created
+          other: dialogues created
         topics_entered:
-          one: dialog viewed
-          other: dialogs viewed
-        top_topics: Top Dialogs
-        no_topics: No dialogs yet.
-        more_topics: More Dialogs
+          one: dialogue viewed
+          other: dialogues viewed
+        top_topics: Top Dialogues
+        no_topics: No dialogues yet.
+        more_topics: More Dialogues
         top_categories: Top Communities
-        topics: Dialogs
+        topics: Dialogues
       stream:
-        the_topic: the dialog
-    all_time_desc: total dialogs created
-    year_desc: dialogs created in the last 365 days
-    month_desc: dialogs created in the last 30 days
-    week_desc: dialogs created in the last 7 days
+        the_topic: the dialogue
+    all_time_desc: total dialogues created
+    year_desc: dialogues created in the last 365 days
+    month_desc: dialogues created in the last 30 days
+    week_desc: dialogues created in the last 7 days
     summary:
-      enabled_description: 'You''re viewing a summary of this dialog: the most interesting
+      enabled_description: 'You''re viewing a summary of this dialogue: the most interesting
         posts as determined by the community.'
-      enable: Summarize This Dialog
+      enable: Summarize This Dialogue
     deleted_filter:
-      enabled_description: This dialog contains deleted posts, which have been hidden.
-      disabled_description: Deleted posts in the dialog are shown.
+      enabled_description: This dialogue contains deleted posts, which have been hidden.
+      disabled_description: Deleted posts in the dialogue are shown.
     category_page_style:
       categories_only: Communities Only
-      categories_with_featured_topics: Communities with Featured Dialogs
-      categories_and_latest_topics: Communities and Latest Dialogs
-      categories_and_top_topics: Communities and Top Dialogs
+      categories_with_featured_topics: Communities with Featured Dialogues
+      categories_and_latest_topics: Communities and Latest Dialogues
+      categories_and_top_topics: Communities and Top Dialogues
       categories_boxes: Boxes with Subcommunities
-      categories_boxes_with_topics: Boxes with Featured Dialogs
+      categories_boxes_with_topics: Boxes with Featured Dialogues
     category_row:
-      topic_count: "%{count} dialogs in this community"
+      topic_count: "%{count} dialogues in this community"
     select_kit:
       components:
         categories_admin_dropdown:
           title: Communities admin dropdown
     shared_drafts:
-      notice: This dialog is only visible to those who can see the <b>%{category}</b>
+      notice: This dialogue is only visible to those who can see the <b>%{category}</b>
         category.
       destination_category: Destination Community
-      publishing: Publishing Dialog...
+      publishing: Publishing Dialogue...
     composer:
-      posting_not_on_topic: Which dialog do you want to reply to?
-      similar_topics: Your dialog is similar to...
+      posting_not_on_topic: Which dialogue do you want to reply to?
+      similar_topics: Your dialogue is similar to...
       cannot_see_mention:
         category: You mentioned %{username} but they won't be notified because they
           do not have access to this category. You will need to add them to a group
@@ -368,33 +368,33 @@ en:
         – are you sure you want to post it again?
       error:
         category_missing: You must choose a community
-        topic_template_not_modified: Please add details and specifics to your dialog
+        topic_template_not_modified: Please add details and specifics to your dialogue
           by editing the topic template.
-      reply_original: Reply on Original Dialog
-      create_topic: Create Dialog
-      remove_featured_link: Remove link from dialog.
+      reply_original: Reply on Original Dialogue
+      create_topic: Create Dialogue
+      remove_featured_link: Remove link from dialogue.
       reply_placeholder_choose_category: Select a community before typing here.
-      link_url_placeholder: Paste a URL or type to search dialogs
-      admin_options_title: Optional staff settings for this dialog
+      link_url_placeholder: Paste a URL or type to search dialogues
+      admin_options_title: Optional staff settings for this dialogue
       composer_actions:
         reply_as_new_topic:
-          label: Reply as linked dialog
-          desc: Create a new dialog linked to this dialog
-          confirm: You have a new dialog draft saved, which will be overwritten if
+          label: Reply as linked dialogue
+          desc: Create a new dialogue linked to this dialogue
+          confirm: You have a new dialogue draft saved, which will be overwritten if
             you create a linked topic.
         reply_to_topic:
-          label: Reply to dialog
-          desc: Reply to the dialog, not any specific post
+          label: Reply to dialogue
+          desc: Reply to the dialogue, not any specific post
         create_topic:
-          label: New Dialog
+          label: New Dialogue
         shared_draft:
-          desc: Draft a dialog that will only be visible to staff
+          desc: Draft a dialogue that will only be visible to staff
         toggle_topic_bump:
-          label: Toggle dialog bump
+          label: Toggle dialogue bump
     notifications:
-      title: notifications of @name mentions, replies to your posts and dialogs, messages,
+      title: notifications of @name mentions, replies to your posts and dialogues, messages,
         etc
-      watching_first_post: "<span>New Dialog</span> %{description}"
+      watching_first_post: "<span>New Dialogue</span> %{description}"
       popup:
         mentioned: '%{username} mentioned you in "%{topic}" - %{site_title}'
         group_mentioned: '%{username} mentioned you in "%{topic}" - %{site_title}'
@@ -404,157 +404,157 @@ en:
         private_message: '%{username} sent you a personal message in "%{topic}" -
           %{site_title}'
         linked: '%{username} linked to your post from "%{topic}" - %{site_title}'
-        watching_first_post: '%{username} created a new dialog "%{topic}" - %{site_title}'
+        watching_first_post: '%{username} created a new dialogue "%{topic}" - %{site_title}'
       titles:
-        invited_to_topic: invited to dialog
-        watching_first_post: new dialog
-        topic_reminder: dialog reminder
+        invited_to_topic: invited to dialogue
+        watching_first_post: new dialogue
+        topic_reminder: dialogue reminder
     search:
-      latest_topic: Latest Dialog
-      title: search dialogs, posts, users, or communities
-      full_page_title: search dialogs or posts
-      start_new_topic: Perhaps start a new dialog?
+      latest_topic: Latest Dialogue
+      title: search dialogues, posts, users, or communities
+      full_page_title: search dialogues or posts
+      start_new_topic: Perhaps start a new dialogue?
       context:
         category: 'Search the #%{category} community'
-        topic: Search this dialog
+        topic: Search this dialogue
       advanced:
         filters:
-          label: Only return dialogs/posts...
+          label: Only return dialogues/posts...
         statuses:
-          label: Where dialogs
-    hamburger_menu: go to another dialog list or community
+          label: Where dialogues
+    hamburger_menu: go to another dialogue list or community
     topics:
       bulk:
-        unlist_topics: Unlist Dialogs
-        relist_topics: Relist Dialogs
-        delete: Delete Dialogs
-        dismiss_tooltip: Dismiss just new posts or stop tracking dialogs
-        also_dismiss_topics: Stop tracking these dialogs so they never show up as unread
+        unlist_topics: Unlist Dialogues
+        relist_topics: Relist Dialogues
+        delete: Delete Dialogues
+        dismiss_tooltip: Dismiss just new posts or stop tracking dialogues
+        also_dismiss_topics: Stop tracking these dialogues so they never show up as unread
           for me again
-        toggle: toggle bulk selection of dialogs
+        toggle: toggle bulk selection of dialogues
         change_category: Set Community
-        close_topics: Close Dialogs
-        archive_topics: Archive Dialogs
-        choose_new_category: 'Choose the new community for the dialogs:'
+        close_topics: Close Dialogues
+        archive_topics: Archive Dialogues
+        choose_new_category: 'Choose the new community for the dialogues:'
         selected:
-          one: You have selected <b>%{count}</b> dialog.
-          other: You have selected <b>%{count}</b> dialogs.
-        choose_new_tags: 'Choose new tags for these dialogs:'
-        choose_append_tags: 'Choose new tags to append for these dialogs:'
-        changed_tags: The tags of those dialogs were changed.
+          one: You have selected <b>%{count}</b> dialogue.
+          other: You have selected <b>%{count}</b> dialogues.
+        choose_new_tags: 'Choose new tags for these dialogues:'
+        choose_append_tags: 'Choose new tags to append for these dialogues:'
+        changed_tags: The tags of those dialogues were changed.
       none:
-        unread: You have no unread dialogs.
-        new: You have no new dialogs.
-        read: You haven't read any dialogs yet.
-        posted: You haven't posted in any dialogs yet.
-        latest: There are no latest dialogs. that's sad.
-        bookmarks: You have no bookmarked dialogs yet.
-        category: There are no %{category} dialogs.
-        top: There are no top dialogs.
+        unread: You have no unread dialogues.
+        new: You have no new dialogues.
+        read: You haven't read any dialogues yet.
+        posted: You haven't posted in any dialogues yet.
+        latest: There are no latest dialogues. that's sad.
+        bookmarks: You have no bookmarked dialogues yet.
+        category: There are no %{category} dialogues.
+        top: There are no top dialogues.
       bottom:
-        latest: There are no more latest dialogs.
-        posted: There are no more posted dialogs.
-        read: There are no more read dialogs.
-        new: There are no more new dialogs.
-        unread: There are no more unread dialogs.
-        category: There are no more %{category} dialogs.
-        top: There are no more top dialogs.
-        bookmarks: There are no more bookmarked dialogs.
+        latest: There are no more latest dialogues.
+        posted: There are no more posted dialogues.
+        read: There are no more read dialogues.
+        new: There are no more new dialogues.
+        unread: There are no more unread dialogues.
+        category: There are no more %{category} dialogues.
+        top: There are no more top dialogues.
+        bookmarks: There are no more bookmarked dialogues.
     topic:
       filter_to:
-        one: "%{count} post in dialog"
-        other: "%{count} posts in dialog"
-      create: New Dialog
-      create_long: Create a new Dialog
+        one: "%{count} post in dialogue"
+        other: "%{count} posts in dialogue"
+      create: New Dialogue
+      create_long: Create a new Dialogue
       feature_on_profile:
-        help: Add a link to this dialog on your user card and profile
+        help: Add a link to this dialogue on your user card and profile
       remove_from_profile:
-        warning: Your profile already has a featured dialog. if you continue, this
+        warning: Your profile already has a featured dialogue. if you continue, this
           topic will replace the existing topic.
-        help: Remove the link to this dialog on your user profile
-      list: Dialogs
-      new: new dialog
+        help: Remove the link to this dialogue on your user profile
+      list: Dialogues
+      new: new dialogue
       new_topics:
-        one: "%{count} new dialog"
-        other: "%{count} new dialogs"
+        one: "%{count} new dialogue"
+        other: "%{count} new dialogues"
       unread_topics:
-        one: "%{count} unread dialog"
-        other: "%{count} unread dialogs"
-      title: Dialog
+        one: "%{count} unread dialogue"
+        other: "%{count} unread dialogues"
+      title: Dialogue
       invalid_access:
-        title: Dialog is private
-        description: Sorry, you don't have access to that dialog!
-        login_required: You need to log in to see that dialog.
+        title: Dialogue is private
+        description: Sorry, you don't have access to that dialogue!
+        login_required: You need to log in to see that dialogue.
       server_error:
-        title: Dialog failed to load
-        description: Sorry, we couldn't load that dialog, possibly due to a connection
+        title: Dialogue failed to load
+        description: Sorry, we couldn't load that dialogue, possibly due to a connection
           problem. Please try again. If the problem persists, let us know.
       not_found:
-        title: Dialog not found
-        description: Sorry, we couldn't find that dialog. perhaps it was removed by
+        title: Dialogue not found
+        description: Sorry, we couldn't find that dialogue. perhaps it was removed by
           a moderator?
       total_unread_posts:
-        one: you have %{count} unread post in this dialog
-        other: you have %{count} unread posts in this dialog
+        one: you have %{count} unread post in this dialogue
+        other: you have %{count} unread posts in this dialogue
       unread_posts:
-        one: you have %{count} unread old post in this dialog
-        other: you have %{count} unread old posts in this dialog
+        one: you have %{count} unread old post in this dialogue
+        other: you have %{count} unread old posts in this dialogue
       new_posts:
         one: there is %{count} new post in this dialog since you last read it
         other: there are %{count} new posts in this dialog since you last read it
       likes:
-        one: there is %{count} like in this dialog
-        other: there are %{count} likes in this dialog
-      back_to_list: Back to Dialog list
-      options: Dialog Options
-      show_links: show links within this dialog
-      toggle_information: toggle dialog details
-      read_more_in_category: Want to read more? Browse other dialogs in %{caTlink}
+        one: there is %{count} like in this dialogue
+        other: there are %{count} likes in this dialogue
+      back_to_list: Back to Dialogue list
+      options: Dialogue Options
+      show_links: show links within this dialogue
+      toggle_information: toggle dialogue details
+      read_more_in_category: Want to read more? Browse other dialogues in %{caTlink}
         or %{latestLink}.
       group_request: You need to request membership to the `%{name}` group to see
         this topic
-      group_join: You need join the `%{name}` group to see this dialog
-      unread_indicator: No member has read the last post of this dialog yet.
+      group_join: You need join the `%{name}` group to see this dialogue
+      unread_indicator: No member has read the last post of this dialogue yet.
       browse_all_categories: Browse all communities
-      view_latest_topics: view latest dialogs
-      suggest_create_topic: Why not create a dialog?
-      deleted: The dialog has been deleted
+      view_latest_topics: view latest dialogues
+      suggest_create_topic: Why not create a dialogue?
+      deleted: The dialogue has been deleted
       topic_status_update:
-        title: Dialog Timer
-        public_timer_types: Dialog Timers
-        private_timer_types: User Dialog timers
+        title: Dialogue Timer
+        public_timer_types: Dialogue Timers
+        private_timer_types: User Dialogue timers
       auto_reopen:
-        title: Auto-open Dialog
+        title: Auto-open Dialogue
       auto_close:
-        title: Auto-Close Dialog
-        label: 'Auto-close dialog hours:'
-        based_on_last_post: Don't close until the last post in the dialog is at least
+        title: Auto-Close Dialogue
+        label: 'Auto-close dialogue hours:'
+        based_on_last_post: Don't close until the last post in the dialogue is at least
           this old.
       auto_delete:
-        title: Auto-Delete Dialog
+        title: Auto-Delete Dialogue
       auto_bump:
-        title: Auto-Bump Dialog
+        title: Auto-Bump Dialogue
       status_update_notice:
-        auto_open: This dialog will automatically open %{timEleft}.
-        auto_close: This dialog will automatically close %{timEleft}.
-        auto_publish_to_category: This dialog will be published to <a href=%{categoryUrl}>#%{categoryName}</a>
+        auto_open: This dialogue will automatically open %{timEleft}.
+        auto_close: This dialogue will automatically close %{timEleft}.
+        auto_publish_to_category: This dialogue will be published to <a href=%{categoryUrl}>#%{categoryName}</a>
           %{timeLeft}.
-        auto_close_based_on_last_post: This dialog will close %{duration} after the
+        auto_close_based_on_last_post: This dialogue will close %{duration} after the
           last reply.
-        auto_delete: This dialog will be automatically deleted %{timEleft}.
-        auto_bump: This dialog will be automatically bumped %{timEleft}.
-        auto_reminder: You will be reminded about this dialog %{timEleft}.
-        auto_delete_replies: Replies on this dialog are automatically deleted after
+        auto_delete: This dialogue will be automatically deleted %{timEleft}.
+        auto_bump: This dialogue will be automatically bumped %{timEleft}.
+        auto_reminder: You will be reminded about this dialogue %{timEleft}.
+        auto_delete_replies: Replies on this dialogueare automatically deleted after
           %{duration}.
       auto_close_immediate:
-        one: The last post in the dialog is already %{count} hour old, so the dialog
+        one: The last post in the dialogue is already %{count} hour old, so the dialogue
           will be closed immediately.
-        other: The last post in the dialog is already %{count} hours old, so the dialog
+        other: The last post in the dialogue is already %{count} hours old, so the dialogue
           will be closed immediately.
       progress:
-        title: dialog progress
+        title: dialogue progress
       notifications:
-        title: change how often you get notified about this dialog
+        title: change how often you get notified about this dialogue
         reasons:
           mailing_list_mode: You have mailing list mode enabled, so you will be notified
             of replies to this topic via email.
@@ -563,9 +563,9 @@ en:
           '3_6': You will receive notifications because you are watching this community.
           '3_5': You will receive notifications because you started watching this
             topic automatically.
-          '3_2': You will receive notifications because you are watching this dialog.
-          '3_1': You will receive notifications because you created this dialog.
-          '3': You will receive notifications because you are watching this dialog.
+          '3_2': You will receive notifications because you are watching this dialogue.
+          '3_1': You will receive notifications because you created this dialogue.
+          '3': You will receive notifications because you are watching this dialogue.
           '2_8': You will see a count of new replies because you are tracking this
             category.
           '2_4': You will see a count of new replies because you posted a reply to
@@ -575,91 +575,91 @@ en:
           '2': You will see a count of new replies because you <a href="%{basePath}/u/%{username}/preferences/notifications">read
             this topic</a>.
           '0_7': You are ignoring all notifications in this community.
-          '0_2': You are ignoring all notifications on this dialog.
-          '0': You are ignoring all notifications on this dialog.
+          '0_2': You are ignoring all notifications on this dialogue.
+          '0': You are ignoring all notifications on this dialogue.
         watching:
-          description: You will be notified of every new reply in this dialog, and
+          description: You will be notified of every new reply in this dialogue, and
             a count of new replies will be shown.
         tracking:
-          description: A count of new replies will be shown for this dialog. you will
+          description: A count of new replies will be shown for this dialogue. you will
             be notified if someone mentions your @name or replies to you.
         muted:
-          description: You will never be notified of anything about this dialog, and
+          description: You will never be notified of anything about this dialogue, and
             it will not appear in latest.
       actions:
-        recover: Un-Delete Dialog
-        delete: Delete Dialog
-        open: Open Dialog
-        close: Close Dialog
-        timed_update: Set Dialog timer...
-        pin: Pin Dialog…
-        unpin: Un-Pin Dialog…
-        unarchive: Unarchive Dialog
-        archive: Archive Dialog
-        make_public: Make Public Dialog
+        recover: Un-Delete Dialogue
+        delete: Delete Dialogue
+        open: Open Dialogue
+        close: Close Dialogue
+        timed_update: Set Dialogue timer...
+        pin: Pin Dialogue…
+        unpin: Un-Pin Dialogue…
+        unarchive: Unarchive Dialogue
+        archive: Archive Dialogue
+        make_public: Make Public Dialogue
       feature:
-        pin: Pin Dialog
-        unpin: Un-Pin Dialog
-        pin_globally: Pin Dialog globally
-        make_banner: Banner Dialog
-        remove_banner: Remove Banner Dialog
+        pin: Pin Dialogue
+        unpin: Un-Pin Dialogue
+        pin_globally: Pin Dialogue globally
+        make_banner: Banner Dialogue
+        remove_banner: Remove Banner Dialogue
       reply:
-        help: begin composing a reply to this dialog
+        help: begin composing a reply to this dialogue
       clear_pin:
-        help: Clear the pinned status of this dialog so it no longer appears at the
+        help: Clear the pinned status of this dialogue so it no longer appears at the
           top of your topic list
       share:
-        help: share a link to this dialog
+        help: share a link to this dialogue
       print:
-        help: Open a printer friendly version of this dialog
+        help: Open a printer friendly version of this dialogue
       flag_topic:
-        help: privately flag this dialog for attention or send a private notification
+        help: privately flag this dialogue for attention or send a private notification
           about it
-        success_message: You successfully flagged this dialog.
+        success_message: You successfully flagged this dialogue.
       make_public:
-        title: Convert to Public Dialog
-        choose_category: 'Please choose a community for the public dialog:'
+        title: Convert to Public Dialogue
+        choose_category: 'Please choose a community for the public dialogue:'
       feature_topic:
-        title: Feature this dialog
-        pin: Make this dialog appear at the top of the %{categoryLink} community until
-        confirm_pin: You already have %{count} pinned dialogs. Too many pinned dialogs
+        title: Feature this dialogue
+        pin: Make this dialogue appear at the top of the %{categoryLink} community until
+        confirm_pin: You already have %{count} pinned dialogues. Too many pinned dialogues
           may be a burden for new and anonymous users. Are you sure you want to pin
-          another dialog in this community?
-        unpin: Remove this dialog from the top of the %{categoryLink} community.
-        unpin_until: Remove this dialog from the top of the %{categorLink} community
+          another dialogue in this community?
+        unpin: Remove this dialogue from the top of the %{categoryLink} community.
+        unpin_until: Remove this dialogue from the top of the %{categorLink} community
           or wait until <strong>%{until}</strong>.
-        pin_note: Users can unpin the dialog individually for themselves.
-        pin_validation: A date is required to pin this dialog.
-        not_pinned: There are no dialogs pinned in %{categoryLink}.
+        pin_note: Users can unpin the dialogue individually for themselves.
+        pin_validation: A date is required to pin this dialogue.
+        not_pinned: There are no dialogues pinned in %{categoryLink}.
         already_pinned:
-          one: 'Dialogs currently pinned in %{categoryLink}: <strong class=''badge
+          one: 'Dialogues currently pinned in %{categoryLink}: <strong class=''badge
             badge-notification unread''>%{count}</strong>'
-          other: 'Dialogs currently pinned in %{categoryLink}: <strong class=''badge
+          other: 'Dialogues currently pinned in %{categoryLink}: <strong class=''badge
             badge-notification unread''>%{count}</strong>'
-        pin_globally: Make this dialog appear at the top of all dialog lists until
-        confirm_pin_globally: You already have %{count} globally pinned dialogs. too
+        pin_globally: Make this dialogue appear at the top of all dialogue lists until
+        confirm_pin_globally: You already have %{count} globally pinned dialogues. too
           many pinned topics may be a burden for new and anonymous users. Are you
           sure you want to pin another topic globally?
-        unpin_globally: Remove this dialog from the top of all dialog lists.
-        unpin_globally_until: Remove this dialog from the top of all dialog lists or
+        unpin_globally: Remove this dialogue from the top of all dialogue lists.
+        unpin_globally_until: Remove this dialogue from the top of all dialogue lists or
           wait until <strong>%{until}</strong>.
-        global_pin_note: Users can unpin the dialog individually for themselves.
-        not_pinned_globally: There are no dialogs pinned globally.
+        global_pin_note: Users can unpin the dialogue individually for themselves.
+        not_pinned_globally: There are no dialogues pinned globally.
         already_pinned_globally:
-          one: 'Dialogs currently pinned globally: <strong class=''badge badge-notification
+          one: 'Dialogues currently pinned globally: <strong class=''badge badge-notification
             unread''>%{count}</strong>'
-          other: 'Dialogs currently pinned globally: <strong class=''badge badge-notification
+          other: 'Dialogues currently pinned globally: <strong class=''badge badge-notification
             unread''>%{count}</strong>'
-        make_banner: Make this dialog into a banner that appears at the top of all
+        make_banner: Make this dialogue into a banner that appears at the top of all
           pages.
-        banner_note: Users can dismiss the banner by closing it. Only one dialog can
+        banner_note: Users can dismiss the banner by closing it. Only one dialogue can
           be bannered at any given time.
-        no_banner_exists: There is no banner dialog.
+        no_banner_exists: There is no banner dialogue.
         banner_exists: There <strong class='badge badge-notification unread'>is</strong>
           currently a banner topic.
-      controls: Dialog Controls
+      controls: Dialogue Controls
       invite_reply:
-        help: invite others to this dialog via email or notifications
+        help: invite others to this dialogue via email or notifications
         sso_enabled: Enter the username of the person you'd like to invite to this
           topic.
         to_topic_blank: Enter the username or email address of the person you'd like
@@ -670,70 +670,70 @@ en:
           a link inviting them to this topic.
         to_username: Enter the username of the person you'd like to invite. We'll
           send a notification with a link inviting them to this topic.
-        success_username: We've invited that user to participate in this dialog.
+        success_username: We've invited that user to participate in this dialogue.
         success_existing_email: A user with email <b>%{emailOrUsername}</b> already
           exists. We've invited that user to participate in this topic.
       split_topic:
-        title: Move to New Dialog
-        action: move to new dialog
-        topic_name: New Dialog title
-        radio_label: New Dialog
-        error: There was an error moving posts to the new dialog.
+        title: Move to New Dialogue
+        action: move to new dialogue
+        topic_name: New Dialogue title
+        radio_label: New Dialogue
+        error: There was an error moving posts to the new dialogue.
         instructions:
-          one: You are about to create a new dialog and populate it with the post you've
+          one: You are about to create a new dialogue and populate it with the post you've
             selected.
-          other: You are about to create a new dialog and populate it with the <b>%{count}</b>
+          other: You are about to create a new dialogue and populate it with the <b>%{count}</b>
             posts you've selected.
       merge_topic:
-        title: Move to Existing Dialog
-        action: move to existing dialog
-        error: There was an error moving posts into that dialog.
-        radio_label: Existing Dialog
+        title: Move to Existing Dialogue
+        action: move to existing dialogue
+        error: There was an error moving posts into that dialogue.
+        radio_label: Existing Dialogue
         instructions:
-          one: Please choose the dialog you'd like to move that post to.
-          other: Please choose the dialog you'd like to move those <b>%{count}</b>
+          one: Please choose the dialogue you'd like to move that post to.
+          other: Please choose the dialogue you'd like to move those <b>%{count}</b>
             posts to.
       publish_page:
-        description: When a dialog is published as a page, its URL can be shared and
+        description: When a dialogue is published as a page, its URL can be shared and
           it will displayed with custom styling.
-        public_description: People can see the page even if the associated dialog is
+        public_description: People can see the page even if the associated dialogue is
           private.
-        topic_published: 'Your dialog has been published at:'
+        topic_published: 'Your dialogue has been published at:'
       change_timestamp:
-        error: There was an error changing the timestamp of the dialog.
-        instructions: Please select the new timestamp of the Dialog. Posts in the dialog
+        error: There was an error changing the timestamp of the dialogue.
+        instructions: Please select the new timestamp of the Dialogue. Posts in the dialogue
           will be updated to have the same time difference.
       deleted_by_author:
-        one: "(dialog withdrawn by author, will be automatically deleted in %{count}
+        one: "(dialogue withdrawn by author, will be automatically deleted in %{count}
           hour unless flagged)"
-        other: "(dialog withdrawn by author, will be automatically deleted in %{count}
+        other: "(dialogue withdrawn by author, will be automatically deleted in %{count}
           hours unless flagged)"
     post:
-      reply_as_new_topic: Reply as linked Dialog
+      reply_as_new_topic: Reply as linked Dialogue
       controls:
-        delete_topic_disallowed_modal: You don't have permission to delete this dialog.
+        delete_topic_disallowed_modal: You don't have permission to delete this dialogue.
           If you really want it to be deleted, submit a flag for moderator attention
           together with reasoning.
-        delete_topic_disallowed: you don't have permission to delete this dialog
-        delete_topic: delete dialog
+        delete_topic_disallowed: you don't have permission to delete this dialogue
+        delete_topic: delete dialogue
       actions:
         people:
-          off_topic: flagged this as off-dialog
+          off_topic: flagged this as off-dialogue
         by_you:
-          off_topic: You flagged this as off-dialog
+          off_topic: You flagged this as off-dialogue
     category:
       none: "(no community)"
       all: All communities
       choose: community&hellip;
       edit_dialog_title: 'Edit: %{categoryName}'
-      view: View Dialogs in community
-      topic_template: Dialog Template
+      view: View Dialogues in community
+      topic_template: Dialogue Template
       tags_allowed_tags: 'Restrict these tags to this community:'
       tags_allowed_tag_groups: 'Restrict these tag groups to this community:'
       tags_tab_description: Tags and tag groups specified above will only be available
         in this category and other categories that also specify them. They won't be
         available for use in other categories.
-      required_tag_group_description: 'Require new dialogs to have tags from a tag
+      required_tag_group_description: 'Require new dialogues to have tags from a tag
         group:'
       topic_featured_link_allowed: Allow featured links in this community
       delete: Delete Community
@@ -744,7 +744,7 @@ en:
       creation_error: There has been an error during the creation of the community.
       save_error: There was an error saving the community.
       name: Community Name
-      topic: Community dialog
+      topic: Community dialogue
       logo: Community Logo Image
       background_image: Community Background Image
       delete_confirm: Are you sure you want to delete this community?
@@ -764,112 +764,112 @@ en:
         go to <a href="%{customizeLink}">Customize / Text Content</a>.
       pending_permission_change_alert: You haven't added %{group} to this community;
         click this button to add them.
-      email_in_disabled: 'Posting new dialogs via email is disabled in the site settings.
+      email_in_disabled: 'Posting new dialogues via email is disabled in the site settings.
         To enable posting new topics via email, '
       mailinglist_mirror: community mirrors a mailing list
-      show_subcategory_list: Show subcommunity list above dialogs in this community.
-      read_only_banner: 'Banner text when a user cannot create a dialog in this community:'
-      num_featured_topics: 'Number of dialogs shown on the communities page:'
-      subcategory_num_featured_topics: 'Number of featured dialogs on parent community''s
+      show_subcategory_list: Show subcommunity list above dialogues in this community.
+      read_only_banner: 'Banner text when a user cannot create a dialogue in this community:'
+      num_featured_topics: 'Number of dialogues shown on the communities page:'
+      subcategory_num_featured_topics: 'Number of featured dialogues on parent community''s
         page:'
-      all_topics_wiki: Make new dialogs wikis by default
+      all_topics_wiki: Make new dialogues wikis by default
       subcategory_list_style: 'subcommunity List Style:'
-      sort_order: 'Dialog List Sort By:'
-      default_view: 'Default Dialog list:'
+      sort_order: 'Dialogue List Sort By:'
+      default_view: 'Default Dialogue list:'
       allow_badges_label: Allow badges to be awarded in this community
       reviewable_by_group: 'In addition to staff, posts and flags in this community
         can be also be reviewed by:'
-      require_topic_approval: Require moderator approval of all new dialogs
+      require_topic_approval: Require moderator approval of all new dialogues
       position: 'Position on the communities page:'
       position_disabled: 'Communities will be displayed in order of activity. to control
         the order of communities in lists, '
       position_disabled_click: enable the "fixed community positions" setting.
-      minimum_required_tags: 'Minimum number of tags required in a dialog:'
+      minimum_required_tags: 'Minimum number of tags required in a dialogue:'
       parent: Parent Community
-      num_auto_bump_daily: 'Number of open dialogs to automatically bump daily:'
-      navigate_to_first_post_after_read: Navigate to first post after dialogs are read
+      num_auto_bump_daily: 'Number of open dialogues to automatically bump daily:'
+      navigate_to_first_post_after_read: Navigate to first post after dialogues are read
       notifications:
         watching:
-          description: You will automatically watch all dialogs in these communities.
+          description: You will automatically watch all dialogues in these communities.
             You will be notified of every new post in every topic, and a count of
             new replies will be shown.
         watching_first_post:
-          description: You will be notified of new dialogs in this community but not
-            replies to the dialogs.
+          description: You will be notified of new dialogues in this community but not
+            replies to the dialogues.
         tracking:
-          description: You will automatically track all dialogs in these communities.
+          description: You will automatically track all dialogues in these communities.
             You will be notified if someone mentions your @name or replies to you,
             and a count of new replies will be shown.
         muted:
-          description: You will never be notified of anything about new dialogs in
+          description: You will never be notified of anything about new dialogues in
             these communities, and they will not appear in latest.
       sort_options:
         category: community
       subcategory_list_styles:
-        rows_with_featured_topics: Rows with featured dialogs
-        boxes_with_featured_topics: Boxes with featured dialogs
+        rows_with_featured_topics: Rows with featured dialogues
+        boxes_with_featured_topics: Boxes with featured dialogues
       list_filters:
-        all: all dialogs
+        all: all dialogues
         none: no subcommunities
     flagging:
       formatted_name:
-        off_topic: It's Off-Dialog
+        off_topic: It's Off-Dialogue
     flagging_topic:
-      action: Flag Dialog
+      action: Flag Dialogue
     topic_map:
-      title: Dialog Summary
+      title: Dialogue Summary
     topic_statuses:
       bookmarked:
-        help: You bookmarked this dialog
+        help: You bookmarked this dialogue
       locked:
-        help: This dialog is closed; it no longer accepts new replies
+        help: This dialogue is closed; it no longer accepts new replies
       archived:
-        help: This dialog is archived; it is frozen and cannot be changed
+        help: This dialogue is archived; it is frozen and cannot be changed
       locked_and_archived:
-        help: This dialog is closed and archived; it no longer accepts new replies
+        help: This dialogue is closed and archived; it no longer accepts new replies
           and cannot be changed
       unpinned:
-        help: This dialog is unpinned for you; it will display in regular order
+        help: This dialogue is unpinned for you; it will display in regular order
       pinned_globally:
-        help: This dialog is pinned globally; it will display at the top of latest
+        help: This dialogue is pinned globally; it will display at the top of latest
           and its community
       pinned:
-        help: This dialog is pinned for you; it will display at the top of its community
+        help: This dialogue is pinned for you; it will display at the top of its community
       unlisted:
-        help: This dialog is unlisted; it will not be displayed in dialog lists, and
+        help: This dialogue is unlisted; it will not be displayed in dialogue lists, and
           can only be accessed via a direct link
       personal_message:
-        title: This dialog is a personal message
-        help: This dialog is a personal message
-    posts_long: there are %{number} posts in this dialog
+        title: This dialogue is a personal message
+        help: This dialogue is a personal message
+    posts_long: there are %{number} posts in this dialogue
     views_long:
-      one: this dialog has been viewed %{count} time
-      other: this dialog has been viewed %{number} times
-    likes_long: there are %{number} likes in this dialog
+      one: this dialogue has been viewed %{count} time
+      other: this dialogue has been viewed %{number} times
+    likes_long: there are %{number} likes in this dialogue
     category_title: Community
     categories_list: Communities List
     keyboard_shortcuts_help:
       jump_to:
         categories: "%{shortcut} Communities"
       navigation:
-        open: "%{shortcut} Open selected dialog"
+        open: "%{shortcut} Open selected dialogue"
       application:
-        create: "%{shortcut} Create a new dialog"
-        show_incoming_updated_topics: "%{shortcut} Show updated dialogs"
-        dismiss_topics: "%{shortcut} Dismiss Dialogs"
+        create: "%{shortcut} Create a new dialogue"
+        show_incoming_updated_topics: "%{shortcut} Show updated dialogues"
+        dismiss_topics: "%{shortcut} Dismiss Dialogues"
       actions:
-        bookmark_topic: "%{shortcut} Toggle bookmark dialog"
-        pin_unpin_topic: "%{shortcut} Pin/Unpin dialog"
-        share_topic: "%{shortcut} Share dialog"
-        reply_as_new_topic: "%{shortcut} Reply as linked dialog"
-        reply_topic: "%{shortcut} Reply to dialog"
-        mark_muted: "%{shortcut} Mute dialog"
-        mark_regular: "%{shortcut} Regular (default) dialog"
-        mark_tracking: "%{shortcut} Track dialog"
-        mark_watching: "%{shortcut} Watch dialog"
-        print: "%{shortcut} Print dialog"
-        defer: "%{shortcut} Defer dialog"
-        topic_admin_actions: "%{shortcut} Open dialog admin actions"
+        bookmark_topic: "%{shortcut} Toggle bookmark dialogue"
+        pin_unpin_topic: "%{shortcut} Pin/Unpin dialogue"
+        share_topic: "%{shortcut} Share dialogue"
+        reply_as_new_topic: "%{shortcut} Reply as linked dialogue"
+        reply_topic: "%{shortcut} Reply to dialogue"
+        mark_muted: "%{shortcut} Mute dialogue"
+        mark_regular: "%{shortcut} Regular (default) dialogue"
+        mark_tracking: "%{shortcut} Track dialogue"
+        mark_watching: "%{shortcut} Watch dialogue"
+        print: "%{shortcut} Print dialogue"
+        defer: "%{shortcut} Defer dialogue"
+        topic_admin_actions: "%{shortcut} Open dialogue admin actions"
     tagging:
       default_info: This tag isn't restricted to any communities, and has no synonyms.
       category_restricted: This tag is restricted to communities you don't have permission
@@ -882,45 +882,45 @@ en:
           topic it is assigned to?
         other: Are you sure you want to delete this tag and remove it from %{count}
           topics it is assigned to?
-      delete_unused_description: Delete all tags which are not attached to any dialogs
+      delete_unused_description: Delete all tags which are not attached to any dialogues
         or personal messages
       filters:
-        without_category: "%{filter} %{tag} dialogs"
-        with_category: "%{filter} %{tag} dialogs in %{category}"
-        untagged_without_category: "%{filter} untagged dialogs"
-        untagged_with_category: "%{filter} untagged dialogs in %{category}"
+        without_category: "%{filter} %{tag} dialogues"
+        with_category: "%{filter} %{tag} dialogues in %{category}"
+        untagged_without_category: "%{filter} untagged dialogues"
+        untagged_with_category: "%{filter} untagged dialogues in %{category}"
       notifications:
         watching:
-          description: You will automatically watch all dialogs with this tag. you
+          description: You will automatically watch all dialogues with this tag. you
             will be notified of all new posts and topics, plus the count of unread
             and new posts will also appear next to the topic.
         watching_first_post:
-          description: You will be notified of new dialogs in this tag but not replies
+          description: You will be notified of new dialogues in this tag but not replies
             to the topics.
         tracking:
-          description: You will automatically track all dialogs with this tag. A count
+          description: You will automatically track all dialogues with this tag. A count
             of unread and new posts will appear next to the topic.
         muted:
-          description: You will not be notified of anything about new dialogs with
+          description: You will not be notified of anything about new dialogues with
             this tag, and they will not appear on your unread tab.
       groups:
-        one_per_topic_label: Limit one tag per dialog from this group
+        one_per_topic_label: Limit one tag per dialogue from this group
       topics:
         none:
-          unread: You have no unread dialogs.
-          new: You have no new dialogs.
-          read: You haven't read any dialogs yet.
-          posted: You haven't posted in any dialogs yet.
-          latest: There are no latest dialogs.
-          bookmarks: You have no bookmarked dialogs yet.
-          top: There are no top dialogs.
+          unread: You have no unread dialogues.
+          new: You have no new dialogues.
+          read: You haven't read any dialogues yet.
+          posted: You haven't posted in any dialogues yet.
+          latest: There are no latest dialogues.
+          bookmarks: You have no bookmarked dialogues yet.
+          top: There are no top dialogues.
         bottom:
-          latest: There are no more latest dialogs.
-          posted: There are no more posted dialogs.
-          read: There are no more read dialogs.
-          new: There are no more new dialogs.
-          unread: There are no more unread dialogs.
-          top: There are no more top dialogs.
-          bookmarks: There are no more bookmarked dialogs.
+          latest: There are no more latest dialogues.
+          posted: There are no more posted dialogues.
+          read: There are no more read dialogues.
+          new: There are no more new dialogues.
+          unread: There are no more unread dialogues.
+          top: There are no more top dialogues.
+          bookmarks: There are no more bookmarked dialogues.
     invite:
-      custom_message_template_topic: Hey, I thought you might enjoy this dialog!
+      custom_message_template_topic: Hey, I thought you might enjoy this dialogue!
