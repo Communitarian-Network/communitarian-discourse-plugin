@@ -21,7 +21,7 @@ export default DiscourseRoute.extend({
       .then((item) => {
         if (item.status == "succeeded") {
           later(() => {
-            this._finishSignUp(item.full_name);
+            this._finishSignUp(item.full_name, item.billing_address);
           }, 5000);
         }
         if (item.status == "processing") {
@@ -37,7 +37,7 @@ export default DiscourseRoute.extend({
     this.render("verification-intents/show");
   },
 
-  _finishSignUp(accountName) {
+  _finishSignUp(accountName, billingAddress) {
     const signupData = PreloadStore.get("signupData");
 
     const attrs = {
@@ -47,13 +47,13 @@ export default DiscourseRoute.extend({
       accountUsername: signupData.username,
       accountPasswordConfirm: signupData.password_confirmation,
       accountChallenge: signupData.challenge,
-      userFields: signupData.user_fields[0]
+      userFields: { 123001: billingAddress }
     };
 
     return User.createAccount(attrs)
       .then((result) => {
         if (result.success) {
-          later(() => window.location = "/u/account-created", 10000);
+          later(() => window.location = "/u/account-created", 5000);
         } else {
           popupAjaxError(result);
         }
