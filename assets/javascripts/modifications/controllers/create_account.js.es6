@@ -33,22 +33,20 @@ export default {
     return methods;
   },
 
-  performAccountCreation() {
+  async performAccountCreation() {
     if (this.get("authOptions.email") === this.accountEmail) {
       return this._super(...arguments);
     }
 
-    const data = {
-      name: this.accountName,
-      email: this.accountEmail,
-      password: this.accountPassword,
-      username: this.accountUsername,
-      password_confirmation: this.accountHoneypot,
-      challenge: this.accountChallenge,
-    };
-
     this.set("formSubmitted", true);
-    this._createAccount(data, this);
+
+    if (await this._validateUserFields()) {
+      this._createVerificationIntent();
+    }
+  },
+
+  async formValid() {
+    return this.fieldsValid() && await this._validateUserFields();
   },
 
   fieldsValid() {
@@ -81,14 +79,14 @@ export default {
   },
 
   actions: {
-    showNextStep() {
+    async showNextStep() {
       this.clearFlash();
 
       if (this.get("authOptions.email") == this.accountEmail) {
         return this.performAccountCreation();
       }
 
-      if (this.fieldsValid()) {
+      if (await this.formValid()) {
         const {
           sign_up_with_credit_card_enabled: creditCardIdentity,
           sign_up_with_stripe_identity_enabled: stripeIdentity,
@@ -101,25 +99,45 @@ export default {
         } else {
           if (new Date() - this._challengeDate > 1000 * this._challengeExpiry) {
             this.fetchConfirmationValue().then(() =>
-              this.performAccountCreation()
+              this._createVerificationIntent()
             );
           } else {
-            this.performAccountCreation();
+            this._createVerificationIntent();
           }
         }
       }
     },
   },
 
-  _createAccount(data, self) {
-    return ajax("/communitarian/users/new", { type: "GET", data: data })
-      .then(() => {
-        this._createVerificationIntent(data, self);
+  async _validateUserFields() {
+    try {
+      await ajax("/communitarian/users/new", { type: "GET", data: this._userFields() });
+      return true;
+    } catch (error) {
+        this.set("formSubmitted", false);
+        if (error) {
+          this.flash(extractError(error), "error");
+        } else {
+          bootbox.alert(
+            I18n.t("communitarian.verification.error_while_creating")
+          );
+        }
+        return false;
+    };
+  },
+
+  _createVerificationIntent() {
+    return ajax("/communitarian/verification_intents", {
+      type: "POST",
+      data: this._userFields(),
+    })
+      .then((response) => {
+        window.location = response.verification_intent.verification_url;
       })
       .catch((error) => {
-        self.set("formSubmitted", false);
+        this.set("formSubmitted", false);
         if (error) {
-          self.flash(extractError(error), "error");
+          this.flash(extractError(error), "error");
         } else {
           bootbox.alert(
             I18n.t("communitarian.verification.error_while_creating")
@@ -128,23 +146,16 @@ export default {
       });
   },
 
-  _createVerificationIntent(data, self) {
-    return ajax("/communitarian/verification_intents", {
-      type: "POST",
-      data: data,
-    })
-      .then((response) => {
-        window.location = response.verification_intent.verification_url;
-      })
-      .catch((error) => {
-        self.set("formSubmitted", false);
-        if (error) {
-          self.flash(extractError(error), "error");
-        } else {
-          bootbox.alert(
-            I18n.t("communitarian.verification.error_while_creating")
-          );
-        }
-      });
+  _userFields() {
+    const data = {
+      name: this.accountName,
+      email: this.accountEmail,
+      password: this.accountPassword,
+      username: this.accountUsername,
+      password_confirmation: this.accountHoneypot,
+      challenge: this.accountChallenge
+    };
+
+    return data;
   }
 };
