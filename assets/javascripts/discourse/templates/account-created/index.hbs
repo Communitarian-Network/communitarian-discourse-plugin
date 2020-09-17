@@ -16,9 +16,11 @@
         <span class="activation-email__name">
           {{accountCreated.name}}
         </span>
-        <span class="activation-email__address">
-          {{i18n "communitarian.create_account.activation_email.address" address="Washington, DC"}}
-        </span>
+        {{#unless isUnknownAddress}}
+          <span class="activation-email__address">
+            {{i18n "communitarian.create_account.activation_email.address" address=accountCreated.billing_address}}
+          </span>
+        {{/unless}}
       </div>
     </div>
   </div>
