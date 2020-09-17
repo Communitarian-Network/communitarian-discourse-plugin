@@ -11,6 +11,8 @@ en:
     communitarian_resolutions_reopen_delay: Delay(in hours) between closing and reopening resolutions
     sign_up_with_credit_card_enabled: Allow users to sign up with credit card?
     sign_up_with_stripe_identity_enabled: Allow users to sign up with identity verification?
+    socials_twitter_url: Link to twitter social displayed at the bottom of main page
+    socials_facebook_url: Link to facebook social displayed at the bottom of main page
     post_delay: Minimal time in seconds before user can publish again to a dialog
     landing_categories: Displayed communities on homepage
     linkedin_enabled: Allow users to authenticate using LinkedIn?
