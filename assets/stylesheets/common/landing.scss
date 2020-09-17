@@ -26,7 +26,7 @@ $landing-desktop-hd-width: 1300px;
 
   &__text {
     font-size: .8em;
-    
+
     @media screen and (min-width: $landing-desktop-width) {
       font-size: 1.05em;
     }
@@ -83,7 +83,7 @@ $landing-explore-image-height: 450px;
 .intro {
   .wrap[role="main"] {
     max-width: 100%;
-  }  
+  }
 }
 
 .landing-explore {
@@ -186,7 +186,7 @@ $landing-explore-image-height: 450px;
   &__description {
     max-width: 700px;
   }
- 
+
   &__title {
     font-size: 1.55em;
   }
@@ -589,6 +589,10 @@ $landing-footer-padding-side: 8px;
 
   &__icons {
     display: flex;
+
+    a {
+      color: $primary-medium;
+    }
   }
 
   &__icon {

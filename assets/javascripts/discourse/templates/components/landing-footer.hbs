@@ -19,15 +19,12 @@
     <div class="landing-footer__bottom">
       <img src={{siteSettings.site_logo_url}} class="landing-footer__logo" />
       <div class="landing-footer__icons">
-        {{#link-to "home" class="landing-footer__icon--instagram"}}
-          {{d-icon "fab-instagram"}}
-        {{/link-to}}
-        {{#link-to "home" class="landing-footer__icon--facebook"}}
+        <a href={{siteSettings.socials_facebook_url}} target="_blank" class="landing-footer__icon--facebook">
           {{d-icon "fab-facebook-square"}}
-        {{/link-to}}
-        {{#link-to "home" class="landing-footer__icon--twitter"}}
+        </a>
+        <a href={{siteSettings.socials_twitter_url}} target="_blank" class="landing-footer__icon--twitter">
           {{d-icon "fab-twitter"}}
-        {{/link-to}}
+        </a>
       </div>
     </div>
   </div>
