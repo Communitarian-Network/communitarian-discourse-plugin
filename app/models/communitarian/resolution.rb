@@ -15,27 +15,16 @@ module Communitarian
     def reopen_weekly_resolution!(original_post)
       return if to_be_closed?(original_post)
 
-      post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
-      post = Post.create!(post_attributes)
-      post.custom_fields["is_resolution"] = true
-      post.save_custom_fields(true)
-      poll = post.reload.polls.first
+      post = copy_post(original_post)
+      poll = post.polls.first
       poll.update!(close_at: resolution_schedule.next_close_time)
-      self.reorder_resolutions!(original_post.topic)
+      self.reorder_resolutions!(post)
       self.schedule_jobs(post)
     end
 
-    def reorder_resolutions!(topic)
-      resolutions = topic.posts.select { |p| p.custom_fields["is_resolution"] }
-
-      sort_orders = resolutions.pluck(:sort_order).sort
-      resolutions.sort! { |r1, r2| r2.created_at <=> r1.created_at }
-
-      Post.transaction do
-        resolutions.zip(sort_orders) do |resolution, order|
-          resolution.update(sort_order: order)
-        end
-      end
+    def reorder_resolutions!(post)
+      post.topic.posts.with_deleted.update_all("sort_order = sort_order + 1")
+      Post.find(post.id).update(sort_order: 0)
     end
 
     def schedule_jobs(post)
@@ -51,6 +40,14 @@ module Communitarian
 
     def to_be_closed?(post)
       post.user_deleted || !resolution?(post) || close_by_vote?(post)
+    end
+
+    def copy_post(original_post)
+      post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
+      post = Post.create!(post_attributes)
+      post.custom_fields["is_resolution"] = true
+      post.save_custom_fields(true)
+      post.reload
     end
 
     def close_by_vote?(post)
