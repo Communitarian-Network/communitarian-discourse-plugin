@@ -137,6 +137,22 @@ export default Controller.extend({
       .join("\n");
   },
 
+  _autoCloseReminderText() {
+    const closeDate = this._closeDate().format("MMM D, ha");
+    const reopenDelay = this.siteSettings.communitarian_resolutions_reopen_delay;
+    if (reopenDelay === 0) {
+      return I18n.t(
+        "communitarian.resolution.ui_builder.auto_close_and_reopen_reminder",
+        { close_date: closeDate }
+      );
+    } else {
+      return I18n.t(
+        "communitarian.resolution.ui_builder.auto_close_and_reopen_with_delay_reminder",
+        { close_date: closeDate, delay: reopenDelay }
+      );
+    }
+  },
+
   _closeDate() {
     const closeHour = this.siteSettings.communitarian_resolutions_close_hour;
     const closeWeekDay = this.siteSettings.communitarian_resolutions_close_week_day;
