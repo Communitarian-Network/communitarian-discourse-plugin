@@ -75,16 +75,14 @@ export default Controller.extend({
     };
 
     return User.createAccount(attrs)
-      .then((result) => {
+      .then(result => {
         if (result.success) {
           window.location = "/u/account-created";
         } else {
-          this.set("loading", false)
-          popupAjaxError({ responseJSON: result });
+          popupAjaxError(result);
         }
       })
-      .catch((error) => {
-        this.set("loading", false)
+      .catch(error => {
         popupAjaxError(error);
       });;
   },
@@ -99,10 +97,10 @@ export default Controller.extend({
         email: this.createAccount.accountEmail
       }
     })
-      .then((data) => {
+      .then(data => {
         this.set("clientSecret", data.payment_intent.client_secret);
       })
-      .catch((error) => {
+      .catch(error => {
         this.set("loading", false);
         if (error) {
           popupAjaxError(error);
