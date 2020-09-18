@@ -109,6 +109,7 @@ export default Controller.extend({
         typingTime: 0,
         firstOpenedTimestamp: new Date(),
         category: slug && slug[1],
+        autoCloseReminder: this._autoCloseReminderText(),
         activePeriodNote: I18n.t("communitarian.resolution.ui_builder.active_period_note"),
       });
     } else {
