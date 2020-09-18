@@ -3,25 +3,24 @@ import showModal from "discourse/lib/show-modal";
 
 export default Component.extend({
   actions: {
-    clickCreateCommunityButton() {
-      openCommunityBulder(this);
-
-    }
+    createCommunity() {
+      openCommunityBuilder(this);
+    },
   }
 });
 
-export function openCommunityBulder(context) {
-  const groups = context.site.groups,
-    groupName = groups.findBy("id", 0).name;
-
+export function openCommunityBuilder(context) {
   const model = context.store.createRecord("category", {
     color: "0088CC",
     text_color: "FFFFFF",
-    group_permissions: [{ group_name: groupName, permission_type: 1 }],
-    available_groups: groups.map(g => g.name),
+    group_permissions: [{ group_name: "everyone", permission_type: 1 }],
+    available_groups: ["everyone"],
     allow_badges: true,
     topic_featured_link_allowed: true,
-    custom_fields: {},
+    custom_fields: {
+      introduction_raw: "",
+      tenets_raw: "",
+    },
     search_priority: 0
   });
 

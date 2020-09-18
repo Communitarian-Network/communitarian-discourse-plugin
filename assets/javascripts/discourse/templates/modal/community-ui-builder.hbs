@@ -1,9 +1,9 @@
 <div class="resolution-form">
-  {{#d-modal-body title=formTitle class="poll-ui-builder community-ui-builder"}}
-    <form class="poll-ui-builder-form form-horizontal" {{action "submitCommunity" on="submit"}}>
+  {{#d-modal-body class="poll-ui-builder community-ui-builder"}}
+    <form class="poll-ui-builder-form form-horizontal" {{action "saveCategory" on="submit"}}>
       <section class="input-group poll-textarea">
         <label>{{i18n "communitarian.community.ui_builder.title.label"}}</label>
-        {{text-field value=title
+        {{text-field value=model.name
           class="full-width"
           maxLength=titleMaxLength
           aria-label=(I18n "communitarian.community.ui_builder.title.label")
@@ -16,7 +16,7 @@
       <section class="field">
         <label>{{i18n "communitarian.community.ui_builder.introduction.label"}}</label>
         {{textarea
-          value=introduction
+          value=model.custom_fields.introduction_raw
           autocomplete="discourse"
           placeholder=(I18n "communitarian.community.ui_builder.introduction.placeholder")
           rows="2"
@@ -26,7 +26,7 @@
       <section class="field">
         <label>{{i18n "communitarian.community.ui_builder.tenets.label"}}</label>
         {{textarea
-          value=tenets
+          value=model.custom_fields.tenets_raw
           autocomplete="discourse"
           placeholder=(I18n "communitarian.community.ui_builder.tenets.placeholder")
           rows="2"
@@ -36,7 +36,7 @@
       <section class="field">
         <label>{{i18n "communitarian.community.ui_builder.cover.label"}}</label>
         {{image-uploader
-          imageUrl=coverImageUrl
+          imageUrl=logoImageUrl
           onUploadDone=(action "coverImageUploadDone")
           onUploadDeleted=(action "coverImageUploadDeleted")
           type="category_logo"
@@ -48,7 +48,7 @@
 
   <div class="modal-footer">
     <div class="resolution-modal-footer-buttons">
-      {{d-button action=(action "submitCommunity") class="btn-primary" label=buttonLabel disabled=disabledButton}}
+      {{d-button action=(action "saveCategory") class="btn-primary" label=saveLabel disabled=disabled}}
 
       {{#if model.can_delete}}
         {{d-button class="btn-danger pull-right"

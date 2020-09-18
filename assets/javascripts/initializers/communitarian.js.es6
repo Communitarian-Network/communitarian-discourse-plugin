@@ -11,6 +11,7 @@ import showModal from "discourse/lib/show-modal";
 import { reopenWidget } from "discourse/widgets/widget";
 import CreateAccount from "../modifications/controllers/create_account";
 import HeaderButtons from "../modifications/widgets/header-buttons";
+import Category from "discourse/models/category";
 
 import ResolutionController from "../controllers/resolution-controller";
 import getResolutionPeriod from "../discourse/components/get-resolution-period";
@@ -120,6 +121,15 @@ function initializeCommunitarian(api) {
       goToDialogsPage() {
         DiscourseURL.routeTo(`${window.location.pathname}/l/dialogs`);
       },
+
+      editCommunity(category) {
+        Category.reloadById(category.get("id")).then(atts => {
+          const model = this.store.createRecord("category", atts.category);
+          model.setupGroupsAndPermissions();
+          this.site.updateCategory(model);
+          showModal("community-ui-builder", { model });
+        });
+      },
     }
   });
 
@@ -173,14 +183,11 @@ function initializeCommunitarian(api) {
 
 //Override openNewCategoryModal due to the fact that all members can create category
 export function openNewCategoryModal(context) {
-  const groups = context.site.groups,
-    groupName = groups.findBy("id", 0).name;
-
   const model = context.store.createRecord("category", {
     color: "0088CC",
     text_color: "FFFFFF",
-    group_permissions: [{ group_name: groupName, permission_type: 1 }],
-    available_groups: groups.map(g => g.name),
+    group_permissions: [{ group_name: "everyone", permission_type: 1 }],
+    available_groups: ["everyone"],
     allow_badges: true,
     topic_featured_link_allowed: true,
     custom_fields: {},
