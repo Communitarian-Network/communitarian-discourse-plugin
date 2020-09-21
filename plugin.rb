@@ -78,18 +78,6 @@ after_initialize do
     end
   end
 
-  %i(
-    category_created
-    category_updated
-  ).each do |event|
-    DiscourseEvent.on(event) do |category|
-      about_post = category.topic.posts.first
-      revisor = PostRevisor.new(about_post, about_post.topic)
-      about = "#{category.custom_fields["introduction_raw"]}\n\n#{category.custom_fields["tenets_raw"]}\n\n#{about_post.raw}"
-      revisor.revise!(about_post.user, { raw: about }, skip_validations: true)
-    end
-  end
-
   on(:post_created) do |post, opts|
     if opts[:is_resolution] != nil
       post.custom_fields["is_resolution"] = opts[:is_resolution]
