@@ -57,6 +57,8 @@ en:
         list:
           date: Weekly Poll on %{period}
           votes: "%{voters} votes"
+      resolutions:
+        empty: No resolutions yet! Create one
       verification:
         error_while_creating: Sorry, there was an error in verification process.
         processing:

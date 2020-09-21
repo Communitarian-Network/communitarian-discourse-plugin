@@ -1,3 +1,11 @@
 {{#each resolutions as |resolution|}}
   {{resolution-list-item resolution=resolution}}
+{{else}}
+  {{i18n "js.communitarian.resolutions.empty"}}
+  {{d-button
+    class="btn-primary"
+    category=category
+    action=(action "clickNewResolutionButton")
+    label="js.communitarian.resolution.ui_builder.form_title.new"
+  }}
 {{/each}}
