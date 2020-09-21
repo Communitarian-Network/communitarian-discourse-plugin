@@ -78,9 +78,7 @@ after_initialize do
     end
   end
 
-  on(:topic_created) do |topic, opts, user|
-    tag_name = opts[:is_resolution] ? "resolution" : "dialogue"
-    tag = Tag.where(name: tag_name).first_or_create
+  on(:topic_created) do |topic, opts, _user|
     topic.tags.find_or_create_by(name: opts[:is_resolution] ? "resolution" : "dialogue")
   end
 
