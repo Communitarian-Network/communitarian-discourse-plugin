@@ -91,4 +91,8 @@
 .cast-votes[disabled] {
   background: #329bf7 !important;
   color: #fff;
+
+  &:hover {
+    color: #fff;
+  }
 }
