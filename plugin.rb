@@ -81,7 +81,7 @@ after_initialize do
   on(:topic_created) do |topic, opts, user|
     tag_name = opts[:is_resolution] ? "resolution" : "dialogue"
     tag = Tag.where(name: tag_name).first_or_create
-    topic.tags << tag
+    topic.tags.find_or_create_by(name: opts[:is_resolution] ? "resolution" : "dialogue")
   end
 
   on(:category_created) do |category|
