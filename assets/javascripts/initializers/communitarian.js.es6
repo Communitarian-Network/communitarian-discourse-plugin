@@ -133,6 +133,17 @@ function initializeCommunitarian(api) {
     }
   });
 
+  api.modifyClass("controller:edit-category", {
+    @discourseComputed("saving", "model.name", "model.color", "model.custom_fields.introduction_raw", "deleting")
+    disabled(saving, name, color, introduction, deleting) {
+      if (saving || deleting) return true;
+      if (!name) return true;
+      if (!introduction) return true;
+      if (!color) return true;
+      return false;
+    },
+  });
+
   api.modifyClass("controller:account-created-index", {
     @discourseComputed("accountCreated.billing_address")
     isUnknownAddress(billing_address) {

@@ -3,9 +3,9 @@ import Controller from "@ember/controller";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
 import ModalFunctionality from "discourse/mixins/modal-functionality";
 import DiscourseURL from "discourse/lib/url";
+import { action } from "@ember/object";
 import { extractError } from "discourse/lib/ajax-error";
 import Category from "discourse/models/category";
-
 
 export default Controller.extend(ModalFunctionality, {
   saving: false,
@@ -14,7 +14,6 @@ export default Controller.extend(ModalFunctionality, {
 
   init() {
     this._super(...arguments);
-    this._setupForm();
   },
 
   onShow() {
@@ -46,6 +45,11 @@ export default Controller.extend(ModalFunctionality, {
     return false;
   },
 
+  @discourseComputed("model.isUncategorizedCategory", "model.id")
+  showDescription(isUncategorizedCategory, categoryId) {
+    return !isUncategorizedCategory && categoryId;
+  },
+
   @discourseComputed("saving", "deleting")
   deleteDisabled(saving, deleting) {
     return deleting || saving || false;
@@ -68,11 +72,10 @@ export default Controller.extend(ModalFunctionality, {
     return uploadedLogoUrl || "";
   },
 
-  _setupForm() {
-    this.setProperties({
-      coverImageUrl: "",
-      coverImageId: null,
-    });
+  @action
+  showCategoryTopic() {
+    window.open(this.get("model.topic_url"), "_blank").focus();
+    return false;
   },
 
 actions: {

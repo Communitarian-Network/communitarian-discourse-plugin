@@ -33,6 +33,22 @@
         }}
       </section>
 
+
+      {{#if showDescription}}
+        <section class="field">
+          <label>{{i18n "category.description"}}</label>
+          {{#if model.description}}
+            {{html-safe model.description}}
+          {{else}}
+            {{i18n "category.no_description"}}
+          {{/if}}
+          {{#if model.topic_url}}
+            <br>
+            {{d-button class="btn-default edit-category-description" action=(action "showCategoryTopic") icon="pencil-alt" label="category.change_in_category_topic"}}
+          {{/if}}
+        </section>
+      {{/if}}
+
       <section class="field">
         <label>{{i18n "communitarian.community.ui_builder.cover.label"}}</label>
         {{image-uploader
