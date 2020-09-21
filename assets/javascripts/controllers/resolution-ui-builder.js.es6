@@ -139,7 +139,7 @@ export default Controller.extend({
   },
 
   _autoCloseReminderText() {
-    const closeDate = this._closeDate().format("MMM D, ha");
+    const closeDate = this._closeDate().format("MMMM D, ha");
     const reopenDelay = this.siteSettings.communitarian_resolutions_reopen_delay;
     if (reopenDelay === 0) {
       return I18n.t(

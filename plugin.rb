@@ -16,6 +16,7 @@ require "stripe"
 enabled_site_setting :communitarian_enabled
 
 [
+  "stylesheets/common/about-page.scss",
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
@@ -76,6 +77,10 @@ after_initialize do
       topic.custom_fields["is_resolution"] = opts[:is_resolution]
       topic.save_custom_fields(true)
     end
+  end
+
+  on(:topic_created) do |topic, opts, _user|
+    topic.tags.find_or_create_by(name: opts[:is_resolution] ? "resolution" : "dialogue")
   end
 
   on(:category_created) do |category|
