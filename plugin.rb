@@ -16,6 +16,7 @@ require "stripe"
 enabled_site_setting :communitarian_enabled
 
 [
+  "stylesheets/common/about-page.scss",
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
   "stylesheets/common/communities-page.scss",
