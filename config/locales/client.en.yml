@@ -172,7 +172,7 @@ en:
         bookmark: Click to bookmark the first post on this dialogue
         unbookmark: Click to remove all bookmarks in this dialogue
         unbookmark_with_reminder: Click to remove all bookmarks and reminders in this
-          topic. You have a reminder set %{reminder_at} for this topic.
+          dialogue. You have a reminder set %{reminder_at} for this dialogue.
     bookmarks:
       confirm_clear: Are you sure you want to clear all your bookmarks from this dialogue?
     drafts:
@@ -193,7 +193,7 @@ en:
       none_found: No dialogues found.
       title:
         search: Search for a Dialogue
-        placeholder: type the dialog title, url or id here
+        placeholder: type the dialogue title, url or id here
     review:
       claim:
         title: claim this dialogue
@@ -258,7 +258,7 @@ en:
     user:
       user_notifications:
         ignore_option_title: You will not receive notifications related to this user
-          and all of their topics and replies will be hidden.
+          and all of their dialogues and replies will be hidden.
       feature_topic_on_profile:
         open_search: Select a New Dialogue
         title: Select a Dialogue
@@ -270,28 +270,28 @@ en:
       mailing_list_mode:
         instructions: |
           This setting overrides the activity summary.<br />
-          Muted topics and categories are not included in these emails.
+          Muted dialogues and categories are not included in these emails.
       watched_tags_instructions: You will automatically watch all dialogues with these
-        tags. You will be notified of all new posts and topics, and a count of new
-        posts will also appear next to the topic.
+        tags. You will be notified of all new posts and dialogues, and a count of new
+        posts will also appear next to the dialogue.
       tracked_tags_instructions: You will automatically track all dialogues with these
-        tags. A count of new posts will appear next to the topic.
+        tags. A count of new posts will appear next to the dialogue.
       muted_tags_instructions: You will not be notified of anything about new dialogues
         with these tags, and they will not appear in latest.
       watched_categories_instructions: You will automatically watch all dialogues in
-        these categories. You will be notified of all new posts and topics, and a
-        count of new posts will also appear next to the topic.
+        these categories. You will be notified of all new posts and dialogues, and a
+        count of new posts will also appear next to the dialogue.
       tracked_categories_instructions: You will automatically track all dialogues in
-        these categories. A count of new posts will appear next to the topic.
+        these categories. A count of new posts will appear next to the dialogue.
       watched_first_post_categories_instructions: You will be notified of the first
-        post in each new topic in these categories.
+        post in each new dialogue in these categories.
       watched_first_post_tags_instructions: You will be notified of the first post
-        in each new topic with these tags.
+        in each new dialogue with these tags.
       muted_categories_instructions: You will not be notified of anything about new
-        topics in these categories, and they will not appear on the categories or
+        dialogues in these categories, and they will not appear on the categories or
         latest pages.
       muted_categories_instructions_dont_hide: You will not be notified of anything
-        about new topics in these categories.
+        about new dialogues in these categories.
       no_category_access: As a moderator you have limited community access, save is
         disabled.
       automatically_unpin_topics: Automatically unpin dialogues when I reach the bottom.
@@ -305,7 +305,7 @@ en:
           and replies
       email_level:
         title: Send me an email when someone quotes me, replies to my post, mentions
-          my @username, or invites me to a topic
+          my @username, or invites me to a dialogue
       categories_settings: Communities
       new_topic_duration:
         label: Consider dialogues new when
@@ -364,12 +364,12 @@ en:
           do not have access to this category. You will need to add them to a group
           that has access to this category.
       duplicate_link: It looks like your link to <b>%{domain}</b> was already posted
-        in the topic by <b>@%{username}</b> in <a href='%{post_url}'>a reply on %{ago}</a>
+        in the dialogue by <b>@%{username}</b> in <a href='%{post_url}'>a reply on %{ago}</a>
         – are you sure you want to post it again?
       error:
         category_missing: You must choose a community
         topic_template_not_modified: Please add details and specifics to your dialogue
-          by editing the topic template.
+          by editing the dialogue template.
       reply_original: Reply on Original Dialogue
       create_topic: Create Dialogue
       remove_featured_link: Remove link from dialogue.
@@ -381,7 +381,7 @@ en:
           label: Reply as linked dialogue
           desc: Create a new dialogue linked to this dialogue
           confirm: You have a new dialogue draft saved, which will be overwritten if
-            you create a linked topic.
+            you create a linked dialogue.
         reply_to_topic:
           label: Reply to dialogue
           desc: Reply to the dialogue, not any specific post
@@ -470,7 +470,7 @@ en:
         help: Add a link to this dialogue on your user card and profile
       remove_from_profile:
         warning: Your profile already has a featured dialogue. if you continue, this
-          topic will replace the existing topic.
+          dialogue will replace the existing dialogue.
         help: Remove the link to this dialogue on your user profile
       list: Dialogues
       new: new dialogue
@@ -500,8 +500,8 @@ en:
         one: you have %{count} unread old post in this dialogue
         other: you have %{count} unread old posts in this dialogue
       new_posts:
-        one: there is %{count} new post in this dialog since you last read it
-        other: there are %{count} new posts in this dialog since you last read it
+        one: there is %{count} new post in this dialogue since you last read it
+        other: there are %{count} new posts in this dialogue since you last read it
       likes:
         one: there is %{count} like in this dialogue
         other: there are %{count} likes in this dialogue
@@ -509,10 +509,10 @@ en:
       options: Dialogue Options
       show_links: show links within this dialogue
       toggle_information: toggle dialogue details
-      read_more_in_category: Want to read more? Browse other dialogues in %{caTlink}
+      read_more_in_category: Want to read more? Browse other dialogues in %{catLink}
         or %{latestLink}.
       group_request: You need to request membership to the `%{name}` group to see
-        this topic
+        this dialogue
       group_join: You need join the `%{name}` group to see this dialogue
       unread_indicator: No member has read the last post of this dialogue yet.
       browse_all_categories: Browse all communities
@@ -557,23 +557,23 @@ en:
         title: change how often you get notified about this dialogue
         reasons:
           mailing_list_mode: You have mailing list mode enabled, so you will be notified
-            of replies to this topic via email.
+            of replies to this dialogue via email.
           '3_10': You will receive notifications because you are watching a tag on
-            this topic.
+            this dialogue.
           '3_6': You will receive notifications because you are watching this community.
           '3_5': You will receive notifications because you started watching this
-            topic automatically.
+            dialogue automatically.
           '3_2': You will receive notifications because you are watching this dialogue.
           '3_1': You will receive notifications because you created this dialogue.
           '3': You will receive notifications because you are watching this dialogue.
           '2_8': You will see a count of new replies because you are tracking this
             category.
           '2_4': You will see a count of new replies because you posted a reply to
-            this topic.
+            this dialogue.
           '2_2': You will see a count of new replies because you are tracking this
-            topic.
+            dialogue.
           '2': You will see a count of new replies because you <a href="%{basePath}/u/%{username}/preferences/notifications">read
-            this topic</a>.
+            this dialogue</a>.
           '0_7': You are ignoring all notifications in this community.
           '0_2': You are ignoring all notifications on this dialogue.
           '0': You are ignoring all notifications on this dialogue.
@@ -607,7 +607,7 @@ en:
         help: begin composing a reply to this dialogue
       clear_pin:
         help: Clear the pinned status of this dialogue so it no longer appears at the
-          top of your topic list
+          top of your dialogue list
       share:
         help: share a link to this dialogue
       print:
@@ -638,8 +638,8 @@ en:
             badge-notification unread''>%{count}</strong>'
         pin_globally: Make this dialogue appear at the top of all dialogue lists until
         confirm_pin_globally: You already have %{count} globally pinned dialogues. too
-          many pinned topics may be a burden for new and anonymous users. Are you
-          sure you want to pin another topic globally?
+          many pinned dialogues may be a burden for new and anonymous users. Are you
+          sure you want to pin another dialogue globally?
         unpin_globally: Remove this dialogue from the top of all dialogue lists.
         unpin_globally_until: Remove this dialogue from the top of all dialogue lists or
           wait until <strong>%{until}</strong>.
@@ -656,23 +656,23 @@ en:
           be bannered at any given time.
         no_banner_exists: There is no banner dialogue.
         banner_exists: There <strong class='badge badge-notification unread'>is</strong>
-          currently a banner topic.
+          currently a banner dialogue.
       controls: Dialogue Controls
       invite_reply:
         help: invite others to this dialogue via email or notifications
         sso_enabled: Enter the username of the person you'd like to invite to this
-          topic.
+          dialogue.
         to_topic_blank: Enter the username or email address of the person you'd like
-          to invite to this topic.
+          to invite to this dialogue.
         to_topic_email: You've entered an email address. We'll email an invitation
-          that allows your friend to immediately reply to this topic.
+          that allows your friend to immediately reply to this dialogue.
         to_topic_username: You've entered a username. We'll send a notification with
-          a link inviting them to this topic.
+          a link inviting them to this dialogue.
         to_username: Enter the username of the person you'd like to invite. We'll
-          send a notification with a link inviting them to this topic.
+          send a notification with a link inviting them to this dialogue.
         success_username: We've invited that user to participate in this dialogue.
         success_existing_email: A user with email <b>%{emailOrUsername}</b> already
-          exists. We've invited that user to participate in this topic.
+          exists. We've invited that user to participate in this dialogue.
       split_topic:
         title: Move to New Dialogue
         action: move to new dialogue
@@ -756,16 +756,16 @@ en:
         settings cannot be edited. If you do not wish to use this community, delete
         it instead of repurposing it.'
       uncategorized_security_warning: This community is special. it is intended as
-        holding area for topics that have no community; it cannot have security settings.
+        holding area for dialogues that have no community; it cannot have security settings.
       uncategorized_general_warning: This community is special. it is used as the default
-        community for new topics that do not have a community selected. If you want
+        community for new dialogues that do not have a community selected. If you want
         to prevent this behavior and force community selection, <a href="%{settingLink}">please
         disable the setting here</a>. If you want to change the name or description,
         go to <a href="%{customizeLink}">Customize / Text Content</a>.
       pending_permission_change_alert: You haven't added %{group} to this community;
         click this button to add them.
       email_in_disabled: 'Posting new dialogues via email is disabled in the site settings.
-        To enable posting new topics via email, '
+        To enable posting new dialogues via email, '
       mailinglist_mirror: community mirrors a mailing list
       show_subcategory_list: Show subcommunity list above dialogues in this community.
       read_only_banner: 'Banner text when a user cannot create a dialogue in this community:'
@@ -791,7 +791,7 @@ en:
       notifications:
         watching:
           description: You will automatically watch all dialogues in these communities.
-            You will be notified of every new post in every topic, and a count of
+            You will be notified of every new post in every dialogue, and a count of
             new replies will be shown.
         watching_first_post:
           description: You will be notified of new dialogues in this community but not
@@ -879,9 +879,9 @@ en:
         other: 'It can only be used in these communities:'
       delete_confirm:
         one: Are you sure you want to delete this tag and remove it from %{count}
-          topic it is assigned to?
+          dialogue it is assigned to?
         other: Are you sure you want to delete this tag and remove it from %{count}
-          topics it is assigned to?
+          dialogues it is assigned to?
       delete_unused_description: Delete all tags which are not attached to any dialogues
         or personal messages
       filters:
@@ -892,14 +892,14 @@ en:
       notifications:
         watching:
           description: You will automatically watch all dialogues with this tag. you
-            will be notified of all new posts and topics, plus the count of unread
-            and new posts will also appear next to the topic.
+            will be notified of all new posts and dialogues, plus the count of unread
+            and new posts will also appear next to the dialogue.
         watching_first_post:
           description: You will be notified of new dialogues in this tag but not replies
-            to the topics.
+            to the dialogues.
         tracking:
           description: You will automatically track all dialogues with this tag. A count
-            of unread and new posts will appear next to the topic.
+            of unread and new posts will appear next to the dialogue.
         muted:
           description: You will not be notified of anything about new dialogues with
             this tag, and they will not appear on your unread tab.

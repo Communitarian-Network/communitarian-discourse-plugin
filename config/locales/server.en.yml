@@ -50,7 +50,7 @@ en:
     failed_to_invite: 'The user cannot be invited into this dialogue without a group
       membership in either one of the following groups: %{group_names}.'
     user_exists: Sorry, that user has already been invited. You may only invite a
-      user to a topic once.
+      user to a dialogue once.
   not_in_group:
     title_topic: You must be in a group to see this dialogue.
     title_category: You must be in a group to see this community.
@@ -59,9 +59,9 @@ en:
     site's administrator.
   too_many_replies:
     one: We're sorry, but new users are temporarily limited to %{count} reply in the
-      same topic.
+      same dialogue.
     other: We're sorry, but new users are temporarily limited to %{count} replies
-      in the same topic.
+      in the same dialogue.
   embed:
     error_topics: The `embed dialogues list` site setting was not enabled
     imported_from: This is a companion discussion dialogue for the original entry at
@@ -70,9 +70,9 @@ en:
   topic_not_found: Something has gone wrong. Perhaps this dialogue was closed or deleted
     while you were looking at it?
   secure_upload_not_allowed_in_public_topic: 'Sorry, the following secure upload(s)
-    cannot be used in a public topic: %{upload_filenames}.'
+    cannot be used in a public dialogue: %{upload_filenames}.'
   create_pm_on_existing_topic: Sorry, you can't create a PM on an existing dialogue.
-  topics_in_category: Topics in the '%{category}' community
+  topics_in_category: Dialogues in the '%{category}' community
   rss_topics_in_category: RSS feed of dialogues in the '%{category}' community
   read_full_topic: Read full dialogue
   rss_description:
@@ -84,14 +84,14 @@ en:
     top_monthly: Monthly top dialogues
     top_weekly: Weekly top dialogues
     top_daily: Daily top dialogues
-    user_topics: Latest dialogs by @%{username}
+    user_topics: Latest dialogues by @%{username}
     tag: Tagged dialogues
   groups:
     errors:
       email_already_used_in_category: "'%{email}' is already used by the community
         '%{category_name}'."
     view_hidden_topic_request_reason: I would like to join the group '%{group_name}',
-      so I may access [this topic](%{topic_url})
+      so I may access [this dialogue](%{topic_url})
   activerecord:
     errors:
       site_settings:
@@ -128,7 +128,7 @@ en:
       description_incomplete: The community description post must have at least one
         paragraph.
       permission_conflict: 'Any group that is allowed to access a subcommunity must
-        also be allowed to access the parent category. The following groups have access
+        also be allowed to access the parent community. The following groups have access
         to one of the subcommunities, but no access to parent community: %{group_names}.'
       disallowed_topic_tags: 'This dialogue has tags not allowed by this community: ''%{tags}'''
       disallowed_tags_generic: This dialogue has disallowed tags.
@@ -142,7 +142,7 @@ en:
         other: Can't delete this community because it has %{count} dialogues. oldest dialogue
           is %{topic_link}.
       topic_exists_no_oldest: Can't delete this community because dialogue count is %{count}.
-    uncategorized_description: Topics that don't need a community, or don't fit into
+    uncategorized_description: Dialogues that don't need a community, or don't fit into
       any other existing community.
   rate_limiter:
     by_type:
@@ -165,6 +165,15 @@ en:
   draft_backup:
     pm_title: Backup Drafts from ongoing dialogues
   user_activity:
+    no_bookmarks:
+      self: "You have no bookmarked dialogues; bookmarks allow you to quickly refer to specific dialogues."
+      others: "No bookmarks."
+    no_likes_given:
+      self: "You have not liked any dialogues."
+      others: "No liked dialogues."
+    no_replies:
+      self: "You have not replied to any dialogues."
+      others: "No replies."
     no_drafts:
       self: You have no drafts; begin composing a reply in any dialogue and it will be
         auto-saved as a new draft.
@@ -324,14 +333,14 @@ en:
         by staff. See `approve_new_topics_unless_trust_level`.
       staged: New dialogues and posts for staged users must be approved by staff. see
         `approve_unless_staged`.
-      category: Posts in this community require manual approval by staff. see the community
+      category: Dialogues in this community require manual approval by staff. see the community
         settings.
       suspect_user: This new user entered profile information without reading any
         dialogues or posts, which strongly suggests they may be a spammer. See `approve_suspect_users`.
     actions:
       delete_spammer:
         description: Remove the user and all their posts and dialogues.
-        confirm: Are you sure you want to delete all that user's posts, dialogues, and
+        confirm: Are you sure you want to delete all that user's communities, dialogues, and
           block their IP and email addresses?
       delete_and_ignore:
         description: Delete post; if the first post, delete the dialogue as well
