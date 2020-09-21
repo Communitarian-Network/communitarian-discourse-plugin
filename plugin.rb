@@ -78,6 +78,12 @@ after_initialize do
     end
   end
 
+  on(:topic_created) do |topic, opts, user|
+    tag_name = opts[:is_resolution] ? "resolution" : "dialogue"
+    tag = Tag.where(name: tag_name).first_or_create
+    topic.tags << tag
+  end
+
   on(:category_created) do |category|
     about_post = category.topic.posts.first
     revisor = PostRevisor.new(about_post, about_post.topic)
