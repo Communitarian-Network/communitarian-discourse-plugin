@@ -58,7 +58,9 @@ en:
           date: Weekly Poll on %{period}
           votes: "%{voters} votes"
       resolutions:
-        empty: No resolutions yet! Create one
+        empty:
+          description: Resolution is poll on a topic of interest to community. Each week the vote is recorded and the poll reopens the next week.
+          action: Create First Resolution
       verification:
         error_while_creating: Sorry, there was an error in verification process.
         processing:

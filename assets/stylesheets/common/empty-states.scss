@@ -1,0 +1,27 @@
+.no-data {
+  background: #f0f0f0;
+  padding: 1.5em 2em 1em 1.3em;
+  border-radius: 0.5em;
+  overflow: hidden;
+
+  &__icon {
+    float: left;
+    width: 120px;
+    height: 120px;
+    margin-right: 1em;
+    border-radius: 50%;
+    text-align: center;
+  }
+
+  &__title {
+    font-size: 1.5em;
+  }
+
+  svg {
+    width: 80px;
+    height: 80px;
+    margin-top: 10px;
+    fill: #fff;
+    filter: drop-shadow(0 0 2px #ccc);
+  }
+}
