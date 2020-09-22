@@ -9,7 +9,7 @@ export default Component.extend({
   },
 
   _setupPoll() {
-    const formattedCreationDate = moment(this.dialog.created_at).format("MMM ‘DD");
+    const formattedCreationDate = moment(this.dialog.created_at).format("MMM DD");
     this.setProperties({ formattedCreationDate });
   },
 });

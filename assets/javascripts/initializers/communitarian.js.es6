@@ -32,7 +32,7 @@ function initializeCommunitarian(api) {
   const getFormattedDialogDate = (val) => {
     if (val) {
       var date = new Date(val);
-      return moment(date).format("MMM ‘DD");
+      return moment(date).format("MMM DD");
     }
   }
 
