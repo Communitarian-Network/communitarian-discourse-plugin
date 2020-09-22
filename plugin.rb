@@ -19,6 +19,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/about-page.scss",
   "stylesheets/common/resolution-form.scss",
   "stylesheets/common/landing.scss",
+  "stylesheets/common/empty-states.scss",
   "stylesheets/common/communities-page.scss",
   "stylesheets/common/dialog-page.scss",
   "stylesheets/common/create-account-modal.scss",

@@ -1,3 +1,16 @@
 {{#each resolutions as |resolution|}}
   {{resolution-list-item resolution=resolution}}
+{{else}}
+  <div class="no-data">
+    <div class="no-data__icon">
+      {{d-icon "tasks"}}
+    </div>
+    <p>{{i18n "js.communitarian.resolutions.empty.description"}}</p>
+    {{d-button
+      class="btn-primary"
+      category=category
+      action=(action "clickNewResolutionButton")
+      label="js.communitarian.resolutions.empty.action"
+    }}
+  </div>
 {{/each}}
