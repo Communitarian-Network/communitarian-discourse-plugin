@@ -1,31 +1,15 @@
 <div class="resolution-list-item">
   <div class="resolution-list-item__header">
-    <span>
-      {{#if formattedActionPeriod}}
-        {{i18n "communitarian.resolution.list.date" period=formattedActionPeriod}}
-      {{/if}}
-    </span>
-    <span>
-      {{#if openedPoll}}
-        {{i18n "communitarian.resolution.list.votes" voters=openedPoll.voters}}
-      {{/if}}
-    </span>
+    {{#if formattedActionPeriod}}
+      <span>{{i18n "communitarian.resolution.list.date" period=formattedActionPeriod}}</span>
+    {{/if}}
+    {{#if openedPoll}}		
+      <span>{{i18n "communitarian.resolution.list.votes" voters=openedPoll.voters}}</span>
+    {{/if}}
   </div>
   <p class="resolution-list-item__name">
     {{~topic-link resolution class="raw-link raw-topic-link"}}
   </p>
-  <ul class="resolution-list-item__options-list">
-    {{#each openedPoll.options as |poll_option|}}
-      <li class="resolution-list-item__option">
-        <label for="votes" class="resolution-list-item__option-name">
-          {{poll_option.html}}
-        </label>
-        <div class="resolution-list-item__option-value-wrap">
-          <div class="resolution-list-item__option-value {{if (compare poll_option.votes '===' mostPopularOption) "max"}}"
-              style={{get-percent-width poll_option.votes mostPopularOption}}>
-          </div>
-        </div>
-      </li>
-    {{/each}}
-  </ul>
+
+  {{mount-widget widget="communitarian-resolution-widget" args=resolution}}
 </div>
