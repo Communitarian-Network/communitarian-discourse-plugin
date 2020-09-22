@@ -43,7 +43,7 @@ export default Ember.Controller.extend({
       this.set("model.categories.content", categories.content.slice(0, 4));
     }
 
-    return categories;
+    return categories.filter(Boolean);
   },
 
   actions: {
