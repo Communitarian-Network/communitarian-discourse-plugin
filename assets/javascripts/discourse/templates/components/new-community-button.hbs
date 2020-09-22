@@ -1,8 +1,17 @@
 {{#if canCreateCommunity}}
-  {{d-button
-    class="btn-primary add-category"
-    id="create-category"
-    action=(action "clickCreateCommunityButton")
-    label="category.create"
-  }}
+  {{#if currentUser.staff}}
+    {{d-button
+      class="btn-primary add-category"
+      id="create-category"
+      action=(route-action "createCategory")
+      label="category.create"
+    }}
+  {{else}}
+    {{d-button
+        class="btn-primary add-category"
+        id="create-category"
+        action=(action "createCommunity")
+        label="category.create"
+      }}
+  {{/if}}
 {{/if}}

@@ -86,7 +86,7 @@ after_initialize do
   on(:category_created) do |category|
     about_post = category.topic.posts.first
     revisor = PostRevisor.new(about_post, about_post.topic)
-    about = "#{category.custom_fields["introduction_raw"]}\n\n#{category.custom_fields["tenets_raw"]}\n\n#{about_post.raw}"
+    about = category.custom_fields["introduction_raw"].presence || about_post.raw
     revisor.revise!(about_post.user, { raw: about }, skip_validations: true)
   end
 
@@ -109,6 +109,10 @@ after_initialize do
   end
 
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
+
+  add_to_serializer(:basic_category, :introduction_raw) do
+    object.uncategorized? ? I18n.t('category.uncategorized_description') : object.custom_fields["introduction_raw"]
+  end
 
   add_to_serializer(:topic_list, :dialogs, false) do
     object.dialogs.to_a.map do |dialog|

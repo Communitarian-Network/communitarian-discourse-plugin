@@ -1,81 +1,151 @@
 import I18n from "I18n";
 import Controller from "@ember/controller";
 import discourseComputed, { observes } from "discourse-common/utils/decorators";
-import EmberObject from "@ember/object";
-import { ajax } from "discourse/lib/ajax";
-import { popupAjaxError } from "discourse/lib/ajax-error";
-import { throttle } from "@ember/runloop";
+import ModalFunctionality from "discourse/mixins/modal-functionality";
+import DiscourseURL from "discourse/lib/url";
+import { action } from "@ember/object";
+import { extractError } from "discourse/lib/ajax-error";
+import Category from "discourse/models/category";
 
-export default Controller.extend({
+export default Controller.extend(ModalFunctionality, {
+  saving: false,
+  deleting: false,
+  hiddenTooltip: true,
+
   init() {
     this._super(...arguments);
-    this._setupForm();
   },
 
-  _setupForm() {
-    this.setProperties({
-      formTitle: "communitarian.community.ui_builder.form_title.new",
-      buttonLabel: "communitarian.community.ui_builder.create",
-      loading: false,
-      title: "",
-      introduction: "",
-      tenets: "",
-      coverImageUrl: "",
-      coverImageId: null,
-    });
+  onShow() {
+    this.titleChanged();
+    this.set("hiddenTooltip", true);
   },
 
-  @discourseComputed("title", "introduction", "loading")
-  disabledButton(title, introduction, loading) {
-    return loading || title.trim().length === 0 || introduction.trim().length === 0;
-  },
-
-  actions: {
-    submitCommunity() {
-      const randInt = bound => Math.floor(Math.random() * bound);
-      const hexAlphabet = "0123456789ABCDEF";
-      const pickRandom = collection => collection[randInt(collection.length)];
-      const randomHexString = length => Array.from({ length }, _ => pickRandom(hexAlphabet)).join("");
-
-      this.set("loading", true);
-
-      ajax("/categories", {
-        type: "POST",
-        data: {
-          name: this.title,
-          uploaded_logo_id: this.coverImageId,
-          color: randomHexString(6),
-          text_color: randomHexString(6),
-          permissions: { everyone: 1 },
-          allow_badges: false,
-          topic_template: "",
-          required_tag_group_name: "",
-          topic_featured_link_allowed: true,
-          search_priority: 0,
-          custom_fields: {
-            introduction_raw: this.introduction + "\n",
-            tenets_raw: this.tenets,
-          },
-        },
-      }).then(({ category }) => {
-        window.location.href = `/c/${category.slug}/${category.id}`;
-        this.set("loading", false);
-      }).catch(error => {
-        this.set("loading", false);
-        if (error) {
-          popupAjaxError(error);
-        } else {
-          bootbox.alert(I18n.t("communitarian.community.error_while_creating"));
-        }
+  @discourseComputed("model.{id,name}")
+  title(model) {
+    if (model.id) {
+      return I18n.t("category.edit_dialog_title", {
+        categoryName: model.name
       });
+    }
+    return I18n.t("category.create");
+  },
+
+  @observes("title")
+  titleChanged() {
+    this.set("modal.title", this.title);
+  },
+
+@discourseComputed("saving", "model.name", "model.color", "model.custom_fields.introduction_raw", "deleting")
+  disabled(saving, name, color, introduction, deleting) {
+    if (saving || deleting) return true;
+    if (!name) return true;
+    if (!introduction) return true;
+    if (!color) return true;
+    return false;
+  },
+
+  @discourseComputed("model.isUncategorizedCategory", "model.id")
+  showDescription(isUncategorizedCategory, categoryId) {
+    return !isUncategorizedCategory && categoryId;
+  },
+
+  @discourseComputed("saving", "deleting")
+  deleteDisabled(saving, deleting) {
+    return deleting || saving || false;
+  },
+
+  @discourseComputed("name")
+  categoryName(name) {
+    name = name || "";
+    return name.trim().length > 0 ? name : I18n.t("preview");
+  },
+
+  @discourseComputed("saving", "model.id")
+  saveLabel(saving, id) {
+    if (saving) return "saving";
+    return id ? "category.save" : "category.create";
+  },
+
+  @discourseComputed("model.uploaded_logo.url")
+  logoImageUrl(uploadedLogoUrl) {
+    return uploadedLogoUrl || "";
+  },
+
+  @action
+  showCategoryTopic() {
+    window.open(this.get("model.topic_url"), "_blank").focus();
+    return false;
+  },
+
+actions: {
+    saveCategory() {
+      const model = this.model;
+      const parentCategory = this.site.categories.findBy(
+        "id",
+        parseInt(model.parent_category_id, 10)
+      );
+
+      this.set("saving", true);
+      model.set("parentCategory", parentCategory);
+
+      model
+        .save()
+        .then(result => {
+          this.set("saving", false);
+          this.send("closeModal");
+          model.setProperties({
+            slug: result.category.slug,
+            id: result.category.id
+          });
+          DiscourseURL.redirectTo(`/c/${Category.slugFor(model)}/${model.id}`);
+        })
+        .catch(error => {
+          this.flash(extractError(error), "error");
+          this.set("saving", false);
+        });
     },
 
     coverImageUploadDone(upload) {
-      this.set("coverImageId", upload.id);
+      this.set("model.uploaded_logo", upload);
     },
 
-    coverImageUploadDeleted(upload) {
-      this.set("coverImageId", null);
+    coverImageUploadDeleted() {
+      this.set("model.uploaded_logo");
+    },
+
+    deleteCategory() {
+      this.set("deleting", true);
+
+      this.send("hideModal");
+      bootbox.confirm(
+        I18n.t("category.delete_confirm"),
+        I18n.t("no_value"),
+        I18n.t("yes_value"),
+        result => {
+          if (result) {
+            this.model.destroy().then(
+              () => {
+                // success
+                DiscourseURL.redirectTo("/categories");
+              },
+              error => {
+                this.flash(extractError(error), "error");
+                this.send("reopenModal");
+                this.displayErrors([I18n.t("category.delete_error")]);
+                this.set("deleting", false);
+              }
+            );
+          } else {
+            this.send("reopenModal");
+            this.set("deleting", false);
+          }
+        }
+      );
+    },
+
+    toggleDeleteTooltip() {
+      this.toggleProperty("hiddenTooltip");
     },
   },
 });

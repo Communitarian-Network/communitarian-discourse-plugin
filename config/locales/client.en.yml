@@ -18,6 +18,7 @@ en:
             placeholder: One or two words maximum
           introduction:
             label: Introduction
+            edit: Edit introduction
             placeholder: One or two lines maximum
           tenets:
             label: Community Tenets
