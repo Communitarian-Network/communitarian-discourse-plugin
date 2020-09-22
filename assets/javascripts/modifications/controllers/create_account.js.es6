@@ -109,7 +109,6 @@ export default {
   },
 
   _validateUserFields(successCallback) {
-    const self = this;
     return ajax("/communitarian/users/new", { type: "GET", data: this._userFields() })
       .then(() => {
         successCallback();
