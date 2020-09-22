@@ -99,7 +99,15 @@
         }
 
         &:first-child {
-          .topic-meta-data,
+          .topic-meta-data {
+            padding-left: 0;
+
+            &:before {
+              content: 'posted by';
+              margin-right: .2em;
+            }
+          }
+
           .topic-avatar,
           .topic-map {
             display: none;
@@ -182,6 +190,12 @@
               display: inline;
               padding-left: 0.5em;
               font-size: 1.2em;
+            }
+
+            p {
+              &:last-child {
+                display: none;
+              }
             }
           }
 
