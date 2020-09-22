@@ -127,7 +127,6 @@ actions: {
             this.model.destroy().then(
               () => {
                 // success
-                this.send("closeModal");
                 DiscourseURL.redirectTo("/categories");
               },
               error => {
