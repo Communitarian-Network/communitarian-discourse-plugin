@@ -7,7 +7,11 @@ export default DiscoveryTopicsListComponent.extend({
 
   actions: {
     clickNewResolutionButton() {
-      showModal("resolution-ui-builder")._setupPoll();
-    }
+      if (this.currentUser) {
+        showModal("resolution-ui-builder")._setupPoll();
+      } else {
+        this.store.register.lookup("route:application").send("showLogin");
+      }
+    },
   },
 });
