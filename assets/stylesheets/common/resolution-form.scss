@@ -3,6 +3,12 @@
     width: 100%;
   }
 
+  .modal-header {
+    @media screen and (max-width: 500px) {
+      padding: 1em;
+    }
+  }
+
   .modal-body {
     padding: 1.5em 2em 2.5em;
     max-height: none;
@@ -33,6 +39,10 @@
 
         .hidden-upload-field {
           width: 10%;
+        }
+
+        @media screen and (max-width: 500px) {
+          max-width: 300px;
         }
       }
 
@@ -173,6 +183,7 @@
 
     .resolution-modal-footer-buttons {
       font-size: 1.2em;
+      width: 100%;
 
       @media screen and (max-width: 500px) {
         margin-right: 1em;

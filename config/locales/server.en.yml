@@ -2,7 +2,7 @@ en:
   model:
     post:
       delay:
-        error: "You can't post more than once in %{period} to this dialog"
+        error: "You can't post more than once in %{period} to this dialogue"
   site_settings:
     communitarian_enabled: Enable Civil dialogues plugin
     communitarian_resolutions_close: Enable close resolutions
@@ -13,28 +13,28 @@ en:
     sign_up_with_stripe_identity_enabled: Allow users to sign up with identity verification?
     socials_twitter_url: Link to twitter social displayed at the bottom of main page
     socials_facebook_url: Link to facebook social displayed at the bottom of main page
-    post_delay: Minimal time in seconds before user can publish again to a dialog
+    post_delay: Minimal time in seconds before user can publish again to a dialogue
     landing_categories: Displayed communities on homepage
     linkedin_enabled: Allow users to authenticate using LinkedIn?
     linkedin_client_id: 'LinkedIn Client ID (need one? visit <a href="https://developer.linkedin.com/docs/oauth2">https://developer.linkedin.com/docs/oauth2</a>)'
     linkedin_secret: LinkedIn Secret Key
     communitarian_stripe_secret_key: "Stripe secret key. NOTE: don't forgot to restart the app after the change"
     communitarian_stripe_public_key: Stripe public key
-  on_another_topic: On another dialog
+  on_another_topic: On another dialogue
   emails:
     incoming:
-      default_subject: This dialog needs a title
+      default_subject: This dialogue needs a title
       errors:
-        strangers_not_allowed_error: Happens when a user tried to create a new dialog
+        strangers_not_allowed_error: Happens when a user tried to create a new dialogue
           in a community they're not a member of.
         insufficient_trust_level_error: Happens when a user tried to create a new
-          dialog in a category they don't have the required trust level for.
-        topic_not_found_error: Happens when a reply came in but the related dialog
+          dialogue in a category they don't have the required trust level for.
+        topic_not_found_error: Happens when a reply came in but the related dialogue
           has been deleted.
-        topic_closed_error: Happens when a reply came in but the related dialog has
+        topic_closed_error: Happens when a reply came in but the related dialogue has
           been closed.
     secure_media_placeholder: 'Redacted: this site has secure media enabled, visit
-      the dialog to see the attached image/audio/video.'
+      the dialogue to see the attached image/audio/video.'
   errors:
     site_settings:
       invalid_category_id: You specified a community that does not exist
@@ -47,51 +47,51 @@ en:
         default_categories_already_selected: You cannot select a community used in
           another list.
   topic_invite:
-    failed_to_invite: 'The user cannot be invited into this dialog without a group
+    failed_to_invite: 'The user cannot be invited into this dialogue without a group
       membership in either one of the following groups: %{group_names}.'
     user_exists: Sorry, that user has already been invited. You may only invite a
-      user to a topic once.
+      user to a dialogue once.
   not_in_group:
-    title_topic: You must be in a group to see this dialog.
+    title_topic: You must be in a group to see this dialogue.
     title_category: You must be in a group to see this community.
-  deleted_topic: Oops! This dialog has been deleted and is no longer available.
-  delete_topic_failed: There was an error deleting that dialog. please contact the
+  deleted_topic: Oops! This dialogue has been deleted and is no longer available.
+  delete_topic_failed: There was an error deleting that dialogue. please contact the
     site's administrator.
   too_many_replies:
     one: We're sorry, but new users are temporarily limited to %{count} reply in the
-      same topic.
+      same dialogue.
     other: We're sorry, but new users are temporarily limited to %{count} replies
-      in the same topic.
+      in the same dialogue.
   embed:
-    error_topics: The `embed dialogs list` site setting was not enabled
-    imported_from: This is a companion discussion dialog for the original entry at
+    error_topics: The `embed dialogues list` site setting was not enabled
+    imported_from: This is a companion discussion dialogue for the original entry at
       %{link}
-    new_topic: Create new dialog
-  topic_not_found: Something has gone wrong. Perhaps this dialog was closed or deleted
+    new_topic: Create new dialogue
+  topic_not_found: Something has gone wrong. Perhaps this dialogue was closed or deleted
     while you were looking at it?
   secure_upload_not_allowed_in_public_topic: 'Sorry, the following secure upload(s)
-    cannot be used in a public topic: %{upload_filenames}.'
-  create_pm_on_existing_topic: Sorry, you can't create a PM on an existing dialog.
-  topics_in_category: Topics in the '%{category}' community
-  rss_topics_in_category: RSS feed of dialogs in the '%{category}' community
-  read_full_topic: Read full dialog
+    cannot be used in a public dialogue: %{upload_filenames}.'
+  create_pm_on_existing_topic: Sorry, you can't create a PM on an existing dialogue.
+  topics_in_category: Dialogues in the '%{category}' community
+  rss_topics_in_category: RSS feed of dialogues in the '%{category}' community
+  read_full_topic: Read full dialogue
   rss_description:
-    latest: Latest dialogs
-    top: Top dialogs
-    top_all: All time top dialogs
-    top_yearly: Yearly top dialogs
-    top_quarterly: Quarterly top dialogs
-    top_monthly: Monthly top dialogs
-    top_weekly: Weekly top dialogs
-    top_daily: Daily top dialogs
-    user_topics: Latest dialogs by @%{username}
-    tag: Tagged dialogs
+    latest: Latest dialogues
+    top: Top dialogues
+    top_all: All time top dialogues
+    top_yearly: Yearly top dialogues
+    top_quarterly: Quarterly top dialogues
+    top_monthly: Monthly top dialogues
+    top_weekly: Weekly top dialogues
+    top_daily: Daily top dialogues
+    user_topics: Latest dialogues by @%{username}
+    tag: Tagged dialogues
   groups:
     errors:
       email_already_used_in_category: "'%{email}' is already used by the community
         '%{category_name}'."
     view_hidden_topic_request_reason: I would like to join the group '%{group_name}',
-      so I may access [this topic](%{topic_url})
+      so I may access [this dialogue](%{topic_url})
   activerecord:
     errors:
       site_settings:
@@ -102,19 +102,19 @@ en:
         topic:
           attributes:
             base:
-              unable_to_update: There was an error updating that dialog.
+              unable_to_update: There was an error updating that dialogue.
             featured_link:
               invalid_category: can't be edited in this community.
         user_profile:
           attributes:
             featured_topic_id:
-              invalid: This dialog cannot be featured on your profile.
+              invalid: This dialogue cannot be featured on your profile.
         post_reply:
           base:
-            different_topic: Post and reply must belong to the same dialog.
+            different_topic: Post and reply must belong to the same dialogue.
   vip_category_description: A community exclusive to members with trust level 3 and
     higher.
-  staff_category_description: Private community for staff discussions. dialogs are only
+  staff_category_description: Private community for staff discussions. dialogues are only
     visible to admins and moderators.
   category:
     topic_prefix: About the %{category} community
@@ -128,92 +128,101 @@ en:
       description_incomplete: The community description post must have at least one
         paragraph.
       permission_conflict: 'Any group that is allowed to access a subcommunity must
-        also be allowed to access the parent category. The following groups have access
+        also be allowed to access the parent community. The following groups have access
         to one of the subcommunities, but no access to parent community: %{group_names}.'
-      disallowed_topic_tags: 'This dialog has tags not allowed by this community: ''%{tags}'''
-      disallowed_tags_generic: This dialog has disallowed tags.
+      disallowed_topic_tags: 'This dialogue has tags not allowed by this community: ''%{tags}'''
+      disallowed_tags_generic: This dialogue has disallowed tags.
     cannot_delete:
       uncategorized: This community is special. it is intended as a holding area for
-        dialogs that have no community; it cannot be deleted.
+        dialogues that have no community; it cannot be deleted.
       has_subcategories: Can't delete this community because it has sub-communities.
       topic_exists:
-        one: Can't delete this community because it has %{count} dialog. oldest dialog
+        one: Can't delete this community because it has %{count} dialogue. oldest dialogue
           is %{topic_link}.
-        other: Can't delete this community because it has %{count} dialogs. oldest dialog
+        other: Can't delete this community because it has %{count} dialogues. oldest dialogue
           is %{topic_link}.
-      topic_exists_no_oldest: Can't delete this community because dialog count is %{count}.
-    uncategorized_description: Topics that don't need a community, or don't fit into
+      topic_exists_no_oldest: Can't delete this community because dialogue count is %{count}.
+    uncategorized_description: Dialogues that don't need a community, or don't fit into
       any other existing community.
   rate_limiter:
     by_type:
-      first_day_topics_per_day: You’ve reached the maximum number of dialogs a new
+      first_day_topics_per_day: You’ve reached the maximum number of dialogues a new
         user can create on their first day. Please wait %{time_left} before trying
         again.
-      create_topic: You’re creating dialogs too quickly. please wait %{time_left} before
+      create_topic: You’re creating dialogues too quickly. please wait %{time_left} before
         trying again.
-      topics_per_day: You’ve reached the maximum number of new dialogs. please wait
+      topics_per_day: You’ve reached the maximum number of new dialogues. please wait
         %{time_left} before trying again.
-      topic_invitations_per_day: You’ve reached the maximum number of dialog invitations.
+      topic_invitations_per_day: You’ve reached the maximum number of dialogue invitations.
         Please wait %{time_left} before trying again.
   post_action_types:
     off_topic:
-      title: Off-Dialog
-      long_form: flagged this as off-dialog
+      title: Off-Dialogue
+      long_form: flagged this as off-dialogue
     spam:
       description: This post is an advertisement, or vandalism. It is not useful or
-        relevant to the current dialog.
+        relevant to the current dialogue.
   draft_backup:
-    pm_title: Backup Drafts from ongoing dialogs
+    pm_title: Backup Drafts from ongoing dialogues
   user_activity:
+    no_bookmarks:
+      self: "You have no bookmarked dialogues; bookmarks allow you to quickly refer to specific dialogues."
+      others: "No bookmarks."
+    no_likes_given:
+      self: "You have not liked any dialogues."
+      others: "No liked dialogues."
+    no_replies:
+      self: "You have not replied to any dialogues."
+      others: "No replies."
     no_drafts:
-      self: You have no drafts; begin composing a reply in any dialog and it will be
+      self: You have no drafts; begin composing a reply in any dialogue and it will be
         auto-saved as a new draft.
   topic_flag_types:
     spam:
-      description: This dialog is an advertisement. it is not useful or relevant to
+      description: This dialogue is an advertisement. it is not useful or relevant to
         this site, but promotional in nature.
     inappropriate:
-      description: This dialog contains content that a reasonable person would consider
+      description: This dialogue contains content that a reasonable person would consider
         offensive, abusive, or a violation of <a href="%{base_path}/guidelines">our
         community guidelines</a>.
     notify_moderators:
-      description: This dialog requires general staff attention based on the <a href="%{base_path}/guidelines">guidelines</a>,
+      description: This dialogue requires general staff attention based on the <a href="%{base_path}/guidelines">guidelines</a>,
         <a href="%{tos_url}">TOS</a>, or for another reason not listed above.
-      email_title: The dialog "%{title}" requires moderator attention
+      email_title: The dialogue "%{title}" requires moderator attention
   archetypes:
     regular:
-      title: Regular Dialog
+      title: Regular Dialogue
     banner:
-      title: Banner Dialog
+      title: Banner Dialogue
       message:
-        make: This dialog is now a banner. it will appear at the top of every page
+        make: This dialogue is now a banner. it will appear at the top of every page
           until it is dismissed by the user.
-        remove: This dialog is no longer a banner. it will no longer appear at the
+        remove: This dialogue is no longer a banner. it will no longer appear at the
           top of every page.
   unsubscribed:
     topic_description: To re-subscribe to %{link}, use the notification control at
-      the bottom or right of the dialog.
+      the bottom or right of the dialogue.
     private_topic_description: To re-subscribe, use the notification control at the
-      bottom or right of the dialog.
+      bottom or right of the dialogue.
   unsubscribe:
-    stop_watching_topic: Stop watching this dialog, %{link}
-    mute_topic: Mute all notifications for this dialog, %{link}
-    unwatch_category: Stop watching all dialogs in %{category}
+    stop_watching_topic: Stop watching this dialogue, %{link}
+    mute_topic: Mute all notifications for this dialogue, %{link}
+    unwatch_category: Stop watching all dialogues in %{category}
   reports:
     moderators_activity:
       description: List of moderator activity including flags reviewed, reading time,
-        dialogs created, posts created, personal messages created, and revisions.
+        dialogues created, posts created, personal messages created, and revisions.
     topics:
-      yaxis: Number of new dialogs
-      description: New dialogs created during this period.
+      yaxis: Number of new dialogues
+      description: New dialogues created during this period.
     bookmarks:
-      description: Number of new dialogs and posts bookmarked.
+      description: Number of new dialogues and posts bookmarked.
     top_referred_topics:
-      title: Top Referred Dialogs
+      title: Top Referred Dialogues
     time_to_first_response:
-      description: Average time (in hours) of the first response to new dialogs.
+      description: Average time (in hours) of the first response to new dialogues.
     topics_with_no_response:
-      description: Number of new dialogs created that did not receive a response.
+      description: Number of new dialogues created that did not receive a response.
   dashboard:
     poll_pop3_timeout: Connection to the POP3 server is timing out. Incoming email
       could not be retrieved. Please check your <a href='%{base_path}/admin/site_settings/category/email'>POP3
@@ -224,91 +233,91 @@ en:
     force_https_warning: Your website is using SSL. But `<a href='%{base_path}/admin/site_settings/category/all_results?filter=force_https'>force_https</a>`
       is not yet enabled in your site settings.
   redirected_to_top_reasons:
-    new_user: Welcome to our community! These are the most popular recent dialogs.
+    new_user: Welcome to our community! These are the most popular recent dialogues.
     not_seen_in_a_month: Welcome back! We haven't seen you in a while. These are the
-      most popular dialogs since you've been away.
+      most popular dialogues since you've been away.
   merge_posts:
     errors:
-      different_topics: Posts belonging to different dialogs cannot be merged.
+      different_topics: Posts belonging to different dialogues cannot be merged.
   move_posts:
     new_topic_moderator_post:
-      one: 'A post was split to a new dialog: %{topic_link}'
-      other: "%{count} posts were split to a new dialog: %{topic_link}"
+      one: 'A post was split to a new dialogue: %{topic_link}'
+      other: "%{count} posts were split to a new dialogue: %{topic_link}"
     existing_topic_moderator_post:
-      one: 'A post was merged into an existing dialog: %{topic_link}'
-      other: "%{count} posts were merged into an existing dialog: %{topic_link}"
+      one: 'A post was merged into an existing dialogue: %{topic_link}'
+      other: "%{count} posts were merged into an existing dialogue: %{topic_link}"
   topic_statuses:
     autoclosed_topic_max_posts:
-      one: This dialog was automatically closed after reaching the maximum limit of
+      one: This dialogue was automatically closed after reaching the maximum limit of
         %{count} reply.
-      other: This dialog was automatically closed after reaching the maximum limit
+      other: This dialogue was automatically closed after reaching the maximum limit
         of %{count} replies.
     autoclosed_enabled_days:
-      one: This dialog was automatically closed after %{count} day. new replies are
+      one: This dialogue was automatically closed after %{count} day. new replies are
         no longer allowed.
-      other: This dialog was automatically closed after %{count} days. new replies
+      other: This dialogue was automatically closed after %{count} days. new replies
         are no longer allowed.
     autoclosed_enabled_hours:
-      one: This dialog was automatically closed after %{count} hour. new replies are
+      one: This dialogue was automatically closed after %{count} hour. new replies are
         no longer allowed.
-      other: This dialog was automatically closed after %{count} hours. new replies
+      other: This dialogue was automatically closed after %{count} hours. new replies
         are no longer allowed.
     autoclosed_enabled_minutes:
-      one: This dialog was automatically closed after %{count} minute. new replies
+      one: This dialogue was automatically closed after %{count} minute. new replies
         are no longer allowed.
-      other: This dialog was automatically closed after %{count} minutes. new replies
+      other: This dialogue was automatically closed after %{count} minutes. new replies
         are no longer allowed.
     autoclosed_enabled_lastpost_days:
-      one: This dialog was automatically closed %{count} day after the last reply.
+      one: This dialogue was automatically closed %{count} day after the last reply.
         New replies are no longer allowed.
-      other: This dialog was automatically closed %{count} days after the last reply.
+      other: This dialogue was automatically closed %{count} days after the last reply.
         New replies are no longer allowed.
     autoclosed_enabled_lastpost_hours:
-      one: This dialog was automatically closed %{count} hour after the last reply.
+      one: This dialogue was automatically closed %{count} hour after the last reply.
         New replies are no longer allowed.
-      other: This dialog was automatically closed %{count} hours after the last reply.
+      other: This dialogue was automatically closed %{count} hours after the last reply.
         New replies are no longer allowed.
     autoclosed_enabled_lastpost_minutes:
-      one: This dialog was automatically closed %{count} minute after the last reply.
+      one: This dialogue was automatically closed %{count} minute after the last reply.
         New replies are no longer allowed.
-      other: This dialog was automatically closed %{count} minutes after the last reply.
+      other: This dialogue was automatically closed %{count} minutes after the last reply.
         New replies are no longer allowed.
     autoclosed_disabled_days:
-      one: This dialog was automatically opened after %{count} day.
-      other: This dialog was automatically opened after %{count} days.
+      one: This dialogue was automatically opened after %{count} day.
+      other: This dialogue was automatically opened after %{count} days.
     autoclosed_disabled_hours:
-      one: This dialog was automatically opened after %{count} hour.
-      other: This dialog was automatically opened after %{count} hours.
+      one: This dialogue was automatically opened after %{count} hour.
+      other: This dialogue was automatically opened after %{count} hours.
     autoclosed_disabled_minutes:
-      one: This dialog was automatically opened after %{count} minute.
-      other: This dialog was automatically opened after %{count} minutes.
+      one: This dialogue was automatically opened after %{count} minute.
+      other: This dialogue was automatically opened after %{count} minutes.
     autoclosed_disabled_lastpost_days:
-      one: This dialog was automatically opened %{count} day after the last reply.
-      other: This dialog was automatically opened %{count} days after the last reply.
+      one: This dialogue was automatically opened %{count} day after the last reply.
+      other: This dialogue was automatically opened %{count} days after the last reply.
     autoclosed_disabled_lastpost_hours:
-      one: This dialog was automatically opened %{count} hour after the last reply.
-      other: This dialog was automatically opened %{count} hours after the last reply.
+      one: This dialogue was automatically opened %{count} hour after the last reply.
+      other: This dialogue was automatically opened %{count} hours after the last reply.
     autoclosed_disabled_lastpost_minutes:
-      one: This dialog was automatically opened %{count} minute after the last reply.
-      other: This dialog was automatically opened %{count} minutes after the last reply.
-    autoclosed_disabled: This dialog is now opened. new replies are allowed.
-    autoclosed_disabled_lastpost: This dialog is now opened. new replies are allowed.
+      one: This dialogue was automatically opened %{count} minute after the last reply.
+      other: This dialogue was automatically opened %{count} minutes after the last reply.
+    autoclosed_disabled: This dialogue is now opened. new replies are allowed.
+    autoclosed_disabled_lastpost: This dialogue is now opened. new replies are allowed.
   flag_reasons:
-    off_topic: 'Your post was flagged as **off-dialog**: the community feels it is
-      not a good fit for the dialog, as currently defined by the title and the first
+    off_topic: 'Your post was flagged as **off-dialogue**: the community feels it is
+      not a good fit for the dialogue, as currently defined by the title and the first
       post.'
     spam: 'Your post was flagged as **spam**: the community feels it is an advertisement,
       something that is overly promotional in nature instead of being useful or relevant
-      to the dialog as expected.'
+      to the dialogue as expected.'
   temporarily_closed_due_to_flags:
-    one: This dialog is temporarily closed for at least %{count} hour due to a large
+    one: This dialogue is temporarily closed for at least %{count} hour due to a large
       number of community flags.
-    other: This dialog is temporarily closed for at least %{count} hours due to a large
+    other: This dialogue is temporarily closed for at least %{count} hours due to a large
       number of community flags.
   skipped_email_log:
-    user_email_notification_topic_nil: post.dialog is nil
+    user_email_notification_topic_nil: post.dialogue is nil
   performance_report:
-    initial_post_raw: This dialog includes daily performance reports for your site.
+    initial_post_raw: This dialogue includes daily performance reports for your site.
   tags:
     forbidden:
       in_this_category: '"%{tag_name}" cannot be used in this community'
@@ -317,31 +326,31 @@ en:
         other: '"%{tag_name}" is restricted to the following communities: %{category_names}'
   discourse_push_notifications:
     popup:
-      watching_first_post: '%{username} created a new dialog "%{topic}" - %{site_title}'
+      watching_first_post: '%{username} created a new dialogue "%{topic}" - %{site_title}'
   reviewables:
     reasons:
-      new_topics_unless_trust_level: Users at low trust levels must have dialogs approved
+      new_topics_unless_trust_level: Users at low trust levels must have dialogues approved
         by staff. See `approve_new_topics_unless_trust_level`.
-      staged: New dialogs and posts for staged users must be approved by staff. see
+      staged: New dialogues and posts for staged users must be approved by staff. see
         `approve_unless_staged`.
-      category: Posts in this community require manual approval by staff. see the community
+      category: Dialogues in this community require manual approval by staff. see the community
         settings.
       suspect_user: This new user entered profile information without reading any
-        dialogs or posts, which strongly suggests they may be a spammer. See `approve_suspect_users`.
+        dialogues or posts, which strongly suggests they may be a spammer. See `approve_suspect_users`.
     actions:
       delete_spammer:
-        description: Remove the user and all their posts and dialogs.
-        confirm: Are you sure you want to delete all that user's posts, dialogs, and
+        description: Remove the user and all their posts and dialogues.
+        confirm: Are you sure you want to delete all that user's communities, dialogues, and
           block their IP and email addresses?
       delete_and_ignore:
-        description: Delete post; if the first post, delete the dialog as well
+        description: Delete post; if the first post, delete the dialogue as well
       delete_and_ignore_replies:
         description: Delete post and all of its replies; if the first post, delete
-          the dialog as well
+          the dialogue as well
       delete_and_agree:
-        description: Delete post; if the first post, delete the dialog as well
+        description: Delete post; if the first post, delete the dialogue as well
       delete_and_agree_replies:
         description: Delete post and all of its replies; if the first post, delete
-          the dialog as well
+          the dialogue as well
       approve_post:
-        confirm_closed: This dialog is closed. would you like to create the post anyway?
+        confirm_closed: This dialogue is closed. would you like to create the post anyway?
