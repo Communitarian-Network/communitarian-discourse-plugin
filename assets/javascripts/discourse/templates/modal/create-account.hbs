@@ -1,4 +1,4 @@
-{{#create-account email=accountEmail disabled=submitDisabled action=(action "showNextStep")}}
+{{#create-account email=accountEmail disabled=submitDisabled action=(action "submitForm")}}
   {{#unless complete}}
     {{plugin-outlet name="create-account-before-modal-body"}}
     {{#d-modal-body title="communitarian.create_account.title" class=(concat (if hasAtLeastOneLoginButton "has-alt-auth") " " (if userFields "has-user-fields"))}}
@@ -99,7 +99,7 @@
       <div class="modal-footer">
         {{d-button
           class="btn-large btn-primary verification-continue"
-          action=(action "showNextStep")
+          action=(action "submitForm")
           disabled=submitDisabled
           label=nextStepLabel
         }}

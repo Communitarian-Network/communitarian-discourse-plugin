@@ -38,17 +38,12 @@ export default {
       return this._super(...arguments);
     }
 
-    const data = {
-      name: this.accountName,
-      email: this.accountEmail,
-      password: this.accountPassword,
-      username: this.accountUsername,
-      password_confirmation: this.accountHoneypot,
-      challenge: this.accountChallenge,
-    };
-
     this.set("formSubmitted", true);
-    this._createAccount(data, this);
+    this._validateUserFields(this._createVerificationIntent.bind(this));
+  },
+
+  formValid(successCallback) {
+    return this.fieldsValid() && this._validateUserFields(successCallback);
   },
 
   fieldsValid() {
@@ -81,70 +76,86 @@ export default {
   },
 
   actions: {
-    showNextStep() {
+    submitForm() {
       this.clearFlash();
 
       if (this.get("authOptions.email") == this.accountEmail) {
         return this.performAccountCreation();
       }
 
-      if (this.fieldsValid()) {
-        const {
-          sign_up_with_credit_card_enabled: creditCardIdentity,
-          sign_up_with_stripe_identity_enabled: stripeIdentity,
-        } = this.siteSettings;
-
-        if (creditCardIdentity && stripeIdentity) {
-          showModal("choose-verification-way");
-        } else if (creditCardIdentity) {
-          showModal("payment-details");
-        } else {
-          if (new Date() - this._challengeDate > 1000 * this._challengeExpiry) {
-            this.fetchConfirmationValue().then(() =>
-              this.performAccountCreation()
-            );
-          } else {
-            this.performAccountCreation();
-          }
-        }
-      }
+      this.formValid(this.switchToNextStep.bind(this));
     },
   },
 
-  _createAccount(data, self) {
-    return ajax("/communitarian/users/new", { type: "GET", data: data })
+  switchToNextStep() {
+    const {
+      sign_up_with_credit_card_enabled: creditCardIdentity,
+      sign_up_with_stripe_identity_enabled: stripeIdentity,
+    } = this.siteSettings;
+
+    if (creditCardIdentity && stripeIdentity) {
+      showModal("choose-verification-way");
+    } else if (creditCardIdentity) {
+      showModal("payment-details");
+    } else {
+      if (new Date() - this._challengeDate > 1000 * this._challengeExpiry) {
+        this.fetchConfirmationValue().then(() =>
+          this._createVerificationIntent()
+        );
+      } else {
+        this._createVerificationIntent();
+      }
+    }
+  },
+
+  _validateUserFields(successCallback) {
+    return ajax("/communitarian/users/new", { type: "GET", data: this._userFields() })
       .then(() => {
-        this._createVerificationIntent(data, self);
+        successCallback();
       })
       .catch((error) => {
-        self.set("formSubmitted", false);
+        this.set("formSubmitted", false);
         if (error) {
-          self.flash(extractError(error), "error");
+          this.flash(extractError(error), "error");
         } else {
           bootbox.alert(
             I18n.t("communitarian.verification.error_while_creating")
           );
         }
-      });
+        return false;
+    });
   },
 
-  _createVerificationIntent(data, self) {
+  _createVerificationIntent() {
     return ajax("/communitarian/verification_intents", {
       type: "POST",
-      data: data,
+      data: this._userFields(),
     })
       .then((response) => {
         window.location = response.verification_intent.verification_url;
       })
       .catch((error) => {
-        self.set("formSubmitted", false);
+        this.set("formSubmitted", false);
         if (error) {
-          self.flash(extractError(error), "error");
+          this.flash(extractError(error), "error");
         } else {
           bootbox.alert(
             I18n.t("communitarian.verification.error_while_creating")
           );
         }
       });
+  },
+
+  _userFields() {
+    const data = {
+      name: this.accountName,
+      email: this.accountEmail,
+      password: this.accountPassword,
+      username: this.accountUsername,
+      password_confirmation: this.accountHoneypot,
+      challenge: this.accountChallenge
+    };
+
+    return data;
   }
 };
