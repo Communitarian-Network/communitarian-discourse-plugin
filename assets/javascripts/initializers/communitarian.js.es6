@@ -70,6 +70,15 @@ function initializeCommunitarian(api) {
       goToDialogsPage() {
         DiscourseURL.routeTo(`${window.location.pathname}/l/dialogs`);
       },
+
+      editCommunity(category) {
+        Category.reloadById(category.get("id")).then(atts => {
+          const model = this.store.createRecord("category", atts.category);
+          model.setupGroupsAndPermissions();
+          this.site.updateCategory(model);
+          showModal("community-ui-builder", { model });
+        });
+      },
     }
   });
 
