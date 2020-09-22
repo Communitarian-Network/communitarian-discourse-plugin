@@ -35,6 +35,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/dialog-list-item.scss",
   "stylesheets/common/new-topic-dropdown.scss",
   "stylesheets/common/resolution-list-item.scss",
+  "stylesheets/common/resolution.scss",
   "stylesheets/common/page-header.scss",
   "stylesheets/common/community-action.scss",
   "stylesheets/linkedin-login.scss"
@@ -81,7 +82,17 @@ after_initialize do
   end
 
   on(:topic_created) do |topic, opts, _user|
-    topic.tags.find_or_create_by(name: opts[:is_resolution] ? "resolution" : "dialogue")
+    return unless opts[:is_resolution]
+
+    topic.transaction do
+      topic.update!(highest_staff_post_number: 2, highest_post_number: 2)
+      topic.posts.first.update!(post_number: 2)
+    end
+  end
+
+  on(:topic_created) do |topic, opts, _user|
+    tag = Tag.find_or_create_by(name: opts[:is_resolution] ? "resolution" : "dialogue")
+    topic.tags << tag
   end
 
   on(:category_created) do |category|
