@@ -21,13 +21,8 @@ export default Component.extend({
       moment(openedPoll.close),
     ];
 
-    const mostPopularOption = Math.max(
-      ...openedPoll.options.map(({ votes }) => votes)
-    );
-
     this.setProperties({
       openedPoll,
-      mostPopularOption: mostPopularOption === 0 ? null : mostPopularOption,
       formattedActionPeriod: getResolutionPeriod(created, closed)
     });
   },
