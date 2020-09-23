@@ -8,7 +8,7 @@ export default Controller.extend({
   createAccount: Ember.inject.controller(),
 
   @discourseComputed("name", "clientSecret", "loading", "zipcode")
-submitDisabled(name, clientSecret, loading, zipcode) {
+  submitDisabled(name, clientSecret, loading, zipcode) {
     return (
       loading ||
       !clientSecret.length ||
