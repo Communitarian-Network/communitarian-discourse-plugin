@@ -109,12 +109,6 @@ after_initialize do
     object.uncategorized? ? I18n.t('category.uncategorized_description') : object.custom_fields["introduction_raw"]
   end
 
-  add_to_serializer(:topic_list, :dialogs, false) do
-    object.dialogs.to_a.map do |dialog|
-      TopicListItemSerializer.new(dialog, root: false, embed: :objects, scope: self.scope)
-    end
-  end
-
   add_to_serializer(:topic_list_item, :recent_resolution_post, false) do
     return unless object.is_resolution?
 
@@ -128,6 +122,14 @@ after_initialize do
   end
 
   reloadable_patch do
+    TopicListSerializer.class_eval do
+      has_many :dialogs, serializer: TopicListItemSerializer, embed: :objects
+
+      def dialogs
+        object.dialogs.to_a
+      end
+    end
+
     Topic.class_eval do
       has_one :recent_resolution_post, -> { where(is_resolution: true).order(post_number: :desc) }, class_name: "Post"
     end
