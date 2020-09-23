@@ -14,7 +14,7 @@ en:
     socials_twitter_url: Link to twitter social displayed at the bottom of main page
     socials_facebook_url: Link to facebook social displayed at the bottom of main page
     post_delay: Minimal time in seconds before user can publish again to a dialogue
-    landing_categories: Displayed communities on homepage
+    landing_categories: "Displayed communities on homepage. Note: don't add private categories(with lock)"
     linkedin_enabled: Allow users to authenticate using LinkedIn?
     linkedin_client_id: 'LinkedIn Client ID (need one? visit <a href="https://developer.linkedin.com/docs/oauth2">https://developer.linkedin.com/docs/oauth2</a>)'
     linkedin_secret: LinkedIn Secret Key
