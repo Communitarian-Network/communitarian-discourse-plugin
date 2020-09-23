@@ -111,10 +111,6 @@ after_initialize do
 
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
 
-  add_to_serializer(:basic_category, :introduction_raw) do
-    object.uncategorized? ? I18n.t('category.uncategorized_description') : object.custom_fields["introduction_raw"]
-  end
-
   add_to_serializer(:topic_list, :dialogs, false) do
     object.dialogs.to_a.map do |dialog|
       TopicListItemSerializer.new(dialog, root: false, embed: :objects, scope: self.scope)

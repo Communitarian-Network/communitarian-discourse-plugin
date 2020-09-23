@@ -38,22 +38,22 @@
     <section class="field">
       <label>{{i18n "communitarian.community.ui_builder.introduction.label"}}</label>
       {{textarea
-                value=category.custom_fields.introduction_raw
-                autocomplete="discourse"
-                placeholder=(I18n "communitarian.community.ui_builder.introduction.placeholder")
-                rows="2"
-              }}
+        value=category.custom_fields.introduction_raw
+        autocomplete="discourse"
+        placeholder=(I18n "communitarian.community.ui_builder.introduction.placeholder")
+        rows="2"
+      }}
     </section>
   {{/unless}}
 
   <section class="field">
     <label>{{i18n "communitarian.community.ui_builder.tenets.label"}}</label>
     {{textarea
-            value=category.custom_fields.tenets_raw
-            autocomplete="discourse"
-            placeholder=(I18n "communitarian.community.ui_builder.tenets.placeholder")
-            rows="2"
-          }}
+      value=category.custom_fields.tenets_raw
+      autocomplete="discourse"
+      placeholder=(I18n "communitarian.community.ui_builder.tenets.placeholder")
+      rows="2"
+    }}
   </section>
   {{!-- custom code ended here ↑ --}}
 
