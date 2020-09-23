@@ -265,25 +265,12 @@ after_initialize do
     end
 
     User.class_eval do
-      after_create :set_billing_address
-
       def billing_address
         UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
       end
 
       def zipcode
         UserCustomField.find_by(user_id: id, name: :user_field_123002)&.value
-      end
-
-      private
-
-      def set_billing_address
-        return unless billing_address == "unknown" || billing_address.blank?
-
-        address = ZipCodes.identify(zipcode).to_h.slice(:state_name, :city).values.reject(&:blank?).join(", ").presence
-        address ||= "unknown"
-
-        UserCustomField.find_or_create_by(user_id: id, name: :user_field_123001, value: address)
       end
     end
 
@@ -323,6 +310,180 @@ after_initialize do
           format.html { render "default/empty" }
           format.json { render json: success_json }
         end
+      end
+
+      def create
+        params.require(:email)
+        params.require(:username)
+        params.require(:invite_code) if SiteSetting.require_invite_code
+        params.permit(:user_fields)
+
+        unless SiteSetting.allow_new_registrations
+          return fail_with("login.new_registrations_disabled")
+        end
+
+        if params[:password] && params[:password].length > User.max_password_length
+          return fail_with("login.password_too_long")
+        end
+
+        if params[:email].length > 254 + 1 + 253
+          return fail_with("login.email_too_long")
+        end
+
+        if SiteSetting.require_invite_code && SiteSetting.invite_code.strip.downcase != params[:invite_code].strip.downcase
+          return fail_with("login.wrong_invite_code")
+        end
+
+        if clashing_with_existing_route?(params[:username]) || User.reserved_username?(params[:username])
+          return fail_with("login.reserved_username")
+        end
+
+        params[:locale] ||= I18n.locale unless current_user
+
+        new_user_params = user_params.except(:timezone)
+
+        user = User.where(staged: true).with_email(new_user_params[:email].strip.downcase).first
+
+        if user
+          user.active = false
+          user.unstage!
+        end
+
+        user ||= User.new
+        user.attributes = new_user_params
+
+        # Handle API approval and
+        # auto approve users based on auto_approve_email_domains setting
+        if user.approved? || EmailValidator.can_auto_approve_user?(user.email)
+          ReviewableUser.set_approved_fields!(user, current_user)
+        end
+
+        # Handle custom fields
+        user_fields = UserField.all
+        if user_fields.present?
+          field_params = user_fields_params
+          fields = user.custom_fields
+
+          user_fields.each do |f|
+            field_val = field_params[f.id.to_s]
+            if field_val.blank?
+              return fail_with("login.missing_user_field") if f.required?
+            else
+              fields["#{User::USER_FIELD_PREFIX}#{f.id}"] = field_val[0...UserField.max_length]
+            end
+          end
+
+          user.custom_fields = fields
+        end
+
+        authentication = UserAuthenticator.new(user, session)
+
+        if !authentication.has_authenticator? && !SiteSetting.enable_local_logins && !(current_user&.admin? && is_api?)
+          return render body: nil, status: :forbidden
+        end
+
+        authentication.start
+
+        if authentication.email_valid? && !authentication.authenticated?
+          # posted email is different that the already validated one?
+          return fail_with('login.incorrect_username_email_or_password')
+        end
+
+        activation = UserActivator.new(user, request, session, cookies)
+        activation.start
+
+        # just assign a password if we have an authenticator and no password
+        # this is the case for Twitter
+        user.password = SecureRandom.hex if user.password.blank? && authentication.has_authenticator?
+
+        if user.save
+          authentication.finish
+          activation.finish
+          user.update_timezone_if_missing(params[:timezone])
+
+          secure_session[HONEYPOT_KEY] = nil
+          secure_session[CHALLENGE_KEY] = nil
+
+          # save user email in session, to show on account-created page
+          session["user_created_message"] = activation.message
+          session[SessionController::ACTIVATE_USER_KEY] = user.id
+
+          # If the user was created as active this will
+          # ensure their email is confirmed and
+          # add them to the review queue if they need to be approved
+          user.activate if user.active?
+
+          render json: {
+            success: true,
+            active: user.active?,
+            message: activation.message,
+            user_id: user.id
+          }
+        elsif SiteSetting.hide_email_address_taken && user.errors[:primary_email]&.include?(I18n.t('errors.messages.taken'))
+          session["user_created_message"] = activation.success_message
+
+          if existing_user = User.find_by_email(user.primary_email&.email)
+            Jobs.enqueue(:critical_user_email, type: :account_exists, user_id: existing_user.id)
+          end
+
+          render json: {
+            success: true,
+            active: user.active?,
+            message: activation.success_message,
+            user_id: user.id
+          }
+        else
+          errors = user.errors.to_hash
+          errors[:email] = errors.delete(:primary_email) if errors[:primary_email]
+
+          render json: {
+            success: false,
+            message: I18n.t(
+              'login.errors',
+              errors: user.errors.full_messages.join("\n")
+            ),
+            errors: errors,
+            values: {
+              name: user.name,
+              username: user.username,
+              email: user.primary_email&.email
+            },
+            is_developer: UsernameCheckerService.is_developer?(user.email)
+          }
+        end
+      rescue ActiveRecord::StatementInvalid
+        render json: {
+          success: false,
+          message: I18n.t("login.something_already_taken")
+        }
+      end
+
+      HONEYPOT_KEY ||= 'HONEYPOT_KEY'
+      CHALLENGE_KEY ||= 'CHALLENGE_KEY'
+
+      protected
+
+      def honeypot_value
+        secure_session[HONEYPOT_KEY] ||= SecureRandom.hex
+      end
+
+      def challenge_value
+        secure_session[CHALLENGE_KEY] ||= SecureRandom.hex
+      end
+
+      private
+
+      def user_fields_params
+        fields_params = params[:user_fields] || {}
+
+        return unless fields_params["123001"] == "unknown" || fields_params["123001"].blank?
+
+        address = zipcode_address(fields_params["123002"]) || "unknown"
+        fields_params.merge("123001" => address)
+      end
+
+      def zipcode_address(zipcode = nil)
+        ZipCodes.identify(zipcode).to_h.slice(:state_name, :city).values.reject(&:blank?).join(", ").presence
       end
     end
 

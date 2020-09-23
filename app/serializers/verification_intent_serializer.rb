@@ -31,13 +31,13 @@ class VerificationIntentSerializer < ApplicationSerializer
   end
 
   def zipcode
-    person_details.dig(:address, :postal_code) || "unknown"
+    person_details.dig(:address, :postal_code) || ""
   end
 
   private
 
   def identity_billing_address
-    person_details[:address].to_h.slice(:city, :country).values.reject(&:blank?).join(", ").presence
+    person_details[:address].to_h.slice(:city, :state, :country).values.reject(&:blank?).join(", ").presence
   end
 
   def person_details
