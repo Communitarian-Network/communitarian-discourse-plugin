@@ -198,7 +198,7 @@
       {{/topic-navigation}}
 
       <div class="row">
-        <section class="topic-area" id="topic" data-topic-id={{model.id}}>
+        <section class={{if isResolutionPage "topic-area resolution-view" "topic-area"}} id="topic" data-topic-id={{model.id}}>
 
           <div class="resolution-list-item__header--dialog">
             {{#if isResolutionPage}}

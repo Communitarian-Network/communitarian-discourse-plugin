@@ -216,3 +216,18 @@
     }
   }
 }
+
+.resolution-view {
+  position: relative;
+
+  .results {
+    margin-top: 1em;
+  }
+
+  .resolution-list-item__header--dialog {
+    position: absolute;
+    left: 15px;
+    top: 40px;
+    z-index: 9;
+  }
+}
