@@ -112,7 +112,7 @@ en:
           payment:
             name: Name on Card
             card: Credit or Debit Card
-            address: Billing address
+            zipcode: Zipcode
         activation_email:
           title: Check your inbox
           description: Your name & location will be a part of all your post.

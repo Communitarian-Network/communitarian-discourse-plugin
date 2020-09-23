@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class VerificationIntentSerializer < ApplicationSerializer
-  attributes :id, :status, :error, :full_name, :verification_url, :billing_address
+  attributes :id, :status, :error, :full_name, :verification_url, :billing_address, :zipcode
 
   def id
     object[:id]
@@ -30,10 +30,14 @@ class VerificationIntentSerializer < ApplicationSerializer
     identity_billing_address || "unknown"
   end
 
+  def zipcode
+    person_details.dig(:address, :postal_code) || "unknown"
+  end
+
   private
 
   def identity_billing_address
-    person_details[:address].to_h.slice(:city, :country, :postal_code).values.reject(&:blank?).join(", ").presence
+    person_details[:address].to_h.slice(:city, :country).values.reject(&:blank?).join(", ").presence
   end
 
   def person_details

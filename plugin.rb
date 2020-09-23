@@ -10,6 +10,7 @@ gem "omniauth-linkedin-oauth2", "1.0.0"
 gem "stripe", "5.22.0"
 gem "stripe_event", "2.3.1"
 gem "interactor", "3.1.2"
+gem "zip-codes", "0.2.0"
 
 require "stripe"
 
@@ -264,8 +265,25 @@ after_initialize do
     end
 
     User.class_eval do
+      after_create :set_billing_address
+
       def billing_address
         UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
+      end
+
+      def zipcode
+        UserCustomField.find_by(user_id: id, name: :user_field_123002)&.value
+      end
+
+      private
+
+      def set_billing_address
+        return unless billing_address == "unknown" || billing_address.blank?
+
+        address = ZipCodes.identify(zipcode).to_h.slice(:state_name, :city).values.reject(&:blank?).join(", ").presence
+        address ||= "unknown"
+
+        UserCustomField.find_or_create_by(user_id: id, name: :user_field_123001, value: address)
       end
     end
 

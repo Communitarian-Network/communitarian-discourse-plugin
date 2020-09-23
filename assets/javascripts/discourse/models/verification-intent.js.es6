@@ -6,6 +6,7 @@ export default RestModel.extend({
   error: "",
   verification_url: "",
   billing_address: "",
+  zipcode: "",
 
   @discourseComputed("status")
   processing(status) {

@@ -7,13 +7,13 @@ import User from "discourse/models/user";
 export default Controller.extend({
   createAccount: Ember.inject.controller(),
 
-  @discourseComputed("name", "clientSecret", "loading", "address")
-  submitDisabled(name, clientSecret, loading, address) {
+  @discourseComputed("name", "clientSecret", "loading", "zipcode")
+submitDisabled(name, clientSecret, loading, zipcode) {
     return (
       loading ||
       !clientSecret.length ||
       !name.replace(/\s/g, "").length ||
-      !address.replace(/\s/g, "").length
+      !zipcode.replace(/\s/g, "").length
     );
   },
 
@@ -23,7 +23,7 @@ export default Controller.extend({
       clientSecret: "",
       errorMessage: "",
       name: "",
-      address: ""
+      zipcode: ""
     });
     this._createPaymentIntent();
   },
@@ -63,7 +63,7 @@ export default Controller.extend({
     });
   },
   _createAccount() {
-    const userfields = { 123001: this.address };
+    const userfields = { 123002: this.zipcode };
     let attrs = {
       accountName: this.name,
       accountEmail: this.createAccount.accountEmail,
