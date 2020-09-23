@@ -98,12 +98,17 @@
           }
         }
 
+        .post-author-prefix {
+          display: none;
+          font-size: 1.1em;
+        }
+
         &:first-child {
           .topic-meta-data {
             padding-left: 0;
 
-            &:before {
-              content: 'posted by';
+            span.post-author-prefix {
+              display: inline;
               margin-right: .2em;
             }
           }
@@ -321,7 +326,7 @@
     color: #329bf7;
     font-size: 1.3em;
   }
-  
+
   .badge-category-bg {
     max-width: 0;
     max-height: 0;
