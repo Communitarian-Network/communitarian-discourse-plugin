@@ -122,7 +122,8 @@ en:
           check_span: If it doesn’t arrive, check your spam folder or
       login:
         title: Welcome back!
-      author_prefix: Posted by
+      post:
+        author_prefix: Posted by
     filters:
       dialogs:
         title: All dialogues

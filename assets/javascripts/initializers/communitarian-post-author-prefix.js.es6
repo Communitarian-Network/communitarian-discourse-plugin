@@ -3,7 +3,7 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 function createAuthorPrefix(api) {
   api.decorateWidget("poster-name:before", decoratorHelper => decoratorHelper.h(
     "span.post-author-prefix",
-    I18n.t("communitarian.author_prefix")
+    I18n.t("communitarian.post.author_prefix")
   ));
 }
 
