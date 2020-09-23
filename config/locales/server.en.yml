@@ -117,7 +117,7 @@ en:
   staff_category_description: Private community for staff discussions. dialogues are only
     visible to admins and moderators.
   category:
-    topic_prefix: About the %{category} community
+    community_prefix: About the %{category} community
     replace_paragraph: "(Replace this first paragraph with a brief description of
       your new community. This guidance will appear in the community selection area,
       so try to keep it below 200 characters.)"

@@ -263,6 +263,35 @@ after_initialize do
       end
     end
 
+    Category.class_eval do
+      def create_category_definition
+        return if skip_category_definition
+
+        Topic.transaction do
+          t = Topic.new(title: I18n.t("category.community_prefix", category: name), user: user, pinned_at: Time.now, category_id: id)
+          t.skip_callbacks = true
+          t.ignore_category_auto_close = true
+          t.delete_topic_timer(TopicTimer.types[:close])
+          t.save!(validate: false)
+          update_column(:topic_id, t.id)
+          post = t.posts.build(raw: description || post_template, user: user)
+          post.save!(validate: false)
+          update_column(:description, post.cooked) if description.present?
+
+          t
+        end
+      end
+
+      # If the name changes, try and update the category definition topic too if it's an exact match
+      def rename_category_definition
+        return unless topic.present?
+        old_name = saved_changes.transform_values(&:first)["name"]
+        if topic.title == I18n.t("category.community_prefix", category: old_name)
+          topic.update_attribute(:title, I18n.t("category.community_prefix", category: name))
+        end
+      end
+    end
+
     UsersController.class_eval do
       def account_created
         if current_user.present?
