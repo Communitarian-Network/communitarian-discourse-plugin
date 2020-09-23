@@ -14,4 +14,3 @@ export default {
     withPluginApi("0.8.31", createAuthorPrefix);
   },
 };
-
