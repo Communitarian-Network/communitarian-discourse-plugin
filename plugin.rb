@@ -74,10 +74,7 @@ after_initialize do
   # using Discourse "Topic Created" event to trigger a save.
   # `opts[]` is how you pass the data back from the frontend into Rails
   on(:topic_created) do |topic, opts, user|
-    if opts[:is_resolution] != nil
-      topic.custom_fields["is_resolution"] = opts[:is_resolution]
-      topic.save_custom_fields(true)
-    end
+    topic.update_column(:is_resolution, true) if opts[:is_resolution]
   end
 
   on(:topic_created) do |topic, opts, _user|
@@ -92,10 +89,7 @@ after_initialize do
   end
 
   on(:post_created) do |post, opts|
-    if opts[:is_resolution] != nil
-      post.custom_fields["is_resolution"] = opts[:is_resolution]
-      post.save_custom_fields(true)
-    end
+    post.update_column(:is_resolution, true) if opts[:is_resolution]
   end
 
   on(:post_created) do |post, _opts|
@@ -122,10 +116,10 @@ after_initialize do
   end
 
   add_to_serializer(:topic_list_item, :recent_resolution_post, false) do
+    return unless object.is_resolution?
+
     PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
   end
-
-  add_preloaded_topic_list_custom_field("is_resolution")
 
   require 'homepage_constraint'
   Discourse::Application.routes.prepend do
@@ -135,9 +129,7 @@ after_initialize do
 
   reloadable_patch do
     Topic.class_eval do
-      has_one :recent_resolution_post, -> {
-        joins(:_custom_fields).where(post_custom_fields: { name: :is_resolution }).order(post_number: :desc)
-      }, class_name: "Post"
+      has_one :recent_resolution_post, -> { where(is_resolution: true).order(post_number: :desc) }, class_name: "Post"
     end
 
     TopicQuery.class_eval do
@@ -175,7 +167,7 @@ after_initialize do
         result = remove_muted_categories(result, @user, exclude: options[:category])
         result = remove_muted_tags(result, @user, options)
         result = apply_shared_drafts(result, get_category_id(options[:category]), options)
-        result = result.where.not(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
+        result = result.where(is_resolution: false)
         result
       end
     end
@@ -234,7 +226,7 @@ after_initialize do
       options[:only_resolutions] ||= true
 
       if filter_name == :latest && options[:only_resolutions]
-        result.where(id: TopicCustomField.where(name: :is_resolution).select(:topic_id))
+        result.includes(:recent_resolution_post).where(is_resolution: true)
       else
         result
       end
@@ -242,7 +234,7 @@ after_initialize do
 
     SuggestedTopicsBuilder.class_eval do
       def initialize(topic)
-        @excluded_topic_ids = (TopicCustomField.where(name: :is_resolution).pluck(:topic_id) << topic.id).uniq
+        @excluded_topic_ids = (Topic.where(is_resolution: true).ids << topic.id).uniq
         @category_id = topic.category_id
         @category_topic_ids = Category.topic_ids
         @results = []
