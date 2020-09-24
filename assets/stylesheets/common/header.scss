@@ -1,0 +1,7 @@
+.d-header {
+  ul.custom-header-links {
+    @media screen and (max-width: 600px) {
+      margin-left: 0;
+    }
+  }
+}
