@@ -36,6 +36,7 @@ en:
         view_dialogs: View dialogues
       resolution:
         new_button: Resolution
+        header_title: Resolutions
         ui_builder:
           form_title:
             new: New Resolution

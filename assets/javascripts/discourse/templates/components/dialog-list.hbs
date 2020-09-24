@@ -1,9 +1,13 @@
 <div class="dialog-list__header">
   <span class="dialog-list__header-title">
-    {{i18n "communitarian.dialog.header_title"}}
+    {{#if dialogs}}
+      {{i18n "communitarian.dialog.header_title"}}
+    {{else}}
+      {{i18n "communitarian.resolution.header_title"}}
+    {{/if}}
   </span>
 </div>
 
-{{#each dialogs as |dialog|}}
-  {{dialog-list-item dialog=dialog}}
+{{#each items as |item|}}
+  {{dialog-list-item dialog=item}}
 {{/each}}

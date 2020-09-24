@@ -124,9 +124,14 @@ after_initialize do
   reloadable_patch do
     TopicListSerializer.class_eval do
       has_many :dialogs, serializer: TopicListItemSerializer, embed: :objects
+      has_many :resolutions, serializer: TopicListItemSerializer, embed: :objects
 
       def dialogs
         object.dialogs.to_a
+      end
+
+      def resolutions
+        object.resolutions.to_a
       end
     end
 
@@ -254,7 +259,7 @@ after_initialize do
     end
 
     TopicList.class_eval do
-      attr_accessor :dialogs
+      attr_accessor :dialogs, :resolutions
     end
 
     User.class_eval do
@@ -377,6 +382,8 @@ after_initialize do
       ].flatten
 
       def latest(options = nil)
+        without_respond = options ? options.delete(:without_respond) : false
+
         filter = :latest
         list_opts = build_topic_list_options
         list_opts.merge!(options) if options
@@ -408,6 +415,8 @@ after_initialize do
 
         list.more_topics_url = construct_url_with(:next, list_opts)
         list.prev_topics_url = construct_url_with(:prev, list_opts)
+
+        return list if without_respond
 
         if Discourse.anonymous_filters.include?(filter)
           @description = SiteSetting.site_description
@@ -486,6 +495,8 @@ after_initialize do
             @title = "#{SiteSetting.title} - #{SiteSetting.short_site_description}"
           end
         end
+
+        list.resolutions = @category ? latest(category: @category.id, without_respond: true).topics.first(5) : []
 
         respond_with_list(list)
       end
