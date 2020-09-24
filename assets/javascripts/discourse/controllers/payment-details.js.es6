@@ -8,7 +8,7 @@ export default Controller.extend({
   createAccount: Ember.inject.controller(),
 
   @discourseComputed("name", "clientSecret", "loading", "zipcode")
-submitDisabled(name, clientSecret, loading, zipcode) {
+  submitDisabled(name, clientSecret, loading, zipcode) {
     return (
       loading ||
       !clientSecret.length ||
@@ -23,7 +23,8 @@ submitDisabled(name, clientSecret, loading, zipcode) {
       clientSecret: "",
       errorMessage: "",
       name: "",
-      zipcode: ""
+      zipcode: "",
+      address: ""
     });
     this._createPaymentIntent();
   },
@@ -34,11 +35,7 @@ submitDisabled(name, clientSecret, loading, zipcode) {
       if (this.submitDisabled) return;
       this.set("loading", true);
       this.set("errorMessage", "");
-      if (this.paymentConfirmed) {
-        this._createAccount();
-      } else {
-        this._confirmCardPayment();
-      }
+      this._validateZipcode();
     },
   },
   _confirmCardPayment() {
@@ -48,8 +45,11 @@ submitDisabled(name, clientSecret, loading, zipcode) {
       payment_method: {
         card: window.card,
         billing_details: {
-          name: self.name,
-          email: this.createAccount.accountEmail
+          name: this.name,
+          email: this.createAccount.accountEmail,
+          address: {
+            postal_code: this.zipcode
+          }
         }
       }
     })
@@ -62,8 +62,9 @@ submitDisabled(name, clientSecret, loading, zipcode) {
       }
     });
   },
+
   _createAccount() {
-    const userfields = { 123002: this.zipcode };
+    const userfields = { 123002: this.zipcode, 123001: this.address };
     let attrs = {
       accountName: this.name,
       accountEmail: this.createAccount.accountEmail,
@@ -88,10 +89,35 @@ submitDisabled(name, clientSecret, loading, zipcode) {
         popupAjaxError(error);
       });;
   },
+
   _showError(errorMsgText) {
     this.set("loading", false)
     this.set("errorMessage", errorMsgText);
   },
+
+  _validateZipcode() {
+    ajax("/communitarian/users/billing_address", {
+      method: "GET",
+      data: {
+        zipcode: this.zipcode
+      }
+    })
+      .then((data) => {
+        this.set("address", data.values.address);
+        if (this.paymentConfirmed) {
+          this._createAccount();
+        } else {
+          this._confirmCardPayment();
+        }
+      })
+      .catch((error) => {
+        this.set("loading", false);
+        if (error) {
+          popupAjaxError(error);
+        }
+      });
+  },
+
   _createPaymentIntent() {
     ajax("/communitarian/payment_intents", {
       method: "POST",
