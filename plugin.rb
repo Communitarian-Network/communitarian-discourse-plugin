@@ -59,6 +59,7 @@ after_initialize do
   [
     "../app/models/communitarian/post_delay",
     "../app/models/communitarian/resolution",
+    "../app/models/communitarian/resolution_title",
     "../app/models/communitarian/unique_username",
     "../lib/guardian/category_guardian"
   ].each { |path| require File.expand_path(path, __FILE__) }
@@ -76,6 +77,12 @@ after_initialize do
   # `opts[]` is how you pass the data back from the frontend into Rails
   on(:topic_created) do |topic, opts, user|
     topic.update_column(:is_resolution, true) if opts[:is_resolution]
+  end
+
+  on(:topic_created) do |topic, opts|
+    return unless opts[:is_resolution]
+
+    Communitarian::ResolutionTitle.create_suffix_for!(topic)
   end
 
   on(:topic_created) do |topic, opts, _user|
