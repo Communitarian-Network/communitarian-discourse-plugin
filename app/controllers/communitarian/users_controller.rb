@@ -127,14 +127,14 @@ module Communitarian
         render json: {
           success: false,
           values: { address: address },
-          message: "Invalid zipcode, please try again."
+          message: I18n.t("login.invalid_zipcode")
         }, status: :unprocessable_entity
       end
 
       rescue ArgumentError, Geokit::Geocoders::GeocodeError
         render json: {
           success: false,
-          message: "Invalid zipcode, please try again."
+          message: I18n.t("login.invalid_zipcode")
         }, status: :unprocessable_entity
     end
 

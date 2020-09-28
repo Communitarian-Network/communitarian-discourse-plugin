@@ -1,10 +1,11 @@
 import Controller from "@ember/controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
-import { popupAjaxError } from "discourse/lib/ajax-error";
+import { extractError, popupAjaxError } from "discourse/lib/ajax-error";
 import User from "discourse/models/user";
+import ModalFunctionality from "discourse/mixins/modal-functionality";
 
-export default Controller.extend({
+export default Controller.extend(ModalFunctionality, {
   createAccount: Ember.inject.controller(),
 
   @discourseComputed("name", "clientSecret", "loading", "zipcode")
@@ -35,6 +36,7 @@ export default Controller.extend({
       if (this.submitDisabled) return;
       this.set("loading", true);
       this.set("errorMessage", "");
+      this.clearFlash();
       this._validateZipcode();
     },
   },
@@ -113,7 +115,11 @@ export default Controller.extend({
       .catch((error) => {
         this.set("loading", false);
         if (error) {
-          popupAjaxError(error);
+          this.flash(extractError(error), "error");
+        } else {
+          bootbox.alert(
+            I18n.t("communitarian.verification.error_while_creating")
+          );
         }
       });
   },
