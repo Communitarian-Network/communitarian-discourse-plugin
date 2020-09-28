@@ -32,7 +32,7 @@ function initializeCommunitarian(api) {
   const getFormattedDialogDate = (val) => {
     if (val) {
       var date = new Date(val);
-      return moment(date).format("MMM ‘DD");
+      return moment(date).format("MMM DD");
     }
   }
 
@@ -69,6 +69,15 @@ function initializeCommunitarian(api) {
 
       goToDialogsPage() {
         DiscourseURL.routeTo(`${window.location.pathname}/l/dialogs`);
+      },
+
+      editCommunity(category) {
+        Category.reloadById(category.get("id")).then(atts => {
+          const model = this.store.createRecord("category", atts.category);
+          model.setupGroupsAndPermissions();
+          this.site.updateCategory(model);
+          showModal("community-ui-builder", { model });
+        });
       },
     }
   });

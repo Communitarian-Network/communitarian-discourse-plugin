@@ -3,7 +3,7 @@
 module Communitarian
   class Resolution
     REOPENED_RESOLUTION_ATTRIBUTES = %w[
-      user_id topic_id raw post_type last_editor_id last_version_at user_deleted public_version
+      user_id topic_id raw post_type last_editor_id last_version_at user_deleted public_version is_resolution
     ].freeze
 
     attr_reader :resolution_schedule
@@ -45,8 +45,6 @@ module Communitarian
     def copy_post(original_post)
       post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
       post = Post.create!(post_attributes)
-      post.custom_fields["is_resolution"] = true
-      post.save_custom_fields(true)
       post.reload
     end
 

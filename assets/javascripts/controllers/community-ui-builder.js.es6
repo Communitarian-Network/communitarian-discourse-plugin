@@ -36,7 +36,7 @@ export default Controller.extend(ModalFunctionality, {
     this.set("modal.title", this.title);
   },
 
-@discourseComputed("saving", "model.name", "model.color", "model.custom_fields.introduction_raw", "deleting")
+  @discourseComputed("saving", "model.name", "model.color", "model.custom_fields.introduction_raw", "deleting")
   disabled(saving, name, color, introduction, deleting) {
     if (saving || deleting) return true;
     if (!name) return true;
@@ -78,7 +78,7 @@ export default Controller.extend(ModalFunctionality, {
     return false;
   },
 
-actions: {
+  actions: {
     saveCategory() {
       const model = this.model;
       const parentCategory = this.site.categories.findBy(

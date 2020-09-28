@@ -98,8 +98,21 @@
           }
         }
 
+        .post-author-prefix {
+          display: none;
+          font-size: 1.1em;
+        }
+
         &:first-child {
-          .topic-meta-data,
+          .topic-meta-data {
+            padding-left: 0;
+
+            span.post-author-prefix {
+              display: inline;
+              margin-right: .2em;
+            }
+          }
+
           .topic-avatar,
           .topic-map {
             display: none;
@@ -182,6 +195,12 @@
               display: inline;
               padding-left: 0.5em;
               font-size: 1.2em;
+            }
+
+            p {
+              &:last-child {
+                display: none;
+              }
             }
           }
 
@@ -307,7 +326,7 @@
     color: #329bf7;
     font-size: 1.3em;
   }
-  
+
   .badge-category-bg {
     max-width: 0;
     max-height: 0;
