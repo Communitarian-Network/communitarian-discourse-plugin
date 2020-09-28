@@ -32,7 +32,8 @@ en:
         header_title: Ongoing Dialogues
         resolutions_link: Vote on resolutions
       dialogs:
-        header_title: Ongoing Dialogues
+        header_title: Dialogues
+        aside_title: Ongoing Dialogues
         view_dialogs: View dialogues
       resolution:
         new_button: Resolution

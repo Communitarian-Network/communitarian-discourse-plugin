@@ -38,61 +38,62 @@
         </div>
       </div>
     </div>
+    {{#unless isCommunitiesPage}}
+      <div class="community-page__dialogs {{if loading "hidden"}}">
+        {{plugin-outlet name="dialogs-list-above" args=(hash category=category)}}
 
-    <div class="community-page__dialogs {{if loading "hidden"}}">
-      {{plugin-outlet name="dialogs-list-above" args=(hash category=category)}}
-
-      <div class="community-page__dialogs-buttons">
-        {{#if isResolutionsPage}}
-          {{d-button
-            action=(action "goToDialogsPage")
-            label="communitarian.dialogs.view_dialogs"
-            class="link-button page-header__button"
-          }}
-        {{else}}
-          {{d-button
-            action=(action "goToResolutionsPage")
-            label="communitarian.dialog.resolutions_link"
-            class="link-button page-header__button"
-          }}
-        {{/if}}
-        {{#if category.can_edit}}
-          {{#if currentUser.staff}}
+        <div class="community-page__dialogs-buttons">
+          {{#if isResolutionsPage}}
             {{d-button
-              class="btn-default edit-category page-header__button"
-              action=(route-action "editCategory" category)
-              icon="wrench"
-              label="category.edit"
+              action=(action "goToDialogsPage")
+              label="communitarian.dialogs.view_dialogs"
+              class="link-button page-header__button"
             }}
           {{else}}
             {{d-button
-              class="btn-default edit-category page-header__button"
-              action=(action "editCommunity" category)
-              icon="wrench"
-              label="category.edit"
+              action=(action "goToResolutionsPage")
+              label="communitarian.dialog.resolutions_link"
+              class="link-button page-header__button"
             }}
           {{/if}}
+          {{#if category.can_edit}}
+            {{#if currentUser.staff}}
+              {{d-button
+                class="btn-default edit-category page-header__button"
+                action=(route-action "editCategory" category)
+                icon="wrench"
+                label="category.edit"
+              }}
+            {{else}}
+              {{d-button
+                class="btn-default edit-category page-header__button"
+                action=(action "editCommunity" category)
+                icon="wrench"
+                label="category.edit"
+              }}
+            {{/if}}
+          {{/if}}
+          {{#if currentUser}}
+            {{new-topic-dropdown
+              class="page-header__button"
+              createDialog=(route-action "createTopic")
+              args=(hash
+                canCreateTopic=canCreateTopic
+                createTopicDisabled=createTopicDisabled
+                createTopicButtonDisabled=createTopicButtonDisabled
+              )
+            }}
+          {{/if}}
+        </div>
+
+        {{#if dialogs}}
+          {{dialog-list items=dialogs title=(I18n "communitarian.dialogs.aside_title")}}
         {{/if}}
-        {{#if currentUser}}
-          {{new-topic-dropdown
-            class="page-header__button"
-            createDialog=(route-action "createTopic")
-            args=(hash
-              canCreateTopic=canCreateTopic
-              createTopicDisabled=createTopicDisabled
-              createTopicButtonDisabled=createTopicButtonDisabled
-            )
-          }}
+        {{#if resolutions}}
+          {{dialog-list items=resolutions resolutions=true class="resolutions-preview" title=(I18n "communitarian.resolution.header_title")}}
         {{/if}}
       </div>
-
-      {{#if dialogs}}
-        {{dialog-list items=dialogs dialogs=true}}
-      {{/if}}
-      {{#if resolutions}}
-        {{dialog-list items=resolutions resolutions=true}}
-      {{/if}}
-    </div>
+    {{/unless}}
   </div>
   {{!-- custom code ended here ↑ --}}
 

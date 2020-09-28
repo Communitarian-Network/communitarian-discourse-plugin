@@ -54,6 +54,7 @@
 
   {{!-- custom code started here ↓ --}}
   {{#if hasDialogs}}
+    <h2>{{i18n "communitarian.resolution.header_title"}}</h2>
     {{community-details
       highlightLastVisited=true
       top=top
@@ -78,27 +79,8 @@
       onScroll=discoveryTopicList.saveScrollPosition}}
   {{else}}
     {{#if hasTopics}}
-      {{topic-list
-        class="dialog-list-page-content"
-        highlightLastVisited=true
-        top=top
-        showTopicPostBadges=showTopicPostBadges
-        showPosters=true
-        canBulkSelect=canBulkSelect
-        changeSort=(action "changeSort")
-        toggleBulkSelect=(action "toggleBulkSelect")
-        hideCategory=model.hideCategory
-        order=order
-        ascending=ascending
-        bulkSelectEnabled=bulkSelectEnabled
-        selected=selected
-        expandGloballyPinned=expandGloballyPinned
-        expandAllPinned=expandAllPinned
-        category=category
-        topics=model.topics
-        discoveryList=true
-        scrollOnLoad=true
-        onScroll=discoveryTopicList.saveScrollPosition}}
+      <h2>{{i18n "communitarian.dialogs.header_title"}}</h2>
+      {{dialog-list items=model.topics dialogs=true class="primary-list" full=true}}
     {{/if}}
   {{/if}}
   {{!-- custom code ended here ↑ --}}

@@ -134,6 +134,11 @@ function initializeCommunitarian(api) {
       return currentRouteName === "category";
     },
 
+    @discourseComputed("router.currentRoute.localName")
+    isCommunitiesPage(currentRouteName) {
+      return currentRouteName === "categories";
+    },
+
     actions: {
       goToResolutionsPage() {
         DiscourseURL.routeTo(`${window.location.pathname.replace('/l/dialogs','')}`);

@@ -1,4 +1,12 @@
+{{#if resolutions}}
+  <span class="resolution-icon">
+    {{d-icon "tasks"}}
+  </span>
+{{/if}}
 {{~topic-link dialog class="raw-link raw-topic-link dialog-list-item__name"}}
+{{#if full}}
+  {{~raw "list/topic-excerpt" topic=dialog~}}
+{{/if}}
 <p class="dialog-list-item__date">{{formattedCreationDate}}</p>
 
 <div class="dialog-list-item__activity">
