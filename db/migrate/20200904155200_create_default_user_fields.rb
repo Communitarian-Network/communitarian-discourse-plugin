@@ -13,18 +13,6 @@ class CreateDefaultUserFields < ActiveRecord::Migration[6.0]
       show_on_user_card: true,
       position: 1
     )
-
-    UserField.create!(
-      id: 123_002,
-      name: "Zipcode",
-      field_type: "text",
-      editable: false,
-      description: "Zipcode",
-      required: false,
-      show_on_profile: false,
-      show_on_user_card: false,
-      position: 1
-    )
   end
 
   def down

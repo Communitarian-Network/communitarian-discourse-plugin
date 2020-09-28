@@ -13,7 +13,6 @@ gem "interactor", "3.1.2"
 gem "geokit", "1.13.1"
 
 require "stripe"
-Geokit::Geocoders::GeonamesGeocoder.key = "vadimkurnatovskiy"
 
 enabled_site_setting :communitarian_enabled
 
@@ -67,6 +66,7 @@ after_initialize do
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
   Stripe.api_version = '2020-03-02; identity_beta=v3'
+  Geokit::Geocoders::GeonamesGeocoder.key = SiteSetting.geonames_username
 
   Topic.register_custom_field_type("is_resolution", :boolean)
   Category.register_custom_field_type("introduction_raw", :text)
@@ -259,10 +259,6 @@ after_initialize do
     User.class_eval do
       def billing_address
         UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
-      end
-
-      def zipcode
-        UserCustomField.find_by(user_id: id, name: :user_field_123002)&.value
       end
     end
 

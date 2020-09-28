@@ -11,7 +11,7 @@ class CreateZipcodeUserField < ActiveRecord::Migration[6.0]
       required: false,
       show_on_profile: false,
       show_on_user_card: false,
-      position: 1
+      position: 2
     )
   end
 
