@@ -35,6 +35,15 @@
         }}
       </section>
 
+      <section class="field">
+        <label>{{i18n "communitarian.community.ui_builder.community_code.label"}}</label>
+        {{text-field
+              value=model.custom_fields.community_code
+              autocomplete="discourse"
+              placeholder=(I18n "communitarian.community.ui_builder.community_code.placeholder")
+              rows="2"
+            }}
+      </section>
 
       {{#if showDescription}}
         <section class="field">

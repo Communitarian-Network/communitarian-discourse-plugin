@@ -69,6 +69,7 @@ after_initialize do
   Topic.register_custom_field_type("is_resolution", :boolean)
   Category.register_custom_field_type("introduction_raw", :text)
   Category.register_custom_field_type("tenets_raw", :text)
+  Category.register_custom_field_type("community_code", :text)
 
   NewPostManager.add_handler(10) { |manager| Communitarian::PostDelay.new.call(manager) }
 

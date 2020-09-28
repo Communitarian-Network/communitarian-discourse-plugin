@@ -20,6 +20,9 @@ en:
             label: Introduction
             edit: Edit introduction
             placeholder: One or two lines maximum
+          community_code:
+            label: Community Code
+            placeholder: Unique identificator
           tenets:
             label: Community Tenets
             placeholder: Optional
