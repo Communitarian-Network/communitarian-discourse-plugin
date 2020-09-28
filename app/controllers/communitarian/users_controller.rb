@@ -119,7 +119,7 @@ module Communitarian
     def billing_address
       geo = Geokit::Geocoders::GeonamesGeocoder.geocode(params["zipcode"])
 
-      address = [geo.city, geo.state_name, geo.country_code].reject(&:blank?).join(", ").presence || "unknown"
+      address = [geo.city&.gsub(/\W+|\d+/, ""), geo.state_name, geo.country_code].reject(&:blank?).join(", ").presence || "unknown"
 
       if geo.success && params["zipcode"] == geo.zip
         render json: { success: true, values: { address: address } }
