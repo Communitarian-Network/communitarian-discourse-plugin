@@ -20,6 +20,7 @@ export function openCommunityBuilder(context) {
     custom_fields: {
       introduction_raw: "",
       tenets_raw: "",
+      community_code: "",
     },
     search_priority: 0
   });
