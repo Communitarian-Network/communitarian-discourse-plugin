@@ -261,6 +261,12 @@ after_initialize do
       end
     end
 
+    About.class_eval do
+      def title
+        SiteSetting.about_title
+      end
+    end
+
     Category.class_eval do
       def create_category_definition
         return if skip_category_definition
