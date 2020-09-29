@@ -10,6 +10,7 @@ gem "omniauth-linkedin-oauth2", "1.0.0"
 gem "stripe", "5.22.0"
 gem "stripe_event", "2.3.1"
 gem "interactor", "3.1.2"
+gem "geokit", "1.13.1"
 
 require "stripe"
 
@@ -65,6 +66,7 @@ after_initialize do
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
   Stripe.api_version = '2020-03-02; identity_beta=v3'
+  Geokit::Geocoders::GeonamesGeocoder.key = SiteSetting.geonames_username
 
   Category.register_custom_field_type("introduction_raw", :text)
   Category.register_custom_field_type("tenets_raw", :text)

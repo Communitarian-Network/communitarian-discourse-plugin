@@ -4,7 +4,7 @@ module Communitarian
   class UsersController < ::ApplicationController
     requires_plugin Communitarian
 
-    before_action :respond_to_suspicious_request
+    before_action :respond_to_suspicious_request, only: :new
     skip_before_action :verify_authenticity_token, :redirect_to_login_if_required
 
     def new
@@ -114,6 +114,28 @@ module Communitarian
         success: false,
         message: I18n.t("login.something_already_taken")
       }, status: :unprocessable_entity
+    end
+
+    def billing_address
+      geo = Geokit::Geocoders::GeonamesGeocoder.geocode(params["zipcode"])
+
+      address = [geo.city&.gsub(/\W+|\d+/, ""), geo.state_name, geo.country_code].reject(&:blank?).join(", ").presence || "unknown"
+
+      if geo.success && params["zipcode"] == geo.zip
+        render json: { success: true, values: { address: address } }
+      else
+        render json: {
+          success: false,
+          values: { address: address },
+          message: I18n.t("login.invalid_zipcode")
+        }, status: :unprocessable_entity
+      end
+
+      rescue ArgumentError, Geokit::Geocoders::GeocodeError
+        render json: {
+          success: false,
+          message: I18n.t("login.invalid_zipcode")
+        }, status: :unprocessable_entity
     end
 
     private

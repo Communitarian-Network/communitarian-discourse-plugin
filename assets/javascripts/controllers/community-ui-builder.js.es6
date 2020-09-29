@@ -37,8 +37,8 @@ export default Controller.extend(ModalFunctionality, {
     this.set("modal.title", this.title);
   },
 
-@discourseComputed("saving", "model.name", "model.color", "model.custom_fields.introduction_raw",
-  "model.custom_fields.community_code", "deleting")
+  @discourseComputed("saving", "model.name", "model.color", "model.custom_fields.introduction_raw",
+    "model.custom_fields.community_code", "deleting")
   disabled(saving, name, color, introduction, code, deleting) {
     if (saving || deleting) return true;
     if (!name) return true;

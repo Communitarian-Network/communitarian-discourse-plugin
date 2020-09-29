@@ -61,6 +61,9 @@ plugins:
   socials_facebook_url:
     client: true
     default: "https://www.facebook.com/Civildialoguesorg-106269701225894/"
+  geonames_username:
+    client: false
+    default: ""
   about_title:
     client: true
     default: "About Civil Dialogues"
