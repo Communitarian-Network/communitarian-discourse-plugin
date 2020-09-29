@@ -18,6 +18,7 @@ export default Controller.extend(ModalFunctionality, {
 
   onShow() {
     this.titleChanged();
+    this.set("codeMaxLength", this.siteSettings.community_code_maxlength || 5);
     this.set("hiddenTooltip", true);
   },
 

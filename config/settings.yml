@@ -64,3 +64,6 @@ plugins:
   about_title:
     client: true
     default: "About Civil Dialogues"
+  community_code_maxlength:
+    client: true
+    default: 5
