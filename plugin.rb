@@ -66,7 +66,6 @@ after_initialize do
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
   Stripe.api_version = '2020-03-02; identity_beta=v3'
 
-  Topic.register_custom_field_type("is_resolution", :boolean)
   Category.register_custom_field_type("introduction_raw", :text)
   Category.register_custom_field_type("tenets_raw", :text)
 
