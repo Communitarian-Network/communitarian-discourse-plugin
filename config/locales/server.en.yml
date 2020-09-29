@@ -21,6 +21,8 @@ en:
     communitarian_stripe_secret_key: "Stripe secret key. NOTE: don't forgot to restart the app after the change"
     communitarian_stripe_public_key: Stripe public key
     geonames_username: "Geonames username for zipcode validation. NOTE: don't forgot to restart the app after the change"
+    community_code_maxlength: Community code maxlength. Leave blank to use the default length of 5.
+    about_title: Title on about page
   on_another_topic: On another dialogue
   emails:
     incoming:

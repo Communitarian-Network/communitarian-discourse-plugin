@@ -62,5 +62,11 @@ plugins:
     client: true
     default: "https://www.facebook.com/Civildialoguesorg-106269701225894/"
   geonames_username:
-    client: true
+    client: false
     default: ""
+  about_title:
+    client: true
+    default: "About Civil Dialogues"
+  community_code_maxlength:
+    client: true
+    default: 5

@@ -1,5 +1,5 @@
 <{{view.tagName}} class='num posts-map posts {{view.likesHeat}}' title='{{view.title}}'>
-  <a href class='posts-map badge-posts {{view.likesHeat}}'>
+  <a href={{topic.lastPostUrl}} class='posts-map badge-posts {{view.likesHeat}}'>
     {{raw-plugin-outlet name="topic-list-before-reply-count"}}
     {{!-- custom code --}}
     {{d-icon "far-comment"}}
