@@ -77,7 +77,7 @@ after_initialize do
   # using Discourse "Topic Created" event to trigger a save.
   # `opts[]` is how you pass the data back from the frontend into Rails
   on(:topic_created) do |topic, opts, user|
-    topic.update_column(:is_resolution, true) if opts[:is_resolution]
+    topic.update_columns(is_resolution: true, closed: true) if opts[:is_resolution]
   end
 
   on(:topic_created) do |topic, opts, _user|
