@@ -20,6 +20,9 @@ en:
     linkedin_secret: LinkedIn Secret Key
     communitarian_stripe_secret_key: "Stripe secret key. NOTE: don't forgot to restart the app after the change"
     communitarian_stripe_public_key: Stripe public key
+    geonames_username: "Geonames username for zipcode validation. NOTE: don't forgot to restart the app after the change"
+    community_code_maxlength: Community code maxlength. Leave blank to use the default length of 5.
+    about_title: Title on about page
   on_another_topic: On another dialogue
   emails:
     incoming:
@@ -46,6 +49,8 @@ en:
         invalid_category_id: You specified a community that does not exist
         default_categories_already_selected: You cannot select a community used in
           another list.
+  login:
+    invalid_zipcode: Invalid zipcode, please try again.
   topic_invite:
     failed_to_invite: 'The user cannot be invited into this dialogue without a group
       membership in either one of the following groups: %{group_names}.'

@@ -10,6 +10,7 @@ gem "omniauth-linkedin-oauth2", "1.0.0"
 gem "stripe", "5.22.0"
 gem "stripe_event", "2.3.1"
 gem "interactor", "3.1.2"
+gem "geokit", "1.13.1"
 
 require "stripe"
 
@@ -65,10 +66,11 @@ after_initialize do
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
   Stripe.api_version = '2020-03-02; identity_beta=v3'
+  Geokit::Geocoders::GeonamesGeocoder.key = SiteSetting.geonames_username
 
-  Topic.register_custom_field_type("is_resolution", :boolean)
   Category.register_custom_field_type("introduction_raw", :text)
   Category.register_custom_field_type("tenets_raw", :text)
+  Category.register_custom_field_type("community_code", :text)
 
   NewPostManager.add_handler(10) { |manager| Communitarian::PostDelay.new.call(manager) }
 
@@ -257,6 +259,12 @@ after_initialize do
     User.class_eval do
       def billing_address
         UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
+      end
+    end
+
+    About.class_eval do
+      def title
+        SiteSetting.about_title
       end
     end
 

@@ -20,6 +20,9 @@ en:
             label: Introduction
             edit: Edit introduction
             placeholder: One or two lines maximum
+          community_code:
+            label: Community Code
+            placeholder: Unique identificator
           tenets:
             label: Community Tenets
             placeholder: Optional
@@ -112,7 +115,7 @@ en:
           payment:
             name: Name on Card
             card: Credit or Debit Card
-            address: Billing address
+            zipcode: Zipcode
         activation_email:
           title: Check your inbox
           description: Your name & location will be a part of all your post.
