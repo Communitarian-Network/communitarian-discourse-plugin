@@ -33,18 +33,6 @@
                 }}
               {{/if}}
 
-              {{#if canEditTags}}
-                {{mini-tag-chooser
-                  value=buffered.tags
-                  onChange=(action "topicTagsChanged")
-                  options=(hash
-                    filterable=true
-                    categoryId=buffered.category_id
-                    minimum=minimumRequiredTags
-                  )
-                }}
-              {{/if}}
-
               {{plugin-outlet name="edit-topic" args=(hash model=model buffered=buffered)}}
 
               <div class="edit-controls">

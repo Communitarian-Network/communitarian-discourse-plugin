@@ -89,7 +89,8 @@ after_initialize do
   end
 
   on(:topic_created) do |topic, opts, _user|
-    topic.tags.find_or_create_by(name: opts[:is_resolution] ? "resolution" : "dialogue")
+    tag = Tag.find_or_create_by!(name: opts[:is_resolution] ? "resolution" : "dialogue")
+    topic.tags << tag unless topic.tag_ids.include?(tag.id)
   end
 
   on(:category_created) do |category|
