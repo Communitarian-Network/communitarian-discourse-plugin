@@ -13,6 +13,7 @@ gem "interactor", "3.1.2"
 gem "geokit", "1.13.1"
 
 require "stripe"
+require "geokit"
 
 enabled_site_setting :communitarian_enabled
 
