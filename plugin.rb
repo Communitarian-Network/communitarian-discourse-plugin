@@ -83,9 +83,9 @@ after_initialize do
   end
 
   on(:topic_created) do |topic, opts|
-    return unless opts[:is_resolution]
-
-    Communitarian::ResolutionTitle.create_suffix_for!(topic)
+    if opts[:is_resolution]
+      Communitarian::ResolutionTitle.create_suffix_for!(topic)
+    end
   end
 
   on(:topic_created) do |topic, opts, _user|
