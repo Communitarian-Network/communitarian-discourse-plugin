@@ -37,6 +37,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/dialog-list-item.scss",
   "stylesheets/common/new-topic-dropdown.scss",
   "stylesheets/common/resolution-list-item.scss",
+  "stylesheets/common/resolution.scss",
   "stylesheets/common/page-header.scss",
   "stylesheets/common/community-action.scss",
   "stylesheets/linkedin-login.scss"
