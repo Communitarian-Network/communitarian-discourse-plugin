@@ -12,7 +12,7 @@ module Communitarian
     end
 
     def to_s
-      "#{topic.title} - #{cateogry_abbreviation} #{topic.id}"
+      "#{topic.title} - #{category_abbreviation} #{topic.id}"
     end
 
     private
@@ -20,7 +20,7 @@ module Communitarian
     attr_reader :topic
 
     def category_abbreviation
-      topic.category.name.gsub(/\s/, "").upcase[0..2]
+      topic.category.custom_fields["community_code"]
     end
   end
 end
