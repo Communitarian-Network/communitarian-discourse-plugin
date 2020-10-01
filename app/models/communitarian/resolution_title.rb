@@ -19,7 +19,7 @@ module Communitarian
 
     attr_reader :topic
 
-    def cateogry_abbreviation
+    def category_abbreviation
       topic.category.name.gsub(/\s/, "").upcase[0..2]
     end
   end
