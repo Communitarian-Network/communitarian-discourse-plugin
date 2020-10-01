@@ -117,7 +117,7 @@ module Communitarian
     end
 
     def billing_address
-      geo = Geokit::Geocoders::GeonamesGeocoder.geocode(params["zipcode"])
+      geo = get_geo_info(params["zipcode"])
 
       address = [geo.city&.gsub(/\W+|\d+/, ""), geo.state_name, geo.country_code].reject(&:blank?).join(", ").presence || "unknown"
 
@@ -139,6 +139,12 @@ module Communitarian
     end
 
     private
+
+    def get_geo_info(zipcode = nil)
+      us_geo = Geokit::Geocoders::GeonamesGeocoder.geocode("United States, #{zipcode}")
+
+      us_geo.success? && zipcode == us_geo.zip ? us_geo : Geokit::Geocoders::GeonamesGeocoder.geocode(zipcode)
+    end
 
     def fail_with(key)
       render json: { success: false, message: I18n.t(key) }, status: :unprocessable_entity
