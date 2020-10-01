@@ -117,6 +117,7 @@ export default Controller.extend({
         action: "update",
         buttonLabel: "communitarian.resolution.ui_builder.update",
         formTitle: "communitarian.resolution.ui_builder.form_title.edit",
+        titleMaxLength: this.siteSettings.max_topic_title_length,
       });
       this.store.find("post", postId).then((post) => {
         this.setProperties({
