@@ -89,7 +89,7 @@ after_initialize do
   end
 
   on(:topic_created) do |topic, opts, _user|
-    unless opts[:is_resolution] do
+    unless opts[:is_resolution]
       tag = Tag.find_or_create_by!(name: "dialogue")
       topic.tags << tag unless topic.tag_ids.include?(tag.id)
     end
