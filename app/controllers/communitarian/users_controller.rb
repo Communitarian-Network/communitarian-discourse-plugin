@@ -117,11 +117,11 @@ module Communitarian
     end
 
     def billing_address
-      geo = get_geo_info(params["zipcode"])
+      geo = get_geo_info(params["zipcode"].to_s)
 
       address = [geo.city&.gsub(/\W+|\d+/, ""), geo.state_name, geo.country_code].reject(&:blank?).join(", ").presence || "unknown"
 
-      if geo.success && params["zipcode"] == geo.zip
+      if geo.success && params["zipcode"].to_s == geo.zip
         render json: { success: true, values: { address: address } }
       else
         render json: {
