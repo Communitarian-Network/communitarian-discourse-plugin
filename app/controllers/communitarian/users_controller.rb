@@ -141,9 +141,11 @@ module Communitarian
     private
 
     def get_geo_info(zipcode = nil)
-      us_geo = Geokit::Geocoders::GeonamesGeocoder.geocode("United States, #{zipcode}")
+      us_geo = Geokit::Geocoders::GeonamesGeocoder.geocode(("#{zipcode}, US").encode("UTF-8"))
 
-      us_geo.success? && zipcode == us_geo.zip ? us_geo : Geokit::Geocoders::GeonamesGeocoder.geocode(zipcode)
+      return us_geo if us_geo.success? && zipcode == us_geo.zip
+
+      Geokit::Geocoders::GeonamesGeocoder.geocode(zipcode.encode("UTF-8"))
     end
 
     def fail_with(key)
