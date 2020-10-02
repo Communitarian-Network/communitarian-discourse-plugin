@@ -12,7 +12,7 @@ module Communitarian
     end
 
     def to_s
-      "#{topic.title} - #{category_abbreviation} #{topic.id}"
+      "#{topic.title} - #{category_abbreviation} #{resolution_number}"
     end
 
     private
@@ -21,6 +21,10 @@ module Communitarian
 
     def category_abbreviation
       topic.category.custom_fields["community_code"]
+    end
+
+    def resolution_number
+      topic.category.highest_resolution_number
     end
   end
 end

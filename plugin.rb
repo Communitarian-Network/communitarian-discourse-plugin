@@ -85,6 +85,7 @@ after_initialize do
   on(:topic_created) do |topic, opts|
     if opts[:is_resolution]
       Communitarian::ResolutionTitle.create_suffix_for!(topic)
+      topic.category.increment!(:highest_resolution_number)
     end
   end
 
