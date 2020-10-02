@@ -13,6 +13,7 @@ gem "interactor", "3.1.2"
 gem "geokit", "1.13.1"
 
 require "stripe"
+require "geokit"
 
 enabled_site_setting :communitarian_enabled
 
@@ -89,7 +90,10 @@ after_initialize do
   end
 
   on(:topic_created) do |topic, opts, _user|
-    topic.tags.find_or_create_by(name: opts[:is_resolution] ? "resolution" : "dialogue")
+    unless opts[:is_resolution]
+      tag = Tag.find_or_create_by!(name: "dialogue")
+      topic.tags << tag unless topic.tag_ids.include?(tag.id)
+    end
   end
 
   on(:category_created) do |category|
@@ -341,6 +345,33 @@ after_initialize do
           format.html { render "default/empty" }
           format.json { render json: success_json }
         end
+      end
+
+      def perform_account_activation
+        raise Discourse::InvalidAccess.new if honeypot_or_challenge_fails?(params)
+
+        if @user = EmailToken.confirm(params[:token])
+          # Log in the user unless they need to be approved
+          if Guardian.new(@user).can_access_forum?
+            @user.enqueue_welcome_message('welcome_user') if @user.send_welcome_message
+            log_on_user(@user)
+
+            if Wizard.user_requires_completion?(@user)
+              return redirect_to(wizard_path)
+            elsif destination_url = cookies[:destination_url]
+              cookies[:destination_url] = nil
+              return redirect_to(destination_url)
+            elsif SiteSetting.enable_sso_provider && payload = cookies.delete(:sso_payload)
+              return redirect_to(session_sso_provider_url + "?" + payload)
+            end
+          else
+            @needs_approval = true
+          end
+        else
+          flash.now[:error] = I18n.t('activation.already_done')
+        end
+
+        redirect_to "/faq"
       end
     end
 
