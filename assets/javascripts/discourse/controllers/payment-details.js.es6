@@ -1,19 +1,20 @@
 import Controller from "@ember/controller";
 import discourseComputed from "discourse-common/utils/decorators";
 import { ajax } from "discourse/lib/ajax";
-import { popupAjaxError } from "discourse/lib/ajax-error";
+import { extractError, popupAjaxError } from "discourse/lib/ajax-error";
 import User from "discourse/models/user";
+import ModalFunctionality from "discourse/mixins/modal-functionality";
 
-export default Controller.extend({
+export default Controller.extend(ModalFunctionality, {
   createAccount: Ember.inject.controller(),
 
-  @discourseComputed("name", "clientSecret", "loading", "address")
-  submitDisabled(name, clientSecret, loading, address) {
+  @discourseComputed("name", "clientSecret", "loading", "zipcode")
+  submitDisabled(name, clientSecret, loading, zipcode) {
     return (
       loading ||
       !clientSecret.length ||
       !name.replace(/\s/g, "").length ||
-      !address.replace(/\s/g, "").length
+      !zipcode.replace(/\s/g, "").length
     );
   },
 
@@ -23,6 +24,7 @@ export default Controller.extend({
       clientSecret: "",
       errorMessage: "",
       name: "",
+      zipcode: "",
       address: ""
     });
     this._createPaymentIntent();
@@ -34,11 +36,8 @@ export default Controller.extend({
       if (this.submitDisabled) return;
       this.set("loading", true);
       this.set("errorMessage", "");
-      if (this.paymentConfirmed) {
-        this._createAccount();
-      } else {
-        this._confirmCardPayment();
-      }
+      this.clearFlash();
+      this._validateZipcode();
     },
   },
   _confirmCardPayment() {
@@ -48,8 +47,11 @@ export default Controller.extend({
       payment_method: {
         card: window.card,
         billing_details: {
-          name: self.name,
-          email: this.createAccount.accountEmail
+          name: this.name,
+          email: this.createAccount.accountEmail,
+          address: {
+            postal_code: this.zipcode
+          }
         }
       }
     })
@@ -62,8 +64,9 @@ export default Controller.extend({
       }
     });
   },
+
   _createAccount() {
-    const userfields = { 123001: this.address };
+    const userfields = { 123002: this.zipcode, 123001: this.address };
     let attrs = {
       accountName: this.name,
       accountEmail: this.createAccount.accountEmail,
@@ -88,10 +91,39 @@ export default Controller.extend({
         popupAjaxError(error);
       });;
   },
+
   _showError(errorMsgText) {
     this.set("loading", false)
     this.set("errorMessage", errorMsgText);
   },
+
+  _validateZipcode() {
+    ajax("/communitarian/users/billing_address", {
+      method: "GET",
+      data: {
+        zipcode: this.zipcode
+      }
+    })
+      .then((data) => {
+        this.set("address", data.values.address);
+        if (this.paymentConfirmed) {
+          this._createAccount();
+        } else {
+          this._confirmCardPayment();
+        }
+      })
+      .catch((error) => {
+        this.set("loading", false);
+        if (error) {
+          this.flash(extractError(error), "error");
+        } else {
+          bootbox.alert(
+            I18n.t("communitarian.verification.error_while_creating")
+          );
+        }
+      });
+  },
+
   _createPaymentIntent() {
     ajax("/communitarian/payment_intents", {
       method: "POST",

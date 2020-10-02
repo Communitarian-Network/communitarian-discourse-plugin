@@ -19,7 +19,7 @@ export default Component.extend({
         color: "#fa755a",
       }
     };
-    window.card = elements.create("card", { style: style });
+    window.card = elements.create("card", { hidePostalCode: true, style: style });
     window.card.mount("#card-element");
 
     $(this.element).on("keydown.discourse-payment-details", e => {

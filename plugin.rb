@@ -10,6 +10,7 @@ gem "omniauth-linkedin-oauth2", "1.0.0"
 gem "stripe", "5.22.0"
 gem "stripe_event", "2.3.1"
 gem "interactor", "3.1.2"
+gem "geokit", "1.13.1"
 
 require "stripe"
 
@@ -36,6 +37,7 @@ enabled_site_setting :communitarian_enabled
   "stylesheets/common/dialog-list-item.scss",
   "stylesheets/common/new-topic-dropdown.scss",
   "stylesheets/common/resolution-list-item.scss",
+  "stylesheets/common/resolution.scss",
   "stylesheets/common/page-header.scss",
   "stylesheets/common/community-action.scss",
   "stylesheets/linkedin-login.scss"
@@ -59,23 +61,31 @@ after_initialize do
   [
     "../app/models/communitarian/post_delay",
     "../app/models/communitarian/resolution",
+    "../app/models/communitarian/resolution_title",
     "../app/models/communitarian/unique_username",
     "../lib/guardian/category_guardian"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
   Stripe.api_version = '2020-03-02; identity_beta=v3'
+  Geokit::Geocoders::GeonamesGeocoder.key = SiteSetting.geonames_username
 
-  Topic.register_custom_field_type("is_resolution", :boolean)
   Category.register_custom_field_type("introduction_raw", :text)
   Category.register_custom_field_type("tenets_raw", :text)
+  Category.register_custom_field_type("community_code", :text)
 
   NewPostManager.add_handler(10) { |manager| Communitarian::PostDelay.new.call(manager) }
 
   # using Discourse "Topic Created" event to trigger a save.
   # `opts[]` is how you pass the data back from the frontend into Rails
   on(:topic_created) do |topic, opts, user|
-    topic.update_column(:is_resolution, true) if opts[:is_resolution]
+    topic.update_columns(is_resolution: true, closed: true) if opts[:is_resolution]
+  end
+
+  on(:topic_created) do |topic, opts|
+    if opts[:is_resolution]
+      Communitarian::ResolutionTitle.create_suffix_for!(topic)
+    end
   end
 
   on(:topic_created) do |topic, opts, _user|
@@ -265,6 +275,12 @@ after_initialize do
       end
     end
 
+    About.class_eval do
+      def title
+        SiteSetting.about_title
+      end
+    end
+
     Category.class_eval do
       def create_category_definition
         return if skip_category_definition
@@ -330,6 +346,33 @@ after_initialize do
           format.html { render "default/empty" }
           format.json { render json: success_json }
         end
+      end
+
+      def perform_account_activation
+        raise Discourse::InvalidAccess.new if honeypot_or_challenge_fails?(params)
+
+        if @user = EmailToken.confirm(params[:token])
+          # Log in the user unless they need to be approved
+          if Guardian.new(@user).can_access_forum?
+            @user.enqueue_welcome_message('welcome_user') if @user.send_welcome_message
+            log_on_user(@user)
+
+            if Wizard.user_requires_completion?(@user)
+              return redirect_to(wizard_path)
+            elsif destination_url = cookies[:destination_url]
+              cookies[:destination_url] = nil
+              return redirect_to(destination_url)
+            elsif SiteSetting.enable_sso_provider && payload = cookies.delete(:sso_payload)
+              return redirect_to(session_sso_provider_url + "?" + payload)
+            end
+          else
+            @needs_approval = true
+          end
+        else
+          flash.now[:error] = I18n.t('activation.already_done')
+        end
+
+        redirect_to "/faq"
       end
     end
 
