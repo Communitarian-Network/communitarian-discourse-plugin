@@ -17,28 +17,19 @@
         </div>
 
         <div class="page-header__button-list-right show-on-resolutions">
-          {{d-button
-            action=(action "goToDialogsPage")
-            label="communitarian.dialogs.dialogs_link"
-            class="link-button--dialogs page-header__button"
-          }}
-          {{new-topic-dropdown
-            class="page-header__button"
-            createDialog=(route-action "createTopic")
-            args=(hash
-              canCreateTopic=canCreateTopic
-              createTopicDisabled=createTopicDisabled
-              createTopicButtonDisabled=createTopicButtonDisabled
-            )
-          }}
-        </div>
-
-        <div class="page-header__button-list-right show-on-dialogs">
-          {{d-button
-            action=(action "goToResolutionsPage")
-            label="communitarian.dialog.resolutions_link"
-            class="link-button--resolutions page-header__button"
-          }}
+          {{#if isResolutionsPage}}
+            {{d-button
+              action=(action "goToDialogsPage")
+              label="communitarian.dialogs.dialogs_link"
+              class="link-button--dialogs page-header__button"
+            }}
+          {{else}}
+            {{d-button
+              action=(action "goToResolutionsPage")
+              label="communitarian.dialog.resolutions_link"
+              class="link-button--resolutions page-header__button"
+            }}
+          {{/if}}
           {{#if category.can_edit}}
             {{#if currentUser.staff}}
               {{d-button

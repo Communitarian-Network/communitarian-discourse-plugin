@@ -8,6 +8,12 @@
       display: none;
     }
 
+    .show-on-resolutions {
+      @media screen and (max-width: 750px) {
+        display: flex;
+      }
+    }
+
     &.resolutions {
       .page-header {
         &__title-wrap {
@@ -21,16 +27,6 @@
             margin-top: 1em;
           }
         }
-      }
-
-      .show-on-resolutions {
-        @media screen and (max-width: 750px) {
-          display: flex;
-        }
-      }
-
-      .show-on-dialogs {
-        display: none;
       }
     }
   }

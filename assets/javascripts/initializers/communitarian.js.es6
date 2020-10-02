@@ -57,9 +57,16 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:navigation/category", {
+    router: service(),
+
     @discourseComputed()
     isAuthorized() {
       return !!this.currentUser;
+    },
+
+    @discourseComputed("router.currentRoute.localName")
+    isResolutionsPage(currentRouteName) {
+      return currentRouteName === "category";
     },
 
     actions: {
@@ -122,7 +129,16 @@ function initializeCommunitarian(api) {
       return currentRouteName === "category";
     },
 
+    @discourseComputed("router.currentRoute.localName")
+    isCommunitiesPage(currentRouteName) {
+      return currentRouteName === "categories";
+    },
+
     actions: {
+      goToResolutionsPage() {
+        DiscourseURL.routeTo(`${window.location.pathname.replace('/l/dialogs', '')}`);
+      },
+
       goToDialogsPage() {
         DiscourseURL.routeTo(`${window.location.pathname}/l/dialogs`);
       },
