@@ -102,3 +102,27 @@
     font-size: 1em;
   }
 }
+
+.resolutions-preview {
+  .dialog-list-item__activity {
+    display: none;
+  }
+}
+
+.resolution-icon {
+  float: left;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-color: #f0f0f0;
+  border-radius: 25px;
+  margin-right: 10px;
+  text-align: center;
+
+  svg {
+    opacity: .3;
+    width: 28px;
+    height: 28px;
+    margin-top: 10px;
+  }
+}

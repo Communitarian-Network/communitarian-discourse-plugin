@@ -38,17 +38,24 @@
         </div>
       </div>
     </div>
-
-    {{#if isResolutionsPage}}
+    {{#unless isCommunitiesPage}}
       <div class="community-page__dialogs {{if loading "hidden"}}">
         {{plugin-outlet name="dialogs-list-above" args=(hash category=category)}}
 
         <div class="community-page__dialogs-buttons">
-          {{d-button
-            action=(action "goToDialogsPage")
-            label="communitarian.dialogs.view_dialogs"
-            class="link-button page-header__button"
-          }}
+          {{#if isResolutionsPage}}
+            {{d-button
+              action=(action "goToDialogsPage")
+              label="communitarian.dialogs.view_dialogs"
+              class="link-button page-header__button"
+            }}
+          {{else}}
+            {{d-button
+              action=(action "goToResolutionsPage")
+              label="communitarian.dialog.resolutions_link"
+              class="link-button page-header__button"
+            }}
+          {{/if}}
           {{#if category.can_edit}}
             {{#if currentUser.staff}}
               {{d-button
@@ -79,9 +86,14 @@
           {{/if}}
         </div>
 
-        {{dialog-list dialogs=dialogs}}
+        {{#if dialogs}}
+          {{dialog-list items=dialogs title=(I18n "communitarian.dialogs.aside_title")}}
+        {{/if}}
+        {{#if resolutions}}
+          {{dialog-list items=resolutions resolutions=true class="resolutions-preview" title=(I18n "communitarian.resolution.header_title")}}
+        {{/if}}
       </div>
-    {{/if}}
+    {{/unless}}
   </div>
   {{!-- custom code ended here ↑ --}}
 

@@ -57,9 +57,16 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:navigation/category", {
+    router: service(),
+
     @discourseComputed()
     isAuthorized() {
       return !!this.currentUser;
+    },
+
+    @discourseComputed("router.currentRoute.localName")
+    isResolutionsPage(currentRouteName) {
+      return currentRouteName === "category";
     },
 
     actions: {
@@ -117,12 +124,26 @@ function initializeCommunitarian(api) {
       return dialogs;
     },
 
+    @discourseComputed("discoveryTopics.model.resolutions")
+    resolutions(resolutions) {
+      return resolutions;
+    },
+
     @discourseComputed("router.currentRoute.localName")
     isResolutionsPage(currentRouteName) {
       return currentRouteName === "category";
     },
 
+    @discourseComputed("router.currentRoute.localName")
+    isCommunitiesPage(currentRouteName) {
+      return currentRouteName === "categories";
+    },
+
     actions: {
+      goToResolutionsPage() {
+        DiscourseURL.routeTo(`${window.location.pathname.replace('/l/dialogs','')}`);
+      },
+
       goToDialogsPage() {
         DiscourseURL.routeTo(`${window.location.pathname}/l/dialogs`);
       },
@@ -159,7 +180,7 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:discovery:topics", {
-    hasDialogs: gt("model.dialogs.length", 0)
+    hasDialogs: gt("model.dialogs.length", 0),
   });
 
   api.modifyClassStatic("model:topic-list", {
@@ -175,6 +196,7 @@ function initializeCommunitarian(api) {
       json.per_page = json.topic_list.per_page;
       json.topics = this.topicsFrom(store, json);
       json.dialogs = this.topicsFrom(store, json, { listKey: "dialogs" });
+      json.resolutions = this.topicsFrom(store, json, { listKey: "resolutions" });
 
       if (json.topic_list.shared_drafts) {
         json.sharedDrafts = this.topicsFrom(store, json, {

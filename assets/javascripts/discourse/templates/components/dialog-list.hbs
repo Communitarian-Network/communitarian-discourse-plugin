@@ -1,9 +1,10 @@
-<div class="dialog-list__header">
-  <span class="dialog-list__header-title">
-    {{i18n "communitarian.dialog.header_title"}}
-  </span>
-</div>
-
-{{#each dialogs as |dialog|}}
-  {{dialog-list-item dialog=dialog}}
+{{#if title}}
+  <div class="dialog-list__header">
+    <span class="dialog-list__header-title">
+      {{title}}
+    </span>
+  </div>
+{{/if}}
+{{#each items as |item|}}
+  {{dialog-list-item resolutions=resolutions dialog=item full=full}}
 {{/each}}
