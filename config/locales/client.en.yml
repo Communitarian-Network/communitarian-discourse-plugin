@@ -33,12 +33,13 @@ en:
       dialog:
         new_button: Dialogue
         header_title: Ongoing Dialogues
-        resolutions_link: Vote on resolutions
+        resolutions_link: Go to resolutions
       dialogs:
-        header_title: Ongoing Dialogues
-        view_dialogs: View dialogues
+        header_title: Dialogues
+        dialogs_link: Go to dialogues
       resolution:
         new_button: Resolution
+        header_title: Resolutions
         ui_builder:
           form_title:
             new: New Resolution
