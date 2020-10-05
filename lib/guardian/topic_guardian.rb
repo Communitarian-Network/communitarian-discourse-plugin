@@ -123,7 +123,7 @@ module TopicGuardian
 
   def can_delete_topic?(topic)
     !topic.trashed? &&
-    (is_staff? || is_my_own?(topic) &&
+    (is_staff? || is_my_own?(topic)) &&
     !topic.is_category_topic? &&
     !Discourse.static_doc_topic_ids.include?(topic.id)
   end
