@@ -319,7 +319,6 @@ after_initialize do
       end
     end
 
-
     About.class_eval do
       def title
         SiteSetting.about_title
