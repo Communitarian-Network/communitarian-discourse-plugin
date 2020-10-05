@@ -62,7 +62,6 @@ after_initialize do
   [
     "../app/models/communitarian/post_delay",
     "../app/models/communitarian/resolution",
-    "../app/models/communitarian/resolution_title",
     "../app/models/communitarian/unique_username",
     "../lib/guardian/category_guardian"
   ].each { |path| require File.expand_path(path, __FILE__) }
@@ -85,7 +84,8 @@ after_initialize do
 
   on(:topic_created) do |topic, opts|
     if opts[:is_resolution]
-      Communitarian::ResolutionTitle.create_suffix_for!(topic)
+      fancy_title = Topic.fancy_title(topic.title, topic.category, opts[:is_resolution])
+      topic.update!(fancy_title: fancy_title)
       topic.category.increment!(:highest_resolution_number)
     end
   end
@@ -144,6 +144,50 @@ after_initialize do
 
     Topic.class_eval do
       has_one :recent_resolution_post, -> { where(is_resolution: true).order(post_number: :desc) }, class_name: "Post"
+
+      before_save do
+        unless skip_callbacks
+          ensure_topic_has_a_category
+        end
+
+        if title_changed?
+          write_attribute(:fancy_title, Topic.fancy_title(title, category, is_resolution))
+        end
+
+        if category_id_changed? || new_record?
+          inherit_auto_close_from_category
+        end
+      end
+
+      def self.fancy_title(title, category = nil, is_resolution = nil)
+        return unless escaped = ERB::Util.html_escape(title)
+        fancy_title = Emoji.unicode_unescape(HtmlPrettify.render(escaped))
+
+        result_title = if is_resolution && category
+          "#{fancy_title} - #{category.custom_fields["community_code"]} #{category.highest_resolution_number}"
+        else
+          fancy_title
+        end
+
+        result_title.length > Topic.max_fancy_title_length ? escaped : result_title
+      end
+
+      def fancy_title
+        return ERB::Util.html_escape(title) unless SiteSetting.title_fancy_entities?
+
+        unless fancy_title = read_attribute(:fancy_title)
+          fancy_title = Topic.fancy_title(title, category, is_resolution)
+          write_attribute(:fancy_title, fancy_title)
+
+          if !new_record? && !Discourse.readonly_mode?
+            # make sure data is set in table, this also allows us to change algorithm
+            # by simply nulling this column
+            DB.exec("UPDATE topics SET fancy_title = :fancy_title where id = :id", id: self.id, fancy_title: fancy_title)
+          end
+        end
+
+        fancy_title
+      end
     end
 
     TopicQuery.class_eval do
@@ -274,6 +318,7 @@ after_initialize do
         UserCustomField.find_by(user_id: id, name: :user_field_123001)&.value
       end
     end
+
 
     About.class_eval do
       def title
