@@ -151,7 +151,7 @@ after_initialize do
         end
 
         if title_changed?
-          write_attribute(:fancy_title, Topic.fancy_title(title, category, is_resolution))
+          write_attribute(:fancy_title, Topic.fancy_title(title, category, self&.is_resolution))
         end
 
         if category_id_changed? || new_record?
@@ -176,7 +176,7 @@ after_initialize do
         return ERB::Util.html_escape(title) unless SiteSetting.title_fancy_entities?
 
         unless fancy_title = read_attribute(:fancy_title)
-          fancy_title = Topic.fancy_title(title, category, is_resolution)
+          fancy_title = Topic.fancy_title(title, category, self&.is_resolution)
           write_attribute(:fancy_title, fancy_title)
 
           if !new_record? && !Discourse.readonly_mode?
