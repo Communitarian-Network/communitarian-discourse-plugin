@@ -64,7 +64,8 @@ after_initialize do
     "../app/models/communitarian/resolution",
     "../app/models/communitarian/resolution_title",
     "../app/models/communitarian/unique_username",
-    "../lib/guardian/category_guardian"
+    "../lib/guardian/category_guardian",
+    "../lib/guardian/topic_guardian"
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
@@ -121,6 +122,7 @@ after_initialize do
 
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
 
+  add_to_serializer(:topic_view, :is_resolution) { object.topic&.is_resolution }
   add_to_serializer(:topic_list_item, :recent_resolution_post, false) do
     return unless object.is_resolution?
 
