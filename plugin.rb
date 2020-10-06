@@ -122,6 +122,7 @@ after_initialize do
 
   add_to_serializer(:current_user, :homepage_id) { object.user_option.homepage_id }
 
+  add_to_serializer(:topic_view, :is_resolution) { object.topic&.is_resolution }
   add_to_serializer(:topic_list_item, :recent_resolution_post, false) do
     return unless object.is_resolution?
 

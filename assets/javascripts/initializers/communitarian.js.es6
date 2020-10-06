@@ -105,6 +105,115 @@ function initializeCommunitarian(api) {
       const closed = moment(poll.close);
 
       return getResolutionPeriod(created, closed);
+    },
+
+    actions: {
+      deletePost(post) {
+        const user = this.currentUser;
+        const refresh = () => this.appEvents.trigger("post-stream:refresh");
+        const hasReplies = post.get("reply_count") > 0;
+        const loadedPosts = this.get("model.postStream.posts");
+
+        if (post.get("post_number") === 1 || post.get("topic.is_resolution")) {
+          post
+            .destroy(user)
+            .then(refresh)
+            .catch(error => {
+              popupAjaxError(error);
+              post.undoDeleteState();
+            });
+          return this.deleteTopic();
+        } else if (!post.can_delete) {
+          return false;
+        }
+
+        if (user.get("staff") && hasReplies) {
+          ajax(`/posts/${post.id}/reply-ids.json`).then(replies => {
+            if (replies.length === 0) {
+              return post
+                .destroy(user)
+                .then(refresh)
+                .catch(error => {
+                  popupAjaxError(error);
+                  post.undoDeleteState();
+                });
+            }
+
+            const buttons = [];
+
+            buttons.push({
+              label: I18n.t("cancel"),
+              class: "btn-danger right"
+            });
+
+            buttons.push({
+              label: I18n.t("post.controls.delete_replies.just_the_post"),
+              callback() {
+                post
+                  .destroy(user)
+                  .then(refresh)
+                  .catch(error => {
+                    popupAjaxError(error);
+                    post.undoDeleteState();
+                  });
+              }
+            });
+
+            if (replies.some(r => r.level > 1)) {
+              buttons.push({
+                label: I18n.t("post.controls.delete_replies.all_replies", {
+                  count: replies.length
+                }),
+                callback() {
+                  loadedPosts.forEach(
+                    p =>
+                      (p === post || replies.some(r => r.id === p.id)) &&
+                      p.setDeletedState(user)
+                  );
+                  Post.deleteMany([post.id, ...replies.map(r => r.id)])
+                    .then(refresh)
+                    .catch(popupAjaxError);
+                }
+              });
+            }
+
+            const directReplyIds = replies
+              .filter(r => r.level === 1)
+              .map(r => r.id);
+
+            buttons.push({
+              label: I18n.t("post.controls.delete_replies.direct_replies", {
+                count: directReplyIds.length
+              }),
+              class: "btn-primary",
+              callback() {
+                loadedPosts.forEach(
+                  p =>
+                    (p === post || directReplyIds.includes(p.id)) &&
+                    p.setDeletedState(user)
+                );
+                Post.deleteMany([post.id, ...directReplyIds])
+                  .then(refresh)
+                  .catch(popupAjaxError);
+              }
+            });
+
+            bootbox.dialog(
+              I18n.t("post.controls.delete_replies.confirm"),
+              buttons
+            );
+          });
+        } else {
+          return post
+            .destroy(user)
+            .then(refresh)
+            .catch(error => {
+              popupAjaxError(error);
+              post.undoDeleteState();
+            });
+        }
+      },
+
     }
   });
 
