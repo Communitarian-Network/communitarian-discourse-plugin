@@ -110,8 +110,7 @@ after_initialize do
   end
 
   on(:post_created) do |post, _opts|
-    Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
-      schedule_jobs(post)
+    Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).schedule_jobs(post)
   end
 
   on(:user_created) do |user|

@@ -49,6 +49,8 @@ module Communitarian
     end
 
     def close_by_vote?(post)
+      return false unless post.polls.exists?
+
       resolution_stats = Communitarian::ResolutionStats.new(post.polls.first)
 
       resolution_stats.to_close?
