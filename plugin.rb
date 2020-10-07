@@ -84,7 +84,7 @@ after_initialize do
   end
 
   on(:topic_created) do |topic, opts|
-    if topic.is_resolution
+    if topic.is_resolution || opts[:is_resolution]
       fancy_title = Topic.fancy_title(topic.title, topic.category, topic.is_resolution)
       topic.update!(fancy_title: fancy_title)
       topic.category.increment!(:highest_resolution_number)
@@ -92,7 +92,7 @@ after_initialize do
   end
 
   on(:topic_created) do |topic, opts, _user|
-    unless topic.is_resolution
+    unless topic.is_resolution || opts[:is_resolution]
       tag = Tag.find_or_create_by!(name: "dialogue")
       topic.tags << tag unless topic.tag_ids.include?(tag.id)
     end
