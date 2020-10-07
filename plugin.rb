@@ -80,19 +80,19 @@ after_initialize do
   # using Discourse "Topic Created" event to trigger a save.
   # `opts[]` is how you pass the data back from the frontend into Rails
   on(:topic_created) do |topic, opts, user|
-    topic.update_columns(is_resolution: true, closed: true) if opts[:is_resolution]
+    topic.update_columns(is_resolution: true, closed: true) if opts[:is_resolution] || topic.posts.first.polls.exists?
   end
 
   on(:topic_created) do |topic, opts|
-    if opts[:is_resolution]
-      fancy_title = Topic.fancy_title(topic.title, topic.category, opts[:is_resolution])
+    if topic.is_resolution || opts[:is_resolution]
+      fancy_title = Topic.fancy_title(topic.title, topic.category, topic.is_resolution)
       topic.update!(fancy_title: fancy_title)
       topic.category.increment!(:highest_resolution_number)
     end
   end
 
   on(:topic_created) do |topic, opts, _user|
-    unless opts[:is_resolution]
+    unless topic.is_resolution || opts[:is_resolution]
       tag = Tag.find_or_create_by!(name: "dialogue")
       topic.tags << tag unless topic.tag_ids.include?(tag.id)
     end
@@ -106,12 +106,11 @@ after_initialize do
   end
 
   on(:post_created) do |post, opts|
-    post.update_column(:is_resolution, true) if opts[:is_resolution]
+    post.update_column(:is_resolution, true) if opts[:is_resolution] || post.polls.exists?
   end
 
   on(:post_created) do |post, _opts|
-    Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).
-      schedule_jobs(post)
+    Communitarian::Resolution.new(Communitarian::ResolutionSchedule.new).schedule_jobs(post)
   end
 
   on(:user_created) do |user|

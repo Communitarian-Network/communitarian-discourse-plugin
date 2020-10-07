@@ -12,6 +12,7 @@ import { reopenWidget } from "discourse/widgets/widget";
 import CreateAccount from "../modifications/controllers/create_account";
 import HeaderButtons from "../modifications/widgets/header-buttons";
 import Category from "discourse/models/category";
+import { popupAjaxError } from "discourse/lib/ajax-error";
 
 import ResolutionController from "../controllers/resolution-controller";
 import getResolutionPeriod from "../discourse/components/get-resolution-period";
@@ -115,13 +116,6 @@ function initializeCommunitarian(api) {
         const loadedPosts = this.get("model.postStream.posts");
 
         if (post.get("post_number") === 1 || post.get("topic.is_resolution")) {
-          post
-            .destroy(user)
-            .then(refresh)
-            .catch(error => {
-              popupAjaxError(error);
-              post.undoDeleteState();
-            });
           return this.deleteTopic();
         } else if (!post.can_delete) {
           return false;

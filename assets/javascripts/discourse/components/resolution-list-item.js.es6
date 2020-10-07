@@ -10,7 +10,7 @@ export default Component.extend({
 
   _setupPoll() {
     const recentResolution = this.resolution.recent_resolution_post;
-    if (!recentResolution) {
+    if (!recentResolution || !recentResolution.polls) {
       return;
     }
 
