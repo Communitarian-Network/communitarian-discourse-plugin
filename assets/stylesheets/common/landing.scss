@@ -25,7 +25,7 @@ $landing-desktop-hd-width: 1300px;
   }
 
   &__text {
-    font-size: .8em;
+    font-size: 0.8em;
 
     @media screen and (min-width: $landing-desktop-width) {
       font-size: 1.05em;
@@ -180,7 +180,7 @@ $landing-explore-image-height: 450px;
 
   &__founder {
     float: left;
-    margin: 0 1em .2em 0;
+    margin: 0 1em 0.2em 0;
   }
 
   &__description {
@@ -189,6 +189,16 @@ $landing-explore-image-height: 450px;
 
   &__title {
     font-size: 1.55em;
+  }
+
+  &__donate {
+    @extend .landing-block__link;
+    margin-top: 2em;
+
+    &,
+    &:hover {
+      font-size: 1em;
+    }
   }
 }
 
@@ -222,7 +232,7 @@ $landing-explore-image-height: 450px;
     font-family: "Avenir Light", sans-serif;
 
     @media screen and (min-width: $landing-mobile-width) {
-      margin-top: .75em;
+      margin-top: 0.75em;
     }
   }
 }
@@ -249,7 +259,7 @@ $category-boxes-gap: 1em;
       transition: all 0.2s;
 
       @media screen and (min-width: $landing-desktop-hd-width) {
-        margin-right: .45vw;
+        margin-right: 0.45vw;
       }
 
       @media screen and (min-width: $landing-mobile-width) {
