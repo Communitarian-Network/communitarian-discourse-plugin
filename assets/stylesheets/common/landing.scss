@@ -25,7 +25,7 @@ $landing-desktop-hd-width: 1300px;
   }
 
   &__text {
-    font-size: .8em;
+    font-size: 0.8em;
 
     @media screen and (min-width: $landing-desktop-width) {
       font-size: 1.05em;
@@ -180,7 +180,7 @@ $landing-explore-image-height: 450px;
 
   &__founder {
     float: left;
-    margin: 0 1em .2em 0;
+    margin: 0 1em 0.2em 0;
   }
 
   &__description {
@@ -222,7 +222,7 @@ $landing-explore-image-height: 450px;
     font-family: "Avenir Light", sans-serif;
 
     @media screen and (min-width: $landing-mobile-width) {
-      margin-top: .75em;
+      margin-top: 0.75em;
     }
   }
 }
@@ -249,7 +249,7 @@ $category-boxes-gap: 1em;
       transition: all 0.2s;
 
       @media screen and (min-width: $landing-desktop-hd-width) {
-        margin-right: .45vw;
+        margin-right: 0.45vw;
       }
 
       @media screen and (min-width: $landing-mobile-width) {
@@ -495,7 +495,7 @@ $landing-footer-padding-side: 8px;
 
 .landing-footer {
   margin: 0 -10px 0;
-  padding: 4em $landing-footer-padding-side 3em;
+  padding: 4em 2 * $landing-footer-padding-side 3em;
   background-color: $primary;
 
   @media screen and (min-width: ($large-width + 2 * $landing-footer-padding-side)) {
@@ -558,11 +558,27 @@ $landing-footer-padding-side: 8px;
   }
 
   &__link {
-    @extend .landing-block__link;
-    margin-top: 1em;
+    &--mobile {
+      @extend .landing-block__link;
 
-    @media screen and (min-width: $landing-footer-mobile-width) {
-      margin-top: 0;
+      @media screen and (min-width: $landing-footer-mobile-width) {
+        display: none;
+      }
+    }
+
+    &--desktop {
+      margin-right: 3em;
+      font-size: 1.2em;
+
+      &,
+      &:hover,
+      &:visited {
+        color: $primary-medium;
+      }
+
+      @media screen and (max-width: $landing-footer-mobile-width - 1) {
+        display: none;
+      }
     }
   }
 
@@ -571,6 +587,10 @@ $landing-footer-padding-side: 8px;
     width: 100%;
     height: 1px;
     background-color: $primary-very-high;
+
+    @media screen and (min-width: $landing-footer-mobile-width) {
+      display: none;
+    }
   }
 
   &__bottom {
@@ -593,6 +613,10 @@ $landing-footer-padding-side: 8px;
     a {
       color: $primary-medium;
     }
+  }
+
+  &__icons-container {
+    display: flex;
   }
 
   &__icon {
