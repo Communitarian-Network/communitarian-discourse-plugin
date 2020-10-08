@@ -165,7 +165,7 @@ after_initialize do
         fancy_title = Emoji.unicode_unescape(HtmlPrettify.render(escaped))
 
         result_title = if is_resolution && category
-          "#{fancy_title} - #{category.custom_fields["community_code"]} #{category.highest_resolution_number}"
+          "[#{category.custom_fields["community_code"]} - #{category.highest_resolution_number}] #{fancy_title}"
         else
           fancy_title
         end
