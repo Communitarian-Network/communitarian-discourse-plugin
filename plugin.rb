@@ -144,7 +144,7 @@ after_initialize do
     end
 
     Topic.class_eval do
-      has_one :recent_resolution_post, -> { where(is_resolution: true).order(post_number: :desc) }, class_name: "Post"
+      has_one :recent_resolution_post, -> { where(is_resolution: true).order(created_at: :desc) }, class_name: "Post"
 
       before_save do
         unless skip_callbacks
