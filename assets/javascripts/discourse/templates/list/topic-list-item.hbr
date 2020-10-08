@@ -40,8 +40,8 @@
     <a class="bottom-line-activity" href="{{topic.lastPostUrl}}">
       {{~topic.bumped_at~}}
     </a>
+    {{!-- {{discourse-tags topic mode="list" tagsForUser=tagsForUser}} --}}
     {{!-- /custom code --}}
-    {{discourse-tags topic mode="list" tagsForUser=tagsForUser}}
     {{raw "list/action-list" topic=topic postNumbers=topic.liked_post_numbers className="likes" icon="heart"}}
   </div>
   {{#if expandPinned}}

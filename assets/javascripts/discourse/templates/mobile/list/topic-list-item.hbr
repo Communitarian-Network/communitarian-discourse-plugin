@@ -40,7 +40,9 @@
               {{category-link topic.category}}
             </div>
           {{/unless}}
-          {{discourse-tags topic mode="list"}}
+          {{!-- custom code --}}
+          {{!-- {{discourse-tags topic mode="list"}} --}}
+          {{!-- /custom code --}}
           <div class="pull-right">
             <div class='num activity last'>
               <span class="age activity" title="{{topic.bumpedAtTitle}}">
