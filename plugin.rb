@@ -285,7 +285,7 @@ after_initialize do
       options[:only_resolutions] ||= true
 
       if filter_name == :latest && options[:only_resolutions]
-        result.includes(:recent_resolution_post_new).where(is_resolution: true)
+        result.where(is_resolution: true)
       else
         result
       end
