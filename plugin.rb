@@ -125,7 +125,7 @@ after_initialize do
   add_to_serializer(:topic_list_item, :recent_resolution_post, false) do
     return unless object.is_resolution?
 
-    PostSerializer.new(object.recent_resolution_post_new, root: false, embed: :objects, scope: self.scope)
+    PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
   end
 
   require 'homepage_constraint'
@@ -144,7 +144,7 @@ after_initialize do
     end
 
     Topic.class_eval do
-      has_one :recent_resolution_post_new, -> { where(is_resolution: true).order(id: :desc) }, class_name: "Post"
+      has_one :recent_resolution_post, -> { where(is_resolution: true).order(id: :desc) }, class_name: "Post"
 
       before_save do
         unless skip_callbacks
