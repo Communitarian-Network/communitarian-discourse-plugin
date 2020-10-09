@@ -235,7 +235,7 @@
   }
 
   .suggested-topics {
-    width: calc(#{$topic-body-width} + (#{$topic-body-width-padding} * 2));
+    // width: calc(#{$topic-body-width} + (#{$topic-body-width-padding} * 2));
     max-width: 100%;
 
     table {
