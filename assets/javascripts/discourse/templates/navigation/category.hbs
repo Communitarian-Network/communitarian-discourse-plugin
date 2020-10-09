@@ -22,6 +22,23 @@
             label="communitarian.dialogs.dialogs_link"
             class="link-button--dialogs page-header__button"
           }}
+          {{#if category.can_edit}}
+            {{#if currentUser.staff}}
+              {{d-button
+                class="btn-default edit-category page-header__button"
+                action=(route-action "editCategory" category)
+                icon="wrench"
+                label="category.edit"
+              }}
+            {{else}}
+              {{d-button
+                class="btn-default edit-category page-header__button"
+                action=(action "editCommunity" category)
+                icon="wrench"
+                label="category.edit"
+              }}
+            {{/if}}
+          {{/if}}
           {{new-topic-dropdown
             class="page-header__button"
             createDialog=(route-action "createTopic")
