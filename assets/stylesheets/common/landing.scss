@@ -190,6 +190,16 @@ $landing-explore-image-height: 450px;
   &__title {
     font-size: 1.55em;
   }
+
+  &__donate {
+    @extend .landing-block__link;
+    margin-top: 2em;
+
+    &,
+    &:hover {
+      font-size: 1em;
+    }
+  }
 }
 
 .landing-communities-header {
