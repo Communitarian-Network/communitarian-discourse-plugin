@@ -335,6 +335,7 @@ after_initialize do
           t.skip_callbacks = true
           t.ignore_category_auto_close = true
           t.delete_topic_timer(TopicTimer.types[:close])
+          t.tags << Tag.find_or_create_by!(name: "dialogue")
           t.save!(validate: false)
           update_column(:topic_id, t.id)
           post = t.posts.build(raw: description || post_template, user: user)
