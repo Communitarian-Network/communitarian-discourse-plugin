@@ -198,7 +198,17 @@ export default Controller.extend({
         composer_open_duration_msecs: totalOpenDuration
       }
     }).then(response => {
-      window.location = `/t/topic/${response.post.topic_id}`;
+      if (response.action === "enqueued" || response.pending_post) {
+        this.send("postWasEnqueued", response);
+        if (response.pending_post) {
+          let pendingPosts = this.get("topicController.model.pending_posts");
+          if (pendingPosts) {
+            pendingPosts.pushObject(response.pending_post);
+          }
+        }
+      } else if (response.success) {
+        window.location = `/t/topic/${response.post.topic_id}`;
+      }
     }).catch(error => {
       this.set("loading", false);
       if (error) {
