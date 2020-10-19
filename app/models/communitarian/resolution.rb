@@ -3,7 +3,7 @@
 module Communitarian
   class Resolution
     REOPENED_RESOLUTION_ATTRIBUTES = %w[
-      user_id topic_id raw post_type last_editor_id last_version_at user_deleted public_version is_resolution
+      topic_id post_type
     ].freeze
 
     attr_reader :resolution_schedule
@@ -12,19 +12,14 @@ module Communitarian
       @resolution_schedule = resolution_schedule
     end
 
-    def reopen_weekly_resolution!(original_post)
-      return if to_be_closed?(original_post)
+    def reopen_weekly_resolution!(resolution)
+      return if to_be_closed?(resolution)
 
-      post = copy_post(original_post)
-      poll = post.polls.first
+      generate_weekly_report(resolution)
+      poll = resolution.polls.first
       poll.update!(close_at: resolution_schedule.next_close_time)
-      self.reorder_resolutions!(post)
-      self.schedule_jobs(post)
-    end
 
-    def reorder_resolutions!(post)
-      post.topic.posts.with_deleted.update_all("sort_order = sort_order + 1")
-      Post.find(post.id).update(sort_order: 0)
+      self.schedule_jobs(resolution)
     end
 
     def schedule_jobs(post)
@@ -42,10 +37,22 @@ module Communitarian
       post.user_deleted || !resolution?(post) || close_by_vote?(post)
     end
 
-    def copy_post(original_post)
-      post_attributes = original_post.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
-      post = Post.create!(post_attributes)
-      post.reload
+    def generate_weekly_report(resolution)
+      report_attributes = resolution.attributes.slice(*self.class::REOPENED_RESOLUTION_ATTRIBUTES)
+      report = Post.create!(report_attributes.merge(user_id: -1, raw: report_raw(resolution)))
+      report.custom_fields["is_weekly_report"] = true
+      report.save_custom_fields(true)
+      report.reload
+    end
+
+    def report_raw(resolution)
+      poll_options = resolution.polls.includes(poll_options: :poll_votes).first.poll_options
+      week_number = PostCustomField.where(name: :is_weekly_report, post_id: resolution.topic.post_ids).count + 1
+      raw = "Week #{week_number} result:"
+      poll_options.each do |poll_option|
+        raw += "\n* #{poll_option.html}: #{I18n.t(:voted_people, count: poll_option.poll_votes.size)}"
+      end
+      raw
     end
 
     def close_by_vote?(post)
