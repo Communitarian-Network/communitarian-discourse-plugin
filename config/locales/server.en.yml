@@ -24,6 +24,9 @@ en:
     community_code_maxlength: Community code maxlength. Leave blank to use the default length of 5.
     about_title: Title on about page
   on_another_topic: On another dialogue
+  voted_people:
+    one: 1 person
+    other: "%{count} people"
   emails:
     incoming:
       default_subject: This dialogue needs a title
