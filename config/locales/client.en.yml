@@ -17,8 +17,8 @@ en:
             label: Title
             placeholder: One or two words maximum
           introduction:
-            label: Introduction
-            edit: Edit introduction
+            label: Description
+            edit: Edit description
             placeholder: One or two lines maximum
           community_code:
             label: Community Code
