@@ -102,7 +102,7 @@ after_initialize do
     about_post = category.topic.posts.first
     revisor = PostRevisor.new(about_post, about_post.topic)
     about = category.custom_fields["introduction_raw"].presence || about_post.raw
-    revisor.revise!(about_post.user, { raw: about }, skip_validations: true)
+    revisor.revise!(about_post.user, { raw: "***#{about}***" }, skip_validations: true)
   end
 
   on(:post_created) do |post, opts|
