@@ -1,10 +1,56 @@
 import { reopenWidget } from "discourse/widgets/widget";
+import { ajax } from "discourse/lib/ajax";
+import { popupAjaxError } from "discourse/lib/ajax-error";
 
 export default {
   name: "communitarian-can-cast-votes",
 
   initialize() {
     reopenWidget("discourse-poll", {
+      // plugins/poll/assets/javascripts/widgets/discourse-poll.js.es6:1034
+      castVotes() {
+        if (!this.canCastVotes()) return;
+        if (!this.currentUser) return this.showLogin();
+
+        const { attrs, state } = this;
+
+        state.loading = true;
+
+        return ajax("/polls/vote", {
+          type: "PUT",
+          data: {
+            post_id: attrs.post.id,
+            poll_name: attrs.poll.get("name"),
+            options: attrs.vote
+          }
+        })
+          .then(({ poll }) => {
+            attrs.poll.setProperties(poll);
+            if (attrs.poll.get("results") !== "on_close") {
+              state.showResults = true;
+            }
+            if (attrs.poll.results === "staff_only") {
+              if (this.currentUser && this.currentUser.get("staff")) {
+                state.showResults = true;
+              } else {
+                state.showResults = false;
+              }
+            }
+            // vvv custom behavior vvv
+            $(document).trigger(`post-${attrs.post.id}-poll-voted`, poll);
+          })
+          .catch(error => {
+            if (error) {
+              popupAjaxError(error);
+            } else {
+              bootbox.alert(I18n.t("poll.error_while_casting_votes"));
+            }
+          })
+          .finally(() => {
+            state.loading = false;
+          });
+      },
+
       // plugins/poll/assets/javascripts/widgets/discourse-poll.js.es6:892
       canCastVotes() {
         const { state, attrs } = this;
