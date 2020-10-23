@@ -34,7 +34,7 @@ module Communitarian
     private
 
     def to_be_closed?(post)
-      post.user_deleted || !resolution?(post) || close_by_vote?(post)
+      post.user_deleted || !resolution?(post) || close_by_vote?(post) || already_closed?(post)
     end
 
     def generate_weekly_report(resolution)
@@ -61,6 +61,10 @@ module Communitarian
       resolution_stats = Communitarian::ResolutionStats.new(post.polls.first)
 
       resolution_stats.to_close?
+    end
+
+    def already_closed?(post)
+      post.polls.first.closed?
     end
 
     def resolution?(post)

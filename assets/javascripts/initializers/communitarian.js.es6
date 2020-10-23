@@ -12,6 +12,7 @@ import { reopenWidget } from "discourse/widgets/widget";
 import CreateAccount from "../modifications/controllers/create_account";
 import HeaderButtons from "../modifications/widgets/header-buttons";
 import UserMenu from "../modifications/widgets/user-menu";
+import DiscoursePollButtons from "../modifications/widgets/discourse-poll-buttons";
 import Category from "discourse/models/category";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
@@ -302,6 +303,7 @@ function initializeCommunitarian(api) {
 
   reopenWidget("header-buttons", HeaderButtons);
   reopenWidget("user-menu", UserMenu);
+  reopenWidget("discourse-poll-buttons", DiscoursePollButtons);
 }
 
 //Override openNewCategoryModal due to the fact that all members can create category
