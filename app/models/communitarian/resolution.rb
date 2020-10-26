@@ -34,7 +34,7 @@ module Communitarian
     private
 
     def to_be_closed?(post)
-      post.user_deleted || !resolution?(post) || close_by_vote?(post) || already_closed?(post)
+      post.user_deleted || post.topic.blank? || !resolution?(post) || close_by_vote?(post) || closed_by_user?(post)
     end
 
     def generate_weekly_report(resolution)
@@ -63,8 +63,11 @@ module Communitarian
       resolution_stats.to_close?
     end
 
-    def already_closed?(post)
-      post.polls.first.closed?
+    # this check needs to ignore Jobs::ClosePoll job that closing resolution
+    # on the same time when we trying to renew it
+    def closed_by_user?(post)
+      poll = post.polls.first
+      poll.closed? && !poll.close_at.today?
     end
 
     def resolution?(post)
