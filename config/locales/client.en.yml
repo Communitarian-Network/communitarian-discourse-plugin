@@ -46,8 +46,8 @@ en:
             edit: Edit Resolution
           create: Create
           update: Update
-          auto_close_and_reopen_reminder: This resolution will be automatically closed at %{close_date} and reopened immediately.
-          auto_close_and_reopen_with_delay_reminder: This resolution will be automatically closed at %{close_date} and reopened in %{delay} hour(s).
+          auto_close_and_reopen_reminder: This resolution will be automatically closed at %{close_date} and reopened immediately until the majority votes closure.
+          auto_close_and_reopen_with_delay_reminder: This resolution will be automatically closed at %{close_date} and reopened in %{delay} hour(s) until the majority votes closure.
           active_period_note: Resolution active during 1 week after reopening.
           title:
             label: Resolution title
@@ -115,7 +115,7 @@ en:
           card_title: Verification with Debit or Credit Card
           card_description: The one-time $1 fee is used in order to verify your identity.
           identity_title: Verification with ID
-          identity_description: "You'll need a government-issued photo ID.<br>Ex: Driver's license, Identity Card, Passport"
+          identity_description: "You'll need a government-issued photo ID.<br>Ex: American Driver's license, Identity Card, American Passport"
           payment:
             name: Name on Card
             card: Credit or Debit Card
