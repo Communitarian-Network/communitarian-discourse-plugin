@@ -37,7 +37,7 @@ export default DiscourseRoute.extend({
     this.render("verification-intents/show");
   },
 
-  _finishSignUp(accountName, billingAddress, zipcode) {
+  _finishSignUp(accountName, address, zipcode) {
     const signupData = PreloadStore.get("signupData");
 
     const attrs = {
@@ -47,7 +47,7 @@ export default DiscourseRoute.extend({
       accountUsername: signupData.username,
       accountPasswordConfirm: signupData.password_confirmation,
       accountChallenge: signupData.challenge,
-      userFields: { 123001: billingAddress, 123002: zipcode }
+      userFields: { 123001: this.createAccount.billingAddress, 123002: zipcode }
     };
 
     return User.createAccount(attrs)

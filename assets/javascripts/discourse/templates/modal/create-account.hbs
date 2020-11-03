@@ -90,6 +90,40 @@
                 }}
               </tbody>
             </table>
+
+            {{!--
+            If we want to save location through user fields
+            {{#if signUpUserFields}}
+              <div class="user-fields">
+                {{#each signUpUserFields as |f|}}
+                  {{user-field field=f.field value=f.value}}
+                {{/each}}
+              </div>
+            {{/if}}
+            --}}
+          <div class="user-fields">
+            <div class="user-field text user-field-country ember-view">
+              <label class="control-label">Country</label>
+              <div class="controls">
+                {{input type="text" value=country id="country" name="country" placeholder="United States"}}
+              </div>
+            </div>
+
+            <div class="user-field text user-field-state ember-view">
+              <label class="control-label">State</label>
+              <div class="controls">
+                {{input type="text" value=state id="state" name="state" placeholder="New York"}}
+              </div>
+            </div>
+
+            <div class="user-field text user-field-city ember-view">
+              <label class="control-label">City</label>
+              <div class="controls">
+                {{input type="text" value=city id="city" name="city" placeholder="New York City"}}
+              </div>
+            </div>
+          </div>
+
           </form>
         </div>
       {{/if}}
