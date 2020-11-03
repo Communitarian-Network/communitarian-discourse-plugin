@@ -108,7 +108,7 @@ en:
         next_verification: Next Verification
         country:
           label: Country
-          placeholder: Unites States
+          placeholder: United States
         city:
           label: City
           placeholder: New York City

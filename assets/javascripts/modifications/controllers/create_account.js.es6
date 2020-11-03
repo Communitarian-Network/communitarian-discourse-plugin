@@ -18,13 +18,12 @@ export default {
 
   @discourseComputed("formSubmitted", "country", "state", "city")
   submitDisabled(formSubmitted, country, state, city) {
-    if (
+    return (
       this.formSubmitted ||
       !country.replace(/\s/g, "").length ||
       !state.replace(/\s/g, "").length ||
-      !city.replace(/\s/g, "").length) return true;
-
-    return false;
+      !city.replace(/\s/g, "").length
+    );
   },
 
   @discourseComputed
