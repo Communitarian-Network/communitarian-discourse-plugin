@@ -103,23 +103,23 @@
             --}}
           <div class="user-fields">
             <div class="user-field text user-field-country ember-view">
-              <label class="control-label">Country</label>
+              <label class="control-label">{{I18n "communitarian.create_account.country.label" }}</label>
               <div class="controls">
-                {{input type="text" value=country id="country" name="country" placeholder="United States"}}
+                {{input type="text" value=country id="country" name="country" placeholder=(I18n "communitarian.create_account.country.placeholder")}}
               </div>
             </div>
 
             <div class="user-field text user-field-state ember-view">
-              <label class="control-label">State</label>
+              <label class="control-label">{{I18n "communitarian.create_account.state.label" }}</label>
               <div class="controls">
-                {{input type="text" value=state id="state" name="state" placeholder="New York"}}
+                {{input type="text" value=state id="state" name="state" placeholder=(I18n "communitarian.create_account.state.placeholder")}}
               </div>
             </div>
 
             <div class="user-field text user-field-city ember-view">
-              <label class="control-label">City</label>
+              <label class="control-label">{{I18n "communitarian.create_account.city.label" }}</label>
               <div class="controls">
-                {{input type="text" value=city id="city" name="city" placeholder="New York City"}}
+                {{input type="text" value=city id="city" name="city" placeholder=(I18n "communitarian.create_account.city.placeholder")}}
               </div>
             </div>
           </div>
