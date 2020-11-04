@@ -8,8 +8,22 @@ import { extractError } from "discourse/lib/ajax-error";
 export default {
   onShow() {
     this.setProperties({
-      accountUsername: Date.now()
+      accountUsername: Date.now(),
+      country: "",
+      state: "",
+      city: "",
+      billingAddress: ""
     });
+  },
+
+  @discourseComputed("formSubmitted", "country", "state", "city")
+  submitDisabled(formSubmitted, country, state, city) {
+    return (
+      this.formSubmitted ||
+      !country.replace(/\s/g, "").length ||
+      !state.replace(/\s/g, "").length ||
+      !city.replace(/\s/g, "").length
+    );
   },
 
   @discourseComputed
@@ -18,6 +32,16 @@ export default {
       return "create_account.title";
     } else {
       return "communitarian.create_account.continue";
+    }
+  },
+
+  // If we want to save location through user fields
+  @discourseComputed
+  signUpUserFields() {
+    let userFields = this.userFields;
+
+    if (userFields) {
+      return userFields.filter(uf => uf.get("field.id").toString() === "123001");
     }
   },
 
@@ -44,6 +68,10 @@ export default {
 
   formValid(successCallback) {
     return this.fieldsValid() && this._validateUserFields(successCallback);
+  },
+
+  setBillingAddress() {
+    this.set("billingAddress", this.country + ", " + this.state + ", " + this.city);
   },
 
   fieldsValid() {
@@ -78,6 +106,7 @@ export default {
   actions: {
     submitForm() {
       this.clearFlash();
+      this.setBillingAddress();
 
       if (this.get("authOptions.email") == this.accountEmail) {
         return this.performAccountCreation();

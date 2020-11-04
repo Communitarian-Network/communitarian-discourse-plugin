@@ -106,6 +106,15 @@ en:
         title: Create Your Account
         continue: Continue
         next_verification: Next Verification
+        country:
+          label: Country
+          placeholder: United States
+        city:
+          label: City
+          placeholder: New York City
+        state:
+          label: State
+          placeholder: New York
         payment_details:
           title: Payment Details
           submit_button: Pay $1.00
