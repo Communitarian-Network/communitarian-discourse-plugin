@@ -112,7 +112,7 @@ en:
           label: City
           placeholder: New York City
         state:
-          label: State
+          label: State (optional)
           placeholder: New York
         payment_details:
           title: Payment Details

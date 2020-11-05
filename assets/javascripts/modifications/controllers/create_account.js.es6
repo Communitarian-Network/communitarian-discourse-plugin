@@ -16,12 +16,11 @@ export default {
     });
   },
 
-  @discourseComputed("formSubmitted", "country", "state", "city")
-  submitDisabled(formSubmitted, country, state, city) {
+  @discourseComputed("formSubmitted", "country", "city")
+  submitDisabled(formSubmitted, country, city) {
     return (
       this.formSubmitted ||
       !country.replace(/\s/g, "").length ||
-      !state.replace(/\s/g, "").length ||
       !city.replace(/\s/g, "").length
     );
   },
@@ -32,16 +31,6 @@ export default {
       return "create_account.title";
     } else {
       return "communitarian.create_account.continue";
-    }
-  },
-
-  // If we want to save location through user fields
-  @discourseComputed
-  signUpUserFields() {
-    let userFields = this.userFields;
-
-    if (userFields) {
-      return userFields.filter(uf => uf.get("field.id").toString() === "123001");
     }
   },
 
@@ -71,7 +60,15 @@ export default {
   },
 
   setBillingAddress() {
-    this.set("billingAddress", this.country + ", " + this.state + ", " + this.city);
+    this.set("billingAddress", this.parsedAddress());
+  },
+
+  parsedAddress() {
+    if (this.state.replace(/\s/g, "").length === 0) {
+      return (this.country + ", " + this.city);
+    } else {
+      return (this.country + ", " + this.state + ", " + this.city);
+    }
   },
 
   fieldsValid() {
