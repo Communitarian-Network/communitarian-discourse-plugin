@@ -17,7 +17,7 @@ module Communitarian
 
       generate_weekly_report(resolution)
       poll = resolution.polls.first
-      poll.update!(close_at: resolution_schedule.next_close_time)
+      poll.update!(close_at: resolution_schedule.next_close_time, status: "open")
 
       self.schedule_jobs(resolution)
     end
@@ -66,8 +66,7 @@ module Communitarian
     # this check needs to ignore Jobs::ClosePoll job that closing resolution
     # on the same time when we trying to renew it
     def closed_by_user?(post)
-      poll = post.polls.first
-      poll.closed? && !poll.close_at.today?
+      post.polls.first.close_at.today?
     end
 
     def resolution?(post)
