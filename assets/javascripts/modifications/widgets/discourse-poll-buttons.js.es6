@@ -101,9 +101,7 @@ export default {
     }
 
     if (
-      this.currentUser &&
-      (this.currentUser.get("id") === post.get("user_id") || isStaff) &&
-      !topicArchived
+      this.currentUser && isStaff && !topicArchived
     ) {
       if (closed) {
         if (!attrs.isAutomaticallyClosed) {
