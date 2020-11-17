@@ -36,3 +36,17 @@
     </div>
   </div>
 {{/each}}
+<div class="category category-box">
+  <div class="category-box-inner">
+    <div class="category-logo">
+      <img src={{siteSettings.favicon}} class="placeholder" alt={{i18n "communitarian.landing.communities_header.link"}}>
+    </div>
+    <div class="category-details">
+      <div class="category-box-heading">
+        {{#link-to "discovery.categories" class="parent-box-link"}}
+          <h3>{{i18n "communitarian.landing.communities_header.link"}}</h3>
+        {{/link-to}}
+      </div>
+    </div>
+  </div>
+</div>
