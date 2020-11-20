@@ -36,3 +36,22 @@
     </div>
   </div>
 {{/each}}
+{{#unless latestTopicOnly}}
+  <div class="category category-box">
+    <div class="category-box-inner">
+      <div class="category-logo">
+        <img src={{siteSettings.favicon}} class="placeholder" alt={{i18n "communitarian.landing.communities_header.link"}}>
+      </div>
+      <div class="category-details">
+        <div class="category-box-heading">
+          {{#link-to "discovery.categories" class="parent-box-link"}}
+            <h3>{{i18n "communitarian.landing.communities_header.action.title"}}</h3>
+          {{/link-to}}
+        </div>
+        <div class="description">
+          <div class="overflow">{{i18n "communitarian.landing.communities_header.action.description"}}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+{{/unless}}
