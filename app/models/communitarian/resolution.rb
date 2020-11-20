@@ -17,7 +17,9 @@ module Communitarian
 
       generate_weekly_report(resolution)
       poll = resolution.polls.first
-      poll.update!(close_at: resolution_schedule.next_close_time, status: "open")
+      next_close_time = resolution_schedule.next_close_time(poll.close_at)
+
+      poll.update!(close_at: next_close_time, status: "open")
 
       self.schedule_jobs(resolution)
     end
@@ -27,8 +29,16 @@ module Communitarian
       return if to_be_closed?(post)
 
       job_args = { post_id: post.id }
+      poll = post.polls.first
+
+      next_reopen_time = if poll.created_at.today?
+        poll.close_at + Communitarian::ResolutionSchedule.reopen_delay
+      else
+        resolution_schedule.next_reopen_time
+      end
+
       Jobs.cancel_scheduled_job(:reopen_resolution, job_args)
-      Jobs.enqueue_at(resolution_schedule.next_reopen_time, :reopen_resolution, job_args)
+      Jobs.enqueue_at(next_reopen_time, :reopen_resolution, job_args)
     end
 
     private
@@ -66,7 +76,7 @@ module Communitarian
     # this check needs to ignore Jobs::ClosePoll job that closing resolution
     # on the same time when we trying to renew it
     def closed_by_system?(post)
-      post.polls.first.close_at.today?
+      post.polls.first.close_at < Date.today
     end
 
     def resolution?(post)
