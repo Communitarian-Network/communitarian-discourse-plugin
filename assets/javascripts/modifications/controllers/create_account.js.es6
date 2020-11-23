@@ -179,7 +179,8 @@ export default {
       password: this.accountPassword,
       username: this.accountUsername,
       password_confirmation: this.accountHoneypot,
-      challenge: this.accountChallenge
+      challenge: this.accountChallenge,
+      billing_address: this.billingAddress
     };
 
     return data;
