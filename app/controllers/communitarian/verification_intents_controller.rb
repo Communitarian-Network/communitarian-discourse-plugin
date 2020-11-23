@@ -66,7 +66,7 @@ module Communitarian
     end
 
     def permitted_params
-      params.permit(:username, :email, :password, :password_confirmation, :challenge, :invite_code)
+      params.permit(:username, :email, :password, :password_confirmation, :challenge, :billing_address)
     end
   end
 end
