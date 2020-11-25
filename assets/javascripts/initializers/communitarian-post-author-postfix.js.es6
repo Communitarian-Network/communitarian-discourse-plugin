@@ -1,15 +1,10 @@
 import { withPluginApi } from "discourse/lib/plugin-api";
-import User from "discourse/models/user";
 
 function createAuthorPostfix(api) {
   api.decorateWidget("poster-name:after", dec => {
-    const username = dec.attrs.username;
-
-    User.findByUsername(username).then(user => {
-      const address = user.user_fields["123001"];
-
-      return dec.h("span.post-author-location", "from " + address);
-    });
+    if(dec.attrs.userCustomFields && dec.attrs.userCustomFields.user_field_123001) {
+      return dec.h("span.post-author-location", "from " + dec.attrs.userCustomFields.user_field_123001);
+    }
   });
 }
 export default {
