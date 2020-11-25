@@ -138,7 +138,7 @@ en:
           address: from %{address}
           instructions: Instructions have been sent to email
           change_email: Edit
-          check_span: If it doesn’t arrive, check your spam folder or
+          check_span: If you don't see our email, check your spam or promotions folders
       login:
         title: Welcome back!
       post:
