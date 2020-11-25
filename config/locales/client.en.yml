@@ -613,6 +613,7 @@ en:
           description: You will never be notified of anything about this dialogue, and
             it will not appear in latest.
       actions:
+        back: "go to"
         recover: Un-Delete Dialogue
         delete: Delete Dialogue
         open: Open Dialogue
