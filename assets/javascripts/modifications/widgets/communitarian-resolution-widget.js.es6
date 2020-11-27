@@ -1,5 +1,6 @@
 import Post from "discourse/models/post";
 import PostCooked from "discourse/widgets/post-cooked";
+import transformPost from "discourse/lib/transform-post";
 import DecoratorHelper from "discourse/widgets/decorator-helper";
 import { createWidget, applyDecorators, reopenWidget } from "discourse/widgets/widget";
 import { h } from "virtual-dom";
@@ -7,11 +8,22 @@ import DiscourseURL from "discourse/lib/url";
 
 createWidget("communitarian-resolution-widget", {
   html(resolution) {
-    this.model = Post.create(resolution.recent_resolution_post);
-    this.model.hideMenu = true;
+    let prevPost;
+    let nextPost;
 
-    const postContents = this.attach("post-contents", this.model);
-    let result = [this.attach("post-meta-data", this.model)];
+    this.model = Post.create(resolution.recent_resolution_post);
+
+    const transformed = transformPost(
+      this.currentUser,
+      this.site,
+      this.model,
+      prevPost,
+      nextPost
+    );
+    transformed.hideMenu = true;
+
+    const postContents = this.attach("post-contents", transformed);
+    let result = [this.attach("post-meta-data", transformed)];
     result.push(postContents);
 
     return result;
