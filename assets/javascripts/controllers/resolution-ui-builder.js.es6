@@ -96,7 +96,7 @@ export default Controller.extend({
 
   _setupPoll(postId = null) {
     if (postId === null) {
-      let slug = window.location.pathname.match(/c\/.*\/(.*)$/);
+      let slug = window.location.pathname.match(/c\/[^\/]*\/(\d+).*$/);
       this.setProperties({
         action: "create",
         buttonLabel: "communitarian.resolution.ui_builder.create",
