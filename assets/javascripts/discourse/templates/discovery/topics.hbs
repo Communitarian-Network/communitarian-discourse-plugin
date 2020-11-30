@@ -53,7 +53,7 @@
   {{plugin-outlet name="before-topic-list" args=(hash category=category)}}
 
   {{!-- custom code started here ↓ --}}
-  {{#if hasDialogs}}
+  {{#if hasTopics}}
     <h2>{{i18n "communitarian.resolution.header_title"}}</h2>
     {{community-details
       highlightLastVisited=true
@@ -78,7 +78,7 @@
       scrollOnLoad=true
       onScroll=discoveryTopicList.saveScrollPosition}}
   {{else}}
-    {{#if hasTopics}}
+    {{#if hasDialogs}}
       <h2>{{i18n "communitarian.dialogs.header_title"}}</h2>
       {{topic-list
         class="dialog-list-page-content"
