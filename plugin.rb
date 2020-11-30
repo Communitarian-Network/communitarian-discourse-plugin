@@ -102,7 +102,7 @@ after_initialize do
     about_post = category.topic.posts.first
     revisor = PostRevisor.new(about_post, about_post.topic)
     about = category.custom_fields["introduction_raw"].presence || about_post.raw
-    revisor.revise!(about_post.user, { raw: about }, skip_validations: true)
+    revisor.revise!(about_post.user, { raw: "***#{about}***" }, skip_validations: true)
   end
 
   on(:post_created) do |post, opts|
@@ -127,6 +127,8 @@ after_initialize do
 
     PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
   end
+
+  add_to_serializer(:basic_category, :dialogs_url) { "#{object.url}/l/dialogs" }
 
   require 'homepage_constraint'
   Discourse::Application.routes.prepend do
@@ -165,7 +167,12 @@ after_initialize do
         fancy_title = Emoji.unicode_unescape(HtmlPrettify.render(escaped))
 
         result_title = if is_resolution && category
-          "[#{category.custom_fields["community_code"]} - #{category.highest_resolution_number}] #{fancy_title}"
+          title_prefix = [
+            category.custom_fields["community_code"],
+            category.highest_resolution_number
+          ].reject(&:blank?).join(" - ")
+
+          "[#{title_prefix}] #{fancy_title}"
         else
           fancy_title
         end
@@ -334,7 +341,9 @@ after_initialize do
           t = Topic.new(title: I18n.t("category.community_prefix", category: name), user: user, pinned_at: Time.now, category_id: id)
           t.skip_callbacks = true
           t.ignore_category_auto_close = true
+          t.visible = false
           t.delete_topic_timer(TopicTimer.types[:close])
+          t.tags << Tag.find_or_create_by!(name: "dialogue")
           t.save!(validate: false)
           update_column(:topic_id, t.id)
           post = t.posts.build(raw: description || post_template, user: user)

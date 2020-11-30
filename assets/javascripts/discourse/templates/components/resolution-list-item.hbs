@@ -3,8 +3,8 @@
     {{#if formattedActionPeriod}}
       <span>{{i18n "communitarian.resolution.list.date" period=formattedActionPeriod}}</span>
     {{/if}}
-    {{#if openedPoll}}		
-      <span>{{i18n "communitarian.resolution.list.votes" voters=openedPoll.voters}}</span>
+    {{#if openedPoll}}
+      <span>{{i18n "communitarian.resolution.list.votes" count=openedPoll.voters}}</span>
     {{/if}}
   </div>
   <p class="resolution-list-item__name">

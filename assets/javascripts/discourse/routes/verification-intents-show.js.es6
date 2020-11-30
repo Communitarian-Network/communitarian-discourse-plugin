@@ -22,12 +22,12 @@ export default DiscourseRoute.extend({
         if (item.status == "succeeded") {
           later(() => {
             this._finishSignUp(item.full_name, item.billing_address, item.zipcode);
-          }, 5000);
+          }, 3000);
         }
         if (item.status == "processing") {
           later(() => {
             self.model({ id: params.id });
-          }, 5000);
+          }, 3000);
         }
         return item;
       });
@@ -37,8 +37,9 @@ export default DiscourseRoute.extend({
     this.render("verification-intents/show");
   },
 
-  _finishSignUp(accountName, billingAddress, zipcode) {
+  _finishSignUp(accountName, address, zipcode) {
     const signupData = PreloadStore.get("signupData");
+    // We use address from First step form, not from Stripe Identity
 
     const attrs = {
       accountName,
@@ -47,13 +48,13 @@ export default DiscourseRoute.extend({
       accountUsername: signupData.username,
       accountPasswordConfirm: signupData.password_confirmation,
       accountChallenge: signupData.challenge,
-      userFields: { 123001: billingAddress, 123002: zipcode }
+      userFields: { 123001: signupData.billing_address, 123002: zipcode }
     };
 
     return User.createAccount(attrs)
       .then((result) => {
         if (result.success) {
-          later(() => window.location = "/u/account-created", 5000);
+          later(() => window.location = "/u/account-created", 3000);
         } else {
           popupAjaxError(result);
         }

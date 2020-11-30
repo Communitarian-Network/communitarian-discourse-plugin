@@ -9,7 +9,12 @@ createWidget("communitarian-resolution-widget", {
   html(resolution) {
     this.model = Post.create(resolution.recent_resolution_post);
     this.model.hideMenu = true;
-    return this.attach("post-contents", this.model);
+
+    const postContents = this.attach("post-contents", this.model);
+    let result = [this.attach("post-meta-data", this.model)];
+    result.push(postContents);
+
+    return result;
   },
 });
 

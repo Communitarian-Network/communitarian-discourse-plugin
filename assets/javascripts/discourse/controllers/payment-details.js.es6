@@ -66,7 +66,8 @@ export default Controller.extend(ModalFunctionality, {
   },
 
   _createAccount() {
-    const userfields = { 123002: this.zipcode, 123001: this.address };
+    const userfields = { 123002: this.zipcode, 123001: this.createAccount.billingAddress };
+
     let attrs = {
       accountName: this.name,
       accountEmail: this.createAccount.accountEmail,

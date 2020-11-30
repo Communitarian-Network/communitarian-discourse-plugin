@@ -8,8 +8,21 @@ import { extractError } from "discourse/lib/ajax-error";
 export default {
   onShow() {
     this.setProperties({
-      accountUsername: Date.now()
+      accountUsername: Date.now(),
+      country: "",
+      state: "",
+      city: "",
+      billingAddress: ""
     });
+  },
+
+  @discourseComputed("formSubmitted", "country", "city")
+  submitDisabled(formSubmitted, country, city) {
+    return (
+      this.formSubmitted ||
+      !country.replace(/\s/g, "").length ||
+      !city.replace(/\s/g, "").length
+    );
   },
 
   @discourseComputed
@@ -46,6 +59,18 @@ export default {
     return this.fieldsValid() && this._validateUserFields(successCallback);
   },
 
+  setBillingAddress() {
+    this.set("billingAddress", this.parsedAddress());
+  },
+
+  parsedAddress() {
+    if (this.state.replace(/\s/g, "").length === 0) {
+      return (this.country + ", " + this.city);
+    } else {
+      return (this.country + ", " + this.state + ", " + this.city);
+    }
+  },
+
   fieldsValid() {
     this.clearFlash();
 
@@ -78,6 +103,7 @@ export default {
   actions: {
     submitForm() {
       this.clearFlash();
+      this.setBillingAddress();
 
       if (this.get("authOptions.email") == this.accountEmail) {
         return this.performAccountCreation();
@@ -153,7 +179,8 @@ export default {
       password: this.accountPassword,
       username: this.accountUsername,
       password_confirmation: this.accountHoneypot,
-      challenge: this.accountChallenge
+      challenge: this.accountChallenge,
+      billing_address: this.billingAddress
     };
 
     return data;

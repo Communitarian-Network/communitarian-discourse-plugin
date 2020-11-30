@@ -1,19 +1,22 @@
 {{#if siteSettings.communitarian_enabled}}
   <div class="landing-footer__content">
     <div class="landing-footer__top">
+      <div class="landing-footer__title">
+        {{i18n "communitarian.landing.footer.title"}}
+      </div>
+      {{#link-to "discovery.categories" class="landing-footer__link--desktop"}}
+        {{i18n "communitarian.landing.footer.link"}}
+      {{/link-to}}
       {{#link-to "discovery.categories" class="landing-footer__link--mobile"}}
         {{i18n "communitarian.landing.footer.link"}}
       {{/link-to}}
     </div>
 
     <div class="landing-footer__line"></div>
-    
+
     <div class="landing-footer__bottom">
       <img src={{siteSettings.site_logo_url}} class="landing-footer__logo" />
       <div class="landing-footer__icons-container">
-        {{#link-to "discovery.categories" class="landing-footer__link--desktop"}}
-          {{i18n "communitarian.landing.footer.link"}}
-        {{/link-to}}
         <div class="landing-footer__icons">
           <a href={{siteSettings.socials_facebook_url}} target="_blank"
             class="landing-footer__icon--facebook">

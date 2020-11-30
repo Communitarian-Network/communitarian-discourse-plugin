@@ -90,6 +90,30 @@
                 }}
               </tbody>
             </table>
+
+          <div class="user-fields">
+            <div class="user-field text user-field-country">
+              <label class="control-label">{{I18n "communitarian.create_account.country.label" }}</label>
+              <div class="controls">
+                {{input type="text" value=country id="country" name="country" placeholder=(I18n "communitarian.create_account.country.placeholder")}}
+              </div>
+            </div>
+
+            <div class="user-field text user-field-state">
+              <label class="control-label">{{I18n "communitarian.create_account.state.label" }}</label>
+              <div class="controls">
+                {{input type="text" value=state id="state" name="state" placeholder=(I18n "communitarian.create_account.state.placeholder")}}
+              </div>
+            </div>
+
+            <div class="user-field text user-field-city">
+              <label class="control-label">{{I18n "communitarian.create_account.city.label" }}</label>
+              <div class="controls">
+                {{input type="text" value=city id="city" name="city" placeholder=(I18n "communitarian.create_account.city.placeholder")}}
+              </div>
+            </div>
+          </div>
+
           </form>
         </div>
       {{/if}}

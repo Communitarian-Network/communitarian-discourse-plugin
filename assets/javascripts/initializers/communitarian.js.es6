@@ -11,6 +11,8 @@ import showModal from "discourse/lib/show-modal";
 import { reopenWidget } from "discourse/widgets/widget";
 import CreateAccount from "../modifications/controllers/create_account";
 import HeaderButtons from "../modifications/widgets/header-buttons";
+import UserMenu from "../modifications/widgets/user-menu";
+import DiscoursePollButtons from "../modifications/widgets/discourse-poll-buttons";
 import Category from "discourse/models/category";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 
@@ -79,6 +81,40 @@ function initializeCommunitarian(api) {
           this.site.updateCategory(model);
           showModal("community-ui-builder", { model });
         });
+      },
+    }
+  });
+
+  api.modifyClass("controller:edit-category", {
+    actions: {
+      saveCategory() {
+        if (this.validators.some(validator => validator())) {
+          return;
+        }
+        const model = this.model;
+        const parentCategory = this.site.categories.findBy(
+          "id",
+          parseInt(model.parent_category_id, 10)
+        );
+
+        this.set("saving", true);
+        model.set("parentCategory", parentCategory);
+
+        model
+          .save()
+          .then(result => {
+            this.set("saving", false);
+            this.send("closeModal");
+            model.setProperties({
+              slug: result.category.slug,
+              id: result.category.id
+            });
+            DiscourseURL.redirectTo(`/c/${Category.slugFor(model)}/${model.id}/l/dialogs`);
+          })
+          .catch(error => {
+            this.flash(extractError(error), "error");
+            this.set("saving", false);
+          });
       },
     }
   });
@@ -300,6 +336,8 @@ function initializeCommunitarian(api) {
   });
 
   reopenWidget("header-buttons", HeaderButtons);
+  reopenWidget("user-menu", UserMenu);
+  reopenWidget("discourse-poll-buttons", DiscoursePollButtons);
 }
 
 //Override openNewCategoryModal due to the fact that all members can create category
