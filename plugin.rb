@@ -128,6 +128,8 @@ after_initialize do
     PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
   end
 
+  add_to_serializer(:basic_category, :dialogs_url) { "#{object.url}/l/dialogs" }
+
   require 'homepage_constraint'
   Discourse::Application.routes.prepend do
     root to: "communitarian/page#index", constraints: HomePageConstraint.new("home")
@@ -339,6 +341,7 @@ after_initialize do
           t = Topic.new(title: I18n.t("category.community_prefix", category: name), user: user, pinned_at: Time.now, category_id: id)
           t.skip_callbacks = true
           t.ignore_category_auto_close = true
+          t.visible = false
           t.delete_topic_timer(TopicTimer.types[:close])
           t.tags << Tag.find_or_create_by!(name: "dialogue")
           t.save!(validate: false)
