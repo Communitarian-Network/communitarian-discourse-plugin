@@ -298,7 +298,12 @@ function initializeCommunitarian(api) {
   });
 
   api.modifyClass("controller:discovery:topics", {
-    hasDialogs: gt("model.dialogs.length", 0)
+    router: service(),
+
+    @discourseComputed("router.currentRoute.localName")
+    isResolutionsPage(currentRouteName) {
+      return currentRouteName === "category";
+    },
   });
 
   api.modifyClassStatic("model:topic-list", {
