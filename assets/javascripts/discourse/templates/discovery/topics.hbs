@@ -53,32 +53,34 @@
   {{plugin-outlet name="before-topic-list" args=(hash category=category)}}
 
   {{!-- custom code started here ↓ --}}
-  {{#if hasTopics}}
-    <h2>{{i18n "communitarian.resolution.header_title"}}</h2>
-    {{community-details
-      highlightLastVisited=true
-      top=top
-      showTopicPostBadges=showTopicPostBadges
-      showPosters=true
-      canBulkSelect=canBulkSelect
-      changeSort=(action "changeSort")
-      toggleBulkSelect=(action "toggleBulkSelect")
-      hideCategory=model.hideCategory
-      model=model
-      order=order
-      ascending=ascending
-      bulkSelectEnabled=bulkSelectEnabled
-      selected=selected
-      expandGloballyPinned=expandGloballyPinned
-      expandAllPinned=expandAllPinned
-      category=category
-      resolutions=model.topics
-      dialogs=model.dialogs
-      discoveryList=true
-      scrollOnLoad=true
-      onScroll=discoveryTopicList.saveScrollPosition}}
+  {{#if isResolutionsPage}}
+    {{#if hasResolutions}}
+      <h2>{{i18n "communitarian.resolution.header_title"}}</h2>
+      {{community-details
+        highlightLastVisited=true
+        top=top
+        showTopicPostBadges=showTopicPostBadges
+        showPosters=true
+        canBulkSelect=canBulkSelect
+        changeSort=(action "changeSort")
+        toggleBulkSelect=(action "toggleBulkSelect")
+        hideCategory=model.hideCategory
+        model=model
+        order=order
+        ascending=ascending
+        bulkSelectEnabled=bulkSelectEnabled
+        selected=selected
+        expandGloballyPinned=expandGloballyPinned
+        expandAllPinned=expandAllPinned
+        category=category
+        resolutions=model.topics
+        dialogs=model.dialogs
+        discoveryList=true
+        scrollOnLoad=true
+        onScroll=discoveryTopicList.saveScrollPosition}}
+      {{/if}}
   {{else}}
-    {{#if hasDialogs}}
+    {{#if hasTopics}}
       <h2>{{i18n "communitarian.dialogs.header_title"}}</h2>
       {{topic-list
         class="dialog-list-page-content"
