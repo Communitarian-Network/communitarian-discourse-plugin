@@ -300,11 +300,6 @@ function initializeCommunitarian(api) {
   api.modifyClass("controller:discovery:topics", {
     router: service(),
 
-    @discourseComputed("model.topic_list.has_resolutions")
-    hasResolutions(has_resolutions) {
-      return has_resolutions;
-    },
-
     @discourseComputed("router.currentRoute.localName")
     isResolutionsPage(currentRouteName) {
       return currentRouteName === "category";

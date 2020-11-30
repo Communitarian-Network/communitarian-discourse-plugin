@@ -137,6 +137,14 @@ after_initialize do
   end
 
   reloadable_patch do
+    TopicListSerializer.class_eval do
+      has_many :dialogs, serializer: TopicListItemSerializer, embed: :objects
+
+      def dialogs
+        object.dialogs.to_a
+      end
+    end
+
     Topic.class_eval do
       has_one :recent_resolution_post, -> { where(is_resolution: true).order(id: :desc) }, class_name: "Post"
 
@@ -353,35 +361,6 @@ after_initialize do
         if topic.title == I18n.t("category.community_prefix", category: old_name)
           topic.update_attribute(:title, I18n.t("category.community_prefix", category: name))
         end
-      end
-    end
-
-    TopicListSerializer.class_eval do
-      attributes :can_create_topic,
-                :more_topics_url,
-                :draft,
-                :draft_key,
-                :draft_sequence,
-                :for_period,
-                :per_page,
-                :top_tags,
-                :tags,
-                :shared_drafts,
-                :has_resolutions,
-                :has_dialogs
-
-      has_many :dialogs, serializer: TopicListItemSerializer, embed: :objects
-
-      def dialogs
-        object.dialogs.to_a
-      end
-
-      def has_dialogs
-        dialogs.any?
-      end
-
-      def has_resolutions
-        object.topics.pluck(:is_resolution).any?
       end
     end
 
