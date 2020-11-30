@@ -128,6 +128,8 @@ after_initialize do
     PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
   end
 
+  add_to_serializer(:basic_category, :dialogs_url) { "#{object.url}/l/dialogs" }
+
   require 'homepage_constraint'
   Discourse::Application.routes.prepend do
     root to: "communitarian/page#index", constraints: HomePageConstraint.new("home")

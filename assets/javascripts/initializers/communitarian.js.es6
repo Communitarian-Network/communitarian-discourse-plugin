@@ -85,6 +85,40 @@ function initializeCommunitarian(api) {
     }
   });
 
+  api.modifyClass("controller:edit-category", {
+    actions: {
+      saveCategory() {
+        if (this.validators.some(validator => validator())) {
+          return;
+        }
+        const model = this.model;
+        const parentCategory = this.site.categories.findBy(
+          "id",
+          parseInt(model.parent_category_id, 10)
+        );
+
+        this.set("saving", true);
+        model.set("parentCategory", parentCategory);
+
+        model
+          .save()
+          .then(result => {
+            this.set("saving", false);
+            this.send("closeModal");
+            model.setProperties({
+              slug: result.category.slug,
+              id: result.category.id
+            });
+            DiscourseURL.redirectTo(`/c/${Category.slugFor(model)}/${model.id}/l/dialogs`);
+          })
+          .catch(error => {
+            this.flash(extractError(error), "error");
+            this.set("saving", false);
+          });
+      },
+    }
+  });
+
   api.modifyClass("controller:topic", {
     @discourseComputed()
     isAuthorized() {
