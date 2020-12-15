@@ -2,8 +2,10 @@ import { withPluginApi } from "discourse/lib/plugin-api";
 
 function createAuthorPostfix(api) {
   api.decorateWidget("poster-name:after", dec => {
-    if(dec.attrs.userCustomFields && dec.attrs.userCustomFields.user_field_123001) {
-      return dec.h("span.post-author-location", "from " + dec.attrs.userCustomFields.user_field_123001);
+    const userCustomFields = dec.attrs.userCustomFields || dec.attrs.user_custom_fields;
+
+    if(userCustomFields && userCustomFields.user_field_123001) {
+      return dec.h("span.post-author-location", "from " + userCustomFields.user_field_123001);
     }
   });
 }
