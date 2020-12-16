@@ -125,7 +125,9 @@ after_initialize do
   add_to_serializer(:topic_list_item, :recent_resolution_post, false) do
     return unless object.is_resolution?
 
-    PostSerializer.new(object.recent_resolution_post, root: false, embed: :objects, scope: self.scope)
+    post = object.recent_resolution_post
+    user_custom_fields = { post.user_id => post.user.custom_fields }
+    PostSerializer.new(post, root: false, embed: :objects, scope: self.scope, user_custom_fields: user_custom_fields)
   end
 
   add_to_serializer(:basic_category, :dialogs_url) { "#{object.url}/l/dialogs" }
