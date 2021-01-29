@@ -20,7 +20,7 @@
           {{d-button
             action=(action "goToDialogsPage")
             label="communitarian.dialogs.dialogs_link"
-            class="link-button--dialogs page-header__button"
+            class="link-button--dialogs page-header__button btn-danger"
           }}
           {{#if category.can_edit}}
             {{#if currentUser.staff}}
@@ -54,7 +54,7 @@
           {{d-button
             action=(action "goToResolutionsPage")
             label="communitarian.dialog.resolutions_link"
-            class="link-button--resolutions page-header__button"
+            class="link-button--resolutions page-header__button btn-danger"
           }}
           {{#if category.can_edit}}
             {{#if currentUser.staff}}
