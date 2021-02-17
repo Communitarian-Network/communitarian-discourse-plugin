@@ -1,7 +1,19 @@
 import evenRound from "discourse/plugins/poll/lib/even-round";
 import { h } from "virtual-dom";
+import RawHtml from "discourse/widgets/raw-html";
+
+function optionHtml(option) {
+  const $node = $(`<span>${option.html}</span>`);
+
+  $node.find(".discourse-local-date").each((_index, elem) => {
+    $(elem).applyLocalDates();
+  });
+
+  return new RawHtml({ html: `<span>${$node.html()}</span>` });
+}
 
 export default {
+
 
   html(attrs, state) {
     const { poll } = attrs;
