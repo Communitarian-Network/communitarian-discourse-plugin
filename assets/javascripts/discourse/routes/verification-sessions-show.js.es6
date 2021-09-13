@@ -4,6 +4,7 @@ import PreloadStore from "discourse/lib/preload-store";
 import { popupAjaxError } from "discourse/lib/ajax-error";
 import DiscourseRoute from "discourse/routes/discourse";
 import User from "discourse/models/user";
+import bootbox from "bootbox";
 
 export default DiscourseRoute.extend({
   setupController(controller, model) {
@@ -16,17 +17,18 @@ export default DiscourseRoute.extend({
 
   model(params) {
     const self = this;
+    const id = sessionStorage.getItem('verificationSessionId');
     return this.store
-      .find("verification-intent", params.id, { backgroundReload: true })
+      .find("verification-session", id, { backgroundReload: true })
       .then((item) => {
-        if (item.status == "succeeded") {
+        if (item.status == "verified") {
           later(() => {
             this._finishSignUp(item.full_name, item.billing_address, item.zipcode);
           }, 3000);
         }
         if (item.status == "processing") {
           later(() => {
-            self.model({ id: params.id });
+            self.model({ id: id });
           }, 3000);
         }
         return item;
@@ -34,7 +36,7 @@ export default DiscourseRoute.extend({
   },
 
   renderTemplate() {
-    this.render("verification-intents/show");
+    this.render("verification-sessions/show");
   },
 
   _finishSignUp(accountName, address, zipcode) {
@@ -55,6 +57,8 @@ export default DiscourseRoute.extend({
       .then((result) => {
         if (result.success) {
           later(() => window.location = "/u/account-created", 3000);
+        } else if (result.message) {
+          bootbox.alert(result.message);
         } else {
           popupAjaxError(result);
         }
