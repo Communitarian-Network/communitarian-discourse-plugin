@@ -52,7 +52,7 @@ export default {
     }
 
     this.set("formSubmitted", true);
-    this._validateUserFields(this._createVerificationIntent.bind(this));
+    this._validateUserFields(this._createVerificationSession.bind(this));
   },
 
   formValid(successCallback) {
@@ -126,10 +126,10 @@ export default {
     } else {
       if (new Date() - this._challengeDate > 1000 * this._challengeExpiry) {
         this.fetchConfirmationValue().then(() =>
-          this._createVerificationIntent()
+          this._createVerificationSession()
         );
       } else {
-        this._createVerificationIntent();
+        this._createVerificationSession();
       }
     }
   },
@@ -152,13 +152,14 @@ export default {
     });
   },
 
-  _createVerificationIntent() {
-    return ajax("/communitarian/verification_intents", {
+  _createVerificationSession() {
+    return ajax("/communitarian/verification_sessions", {
       type: "POST",
       data: this._userFields(),
     })
       .then((response) => {
-        window.location = response.verification_intent.verification_url;
+        sessionStorage.setItem('verificationSessionId', response.verification_session.id);
+        window.location = response.verification_session.verification_url;
       })
       .catch((error) => {
         this.set("formSubmitted", false);

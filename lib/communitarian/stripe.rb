@@ -14,15 +14,15 @@ module Communitarian
       @error = nil
     end
 
-    def get_verification_intent(id, metadata = {})
+    def created_verification_session(params)
       call_with_rescue do
-        ::Stripe::APIResource.request(:get, "/v1/identity/verification_intents/#{id}", metadata).first.data
+        ::Stripe::Identity::VerificationSession.create(params)
       end
     end
 
-    def created_verification_intent(params)
+    def get_verification_session(params = {})
       call_with_rescue do
-        ::Stripe::APIResource.request(:post, "/v1/identity/verification_intents", params).first.data
+        ::Stripe::Identity::VerificationSession.retrieve(params)
       end
     end
 

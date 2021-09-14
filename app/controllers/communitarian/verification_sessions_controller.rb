@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Communitarian
-  class VerificationIntentsController < ::ApplicationController
+  class VerificationSessionsController < ::ApplicationController
     requires_plugin Communitarian
     skip_before_action :verify_authenticity_token, :redirect_to_login_if_required
     skip_before_action :check_xhr, only: %i(show)
@@ -10,7 +10,7 @@ module Communitarian
     def create
       session[:signup_data] = Marshal.dump(permitted_params)
 
-      render_verification_intent_result(created_verification_intent)
+      render_verification_session_result(created_verification_session)
     end
 
     def show
@@ -20,34 +20,36 @@ module Communitarian
           render "default/empty"
         end
         format.json do
-          render_verification_intent_result(verification_intent)
+          render_verification_session_result(verification_session)
         end
       end
     end
 
     private
 
-    def verification_intent
-      @verification_intent ||= Communitarian::Stripe.new.get_verification_intent(params[:id])
+    def verification_session
+      @verification_session ||= Communitarian::Stripe.new.get_verification_session(verification_session_params)
     end
 
-    def created_verification_intent
-      @created_verification_intent ||= Communitarian::Stripe.new.created_verification_intent(verification_intent_params)
+    def created_verification_session
+      @created_verification_session ||= Communitarian::Stripe.new.created_verification_session(new_verification_session_params)
     end
 
-    def verification_intent_params
+    def verification_session_params
+      params.permit(:id).merge(expand: %w(verified_outputs)).to_h
+    end
+
+    def new_verification_session_params
       {
-        return_url: URI.unescape(communitarian_verification_intent_url("{VERIFICATION_INTENT_ID}")),
-        refresh_url: request.origin,
-        requested_verifications: ["identity_document"],
-        person_data: person_data_params,
+        type: "document",
+        return_url: URI.unescape(communitarian_verification_sessions_url),
         metadata: metadata_params
       }
     end
 
-    def render_verification_intent_result(result)
+    def render_verification_session_result(result)
       if result.success?
-        render_serialized(result.response, VerificationIntentSerializer, root: "verification_intent")
+        render_serialized(result.response, VerificationSessionSerializer, root: "verification_session")
       else
         render_json_error result.error.message, status: :unprocessable_entity
       end
@@ -57,12 +59,8 @@ module Communitarian
       return redirect_to "/" if current_user
     end
 
-    def person_data_params
-      params.permit(:email).to_h
-    end
-
     def metadata_params
-      params.permit(:username).to_h
+      params.permit(:email, :username).to_h
     end
 
     def permitted_params

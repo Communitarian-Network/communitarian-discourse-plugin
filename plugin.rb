@@ -2,13 +2,12 @@
 
 # name: communitarian
 # about: Common plugin with main features
-# version: 0.2
+# version: 0.3
 # authors: Flatstack
 # url: https://github.com/fs/communitarian-discourse-plugin
 
 gem "omniauth-linkedin-oauth2", "1.0.0"
-gem "stripe", "5.22.0"
-gem "stripe_event", "2.3.1"
+gem "stripe", "5.38.0"
 gem "interactor", "3.1.2"
 gem "geokit", "1.13.1"
 
@@ -68,7 +67,7 @@ after_initialize do
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
-  Stripe.api_version = '2020-03-02; identity_beta=v3'
+  Stripe.api_version = '2020-03-02; identity_beta=v6'
   Geokit::Geocoders::GeonamesGeocoder.key = SiteSetting.geonames_username
 
   Category.register_custom_field_type("introduction_raw", :text)

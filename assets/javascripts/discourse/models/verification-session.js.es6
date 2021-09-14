@@ -15,7 +15,7 @@ export default RestModel.extend({
 
   @discourseComputed("status")
   requiresAction(status) {
-    return status === "requires_action";
+    return status === "requires_input";
   },
 
   @discourseComputed("status")
@@ -24,7 +24,7 @@ export default RestModel.extend({
   },
 
   @discourseComputed("status")
-  succeeded(status) {
-    return status === "succeeded";
+  verified(status) {
+    return status === "verified";
   },
 });

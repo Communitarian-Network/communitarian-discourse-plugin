@@ -80,7 +80,7 @@ en:
           title: ID Verification Canceled
           text: Your verification has been canceled.
           hint: Please contact with us to solve this issue.
-        succeeded:
+        verified:
           title: ID Verification Completed
           text: Your verification has been completed.
           hint: You will be redirected to email verification step soon.
