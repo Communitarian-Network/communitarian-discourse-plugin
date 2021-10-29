@@ -2,7 +2,7 @@
 
 # name: communitarian
 # about: Common plugin with main features
-# version: 0.3
+# version: 0.4
 # authors: Flatstack
 # url: https://github.com/fs/communitarian-discourse-plugin
 
@@ -67,7 +67,7 @@ after_initialize do
   ].each { |path| require File.expand_path(path, __FILE__) }
 
   Stripe.api_key = SiteSetting.communitarian_stripe_secret_key
-  Stripe.api_version = '2020-03-02; identity_beta=v6'
+  Stripe.api_version = '2020-03-02'
   Geokit::Geocoders::GeonamesGeocoder.key = SiteSetting.geonames_username
 
   Category.register_custom_field_type("introduction_raw", :text)
